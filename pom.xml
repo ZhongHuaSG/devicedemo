@@ -45,6 +45,11 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.58</version>
         </dependency>
+        <dependency>
+            <groupId>org.snmp4j</groupId>
+            <artifactId>snmp4j</artifactId>
+            <version>2.6.3</version>
+        </dependency>
     </dependencies>
 
     <build>
