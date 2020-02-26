@@ -22,7 +22,7 @@ public class CommonModparas {
     private String icsyle;
 
     @JSONField(name="LAMP_PARA")
-    private Map<String,Object> lamp_Para;
+    private LampPara lamp_Para;
 
     @JSONField(name="MOD_RSLT")
     private String mod_Rslt;

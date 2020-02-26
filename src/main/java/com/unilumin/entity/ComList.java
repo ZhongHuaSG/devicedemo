@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.util.Map;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -13,6 +12,6 @@ import java.util.Map;
 public class ComList {
 
     @JSONField(name="LEDPARAS")
-    private Map<String,Object> ledParas;
+    private LedParas ledParas;
 
 }

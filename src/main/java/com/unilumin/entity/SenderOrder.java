@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.util.List;
-import java.util.Map;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -41,6 +40,6 @@ public class SenderOrder {
     private String port;
 
     @JSONField(name="PORT_ORDER")
-    private List<Map<String,Object>> portOrder;
+    private List<PortOrder> portOrder;
 
 }

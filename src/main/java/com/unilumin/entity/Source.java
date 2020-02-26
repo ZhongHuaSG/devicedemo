@@ -16,6 +16,6 @@ public class Source {
     private String device;
 
     @JSONField(name="LEDSCREEN")
-    private Map<String,Object> ledScreen;
+    private LedScreen ledScreen;
 
 }

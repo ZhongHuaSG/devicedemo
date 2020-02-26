@@ -17,6 +17,6 @@ public class PortOrder {
     private String id;
 
     @JSONField(name="BOX")
-    private List<Map<String,Object>> box;
+    private List<Box> box;
 
 }

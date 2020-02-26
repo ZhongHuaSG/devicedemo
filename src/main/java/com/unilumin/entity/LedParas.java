@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.util.List;
-import java.util.Map;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -23,10 +22,10 @@ public class LedParas {
     private String cmd;
 
     @JSONField(name="COMMON_MODPARAS")
-    private Map<String,Object> common_Modparas;
+    private CommonModparas common_Modparas;
 
     @JSONField(name="COMMON_RECPARAS")
-    private Map<String,Object> common_Recparas;
+    private CommonRecparas common_Recparas;
 
     @JSONField(name="CONTRAST")
     private String contrast;
@@ -74,7 +73,7 @@ public class LedParas {
     private String sender_Cnt;
 
     @JSONField(name="SENDER_ORDER")
-    private List<Map<String,Object>> senderOrderList;
+    private List<SenderOrder> senderOrderList;
 
     @JSONField(name="TEMP")
     private String temp;

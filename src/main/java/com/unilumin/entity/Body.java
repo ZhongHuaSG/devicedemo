@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.util.List;
-import java.util.Map;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -14,12 +13,12 @@ import java.util.Map;
 public class Body {
 
     @JSONField(name="COMLIST")
-    private List<Map<String,Object>> comList;
+    private List<ComList> comList;
 
     @JSONField(name="DESTINATION")
-    private Map<String,Object> destination;
+    private Destinaition destination;
 
     @JSONField(name="SOURCE")
-    private Map<String,Object> source;
+    private Source source;
 
 }

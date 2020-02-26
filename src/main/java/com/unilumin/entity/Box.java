@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.util.List;
-import java.util.Map;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -26,10 +25,10 @@ public class Box {
     private String yPos;
 
     @JSONField(name="REC")
-    private List<Map<String,Object>> rec;
+    private List<Rec> rec;
 
     @JSONField(name="SENSOR_POWER")
-    private List<Map<String,Object>> sensor_Power;
+    private List<SensorPower> sensor_Power;
 
 
 }
