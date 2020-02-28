@@ -1,7 +1,8 @@
 package com.unilumin.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.unilumin.entity.Body;
+import com.unilumin.entity.Destinaition;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 /**
@@ -9,9 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
  * */
 public class SayHello {
 
-    @RequestMapping("/sayHello")
-    public String hello(){
-        return "Hello,SpringBoot!";
+    @GetMapping("/sayHello")
+    @ResponseBody
+    public Body hello(){
+        Body body =new Body();
+        Destinaition destinaition = new Destinaition();
+        destinaition.setDEVICE("ORG");
+        destinaition.setID("9527");
+        destinaition.setINTERFACES("oligaduo");
+        body.setDestination(destinaition);
+        return body;
     }
 
 }

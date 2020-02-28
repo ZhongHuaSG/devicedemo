@@ -158,8 +158,8 @@
         },
         mounted () {
             axios
-               .post('/')
-               .then(response => (this.services = response))
+               .get('/sayHello')
+               .then(response => (this.services = response.data))
                .catch(function (error) { // 请求失败处理
                 console.log(error);
               });
