@@ -106,36 +106,51 @@
 
 <form id="main" v-cloak>
     <ul>
-        <li v-for="(value, key) in services" style="height: 6px;" class="{ 'active':true }">
-            {{key}} <span>{{value}}</span>
+        <li style="height: 6px;" class="{ 'active':true }">
+            目标设备名: <span>{{services.destination.device}}</span>
         </li>
-        <!--    <li style="height: 6px;" class="{ 'active':true }">-->
-        <!--      发送卡-是否正常 <span v-if="services.price === '0'">正常</span> <span v-else>不正常</span>-->
-        <!--    </li>-->
-        <!--    <li style="height: 6px;" class="{ 'active':true }">-->
-        <!--      箱体-是否正常 <span v-if="services.price === '0'">正常</span> <span v-else>不正常</span>-->
-        <!--    </li>-->
-        <!--    <li style="height: 6px;" class="{ 'active':true }">-->
-        <!--      发送卡-电压 <span>{{services.price}}</span>-->
-        <!--    </li>-->
-        <!--    <li style="height: 6px;" class="{ 'active':true }">-->
-        <!--      设备IP <span>{{services.ANDROID_IP}}</span>-->
-        <!--    </li>-->
-        <!--    <li style="height: 6px;" class="{ 'active':true }">-->
-        <!--      发送卡-通信状态 <span v-if="services.price === '0'">正常</span> <span v-else>不正常</span>-->
-        <!--    </li>-->
-        <!--    <li style="height: 6px;" class="{ 'active':true }">-->
-        <!--      箱体-异常原因 <span>{{services.price}}</span>-->
-        <!--    </li>-->
-        <!--    <li style="height: 6px;" class="{ 'active':true }">-->
-        <!--      箱体-维修进度 <span>{{services.price}}</span>-->
-        <!--    </li>-->
-        <!--    <li style="height: 6px;" class="{ 'active':true }">-->
-        <!--      设备MAC  <span>{{services.ANDROID_MAC}}</span>-->
-        <!--    </li>-->
-        <!--    <li style="height: 6px;" class="{ 'active':true }">-->
-        <!--      默认亮度  <span>{{services.DEFAULT_BRIGHT}}</span>-->
-        <!--    </li>-->
+        <li style="height: 6px;" class="{ 'active':true }">
+            目标设备ID: <span>{{services.destination.id}}</span>
+        </li>
+        <li style="height: 6px;" class="{ 'active':true }">
+            通讯接口类型: <span>{{services.destination.interfaces}}</span>
+        </li>
+        <li style="height: 6px;" class="{ 'active':true }">
+            源设备: <span>{{services.source.device}}</span>
+        </li>
+        <li style="height: 6px;" class="{ 'active':true }">
+            接口方式: <span>{{services.source.ledScreen.index}}</span>
+        </li>
+<!--        <li v-for="(value, key) in services" style="height: 6px;" class="{ 'active':true }">-->
+<!--            {{key}} <span>{{value}}</span>-->
+<!--        </li>-->
+<!--            <li style="height: 6px;" class="{ 'active':true }">-->
+<!--              发送卡-是否正常 <span v-if="services.price === '0'">正常</span> <span v-else>不正常</span>-->
+<!--            </li>-->
+<!--            <li style="height: 6px;" class="{ 'active':true }">-->
+<!--              箱体-是否正常 <span v-if="services.price === '0'">正常</span> <span v-else>不正常</span>-->
+<!--            </li>-->
+<!--            <li style="height: 6px;" class="{ 'active':true }">-->
+<!--              发送卡-电压 <span>{{services.price}}</span>-->
+<!--            </li>-->
+<!--            <li style="height: 6px;" class="{ 'active':true }">-->
+<!--              设备IP <span>{{services.ANDROID_IP}}</span>-->
+<!--            </li>-->
+<!--            <li style="height: 6px;" class="{ 'active':true }">-->
+<!--              发送卡-通信状态 <span v-if="services.price === '0'">正常</span> <span v-else>不正常</span>-->
+<!--            </li>-->
+<!--            <li style="height: 6px;" class="{ 'active':true }">-->
+<!--              箱体-异常原因 <span>{{services.price}}</span>-->
+<!--            </li>-->
+<!--            <li style="height: 6px;" class="{ 'active':true }">-->
+<!--              箱体-维修进度 <span>{{services.price}}</span>-->
+<!--            </li>-->
+<!--            <li style="height: 6px;" class="{ 'active':true }">-->
+<!--              设备MAC  <span>{{services.ANDROID_MAC}}</span>-->
+<!--            </li>-->
+<!--            <li style="height: 6px;" class="{ 'active':true }">-->
+<!--              默认亮度  <span>{{services.DEFAULT_BRIGHT}}</span>-->
+<!--            </li>-->
     </ul>
 
 
@@ -159,9 +174,11 @@
         mounted () {
             axios
                .get('/sayHello')
-               .then(response => (this.services = response.data))
+               .then((response) => {this.services = response.data
+                                  console.log(this.services)})
                .catch(function (error) { // 请求失败处理
-                console.log(error);
+                   alert("请求错误");
+                   console.log(error);
               });
        }
     });

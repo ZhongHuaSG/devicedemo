@@ -18,8 +18,7 @@ class DemoApplicationTests {
 
     @Test
     public static void main(String []args){
-
-       String path = "E:\\ledparas2.json";
+        String path = "E:\\ledparas2.json";
         String s = ReadUtils.readJsonFile(path);
         Map<String,Object> body = JSON.parseObject(s);
         System.out.println("body==========="+body.toString());
@@ -29,7 +28,7 @@ class DemoApplicationTests {
         System.out.println("id============"+destinaition.getID());
         System.out.println("device============"+destinaition.getDEVICE());
         System.out.println("INTERFACES============"+destinaition.getINTERFACES());
-//
+
 //        JSONArray links = jobj.getJSONArray("links");
 //
 //        for (int i = 0 ; i < links.size();i++){
