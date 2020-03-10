@@ -107,7 +107,7 @@
 <form id="main" v-cloak>
     <ul>
         <li style="height: 6px;" class="{ 'active':true }">
-            目标设备名: <span>{{services.destination.device}}</span>
+            目标设备类型: <span>{{services.destination.device}}</span>
         </li>
         <li style="height: 6px;" class="{ 'active':true }">
             目标设备ID: <span>{{services.destination.id}}</span>
@@ -116,41 +116,165 @@
             通讯接口类型: <span>{{services.destination.interfaces}}</span>
         </li>
         <li style="height: 6px;" class="{ 'active':true }">
-            源设备: <span>{{services.source.device}}</span>
+            源设备类型: <span>{{services.source.device}}</span>
         </li>
         <li style="height: 6px;" class="{ 'active':true }">
-            接口方式: <span>{{services.source.ledScreen.index}}</span>
+            整屏关联板卡的ID: <span>{{services.source.ledScreen.index}}</span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            发送卡IP:<span> {{com.ledParas.android_Ip}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            MAC地址:<span> {{com.ledParas.android_Mac}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            命令参数:<span> {{com.ledParas.cmd}} </span>
+        </li>
+        <li style="height: 6px;" class="{ 'active':true }">
+            通用模组参数:<span>↓</span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
+            &nbsp;&nbsp;通用模组参数-数据组数:<span> {{com.ledParas.common_Modparas.dataGroup}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
+            &nbsp;&nbsp;通用模组参数-走线方式:<span> {{com.ledParas.common_Modparas.dataOrder}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
+            &nbsp;&nbsp;通用模组参数-驱动IC:<span> {{com.ledParas.common_Modparas.icsyle}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
+            &nbsp;&nbsp;通用模组参数-模组分辨率:<span> {{com.ledParas.common_Modparas.mod_Rslt}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
+            &nbsp;&nbsp;通用模组参数-模组尺寸:<span> {{com.ledParas.common_Modparas.mod_Size}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
+            &nbsp;&nbsp;通用模组参数-模组点间距:<span> {{com.ledParas.common_Modparas.mod_Space}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
+            &nbsp;&nbsp;通用模组参数-扫描方式:<span> {{com.ledParas.common_Modparas.scan_Num}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
+            &nbsp;&nbsp;通用模组参数-灯参数:<span>↓</span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
+            &nbsp;&nbsp;通用模组参数-灯参数-发光角度:<span><=&nbsp;{{com.ledParas.common_Modparas.lamp_Para.angle}}&nbsp;&nbsp;度</span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
+            &nbsp;&nbsp;通用模组参数-灯参数-抗静电能力:<span><&nbsp;{{com.ledParas.common_Modparas.lamp_Para.antistatic}}&nbsp;&nbsp;V</span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
+            &nbsp;&nbsp;通用模组参数-灯参数-灯亮度:<span> {{com.ledParas.common_Modparas.lamp_Para.bright}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
+            &nbsp;&nbsp;通用模组参数-灯参数-漏电电流:<span> <&nbsp;{{com.ledParas.common_Modparas.lamp_Para.leakage_Current}}&nbsp;&nbsp;uA </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
+            &nbsp;&nbsp;通用模组参数-灯参数-灯规格型号:<span> {{com.ledParas.common_Modparas.lamp_Para.style}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
+            &nbsp;&nbsp;通用模组参数-灯参数-灯波长:<span> {{com.ledParas.common_Modparas.lamp_Para.wavelen}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            通用接收卡参数:<span> ↓ </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+            通用接收卡参数-箱体名:<span> {{com.ledParas.common_Recparas.box_Name}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+            通用接收卡参数-箱体类型:<span> {{com.ledParas.common_Recparas.box_Type}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+            通用接收卡参数-命令:<span> {{com.ledParas.common_Recparas.cmd}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+            通用接收卡参数-风扇控制:<span v-if=" com.ledParas.common_Recparas.fan_Ctrl === '1'"> 开 </span>
+            <span v-if=" com.ledParas.common_Recparas.fan_Ctrl === '0'">关</span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+            通用接收卡参数-模组排列连接方式:<span> {{com.ledParas.common_Recparas.mod_Order}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+            通用接收卡参数-模组个数:<span> {{com.ledParas.common_Recparas.module_Cnt}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+            通用接收卡参数-接收卡数量:<span> {{com.ledParas.common_Recparas.rec_Cnt}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+            通用接收卡参数-接收卡类型:<span> {{com.ledParas.common_Recparas.rec_Type}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+            通用接收卡参数-接收卡升级程序:<span> {{com.ledParas.common_Recparas.rec_Upg_Pro}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+            通用接收卡参数-工作状态:
+            <span v-if=" com.ledParas.common_Recparas.workState === '1'"> 正常显示 </span>
+            <span v-if=" com.ledParas.common_Recparas.workState === '2'"> 测试图形 </span>
+            <span v-if=" com.ledParas.common_Recparas.workState === '3'"> Maping </span>
+            <span v-if=" com.ledParas.common_Recparas.workState === '4'"> 老化 </span>
+            <span v-if=" com.ledParas.common_Recparas.workState === '5'"> 黑屏 </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            对比度:<span> {{com.ledParas.contrast}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            电流:<span> {{com.ledParas.current}}&nbsp;&nbsp;A</span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            当前工作时间:<span> {{com.ledParas.current_Worktime}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            客户名称:<span> {{com.ledParas.custom}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            环境亮度:<span> {{com.ledParas.envi_Bright}}&nbsp;&nbsp;LX</span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            风扇控制:<span v-if="com.ledParas.fan_Ctrl === '0'">关</span> <span v-else>开</span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            色相:<span> {{com.ledParas.hue}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            湿度:<span> {{com.ledParas.humidity}}&nbsp;&nbsp;%</span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            显示屏分辨率:<span> {{com.ledParas.led_Rslt}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            显示屏点间距:<span> {{com.ledParas.led_Space}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            屏体类型: <span v-if="com.ledParas.led_Type === '1'">租赁</span> <span v-else-if="com.ledParas.led_Type === '2'">固装</span>
+            <span v-else>{{com.ledParas.led_Type}}</span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            订单号:<span> {{com.ledParas.orderForm}} </span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            实时功耗:<span> {{com.ledParas.re_PowerDis}}&nbsp;&nbsp;W</span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            饱和度:<span> {{com.ledParas.saturabilty}} </span>
+        </li>
+<!--        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">-->
+<!--            发送卡顺序列表 以发送卡为单位:<span> {{com.ledParas.senderOrderList}} </span>-->
+<!--        </li>-->
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            发送卡数量:<span> {{com.ledParas.sender_Cnt}}</span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            温度:<span> {{com.ledParas.temp}}&nbsp;&nbsp;℃</span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            累计工作时间:<span> {{com.ledParas.total_WorkTime}}</span>
+        </li>
+        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+            电压:<span> {{com.ledParas.voltage}}&nbsp;&nbsp;V</span>
         </li>
 <!--        <li v-for="(value, key) in services" style="height: 6px;" class="{ 'active':true }">-->
 <!--            {{key}} <span>{{value}}</span>-->
 <!--        </li>-->
-<!--            <li style="height: 6px;" class="{ 'active':true }">-->
-<!--              发送卡-是否正常 <span v-if="services.price === '0'">正常</span> <span v-else>不正常</span>-->
-<!--            </li>-->
-<!--            <li style="height: 6px;" class="{ 'active':true }">-->
-<!--              箱体-是否正常 <span v-if="services.price === '0'">正常</span> <span v-else>不正常</span>-->
-<!--            </li>-->
-<!--            <li style="height: 6px;" class="{ 'active':true }">-->
-<!--              发送卡-电压 <span>{{services.price}}</span>-->
-<!--            </li>-->
-<!--            <li style="height: 6px;" class="{ 'active':true }">-->
-<!--              设备IP <span>{{services.ANDROID_IP}}</span>-->
-<!--            </li>-->
-<!--            <li style="height: 6px;" class="{ 'active':true }">-->
-<!--              发送卡-通信状态 <span v-if="services.price === '0'">正常</span> <span v-else>不正常</span>-->
-<!--            </li>-->
-<!--            <li style="height: 6px;" class="{ 'active':true }">-->
-<!--              箱体-异常原因 <span>{{services.price}}</span>-->
-<!--            </li>-->
-<!--            <li style="height: 6px;" class="{ 'active':true }">-->
-<!--              箱体-维修进度 <span>{{services.price}}</span>-->
-<!--            </li>-->
-<!--            <li style="height: 6px;" class="{ 'active':true }">-->
-<!--              设备MAC  <span>{{services.ANDROID_MAC}}</span>-->
-<!--            </li>-->
-<!--            <li style="height: 6px;" class="{ 'active':true }">-->
-<!--              默认亮度  <span>{{services.DEFAULT_BRIGHT}}</span>-->
-<!--            </li>-->
     </ul>
 
 
@@ -168,14 +292,16 @@
             // 定义模型属性 the model properties. The view will loop
             // 视图将循环输出数组的数据
             return {
-                 services:null
+                 services:null,
+                 comlist:null
             }
         },
         mounted () {
             axios
                .get('/sayHello')
                .then((response) => {this.services = response.data
-                                  console.log(this.services)})
+                                    this.comlist = this.services.comList
+                                    console.log(this.comlist)})
                .catch(function (error) { // 请求失败处理
                    alert("请求错误");
                    console.log(error);
