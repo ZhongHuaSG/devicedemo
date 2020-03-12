@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>系统监控表单</title>
+    <title>本地设备监控表单</title>
     <script src="js/vue.min.js"></script>
     <script src="js/axios.min.js"></script>
     <style>
@@ -120,14 +120,14 @@
         form ul{
             list-style:none;
             color:#fff;
-            font-size:20px;
+            font-size:17px;
             font-weight:bold;
             text-align: left;
             margin:20px 0 15px;
         }
 
         form ul li{
-            padding:20px 30px;
+            padding:20px 10px;
             background-color:#e35885;
             margin-bottom:8px;
             box-shadow:0 1px 1px rgba(0,0,0,0.1);
@@ -159,23 +159,33 @@
 </head>
 <body>
 <!--  菜单   -->
-<!-- 激活的菜单样式为  active 类 -->
-<!-- 为了阻止链接在点击时跳转，我们使用了 "prevent" 修饰符 (preventDefault 的简称)。 -->
+<div id="main">
 
-<nav v-bind:class="active" v-on:click.prevent>
-    <!-- 当菜单上的链接被点击时，我们调用了 makeActive 方法, 该方法在 Vue 实例中创建。 -->
-    <a href="#" class="home" v-on:click="makeActive('home')">Home</a>
-    <a href="#" class="projects" v-on:click="makeActive('projects')">Projects</a>
-    <a href="#" class="services" v-on:click="makeActive('services')">Services</a>
-    <a href="#" class="contact" v-on:click="makeActive('contact')">Contact</a>
-</nav>
+    <!-- 激活的菜单样式为  active 类 -->
+    <!-- 为了阻止链接在点击时跳转，我们使用了 "prevent" 修饰符 (preventDefault 的简称)。 -->
 
-<!-- 以下 "active" 变量会根据当前选中的值来自动变换 -->
-<p>您选择了 <b>{{active}} 菜单</b></p>
+    <nav v-bind:class="active" v-on:click.prevent>
+
+        <!-- 当菜单上的链接被点击时，我们调用了 makeActive 方法, 该方法在 Vue 实例中创建。 -->
+
+        <a href="#" class="home" v-on:click="makeActive('home')">基本参数</a>
+        <a href="#" class="projects" v-on:click="toProjects('projects')">通用模组参数</a>
+        <a href="#" class="services" v-on:click="toServices('services')">通用接收卡参数</a>
+        <a href="#" class="contact" v-on:click="otherActive('contact')">待定项目</a>
+    </nav>
+
+    <!-- 以下 "active" 变量会根据当前选中的值来自动变换 -->
+
+    <p>您选择了 <b v-if = "active ==='home'">基本参数菜单</b>
+                <b v-else-if = "active ==='projects'">通用模组参数</b>
+                <b v-else-if = "active ==='services'">通用接收卡参数</b>
+                <b v-else >暂无菜单</b></p>
+
+
 
 
 <!-- v-cloak 隐藏未编译的变量，直到 Vue 实例准备就绪。 -->
-<form id="main" v-cloak>
+<form v-if="homeshow" v-cloak>
     <ul>
         <li style="height: 6px;" class="{ 'active':true }">
             目标设备类型: <span>{{services.destination.device}}</span>
@@ -200,90 +210,6 @@
         </li>
         <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
             命令参数:<span> {{com.ledParas.cmd}} </span>
-        </li>
-        <li style="height: 6px;" class="{ 'active':true }">
-            通用模组参数:<span>↓</span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
-            &nbsp;&nbsp;通用模组参数-数据组数:<span> {{com.ledParas.common_Modparas.dataGroup}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
-            &nbsp;&nbsp;通用模组参数-走线方式:<span> {{com.ledParas.common_Modparas.dataOrder}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
-            &nbsp;&nbsp;通用模组参数-驱动IC:<span> {{com.ledParas.common_Modparas.icsyle}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
-            &nbsp;&nbsp;通用模组参数-模组分辨率:<span> {{com.ledParas.common_Modparas.mod_Rslt}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
-            &nbsp;&nbsp;通用模组参数-模组尺寸:<span> {{com.ledParas.common_Modparas.mod_Size}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
-            &nbsp;&nbsp;通用模组参数-模组点间距:<span> {{com.ledParas.common_Modparas.mod_Space}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
-            &nbsp;&nbsp;通用模组参数-扫描方式:<span> {{com.ledParas.common_Modparas.scan_Num}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
-            &nbsp;&nbsp;通用模组参数-灯参数:<span>↓</span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
-            &nbsp;&nbsp;通用模组参数-灯参数-发光角度:<span><=&nbsp;{{com.ledParas.common_Modparas.lamp_Para.angle}}&nbsp;&nbsp;度</span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
-            &nbsp;&nbsp;通用模组参数-灯参数-抗静电能力:<span><&nbsp;{{com.ledParas.common_Modparas.lamp_Para.antistatic}}&nbsp;&nbsp;V</span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
-            &nbsp;&nbsp;通用模组参数-灯参数-灯亮度:<span> {{com.ledParas.common_Modparas.lamp_Para.bright}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
-            &nbsp;&nbsp;通用模组参数-灯参数-漏电电流:<span> <&nbsp;{{com.ledParas.common_Modparas.lamp_Para.leakage_Current}}&nbsp;&nbsp;uA </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
-            &nbsp;&nbsp;通用模组参数-灯参数-灯规格型号:<span> {{com.ledParas.common_Modparas.lamp_Para.style}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
-            &nbsp;&nbsp;通用模组参数-灯参数-灯波长:<span> {{com.ledParas.common_Modparas.lamp_Para.wavelen}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
-            通用接收卡参数:<span> ↓ </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
-            通用接收卡参数-箱体名:<span> {{com.ledParas.common_Recparas.box_Name}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
-            通用接收卡参数-箱体类型:<span> {{com.ledParas.common_Recparas.box_Type}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
-            通用接收卡参数-命令:<span> {{com.ledParas.common_Recparas.cmd}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
-            通用接收卡参数-风扇控制:<span v-if=" com.ledParas.common_Recparas.fan_Ctrl === '1'"> 开 </span>
-            <span v-if=" com.ledParas.common_Recparas.fan_Ctrl === '0'">关</span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
-            通用接收卡参数-模组排列连接方式:<span> {{com.ledParas.common_Recparas.mod_Order}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
-            通用接收卡参数-模组个数:<span> {{com.ledParas.common_Recparas.module_Cnt}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
-            通用接收卡参数-接收卡数量:<span> {{com.ledParas.common_Recparas.rec_Cnt}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
-            通用接收卡参数-接收卡类型:<span> {{com.ledParas.common_Recparas.rec_Type}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
-            通用接收卡参数-接收卡升级程序:<span> {{com.ledParas.common_Recparas.rec_Upg_Pro}} </span>
-        </li>
-        <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
-            通用接收卡参数-工作状态:
-            <span v-if=" com.ledParas.common_Recparas.workState === '1'"> 正常显示 </span>
-            <span v-if=" com.ledParas.common_Recparas.workState === '2'"> 测试图形 </span>
-            <span v-if=" com.ledParas.common_Recparas.workState === '3'"> Maping </span>
-            <span v-if=" com.ledParas.common_Recparas.workState === '4'"> 老化 </span>
-            <span v-if=" com.ledParas.common_Recparas.workState === '5'"> 黑屏 </span>
         </li>
         <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
             对比度:<span> {{com.ledParas.contrast}} </span>
@@ -347,45 +273,145 @@
 <!--            {{key}} <span>{{value}}</span>-->
 <!--        </li>-->
     </ul>
-
-
 </form>
+    <form v-if="projectsShow">
+        <ul>
+            <li style="height: 6px;" class="{ 'active':true }">
+                通用模组参数:<span>↓</span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
+                &nbsp;&nbsp;通用模组参数-数据组数:<span> {{com.ledParas.common_Modparas.dataGroup}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
+                &nbsp;&nbsp;通用模组参数-走线方式:<span> {{com.ledParas.common_Modparas.dataOrder}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
+                &nbsp;&nbsp;通用模组参数-驱动IC:<span> {{com.ledParas.common_Modparas.icsyle}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
+                &nbsp;&nbsp;通用模组参数-模组分辨率:<span> {{com.ledParas.common_Modparas.mod_Rslt}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
+                &nbsp;&nbsp;通用模组参数-模组尺寸:<span> {{com.ledParas.common_Modparas.mod_Size}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
+                &nbsp;&nbsp;通用模组参数-模组点间距:<span> {{com.ledParas.common_Modparas.mod_Space}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
+                &nbsp;&nbsp;通用模组参数-扫描方式:<span> {{com.ledParas.common_Modparas.scan_Num}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left:37px;" class="{ 'active':true }">
+                &nbsp;&nbsp;通用模组参数-灯参数:<span>↓</span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
+                &nbsp;&nbsp;通用模组参数-灯参数-发光角度:<span><=&nbsp;{{com.ledParas.common_Modparas.lamp_Para.angle}}&nbsp;&nbsp;度</span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
+                &nbsp;&nbsp;通用模组参数-灯参数-抗静电能力:<span><&nbsp;{{com.ledParas.common_Modparas.lamp_Para.antistatic}}&nbsp;&nbsp;V</span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
+                &nbsp;&nbsp;通用模组参数-灯参数-灯亮度:<span> {{com.ledParas.common_Modparas.lamp_Para.bright}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
+                &nbsp;&nbsp;通用模组参数-灯参数-漏电电流:<span> <&nbsp;{{com.ledParas.common_Modparas.lamp_Para.leakage_Current}}&nbsp;&nbsp;uA </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
+                &nbsp;&nbsp;通用模组参数-灯参数-灯规格型号:<span> {{com.ledParas.common_Modparas.lamp_Para.style}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left: 74px;" class="{ 'active':true }">
+                &nbsp;&nbsp;通用模组参数-灯参数-灯波长:<span> {{com.ledParas.common_Modparas.lamp_Para.wavelen}} </span>
+            </li>
+        </ul>
+    </form>
+    <form v-if="servicesShow">
+        <ul>
+            <li v-for="com in comlist" style="height: 6px;" class="{ 'active':true }">
+                通用接收卡参数:<span> ↓ </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+                通用接收卡参数-箱体名:<span> {{com.ledParas.common_Recparas.box_Name}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+                通用接收卡参数-箱体类型:<span> {{com.ledParas.common_Recparas.box_Type}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+                通用接收卡参数-命令:<span> {{com.ledParas.common_Recparas.cmd}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+                通用接收卡参数-风扇控制:<span v-if=" com.ledParas.common_Recparas.fan_Ctrl === '1'"> 开 </span>
+                <span v-if=" com.ledParas.common_Recparas.fan_Ctrl === '0'">关</span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+                通用接收卡参数-模组排列连接方式:<span> {{com.ledParas.common_Recparas.mod_Order}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+                通用接收卡参数-模组个数:<span> {{com.ledParas.common_Recparas.module_Cnt}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+                通用接收卡参数-接收卡数量:<span> {{com.ledParas.common_Recparas.rec_Cnt}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+                通用接收卡参数-接收卡类型:<span> {{com.ledParas.common_Recparas.rec_Type}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+                通用接收卡参数-接收卡升级程序:<span> {{com.ledParas.common_Recparas.rec_Upg_Pro}} </span>
+            </li>
+            <li v-for="com in comlist" style="height: 6px;margin-left: 37px;" class="{ 'active':true }">
+                通用接收卡参数-工作状态:
+                <span v-if=" com.ledParas.common_Recparas.workState === '1'"> 正常显示 </span>
+                <span v-if=" com.ledParas.common_Recparas.workState === '2'"> 测试图形 </span>
+                <span v-if=" com.ledParas.common_Recparas.workState === '3'"> Maping </span>
+                <span v-if=" com.ledParas.common_Recparas.workState === '4'"> 老化 </span>
+                <span v-if=" com.ledParas.common_Recparas.workState === '5'"> 黑屏 </span>
+            </li>
+        </ul>
+    </form>
+</div>
 <script>
-
-    // 自定义过滤器 "currency".
-    // Vue.filter('currency', function (value) {
-    //   return  value.toFixed(2);
-    // });
-    // 创建一个新的 Vue 实例
-    var caidan = new Vue({
-        // DOM 元素，挂载视图模型
-        el: '#main',
-        // 定义属性，并设置初始值
-        data: {
-            active: 'home'
-        },
-        // 点击菜单使用的函数
-        methods: {
-            makeActive: function(item){
-                // 模型改变，视图会自动更新
-                this.active = item;
-            }
-        }
-    });
-
     var demo = new Vue({
         el: '#main',
         data () {
             // 定义模型属性 the model properties. The view will loop
             // 视图将循环输出数组的数据
             return {
-                 services:null,
-                 comlist:null
+                services:null,
+                comlist:null,
+                active: 'home',
+                homeshow:true,
+                projectsShow:false,
+                servicesShow:false
+            }
+        },
+        methods:{
+            makeActive: function(item){
+                // 模型改变，视图会自动更新
+                this.active = item;
+                this.homeshow = true;
+                this.projectsShow = false;
+                this.servicesShow = false;
+            },
+            toProjects: function (item) {
+                this.active = item;
+                this.homeshow = false;
+                this.projectsShow = true;
+                this.servicesShow = false;
+            },
+            toServices: function(item){
+                this.active = item;
+                this.homeshow = false;
+                this.projectsShow = false;
+                this.servicesShow = true;
+            },
+            otherActive:function(item){
+                this.active = item;
+                this.homeshow = false;
+                this.projectsShow = false;
+                this.servicesShow = false;
             }
         },
         mounted () {
             axios
-               .get('/sayHello')
+               .get('/getJsonMessage')
                .then((response) => {this.services = response.data
                                     this.comlist = this.services.comList
                                     console.log(this.comlist)})
