@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.unilumin.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.unilumin.entity.User" >
+        <result column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+    </resultMap>
     <select id="findAll" resultType="User">
-        SELECT * FROM tb_user
+        SELECT id,username,password FROM tb_user
+    </select>
+
+    <select id="findUser" parameterType="com.unilumin.entity.User" resultType="Integer">
+        SELECT COUNT(1) FROM tb_user WHERE username = #{username} AND password = #{password}
+    </select>
+
+    <select id="findUserByName" resultType="User">
+        SELECT id,username,password FROM tb_user WHERE username = #{username}
     </select>
 </mapper>

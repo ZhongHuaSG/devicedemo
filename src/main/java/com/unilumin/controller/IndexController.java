@@ -1,5 +1,7 @@
 package com.unilumin.controller;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -10,14 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "/index")
     public String Index(){
         return "forward:index.html";
     }
 
-    @RequestMapping(value = "/login")
-    public String login(){
-        return "forward:login.html";
+    @RequiresRoles("admin")
+    @RequiresPermissions("add")
+    @RequestMapping(value = "/baseshow")
+    public String Baseshow(){
+        return "forward:baseshow.html";
     }
 
 
