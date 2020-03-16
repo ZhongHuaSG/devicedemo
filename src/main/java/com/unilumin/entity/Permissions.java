@@ -11,5 +11,7 @@ public class Permissions {
 
     private String id;
     private String permissionsName;
+    //权限控制说明
+    private String permissionsExplain;
 
 }

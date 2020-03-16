@@ -24,5 +24,8 @@ public class IndexController {
         return "forward:baseshow.html";
     }
 
+//    @RequestMapping(value = "/error")
+//    public String Error(){ return "forward:403.html";}
+
 
 }

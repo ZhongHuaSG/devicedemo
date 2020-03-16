@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unilumin.mapper.RoleMapper">
+    <select id="findAll" resultType="Role">
+        SELECT id,role_name,role_explain FROM tb_role
+    </select>
+
+    <select id="findRoleByUser" resultType="Role">
+        SELECT role.id,role.role_name,role.role_explain FROM tb_role role
+        LEFT JOIN tb_user_role ur ON role.id = ur.role_id
+        WHERE ur.user_id = #{userid}
+    </select>
+</mapper>

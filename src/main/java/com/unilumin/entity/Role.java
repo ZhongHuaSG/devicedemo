@@ -13,6 +13,8 @@ public class Role {
 
     private String id;
     private String roleName;
+    //角色说明
+    private String roleExplain;
     /**
      * 角色对应权限集合
      */

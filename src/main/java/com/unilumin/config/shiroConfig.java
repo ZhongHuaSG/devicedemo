@@ -48,6 +48,8 @@ public class shiroConfig {
         Map<String, String> map = new HashMap<>();
         //登出
         map.put("/logout", "logout");
+        //登录
+        map.put("/login","anon");
         //对所有用户认证
         map.put("/**", "authc");
         //释放静态资源
@@ -58,7 +60,7 @@ public class shiroConfig {
         //登录
         shiroFilterFactoryBean.setLoginUrl("/index");
         //首页
-        shiroFilterFactoryBean.setSuccessUrl("/index");
+        shiroFilterFactoryBean.setSuccessUrl("/baseshow");
         //错误页面，认证不通过跳转
         shiroFilterFactoryBean.setUnauthorizedUrl("/error");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);

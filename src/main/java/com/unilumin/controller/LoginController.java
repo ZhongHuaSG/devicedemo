@@ -7,6 +7,8 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,11 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
+    private final static Logger logger = LoggerFactory.getLogger(LoginController.class);
+
     @RequestMapping("/login")
     public JSONObject login(@RequestParam(value = "username", required = true) String username, @RequestParam(value = "password", required = true) String password) {
         JSONObject jsonObject = new JSONObject();
         System.out.println("accountName==="+username);
         System.out.println("password==="+password);
+        logger.info("accountName"+username);
+        logger.info("password"+password);
         //添加用户认证信息
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(
