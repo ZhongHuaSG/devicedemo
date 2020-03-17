@@ -24,25 +24,5 @@ public class UserController {
         return userService.findAll();
     }
 
-    @PostMapping("/login")
-    public JSONObject login(@RequestParam(value = "username", required = true) String username,@RequestParam(value = "password", required = true) String password){
-        //返回结果
-        JSONObject jsonObject = new JSONObject();
-        System.out.println("accountName==="+username);
-        System.out.println("password==="+password);
-        logger.info("accountName"+username);
-        logger.info("password"+password);
-
-        User user = new User();
-        user.setUsername(username);
-//        user.setPassword(MD5Utils.MD5EncodeUtf8(password));
-        user.setPassword(password);
-        Integer i = userService.findUser(user);
-        if(i>0){
-            jsonObject.put("resultCode","200");
-            jsonObject.put("url","/baseshow");
-        }
-        return jsonObject;
-    }
 
 }

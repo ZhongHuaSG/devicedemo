@@ -19,13 +19,12 @@
     <nav v-bind:class="active" v-on:click.prevent>
 
         <!-- 当菜单上的链接被点击时，我们调用了 makeActive 方法, 该方法在 Vue 实例中创建。 -->
-
         <a href="#" class="home" v-on:click="makeActive('home')">基本参数</a>
         <a href="#" class="projects" v-on:click="toProjects('projects')">通用模组参数</a>
         <a href="#" class="services" v-on:click="toServices('services')">通用接收卡参数</a>
-        <a href="#" class="contact" v-on:click="otherActive('contact')">待定项目</a>
+        <a href="#" class="contact" v-on:click="otherActive('contact')">用户列表</a>
     </nav>
-
+    <a style="font-size:26px;" href="/logout">登出</a>
     <!-- 以下 "active" 变量会根据当前选中的值来自动变换 -->
 
     <p>您选择了 <b v-if = "active ==='home'">基本参数菜单</b>
@@ -218,6 +217,27 @@
             </li>
         </ul>
     </form>
+
+    <form v-if="userShow">
+        <table style="width:100%;padding: 20px 10px;box-shadow: 0 1px 1px rgba(0,0,0,0.1);cursor: pointer; ">
+            <thead style="background-color: #438EB9;margin-bottom: 8px;color:white;">
+              <tr style="height:50px;">
+                  <td>用户id: </td>
+                  <td>用户账号: </td>
+                  <td>用户角色: </td>
+                  <td> 创建时间: </td>
+              </tr>
+            </thead>
+            <tbody>
+            <tr style="height:50px;" v-for="user in userlist">
+                <td style="border: 1px black">{{user.id}}</td>
+                <td style="border: 1px black">{{user.username}}</td>
+                <td style="border: 1px black">{{user.role}}</td>
+                <td style="border: 1px black">{{user.creattime}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
 </div>
 <script>
     var demo = new Vue({
@@ -231,7 +251,19 @@
                 active: 'home',
                 homeshow:true,
                 projectsShow:false,
-                servicesShow:false
+                servicesShow:false,
+                userShow:false,
+                userlist:[{
+                    id: '1',
+                    username: 'laowang',
+                    role:'admin',
+                    creattime:'2020.3.17'
+                    },{
+                    id: '2',
+                    username: 'laoli',
+                    role:'user',
+                    creattime:'2020.3.17'
+                  }]
             }
         },
         methods:{
@@ -241,24 +273,28 @@
                 this.homeshow = true;
                 this.projectsShow = false;
                 this.servicesShow = false;
+                this.userShow = false;
             },
             toProjects: function (item) {
                 this.active = item;
                 this.homeshow = false;
                 this.projectsShow = true;
                 this.servicesShow = false;
+                this.userShow = false;
             },
             toServices: function(item){
                 this.active = item;
                 this.homeshow = false;
                 this.projectsShow = false;
                 this.servicesShow = true;
+                this.userShow = false;
             },
             otherActive:function(item){
                 this.active = item;
                 this.homeshow = false;
                 this.projectsShow = false;
                 this.servicesShow = false;
+                this.userShow = true;
             }
         },
         mounted () {

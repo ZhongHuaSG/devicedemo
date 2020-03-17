@@ -1,5 +1,6 @@
 package com.unilumin.entity;
 
+import com.zengtengpeng.common.bean.Page;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -10,7 +11,7 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class User implements Serializable {
+public class User extends Page implements Serializable {
 
         private String id;//编号
         private String username;//用户名

@@ -17,6 +17,9 @@ public class IndexController {
         return "forward:index.html";
     }
 
+    @RequestMapping(value = "/errorpage")
+    public String ErrorPage(){ return "forward:403.html"; }
+
     @RequiresRoles("admin")
     @RequiresPermissions("add")
     @RequestMapping(value = "/baseshow")

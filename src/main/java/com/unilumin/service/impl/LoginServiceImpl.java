@@ -25,7 +25,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public User getUserByName(String userName) {
         User user = userMapper.findUserByName(userName);
-        if(user.getId() != null){
+        if(user != null){
             Set<Role> roleSet = new HashSet<>();
             List<Role> roleList = roleMapper.findRoleByUser(user.getId());
             for(Role role:roleList){
