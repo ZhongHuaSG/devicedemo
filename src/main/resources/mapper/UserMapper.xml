@@ -7,10 +7,10 @@
         <result column="password" property="password" />
     </resultMap>
     <select id="findAll" resultType="User">
-        SELECT id,username,password FROM tb_user
+        SELECT id,username,password,create_time FROM tb_user
     </select>
 
     <select id="findUserByName" resultType="User">
-        SELECT id,username,password FROM tb_user WHERE username = #{username}
+        SELECT id,username,password,create_time FROM tb_user WHERE username = #{username}
     </select>
 </mapper>

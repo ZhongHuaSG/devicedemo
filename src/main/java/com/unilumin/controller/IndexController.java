@@ -20,8 +20,8 @@ public class IndexController {
     @RequestMapping(value = "/errorpage")
     public String ErrorPage(){ return "forward:403.html"; }
 
-    @RequiresRoles("admin")
-    @RequiresPermissions("add")
+//    @RequiresRoles("admin")
+//    @RequiresPermissions("add")
     @RequestMapping(value = "/baseshow")
     public String Baseshow(){
         return "forward:baseshow.html";

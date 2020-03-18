@@ -15,7 +15,8 @@ public class User extends Page implements Serializable {
 
         private String id;//编号
         private String username;//用户名
-        private String password;//密码
+        private String password;//
+        private String createTime;
 
         /**
          * 用户对应的角色集合

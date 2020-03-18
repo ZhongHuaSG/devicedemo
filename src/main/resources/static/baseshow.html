@@ -30,7 +30,7 @@
     <p>您选择了 <b v-if = "active ==='home'">基本参数菜单</b>
                 <b v-else-if = "active ==='projects'">通用模组参数</b>
                 <b v-else-if = "active ==='services'">通用接收卡参数</b>
-                <b v-else >暂无菜单</b></p>
+                <b v-else >用户管理</b></p>
 
 
 
@@ -218,8 +218,34 @@
         </ul>
     </form>
 
-    <form v-if="userShow">
-        <input type="button" style="width:80px;height:35px;background-color: #438EB9;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px;color:white;float:left;margin-left:10px;" value="新增+" />
+    <form v-if="userShow" @submit.prevent="submit">
+        <input type="button" v-on:click="toAddUser()" style="width:80px;height:35px;background-color: #438EB9;box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px;color:white;float:left;margin-left:10px;" value="新增+" />
+        <!--  添加用户输入框 -->
+        <div v-if="addUser" style="margin-left:110px;height: 80px; width: 1377px;border: #27A9E3 1px solid;">
+            <div style="float:left;height:48px;">
+            <span>用户账号</span>
+            <div style=" position: fixed; margin-top:-20px; margin-left: 70px; height: 40px; width: 180px;">
+                <input type="text" v-model = "newuser.username" style="height:30px;" placeholder="请输入用户名" />
+            </div>
+            </div>
+            <div style="margin-left:-300px;">
+                <span style="float:left;position:absolute;margin-left:-320px;">用户密码</span>
+                <div style="position: fixed;margin-top:-2px;margin-left: 767px; height: 40px; width: 180px;">
+                    <input type="text" v-model ="newuser.password" style="height: 30px;width:275px;" placeholder="请输入用户密码（不输入则为默认密码123456）" />
+                </div>
+            </div>
+            <div style="margin-left:780px; float: left; height: 48px;">
+                <span>用户角色</span>
+                <div style="position: fixed; margin-top:-20px; margin-left: 70px; height: 43px; width: 200px;">
+                    <select v-model="newuser.role" style="height:30px;">
+                        <option>请选择用户角色</option>
+                        <option value="1">管理员</option>
+                        <option value="2">普通用户</option>
+                    </select>
+                </div>
+            </div>
+            <input type="submit" style="width:80px;height:35px; background-color: rgb(67, 142, 185); box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px; color: white;" value="提交" />
+        </div>
         <table style="width:100%;padding: 20px 10px;box-shadow: 0 1px 1px rgba(0,0,0,0.1);cursor: pointer; ">
             <thead style="background-color: #438EB9;margin-bottom: 8px;color:white;">
               <tr style="height:50px;">
@@ -233,8 +259,8 @@
             <tr style="height:50px;" v-for="user in userlist">
                 <td style="border: 1px black">{{user.id}}</td>
                 <td style="border: 1px black">{{user.username}}</td>
-                <td style="border: 1px black">{{user.role}}</td>
-                <td style="border: 1px black">{{user.creattime}}</td>
+                <td style="border: 1px black"><b v-for="role in user.roles">{{role.roleExplain}}&nbsp;</b></td>
+                <td style="border: 1px black">{{user.createTime}}</td>
             </tr>
             </tbody>
         </table>
@@ -254,17 +280,13 @@
                 projectsShow:false,
                 servicesShow:false,
                 userShow:false,
-                userlist:[{
-                    id: '1',
-                    username: 'laowang',
-                    role:'admin',
-                    creattime:'2020.3.17'
-                    },{
-                    id: '2',
-                    username: 'laoli',
-                    role:'user',
-                    creattime:'2020.3.17'
-                  }]
+                addUser:false,
+                userlist:null,
+                newuser:{
+                    username:'',
+                    password:'',
+                    role:''
+                }
             }
         },
         methods:{
@@ -290,12 +312,35 @@
                 this.servicesShow = true;
                 this.userShow = false;
             },
+            toAddUser:function(){
+                this.addUser = !this.addUser;
+            },
             otherActive:function(item){
                 this.active = item;
                 this.homeshow = false;
                 this.projectsShow = false;
                 this.servicesShow = false;
                 this.userShow = true;
+                axios
+                    .get('/user/findUserPage')
+                    .then((response) => { this.userlist = response.data})
+                .catch(function (error) { // 请求失败处理
+                    alert("权限不足");
+                    console.log(error);
+                });
+            },
+            submit:function () {
+                var formData = JSON.stringify(this.newuser); // 这里才是你的表单数据
+                axios
+                    .post('/user/addUser',formData,{
+                        headers:{
+                            'Content-Type':'application/json;charset=UTF-8'
+                        }
+                    }).then((response) => {alert("提交成功")})
+                .catch(function (error) { // 请求失败处理
+                    alert("权限不足");
+                    console.log(error);
+                });
             }
         },
         mounted () {
@@ -308,6 +353,7 @@
                    alert("请求错误");
                    console.log(error);
               });
+
        }
     });
 
