@@ -13,4 +13,17 @@
     <select id="findUserByName" resultType="User">
         SELECT id,username,password,create_time FROM tb_user WHERE username = #{username}
     </select>
+
+    <select id="selectByPrimaryKey" resultType="User">
+        SELECT id,username,password,create_time FROM tb_user WHERE id = #{id}
+    </select>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" useGeneratedKeys="true" >
+        insert  into  tb_user (username,password) values (#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="deleteByPrimaryKey" parameterType="User" >
+        DELETE FROM tb_user WHERE id = #{id}
+    </delete>
+
 </mapper>

@@ -40,7 +40,6 @@ public class UserController {
         return userService.findAll();
     }
 
-    @RequiresRoles("admin")
     @GetMapping("/findUserPage")
     public List<User> FindUserPage(){
         List<User> userList = userService.findAll();
@@ -58,11 +57,31 @@ public class UserController {
         JSONObject resultObject = new JSONObject();
         User newUser = new User();
         newUser.setUsername(user.getUsername());
-        newUser.setPassword(MD5Utils.MD5EncodeUtf8(user.getPassword()));
+        if(user.getPassword() == null){
+            newUser.setPassword("1F470ABDA924E8A0AAA30D48BEC226FB");
+        }else{
+            newUser.setPassword(MD5Utils.MD5EncodeUtf8(user.getPassword()));
+        }
+
         newUser.setRoles(new HashSet<>(roleMapper.selectById(user.getRole())));
         userService.insert(newUser);
         userRoleMapper.addNewUser(newUser.getId(),user.getRole());
         return resultObject;
+    }
+
+    @RequiresRoles("admin")
+    @RequiresPermissions("delete")
+    @PostMapping("/deleteuser")
+    @Transactional
+    public JSONObject DeleteUser(@RequestBody UserDTO user){
+        JSONObject jsonObject = new JSONObject();
+        User newuser = new User();
+        newuser.setId(user.getId());
+        Integer i = userService.deleteByPrimaryKey(newuser);
+        if(i>0){
+            userRoleMapper.deleteNewUserByUserId(user.getId());
+        }
+        return jsonObject;
     }
 
 

@@ -2,6 +2,7 @@ package com.unilumin.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.unilumin.entity.User;
+import com.unilumin.utils.MD5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -25,7 +26,7 @@ public class LoginController {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(
                 username,
-                password
+                MD5Utils.MD5EncodeUtf8(password)
         );
         try {
             //进行验证，这里可以捕获异常，然后返回对应信息
