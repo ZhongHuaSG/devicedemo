@@ -105,7 +105,7 @@
     </dependencies>
 
     <build>
-        <finalName>demo</finalName>
+        <finalName>ROOT</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
