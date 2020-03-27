@@ -1,7 +1,6 @@
 package com.unilumin.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.unilumin.entity.User;
 import com.unilumin.utils.MD5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;

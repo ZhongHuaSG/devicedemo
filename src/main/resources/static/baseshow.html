@@ -538,6 +538,7 @@
             axios
                .get('/getJsonMessage')
                .then((response) => {this.services = response.data
+                                    console.log(this.services)
                                     this.comlist = this.services.comList
                                     console.log(this.comlist)})
                .catch(function (error) { // 请求失败处理
