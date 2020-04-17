@@ -35,11 +35,13 @@ public class UserController {
     @Resource
     UserRoleMapper userRoleMapper;
 
+    //查询所有用户接口--无分页
     @RequestMapping("/findAll")
     public List<User> findAll(){
         return userService.findAll();
     }
 
+    //查询所有用户以及角色信息接口--无分页
     @GetMapping("/findUserPage")
     public List<User> FindUserPage(){
         List<User> userList = userService.findAll();
@@ -53,6 +55,10 @@ public class UserController {
     @RequiresPermissions("add")
     @PostMapping("/addUser")
     @Transactional
+    /**
+     * 添加用户接口
+     * @Param UserDto 详细参数看UserDto类
+     * */
     public JSONObject AddUser(@RequestBody UserDTO user){
         JSONObject resultObject = new JSONObject();
         User newUser = new User();
@@ -73,6 +79,10 @@ public class UserController {
     @RequiresPermissions("delete")
     @PostMapping("/deleteuser")
     @Transactional
+    /**
+     * 删除用户接口
+     * @Param id  ---必须封装成JSON格式提交
+     * */
     public JSONObject DeleteUser(@RequestBody UserDTO user){
         JSONObject jsonObject = new JSONObject();
         User newuser = new User();

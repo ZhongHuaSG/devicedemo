@@ -7,8 +7,44 @@
     <title>本地设备监控表单</title>
     <script src="js/vue.min.js"></script>
     <script src="js/axios.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/rangeslider.min.js"></script>
     <link rel="stylesheet" href="css/baseshow.css" />
+    <link rel="stylesheet" href="css/rangeslider.css">
 </head>
+<style>
+    .overall {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .box {
+        width: 400px;
+        height: 30px;
+        box-shadow: 0 0 5px #ccc;
+        position: relative;
+
+    }
+    .dot {
+        width: 30px;
+        height: 30px;
+        background: #37b383;
+        cursor: pointer;
+        position: absolute;
+    }
+    .title{
+        font-weight: bold;
+        width: 100px;
+        height: 30px;
+        position: absolute;
+        left: calc(50% - 50px);
+        top: calc(50% - 50px);
+
+    }
+</style>
 <body>
 <!--  菜单   -->
 <div id="main">
@@ -24,6 +60,7 @@
         <a href="#" class="services" v-on:click="toServices('services')">通用接收卡参数</a>
         <a href="#" class="senderorder" v-on:click="toSenderOrder('senderorder')">发送卡顺序列表</a>
         <a href="#" class="contact" v-on:click="otherActive('contact')">用户列表</a>
+        <a href="/demotest" class="testelement" v-on:click="toTest('testelement')">测试DEMO</a>
     </nav>
     <a style="font-size:26px;" href="/logout">登出</a>
     <!-- 以下 "active" 变量会根据当前选中的值来自动变换 -->
@@ -424,6 +461,13 @@
             </tbody>
         </table>
     </form>
+    <form v-if="testShow">
+        <div>
+            <br>
+            <input type="range" min="-20" max="0" data-rangeslider>
+            <output></output>
+        </div>
+    </form>
 </div>
 <script>
     var demo = new Vue({
@@ -440,6 +484,7 @@
                 servicesShow:false,
                 senderOrderShow:false,
                 userShow:false,
+                testShow:false,
                 addUser:false,
                 userlist:null,
                 newuser:{
@@ -459,6 +504,7 @@
                 this.servicesShow = false;
                 this.userShow = false;
                 this.senderOrderShow = false;
+                this.testShow = false;
             },
             toProjects: function (item) {
                 this.active = item;
@@ -467,6 +513,7 @@
                 this.servicesShow = false;
                 this.userShow = false;
                 this.senderOrderShow = false;
+                this.testShow = false;
             },
             toServices: function(item){
                 this.active = item;
@@ -475,6 +522,7 @@
                 this.servicesShow = true;
                 this.userShow = false;
                 this.senderOrderShow = false;
+                this.testShow = false;
             },
             toSenderOrder:function(item){
                 this.active = item;
@@ -483,6 +531,17 @@
                 this.servicesShow = false;
                 this.userShow = false;
                 this.senderOrderShow = true;
+                this.testShow = false;
+            },
+            toTest:function(item){
+                this.active = item;
+                this.homeshow = false;
+                this.projectsShow = false;
+                this.servicesShow = false;
+                this.userShow = false;
+                this.senderOrderShow = false;
+                this.testShow = true;
+                location.href = "/demotest";
             },
             toAddUser:function(){
                 this.addUser = !this.addUser;
@@ -494,6 +553,7 @@
                 this.servicesShow = false;
                 this.userShow = true;
                 this.senderOrderShow = false;
+                this.testShow = false;
                 axios
                     .get('/user/findUserPage')
                     .then((response) => { this.userlist = response.data})

@@ -18,6 +18,11 @@ public class LoginController {
 
     private final static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
+    /**
+     * 登陆接口
+     * @Param username  账号
+     * @Param password  密码
+     * */
     @RequestMapping("/login")
     public JSONObject login(@RequestParam(value = "username", required = true) String username, @RequestParam(value = "password", required = true) String password) {
         JSONObject jsonObject = new JSONObject();

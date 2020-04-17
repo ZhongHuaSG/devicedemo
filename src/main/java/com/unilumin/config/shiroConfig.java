@@ -61,6 +61,8 @@ public class shiroConfig {
         shiroFilterFactoryBean.setLoginUrl("/index");
         //首页
         shiroFilterFactoryBean.setSuccessUrl("/baseshow");
+        //demo测试
+        shiroFilterFactoryBean.setSuccessUrl("/demotest");
         //错误页面，认证不通过跳转
         shiroFilterFactoryBean.setUnauthorizedUrl("/error");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);

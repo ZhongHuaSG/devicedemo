@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="gb2312">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>jQuery+HTML5实现滑块特效</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/rangeslider.css">
+</head>
+
+<br>
+
+<section id="examples">
+    <hr>
+
+    <div id="js-example-change-value">
+        <br>
+        <input type="range" min="0" max="100" value="50" data-rangeslider>
+        <output></output>
+        <input type="number" value="10" style="margin-top:50px;margin-left:200px;"> <button class="button button--small">确定</button>
+    </div>
+
+    <hr>
+    <hr>
+
+    <div>
+        <a style="width: 200px;height: 100px;" href="/baseshow">返回</a>
+    </div>
+
+</section>
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/rangeslider.min.js"></script>
+<script>
+    $(function() {
+        var $document   = $(document);
+        var selector    = '[data-rangeslider]';
+        var $inputRange = $(selector);
+
+        //页面打开时请求参数
+        var xhr = $.ajax({
+            type : "GET",
+            dataType : "json",
+            timeout : 2000, // 设置超时时间
+            url : "/setPara",//url
+            data : {
+                para : null
+            },
+            success : function(result) {
+                if (result.resultCode == 200) {
+                    alert('获取屏幕参数成功');
+                    //初始滑条获取的值：
+                    $inputRange
+                        .val(result.para)
+                        .change();
+                } else {
+                    alert("获取屏幕参数失败");
+                }
+            },
+            error : function(result) {
+                console.log(result);
+            },
+            complete : function(XMLHttpRequest, status) {
+                if (status == 'timeout') {
+                    xhr.abort(); // 超时后中断请求
+                    alert("网络条件差，请检查网络!");
+                }
+            }
+        });
+
+        // 每次滑块的值的变化的反馈
+        function valueOutput(element) {
+            //获取滑块的值
+            var value = element.value;
+            var output = element.parentNode.getElementsByTagName('output')[0];
+
+            //调节滑块时传输给后台参数
+            var rpg = $.ajax({
+                type : "GET",
+                dataType : "json",
+                timeout : 2000, // 设置超时时间
+                url : "/setPara",//url
+                data : {
+                    para : value
+                },
+                success : function(result) {
+                    if (result.resultCode == 200) {
+                        alert('设置屏幕参数成功');
+                    } else {
+                        alert("设置屏幕参数失败");
+                    }
+                },
+                error : function(result) {
+                    console.log(result);
+                },
+                complete : function(XMLHttpRequest, status) {
+                    if (status == 'timeout') {
+                        rpg.abort(); // 超时后中断请求
+                        alert("网络条件差，请检查网络!");
+                    }
+                }
+            });
+            output.innerHTML = value;
+        }
+
+        // Initial value output
+        for (var i = $inputRange.length - 1; i >= 0; i--) {
+            valueOutput($inputRange[i]);
+        };
+
+        // Update value output
+        $document.on('input', selector, function(e) {
+            valueOutput(e.target);
+        });
+
+        // Initialize the elements
+        $inputRange.rangeslider({
+            polyfill: false
+        });
+
+        // Example functionality to demonstrate programmatic value changes
+        $document.on('click', '#js-example-change-value button', function(e) {
+            var $inputRange = $('input[type="range"]', e.target.parentNode);
+            var value = $('input[type="number"]', e.target.parentNode)[0].value;
+
+            $inputRange
+                .val(value)
+                .change();
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
