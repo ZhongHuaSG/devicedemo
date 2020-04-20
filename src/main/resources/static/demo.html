@@ -10,12 +10,12 @@
 
 <br>
 
-<section id="examples">
+<section id="examples" style="margin-top: 200px;">
     <hr>
 
     <div id="js-example-change-value">
         <br>
-        <input type="range" min="0" max="100" value="50" data-rangeslider>
+        <input type="range" min="0" max="100" value="50" onchange="updatechange()" data-rangeslider>
         <output></output>
         <input type="number" value="10" style="margin-top:50px;margin-left:200px;"> <button class="button button--small">确定</button>
     </div>
@@ -68,8 +68,52 @@
             }
         });
 
+
         // 每次滑块的值的变化的反馈
         function valueOutput(element) {
+            //获取滑块的值
+            var value = element.value;
+            var output = element.parentNode.getElementsByTagName('output')[0];
+            output.innerHTML = value;
+        }
+
+        // Initial value output
+        for (var i = $inputRange.length - 1; i >= 0; i--) {
+            valueOutput($inputRange[i]);
+        };
+
+        // 更新output的值
+        $document.on('input', selector, function(e) {
+            valueOutput(e.target);
+        });
+
+
+        // Initialize the elements
+        $inputRange.rangeslider({
+            polyfill: false
+        });
+
+        // Example functionality to demonstrate programmatic value changes
+        $document.on('click', '#js-example-change-value button', function(e) {
+            var $inputRange = $('input[type="range"]', e.target.parentNode);
+            var value = $('input[type="number"]', e.target.parentNode)[0].value;
+
+            $inputRange
+                .val(value)
+                .change();
+        });
+    });
+
+    function updatechange() {
+        var $document   = $(document);
+        var selector    = '[data-rangeslider]';
+        var $inputRange = $(selector);
+        console.log("$document="+$document);
+        console.log("selector="+selector);
+        console.log("$inputRange="+$inputRange);
+
+        // 每次滑块的值的变化的反馈
+        function postValue(element) {
             //获取滑块的值
             var value = element.value;
             var output = element.parentNode.getElementsByTagName('output')[0];
@@ -85,7 +129,6 @@
                 },
                 success : function(result) {
                     if (result.resultCode == 200) {
-                        alert('设置屏幕参数成功');
                     } else {
                         alert("设置屏幕参数失败");
                     }
@@ -103,31 +146,11 @@
             output.innerHTML = value;
         }
 
-        // Initial value output
-        for (var i = $inputRange.length - 1; i >= 0; i--) {
-            valueOutput($inputRange[i]);
-        };
-
-        // Update value output
+        // 更新output的值
         $document.on('input', selector, function(e) {
-            valueOutput(e.target);
+            postValue(e.target);
         });
-
-        // Initialize the elements
-        $inputRange.rangeslider({
-            polyfill: false
-        });
-
-        // Example functionality to demonstrate programmatic value changes
-        $document.on('click', '#js-example-change-value button', function(e) {
-            var $inputRange = $('input[type="range"]', e.target.parentNode);
-            var value = $('input[type="number"]', e.target.parentNode)[0].value;
-
-            $inputRange
-                .val(value)
-                .change();
-        });
-    });
+    }
 </script>
 
 

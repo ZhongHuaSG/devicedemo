@@ -41,7 +41,6 @@ public class MainController {
     public JSONObject setPara(@Param("para")String para){
         //返回的Json
         JSONObject resultJson = new JSONObject();
-        System.out.println("para============"+para);
         if(para.equals("")||para == null){
             resultJson.put("para","76");
         }else{
