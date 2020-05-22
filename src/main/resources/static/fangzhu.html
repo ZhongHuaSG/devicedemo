@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+<div id="main" style="width: 100%;height:1200px;"></div>
+</body>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/echarts.min.js"></script>
+<script>
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+
+    var uploadedDataURL = "/js/get/data-1585799654003-46R-3f-c3.json";
+
+    //geoCoordMap把所有可能出现的传感器加到数组里面
+    var geoCoordMap = {
+        "屏体1": [116.339, 39.939],
+        '屏体2': [116.339, 39.927],
+        "屏体3": [116.339, 39.915],
+        '屏体4': [116.339, 39.903],
+        "屏体5": [116.339, 39.891],
+        "屏体6": [116.339, 39.882],
+        "屏体7": [116.339, 39.870],
+        '屏体8': [116.339, 39.858],
+        "屏体9": [116.363, 39.939],
+        "屏体10": [116.363, 39.927],
+        "屏体11": [116.363, 39.915],
+        "屏体12": [116.363, 39.903],
+        "屏体13": [116.363, 39.891],
+        "屏体14": [116.363, 39.882],
+        "屏体15": [116.363, 39.870],
+        "屏体16": [116.363, 39.858],
+        "屏体17": [116.385, 39.939],
+        "屏体18": [116.385, 39.927],
+        "屏体19": [116.385, 39.915],
+        "屏体20": [116.385, 39.903],
+        "屏体21": [116.385, 39.891],
+        "屏体22": [116.385, 39.882],
+        "屏体23": [116.385, 39.870],
+        "屏体24": [116.385, 39.858],
+        "屏体25": [116.408, 39.939],
+        "屏体26": [116.408, 39.927],
+        "屏体27": [116.408, 39.915],
+        "屏体28": [116.408, 39.903],
+        "屏体29": [116.408, 39.891],
+        "屏体30": [116.408, 39.882],
+        "屏体31": [116.408, 39.870],
+        "屏体32": [116.408, 39.858],
+
+        "屏体33": [116.432, 39.939],
+        "屏体34": [116.432, 39.927],
+        "屏体35": [116.432, 39.915],
+        "屏体36": [116.432, 39.903],
+        "屏体37": [116.432, 39.891],
+        "屏体38": [116.432, 39.882],
+        "屏体39": [116.432, 39.870],
+        "屏体40": [116.432, 39.858],
+
+        "屏体41": [116.456, 39.939],
+        "屏体42": [116.456, 39.927],
+        "屏体43": [116.456, 39.915],
+        "屏体44": [116.456, 39.903],
+        "屏体45": [116.456, 39.891],
+        "屏体46": [116.456, 39.882],
+        "屏体47": [116.456, 39.870],
+        "屏体48": [116.456, 39.858],
+
+        "屏体49": [116.478, 39.939],
+        "屏体50": [116.478, 39.927],
+        "屏体51": [116.478, 39.915],
+        "屏体52": [116.478, 39.903],
+        "屏体53": [116.478, 39.891],
+        "屏体54": [116.478, 39.882],
+        "屏体55": [116.478, 39.870],
+        "屏体56": [116.478, 39.858],
+
+        "屏体57": [116.500, 39.939],
+        "屏体58": [116.500, 39.927],
+        "屏体59": [116.500, 39.915],
+        "屏体60": [116.500, 39.903],
+        "屏体61": [116.500, 39.891],
+        "屏体62": [116.500, 39.882],
+        "屏体63": [116.500, 39.870],
+        "屏体64": [116.500, 39.858],
+    };
+
+    //温度
+    var d1 = {
+        "屏体3": 0,
+        "屏体5": 0,
+        '屏体2': 0,
+        "屏体1": 0,
+        '屏体4': 0,
+        "屏体6": 0,
+        "屏体7": 0,
+        '屏体8': 0,
+        "屏体9": 0,
+        "屏体10": 0,
+        "屏体11": 0,
+        "屏体12": 0,
+        "屏体13": 0,
+        "屏体14": 0,
+        "屏体15": 0,
+        "屏体16": 0,
+        "屏体17": 0,
+        "屏体18": 0,
+        "屏体19": 0,
+        "屏体20": 0,
+        "屏体21": 0,
+        "屏体22": 0,
+        "屏体23": 0,
+        "屏体24": 0,
+        "屏体25": 0,
+        "屏体26": 0,
+        "屏体27": 0,
+        "屏体28": 0,
+        "屏体29": 0,
+        "屏体30": 0,
+        "屏体31": 0,
+        "屏体32": 0,
+        "屏体33": 0,
+        "屏体34": 0,
+        "屏体35": 0,
+        "屏体36": 0,
+        "屏体37": 0,
+        "屏体38": 0,
+        "屏体39": 0,
+        "屏体40": 0,
+
+        "屏体41": 0,
+        "屏体42": 0,
+        "屏体43": 0,
+        "屏体44": 0,
+        "屏体45": 0,
+        "屏体46": 0,
+        "屏体47": 0,
+        "屏体48": 0,
+
+        "屏体49": 0,
+        "屏体50": 0,
+        "屏体51": 0,
+        "屏体52": 0,
+        "屏体53": 0,
+        "屏体54": 0,
+        "屏体55": 0,
+        "屏体56": 0,
+
+        "屏体57": 0,
+        "屏体58": 0,
+        "屏体59": 0,
+        "屏体60": 0,
+        "屏体61": 0,
+        "屏体62": 0,
+        "屏体63": 0,
+        "屏体64": 0,
+    };
+
+    var colorIndex = 0;
+    $(function() {
+        var year = ["温度（℃）"];
+        var year1 = ["空调调温系统"];
+
+        var mapData = [
+            []
+        ];
+
+
+//实现信号源的圆圈
+        for (var key in geoCoordMap) {
+            mapData[0].push({
+                "year": '温度',
+                "name": key,
+                "value": d1[key],
+            });
+        }
+
+
+        $.getJSON(uploadedDataURL, function(geoJson) {
+            echarts.registerMap('home', geoJson);
+            var convertData = function(data) {
+                var res = [];
+                for (var i = 0; i < data.length; i++) {
+                    var geoCoord = geoCoordMap[data[i].name];
+                    if (geoCoord) {
+                        res.push({
+                            name: data[i].name,
+                            value: geoCoord.concat(data[i].value)
+                        });
+                    }
+                }
+                return res;
+            };
+
+
+            optionXyMap01 = {
+                //底部滚动栏
+                timeline: {
+                    show:false,
+                    autoPlay: false,
+                    controlStyle: {
+                        showNextBtn: false,
+                        showPrevBtn: false,
+                        show:false
+                    },
+
+                },
+                baseOption: {
+                    animation: true,
+                    animationDuration: 1000,
+                    animationEasing: 'cubicInOut',
+                    animationDurationUpdate: 1000,
+                    animationEasingUpdate: 'cubicInOut',
+                    //柱状图样式
+                    grid: [{
+                        left: '125%',
+                        top: '34.5%',
+                        bottom: '44.5%',
+                        show:false
+                    }, {
+                        gridindex: 1,
+                        left: '100%',
+                        right: '3%',
+                        top: '65%',
+                        bottom: '10%',
+                        containLabel: false,
+                        show:false
+                    }],
+
+                    //地图样式
+                    geo: {
+                        show: true,
+                        map: 'home',
+                        roam: true,
+                        zoom: 0.8,
+                        center: [116.423, 39.880],
+                        label: {
+                            emphasis: {
+
+                                show: false
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                borderColor: 'rgba(147, 235, 248, 1)',
+                                borderWidth: 1,
+                                areaColor: {
+                                    type: 'radial',
+                                    x: 0.5,
+                                    y: 0.5,
+                                    r: 0.8,
+                                    colorStops: [{
+                                        offset: 0,
+                                        color: 'rgba(147, 235, 248, 0)' // 0% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: 'rgba(147, 235, 248, .2)' // 100% 处的颜色
+                                    }],
+                                    globalCoord: true // 缺省为 false
+                                },
+                                shadowColor: 'rgba(128, 217, 248, 1)',
+                                // shadowColor: 'rgba(255, 255, 255, 1)',
+                                shadowOffsetX: -2,
+                                shadowOffsetY: 2,
+                                shadowBlur: 10
+                            },
+                            emphasis: {
+                                areaColor: '#389BB7',
+                                borderWidth: 0
+                            }
+                        }
+                    },
+                },
+
+                options: []
+
+            };
+
+
+            for (var n = 0; n < year.length; n++) {
+
+                optionXyMap01.options.push({
+                    //背景色
+                    backgroundColor: '#013954',
+                    xAxis: [{
+                        show:false,
+                        type: 'value',
+                        scale: false,
+                        position: 'top',
+                        min: 0,
+                    },
+                        {
+                            show:false,
+                            gridIndex: 1,
+                            type: 'category',
+
+                        }
+                    ],
+                    yAxis: [{
+                        show:false,
+                        type: 'category',
+                        //  name: 'TOP 20',
+                        nameGap: 16,
+                    }, {
+                        show:false,
+                        gridIndex: 1,
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value} '
+                        }
+                    }],
+
+                    series: [
+
+                        //地图中闪烁的点
+                        {
+                            name: '传感器',
+                            type: 'effectScatter',
+                            coordinateSystem: 'geo',
+                            data: convertData(mapData[n].sort(function(a, b) {
+                                return b.value - a.value;
+                            }).slice(0, 64)), //大小差异显示
+
+                            hoverAnimation: true,
+                            label: {
+                                normal: {
+                                    formatter: '{b}',
+                                    position: 'right',
+                                    show: true
+                                }
+                            },
+                        },
+
+                    ]
+                })
+            }
+            myChart.setOption(optionXyMap01);
+        });
+    });
+    // 使用刚指定的配置项和数据显示图表。
+</script>
+</html>

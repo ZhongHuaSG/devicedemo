@@ -50,6 +50,9 @@ public class shiroConfig {
         map.put("/logout", "logout");
         //登录
         map.put("/login","anon");
+        //登录
+        map.put("/bigshow","anon");
+        map.put("/fangzhu","anon");
         //对所有用户认证
         map.put("/**", "authc");
         //释放静态资源
@@ -57,12 +60,14 @@ public class shiroConfig {
         map.put("/img/**","anon");
         map.put("/js/**","anon");
         map.put("/css/**","anon");
+        map.put("/images/**","anon");
         //登录
         shiroFilterFactoryBean.setLoginUrl("/index");
         //首页
         shiroFilterFactoryBean.setSuccessUrl("/baseshow");
         //demo测试
         shiroFilterFactoryBean.setSuccessUrl("/demotest");
+
         //错误页面，认证不通过跳转
         shiroFilterFactoryBean.setUnauthorizedUrl("/error");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);

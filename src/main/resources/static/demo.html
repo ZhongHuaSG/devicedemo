@@ -36,37 +36,39 @@
         var $document   = $(document);
         var selector    = '[data-rangeslider]';
         var $inputRange = $(selector);
+        setInterval(getPara,1000);
 
-        //页面打开时请求参数
-        var xhr = $.ajax({
-            type : "GET",
-            dataType : "json",
-            timeout : 2000, // 设置超时时间
-            url : "/setPara",//url
-            data : {
-                para : null
-            },
-            success : function(result) {
-                if (result.resultCode == 200) {
-                    alert('获取屏幕参数成功');
-                    //初始滑条获取的值：
-                    $inputRange
-                        .val(result.para)
-                        .change();
-                } else {
-                    alert("获取屏幕参数失败");
+        //从屏幕获取亮度参数的方法
+        function getPara() {
+            var xhr = $.ajax({
+                type : "GET",
+                dataType : "json",
+                timeout : 2000, // 设置超时时间
+                url : "/setPara",//url
+                data : {
+                    para : null
+                },
+                success : function(result) {
+                    if (result.resultCode == 200) {
+                        //初始滑条获取的值：
+                        $inputRange
+                            .val(result.para)
+                            .change();
+                    } else {
+                        alert("获取屏幕参数失败");
+                    }
+                },
+                error : function(result) {
+                    console.log(result);
+                },
+                complete : function(XMLHttpRequest, status) {
+                    if (status == 'timeout') {
+                        xhr.abort(); // 超时后中断请求
+                        alert("网络条件差，请检查网络!");
+                    }
                 }
-            },
-            error : function(result) {
-                console.log(result);
-            },
-            complete : function(XMLHttpRequest, status) {
-                if (status == 'timeout') {
-                    xhr.abort(); // 超时后中断请求
-                    alert("网络条件差，请检查网络!");
-                }
-            }
-        });
+            });
+        }
 
 
         // 每次滑块的值的变化的反馈

@@ -43,5 +43,17 @@ public class IndexController {
 //    @RequestMapping(value = "/error")
 //    public String Error(){ return "forward:403.html";}
 
+    /**
+     * 跳转新页面接口
+     * */
+    @RequestMapping(value = "/bigshow")
+    public String BigShow(){ return "forward:bigshow.html"; }
+
+    /**
+     * 跳转图标页面接口
+     * */
+    @RequestMapping(value = "/fangzhu")
+    public String FangZhu(){ return "forward:fangzhu.html"; }
+
 
 }
