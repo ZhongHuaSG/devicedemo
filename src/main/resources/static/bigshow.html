@@ -14,7 +14,7 @@
     <title>本地设备监控-首页</title>
 </head>
 
-<body style="visibility: hidden;">
+<body>
 <div class="container-flex" tabindex="0" hidefocus="true">
     <div class="box-left">
         <div class="left-top">
@@ -111,7 +111,9 @@
                 <div id="tuopu" style="width: 1200px;height:680px;">
 
                 </div>
-                <div id="pingti" style="width: 710px; height: 570px;margin-left:600px;margin-top:-650px;position:absolute;float: right;"></div>
+                <div id="pingti" style="width: 710px; height: 570px;margin-left:600px;margin-top:-650px;position:absolute;float: right;border: 5px crimson solid;">
+
+                </div>
             </div>
         </div>
 
@@ -258,43 +260,8 @@
 </div>
 </body>
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="js/layer/layer.min.js"></script>
-<script type="text/javascript" src="js/layer/laydate/laydate.js"></script>
 <script type="text/javascript" src="js/echarts.min.js"></script>
 <script type="text/javascript" src="js/base.js"></script>
-<script type="text/javascript">
-    $('document').ready(function () {
-        $("body").css('visibility', 'visible');
-        var localData = [$('#teacher').val(), $('#start').val() + '/' + $('#end').val(), $('#leader').val()]
-        localStorage.setItem("data", localData);
-        $('.modal-btn>li').on('click', function () {
-            var index = $(this).index();
-            if (index <= 2) {
-                $('.container').attr('style', 'visibility: visible').find('.pop-up').eq(index).attr('style', 'visibility: visible').siblings().attr('style', 'visibility: hidden');
-            } else if (index > 2 && index < 5) {
-                $('.container').attr('style', 'visibility: visible').find('.pop-up').eq(3).attr('style', 'visibility: visible').siblings().attr('style', 'visibility: hidden');
-                if (index != 3) {
-                    $('.pop-data .ranking-box').hide();
-                } else {
-                    $('.pop-data .ranking-box').show();
-                }
-                $('.cont-div').eq(index - 3).attr('style', 'visibility: visible').siblings('.cont-div').attr('style', 'visibility: hidden');
-            } else if (index == 5) {
-                $('.container').attr('style', 'visibility: visible').find('.pop-up').eq(3).attr('style', 'visibility: visible').siblings().attr('style', 'visibility: hidden');
-                $('.pop-data .ranking-box').hide();
-                if ($('#switchBtn').find('.active').data('datatype') == "income") {
-                    $('#titles').html('显示屏分辨率');
-                    $('#totalProfits').html('1920 * 1080');
-                    $('.cont-div').eq(2).attr('style', 'visibility: visible').siblings('.cont-div').attr('style', 'visibility: hidden');
-                } else if ($('#switchBtn').find('.active').data('datatype') == 'expend') {
-                    $('#titles').html('显示屏点间距');
-                    $('#totalProfits').html('ZHULING');
-                    $('.cont-div').eq(2).attr('style', 'visibility: visible').siblings('div').attr('style', 'visibility: hidden');
-                }
-            }
-        })
-    })
-</script>
 
 
 </html>
