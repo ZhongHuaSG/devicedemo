@@ -32,7 +32,7 @@ $('.title-box').children('button').hover(function () {
 function tuopu() {
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('tuopu'));
-
+    //矢量图形组
     var nodes = [{
         x: 0,
         y: 600,
@@ -233,8 +233,8 @@ function tuopu() {
             x: 662,
             y: 400,
             symbolSize: 46,
-            nodeName: '屏体33',
-            name: '屏体33',
+            nodeName: '屏体5',
+            name: '屏体5',
             type: '屏体',
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
@@ -242,38 +242,23 @@ function tuopu() {
             x: 662,
             y: 260,
             symbolSize: 46,
-            nodeName: '屏体34',
-            name: '屏体34',
-            type: '屏体',
-            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
-        },
-        {
-            x: 723,
-            y: 960,
-            symbolSize: 46,
-            nodeName: '屏体5',
-            name: '屏体5',
-            type: '屏体',
-            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
-        }, {
-            x: 723,
-            y: 820,
-            symbolSize: 46,
             nodeName: '屏体6',
             name: '屏体6',
             type: '屏体',
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
-        }, {
-            x: 723,
-            y: 680,
+        },
+        {
+            x: 662,
+            y: 120,
             symbolSize: 46,
             nodeName: '屏体7',
             name: '屏体7',
             type: '屏体',
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
-        }, {
-            x: 723,
-            y: 540,
+        },
+        {
+            x: 662,
+            y: -20,
             symbolSize: 46,
             nodeName: '屏体8',
             name: '屏体8',
@@ -281,25 +266,23 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 780,
+            x: 723,
             y: 960,
             symbolSize: 46,
             nodeName: '屏体9',
             name: '屏体9',
             type: '屏体',
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
-        },
-        {
-            x: 780,
+        }, {
+            x: 723,
             y: 820,
             symbolSize: 46,
             nodeName: '屏体10',
             name: '屏体10',
             type: '屏体',
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
-        },
-        {
-            x: 780,
+        }, {
+            x: 723,
             y: 680,
             symbolSize: 46,
             nodeName: '屏体11',
@@ -308,7 +291,7 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 780,
+            x: 723,
             y: 540,
             symbolSize: 46,
             nodeName: '屏体12',
@@ -317,8 +300,8 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 840,
-            y: 960,
+            x: 723,
+            y: 400,
             symbolSize: 46,
             nodeName: '屏体13',
             name: '屏体13',
@@ -326,8 +309,8 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 840,
-            y: 820,
+            x: 723,
+            y: 260,
             symbolSize: 46,
             nodeName: '屏体14',
             name: '屏体14',
@@ -335,8 +318,8 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 840,
-            y: 680,
+            x: 723,
+            y: 120,
             symbolSize: 46,
             nodeName: '屏体15',
             name: '屏体15',
@@ -344,8 +327,8 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 840,
-            y: 540,
+            x: 723,
+            y: -20,
             symbolSize: 46,
             nodeName: '屏体16',
             name: '屏体16',
@@ -353,7 +336,7 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 900,
+            x: 780,
             y: 960,
             symbolSize: 46,
             nodeName: '屏体17',
@@ -362,7 +345,7 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 900,
+            x: 780,
             y: 820,
             symbolSize: 46,
             nodeName: '屏体18',
@@ -371,7 +354,7 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 900,
+            x: 780,
             y: 680,
             symbolSize: 46,
             nodeName: '屏体19',
@@ -380,7 +363,7 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 900,
+            x: 780,
             y: 540,
             symbolSize: 46,
             nodeName: '屏体20',
@@ -389,8 +372,8 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 960,
-            y: 960,
+            x: 780,
+            y: 400,
             symbolSize: 46,
             nodeName: '屏体21',
             name: '屏体21',
@@ -398,8 +381,8 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 960,
-            y: 820,
+            x: 780,
+            y: 260,
             symbolSize: 46,
             nodeName: '屏体22',
             name: '屏体22',
@@ -407,8 +390,8 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 960,
-            y: 680,
+            x: 780,
+            y: 120,
             symbolSize: 46,
             nodeName: '屏体23',
             name: '屏体23',
@@ -416,8 +399,8 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 960,
-            y: 540,
+            x: 780,
+            y: -20,
             symbolSize: 46,
             nodeName: '屏体24',
             name: '屏体24',
@@ -425,7 +408,7 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 1020,
+            x: 840,
             y: 960,
             symbolSize: 46,
             nodeName: '屏体25',
@@ -434,7 +417,7 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 1020,
+            x: 840,
             y: 820,
             symbolSize: 46,
             nodeName: '屏体26',
@@ -443,7 +426,7 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 1020,
+            x: 840,
             y: 680,
             symbolSize: 46,
             nodeName: '屏体27',
@@ -452,7 +435,7 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 1020,
+            x: 840,
             y: 540,
             symbolSize: 46,
             nodeName: '屏体28',
@@ -461,8 +444,8 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 1080,
-            y: 960,
+            x: 840,
+            y: 400,
             symbolSize: 46,
             nodeName: '屏体29',
             name: '屏体29',
@@ -470,8 +453,8 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 1080,
-            y: 820,
+            x: 840,
+            y: 260,
             symbolSize: 46,
             nodeName: '屏体30',
             name: '屏体30',
@@ -479,8 +462,8 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 1080,
-            y: 680,
+            x: 840,
+            y: 120,
             symbolSize: 46,
             nodeName: '屏体31',
             name: '屏体31',
@@ -488,15 +471,304 @@ function tuopu() {
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
         {
-            x: 1080,
-            y: 540,
+            x: 840,
+            y: -20,
             symbolSize: 46,
             nodeName: '屏体32',
             name: '屏体32',
             type: '屏体',
             svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
         },
+        {
+            x: 900,
+            y: 960,
+            symbolSize: 46,
+            nodeName: '屏体33',
+            name: '屏体33',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 900,
+            y: 820,
+            symbolSize: 46,
+            nodeName: '屏体34',
+            name: '屏体34',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 900,
+            y: 680,
+            symbolSize: 46,
+            nodeName: '屏体35',
+            name: '屏体35',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 900,
+            y: 540,
+            symbolSize: 46,
+            nodeName: '屏体36',
+            name: '屏体36',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 900,
+            y: 400,
+            symbolSize: 46,
+            nodeName: '屏体37',
+            name: '屏体37',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 900,
+            y: 260,
+            symbolSize: 46,
+            nodeName: '屏体38',
+            name: '屏体38',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 900,
+            y: 120,
+            symbolSize: 46,
+            nodeName: '屏体39',
+            name: '屏体39',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 900,
+            y: -20,
+            symbolSize: 46,
+            nodeName: '屏体40',
+            name: '屏体40',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 960,
+            y: 960,
+            symbolSize: 46,
+            nodeName: '屏体41',
+            name: '屏体41',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 960,
+            y: 820,
+            symbolSize: 46,
+            nodeName: '屏体42',
+            name: '屏体42',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 960,
+            y: 680,
+            symbolSize: 46,
+            nodeName: '屏体43',
+            name: '屏体43',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 960,
+            y: 540,
+            symbolSize: 46,
+            nodeName: '屏体44',
+            name: '屏体44',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 960,
+            y: 400,
+            symbolSize: 46,
+            nodeName: '屏体45',
+            name: '屏体45',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 960,
+            y: 260,
+            symbolSize: 46,
+            nodeName: '屏体46',
+            name: '屏体46',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 960,
+            y: 120,
+            symbolSize: 46,
+            nodeName: '屏体47',
+            name: '屏体47',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 960,
+            y: -20,
+            symbolSize: 46,
+            nodeName: '屏体48',
+            name: '屏体48',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 1020,
+            y: 960,
+            symbolSize: 46,
+            nodeName: '屏体49',
+            name: '屏体49',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 1020,
+            y: 820,
+            symbolSize: 46,
+            nodeName: '屏体50',
+            name: '屏体50',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 1020,
+            y: 680,
+            symbolSize: 46,
+            nodeName: '屏体51',
+            name: '屏体51',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 1020,
+            y: 540,
+            symbolSize: 46,
+            nodeName: '屏体52',
+            name: '屏体52',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 1020,
+            y: 400,
+            symbolSize: 46,
+            nodeName: '屏体53',
+            name: '屏体53',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 1020,
+            y: 260,
+            symbolSize: 46,
+            nodeName: '屏体54',
+            name: '屏体54',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 1020,
+            y: 120,
+            symbolSize: 46,
+            nodeName: '屏体55',
+            name: '屏体55',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 1020,
+            y: -20,
+            symbolSize: 46,
+            nodeName: '屏体56',
+            name: '屏体56',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 1080,
+            y: 960,
+            symbolSize: 46,
+            nodeName: '屏体57',
+            name: '屏体57',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 1080,
+            y: 820,
+            symbolSize: 46,
+            nodeName: '屏体58',
+            name: '屏体58',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 1080,
+            y: 680,
+            symbolSize: 46,
+            nodeName: '屏体59',
+            name: '屏体59',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 1080,
+            y: 540,
+            symbolSize: 46,
+            nodeName: '屏体60',
+            name: '屏体60',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 1080,
+            y: 400,
+            symbolSize: 46,
+            nodeName: '屏体61',
+            name: '屏体61',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 1080,
+            y: 260,
+            symbolSize: 46,
+            nodeName: '屏体62',
+            name: '屏体62',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 1080,
+            y: 120,
+            symbolSize: 46,
+            nodeName: '屏体63',
+            name: '屏体63',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        },
+        {
+            x: 1080,
+            y: -20,
+            symbolSize: 46,
+            nodeName: '屏体64',
+            name: '屏体64',
+            type: '屏体',
+            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+        }
     ]
+    //连接线数组
     var links = [
         {
             source: '控制卡',
@@ -515,19 +787,469 @@ function tuopu() {
 
         },
         {
-            source: 'P9',
-            target: '屏体33',
+            source: '屏体1',
+            target: '屏体2',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: '屏体2',
+            target: '屏体3',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: '屏体3',
+            target: '屏体4',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: 'P2',
+            target: '屏体5',
             name: '连通',
             type: '网线',
             nodeName: '网线1'
 
         },
         {
+            source: '屏体5',
+            target: '屏体6',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: '屏体6',
+            target: '屏体7',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: '屏体7',
+            target: '屏体8',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: 'P3',
+            target: '屏体9',
+            name: '连通',
+            type: '网线',
+            nodeName: '网线1'
+
+        },
+        {
+            source: '屏体9',
+            target: '屏体10',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: '屏体10',
+            target: '屏体11',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: '屏体11',
+            target: '屏体12',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: 'P4',
+            target: '屏体13',
+            name: '连通',
+            type: '网线',
+            nodeName: '网线1'
+
+        },
+        {
+            source: '屏体13',
+            target: '屏体14',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: '屏体14',
+            target: '屏体15',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: '屏体15',
+            target: '屏体16',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: 'P5',
+            target: '屏体17',
+            name: '连通',
+            type: '网线',
+            nodeName: '网线1'
+
+        },
+        {
+            source: '屏体17',
+            target: '屏体18',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: '屏体18',
+            target: '屏体19',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: '屏体19',
+            target: '屏体20',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: 'P6',
+            target: '屏体21',
+            name: '连通',
+            type: '网线',
+            nodeName: '网线1'
+
+        },
+        {
+            source: '屏体21',
+            target: '屏体22',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: '屏体22',
+            target: '屏体23',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: '屏体23',
+            target: '屏体24',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+
+        },
+        {
+            source: 'P7',
+            target: '屏体25',
+            name: '连通',
+            type: '网线',
+            nodeName: '网线1'
+
+        },
+        {
+            source: '屏体25',
+            target: '屏体26',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体26',
+            target: '屏体27',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体27',
+            target: '屏体28',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: 'P8',
+            target: '屏体29',
+            name: '连通',
+            type: '网线',
+            nodeName: '网线1'
+        },
+        {
+            source: '屏体29',
+            target: '屏体30',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体30',
+            target: '屏体31',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体31',
+            target: '屏体32',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: 'P9',
+            target: '屏体33',
+            name: '连通',
+            type: '网线',
+            nodeName: '网线1'
+        },
+        {
             source: '屏体33',
             target: '屏体34',
             name: '连通',
             type: '网线',
-            nodeName: '串联1'
+            nodeName: '串联'
+        },
+        {
+            source: '屏体34',
+            target: '屏体35',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体35',
+            target: '屏体36',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: 'P10',
+            target: '屏体37',
+            name: '连通',
+            type: '网线',
+            nodeName: '网线1'
+        },
+        {
+            source: '屏体37',
+            target: '屏体38',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体38',
+            target: '屏体39',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体39',
+            target: '屏体40',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: 'P11',
+            target: '屏体41',
+            name: '连通',
+            type: '网线',
+            nodeName: '网线1'
+        },
+        {
+            source: '屏体41',
+            target: '屏体42',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体42',
+            target: '屏体43',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体43',
+            target: '屏体44',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: 'P12',
+            target: '屏体45',
+            name: '连通',
+            type: '网线',
+            nodeName: '网线1'
+        },
+        {
+            source: '屏体45',
+            target: '屏体46',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体46',
+            target: '屏体47',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体47',
+            target: '屏体48',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: 'P13',
+            target: '屏体49',
+            name: '连通',
+            type: '网线',
+            nodeName: '网线1'
+        },
+        {
+            source: '屏体49',
+            target: '屏体50',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体50',
+            target: '屏体51',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体51',
+            target: '屏体52',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: 'P14',
+            target: '屏体53',
+            name: '连通',
+            type: '网线',
+            nodeName: '网线1'
+        },
+        {
+            source: '屏体53',
+            target: '屏体54',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体54',
+            target: '屏体55',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体55',
+            target: '屏体56',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: 'P15',
+            target: '屏体57',
+            name: '连通',
+            type: '网线',
+            nodeName: '网线1'
+        },
+        {
+            source: '屏体57',
+            target: '屏体58',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体58',
+            target: '屏体59',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体59',
+            target: '屏体60',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: 'P16',
+            target: '屏体61',
+            name: '连通',
+            type: '网线',
+            nodeName: '网线1'
+        },
+        {
+            source: '屏体61',
+            target: '屏体62',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体62',
+            target: '屏体63',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
+        },
+        {
+            source: '屏体63',
+            target: '屏体64',
+            name: '连通',
+            type: '网线',
+            nodeName: '串联'
         }
     ]
     var charts = {
