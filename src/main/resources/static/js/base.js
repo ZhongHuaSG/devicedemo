@@ -1374,19 +1374,27 @@ function tuopu() {
             type: links[i].type,
             nodeName: links[i].nodeName,
             label: {
+                normal:{
+                  show:false
+                },
                 emphasis:{
                     symbolSize:8,
                     fontSize:38,
+                    color:'red',
                     show: true,
                     formatter: links[i].name
                 }
             },
             lineStyle: {
                 normal: {
-                    show:true,
+                    curveness:0.15,
+                    symbolSize:0
+                },
+                emphasis:{
+                    symbolSize:8,
                     type: 'solid',
                     color: '#20A0FF'
-                },
+                }
             }
         }
         charts.links.push(link);
@@ -1449,6 +1457,12 @@ function tuopu() {
                 type: 'graph',
                 coordinateSystem: 'cartesian2d',
                 focusNodeAdjacency: true, // 鼠标移到节点上突出显示节点以及节点的边和邻接节点
+                lineStyle: {
+                    normal: {
+                        width: 2,
+                        shadowColor: 'none'
+                    }
+                },
                 edgeSymbol: ['circle', 'arrow'],
                 edgeSymbolSize: [4, 10],
                 label: {
