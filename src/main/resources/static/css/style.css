@@ -1145,7 +1145,7 @@ pre {
     position: absolute;
     top: 0;
     left: 0;
-    padding: 0.2rem 0.5rem;
+    padding: 0.2rem 0.5rem;.pop-up
     visibility: hidden;
 }
 
@@ -1258,7 +1258,7 @@ pre {
 
 
 .set-div {
-    width: 9.8rem;
+    width: 13.4rem;
     height: 88%;
     margin: 0 auto;
     overflow: hidden;
@@ -1271,13 +1271,15 @@ pre {
 }
 
 .set-box {
-    height: 0.63rem;
+    height: 0.33rem;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
 }
 
 .set-box>label {
+    background-image: url(../images/labeltitle.png);
+    width:1.7rem;
     color: #cdddf7;
     margin-right: 10px;
     float: left;

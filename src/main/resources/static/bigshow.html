@@ -104,156 +104,44 @@
                 </div>
         </div>
         <div class="center-bottom">
-<!--            <div class="chart-box">-->
-<!--                <div id="chart4" style="width:100%;height:95%;"></div>-->
-<!--            </div>-->
             <div class="city-data">
                 <div id="tuopu" style="width: 1200px;height:680px;">
-
                 </div>
-<!--                <div id="pingti" style="width: 710px; height: 570px;margin-left:600px;margin-top:-650px;position:absolute;float: right;border: 5px crimson solid;">-->
-
-<!--                </div>-->
-            </div>
-        </div>
-
-    </div>
-
-
-    <div class="pop-up">
-        <div class="cont-div">
-            <div class="chart-box pop-charts">
-                <div id="chart4s" style="width:100%;height:95%;"></div>
-            </div>
-        </div>
-        <div class="cont-div">
-            <h2 class="title" id="titles"></h2>
-            <button class="btn-class" id="dateBtns"><img src="images/data_icon.png" alt="">日期</button>
-            <div class="data-box  pop-time">
-                <div class="time-box" id="timeBoxs">
-                    <div class="time-div">
-                        <input class="time-input" type="text" value="" id="startTimes">
-                        <img src="images/selsct_time.png" alt="">
-                    </div>
-                    <div class="time-div end">
-                        <input class="time-input" type="text" value="" id="endTimes">
-                        <img src="images/selsct_time.png" alt="">
-                    </div>
-                </div>
-            </div>
-            <div class="pop-data-box" id="totalProfits">
-                <p></p>
             </div>
         </div>
     </div>
+</div>
+<div class="container">
     <div class="pop-up">
         <span class="close-pop"></span>
-        <h2 class="title">设置</h2>
+        <h2 class="title">UHPLL1.5</h2>
+        <h3 style="width: 100%;height:0.4rem;font-size: 0.26rem;color:#0e94eb;margin-left:0.3rem;"><b>产品信息:<span style="color: white;">Uni</span></b></h3>
         <div class="set-div">
             <div class="set-box">
-                <label class="four-f" for="">排班日期</label>
-                <div class="time-div">
-                    <input class="time-input" type="text" value="" id="times">
-                    <img src="images/selsct_time.png" alt="">
+                <label class="four-f" for="">&nbsp;&nbsp;&nbsp;传感器</label>
+                <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 2rem;height: 1rem;margin-top: 160px;margin-left:-160px;">
+                    <ul style="margin-left:12px;margin-top:-4px;">
+                        <li style="margin-top: 8px;color: #0e94eb;">电压：<span style="color: #E9E7E7">220V</span></li>
+                        <li style="margin-top: 8px;color: #0e94eb;">电流：<span style="color: #E9E7E7">2A</span></li>
+                        <li style="margin-top: 8px;color: #0e94eb;">湿度：<span style="color: #E9E7E7">30%RH</span></li>
+                        <li style="margin-top: 8px;color: #0e94eb;">烟雾：<span style="color: #E9E7E7">333</span></li>
+                    </ul>
+                    <ul style="margin-left:100px;margin-top:-100px;">
+                        <li style="margin-top: 8px;color: #0e94eb;">温度：<span style="color: #E9E7E7">35℃</span></li>
+                        <li style="margin-top: 8px;color: #0e94eb;">亮度：<span style="color: #E9E7E7">30Lux</span></li>
+                    </ul>
                 </div>
             </div>
-            <div class="set-box">
-                <label for="">值班人</label>
-                <input type="text" value="">
-                <button class="plus" id="addT"></button>
-                <button class="mineus" id="mineusT" style="display:none;"></button>
+            <div class="set-box" style="margin-top: 100px;height:0.8rem">
+                <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;驱动IC</label>
+                <div class="didimen1" style="font-size: small;border:1px solid #1dacfe;width: 1rem;height: 0.1985rem;margin-top: 70px;margin-left:-160px;">
+                    <ul style="margin-left:12px;margin-top:-4px;">
+                        <li style="margin-top: 8px;color: #0e94eb;">MBI5153GP</li>
+                    </ul>
+                </div>
             </div>
-            <div class="set-box">
-                <label for="">负责人</label>
-                <input type="text" value="">
-                <button class="plus" id="addL"></button>
-                <button class="mineus" id="mineusL" style="display:none;"></button>
-                <button class="add-btn" id="addSet"><img src="images/plus.png" alt="">添加</button>
-            </div>
-            <table class="table3">
-                <thead>
-                <tr>
-                    <th>值班人</th>
-                    <th>排班日期</th>
-                    <th>负责人</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody id="tList">
-                <!--
-                                        <tr>
-                                            <td colspan="4">
-                                                <p style="width:9.6rem;">暂无数据</p>
-                                            </td>
-                                        </tr>
-                -->
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="pages-div" class="mineus">
-                <button class="prev"></button>
-                <p id="page"><span>0</span>/<span>0</span></p>
-                <button class="next"></button>
-                <input type="number">
-                <button class="skip">跳转</button>
-            </div>
-        </div>
-        <div class="tishi">日期已存在!</div>
-        <div class="edit-div" style="display:none;">
-            <h4>编辑</h4>
-            <span class="close-edit"></span>
-            <div class="set-box">
-                <label for="">值班人</label>
-                <input class="input-edit" id="editT" type="text" value="">
-            </div>
-            <div class="set-box">
-                <label for="">负责人</label>
-                <input class="input-edit" id="editL" type="text" value="">
-            </div>
-            <div class="set-box edit-box">
-                <button id="qxEdit">取消</button>
-                <button id="qdEdit">确定</button>
+            <div class="set-box" style="margin-top:20px;">
+                <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电源：</label>
             </div>
         </div>
     </div>
@@ -262,6 +150,4 @@
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="js/echarts.min.js"></script>
 <script type="text/javascript" src="js/base.js"></script>
-
-
 </html>

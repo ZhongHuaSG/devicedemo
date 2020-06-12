@@ -1501,7 +1501,16 @@ function tuopu() {
         };
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
+    // 处理点击事件并且弹出数据名称-params传入的参数
+        myChart.on('click', function (params) {
+            $('.container').attr('style', 'visibility: visible').find('.pop-up').attr('style', 'visibility: visible').siblings().attr('style', 'visibility: hidden');
+        });
 }
+
+//点击close-pop这个类时取消弹框
+$('.close-pop').on('click', function () {
+    $(this).parent().parent().hide().find('.cont-div').attr('style', 'visibility: hidden');
+})
 
 tuopu();
 
