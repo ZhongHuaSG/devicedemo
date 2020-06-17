@@ -13,33 +13,41 @@
 <script>
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
+
     var testData = [
         {
-            name:"书房",
+            name:"模组1",
             value:40,
         },
         {
-            name:"客厅",
-            value:20
+            name:"模组2",
+            value:40
         },
         {
-            name:"厨房",
-            value:10
+            name:"模组3",
+            value:40
         },
         {
-            name:"卫生间",
-            value:10
+            name:"模组4",
+            value:40
+        },{
+            name:"模组5",
+            value:40,
         },
         {
-            name:"房间",
-            value:45,
-            children:[
-                {name:"主卧",value:25},
-                {name:"次卧",value:20}
-            ]
-        }
+            name:"模组6",
+            value:40
+        },
+        {
+            name:"模组7",
+            value:40
+        },
+        {
+            name:"模组8",
+            value:40
+        },
     ]
-    function colorMappingChange(value) {
+function colorMappingChange(value) {
         var levelOption = getLevelOption(value);
         chart.setOption({
             series: [{
@@ -80,9 +88,6 @@
     }
 
     myChart.setOption(option = {
-        title:{
-            text:"房间平面图"
-        },
         tooltip: {
             formatter: function (info) {
                 var value = info.value;
@@ -102,9 +107,11 @@
 
         series: [
             {
-                name:'平面图',
+                name:'模组拓扑',
                 type:'treemap',
                 visibleMin: 300,
+                roam:false,
+                squareRatio:1,
                 label: {
                     show: true,
                     formatter: '{b}'
@@ -119,6 +126,7 @@
             }
         ]
     });
+
     myChart.setOption(option);
 </script>
 </html>

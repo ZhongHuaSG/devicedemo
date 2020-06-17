@@ -1514,11 +1514,14 @@ $('.close-pop').on('click', function () {
 
 tuopu();
 
+function aiguozhe(item){
+    alert(item);
+}
+
 $('#dateBtn').on('click', function () {
     if ($('#timeBox').is(":hidden")) {
         $('#timeBox').show();
         document.getElementById('timeBox').focus();
-
     } else {
         $('#timeBox').hide();
     }
