@@ -1516,6 +1516,7 @@ tuopu();
 
 function aiguozhe(item){
     alert(item);
+    $('.modedetail').attr('style','display:block;');
 }
 
 $('#dateBtn').on('click', function () {
