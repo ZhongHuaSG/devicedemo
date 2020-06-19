@@ -5,128 +5,43 @@
     <title>Title</title>
 </head>
 <body>
+<!-- 遮罩层 -->
+<div id="cover" style="background: #000; position: absolute; left: 0px; top: 0px;height: 100%; width: 100%;  filter: alpha(opacity=30); opacity: 0.3; display: none; z-index: 2 ">
+
+</div>
+
+<!-- 弹窗 -->
+<div id="showdiv" style="width: 80%; margin: 0 auto; height: 9.5rem; border: 1px solid #999; display: none; position: absolute; top: 40%; left: 10%; z-index: 3; background: #fff">
+    <!-- 按钮 -->
+    <div style="background: #418BCA; width: 80%; margin: 0 auto; height: 1.5rem; line-height: 1.5rem; text-align: center;color: #fff;margin-top: 1rem; -moz-border-radius: .128rem; -webkit-border-radius: .128rem; border-radius: .128rem;font-size: .59733rem;" onclick="closeWindow()">
+        确 定
+    </div>
+</div>
 <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-<div id="main" style="margin-top:10em; width: 600px;height:600px;"></div>
+<div id="main" style="margin-top:10em; width: 600px;height:600px;border: red 1px solid;">
+
+    <p>IAKDJAWKDAWLKDAWJK</p>
+    <h1>ARE YOU OK!!!!</h1>
+
+</div>
 </body>
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="js/echarts.min.js"></script>
-<script>
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main'));
+<script type="text/javascript">
 
-    var testData = [
-        {
-            name:"模组1",
-            value:40,
-        },
-        {
-            name:"模组2",
-            value:40
-        },
-        {
-            name:"模组3",
-            value:40
-        },
-        {
-            name:"模组4",
-            value:40
-        },{
-            name:"模组5",
-            value:40,
-        },
-        {
-            name:"模组6",
-            value:40
-        },
-        {
-            name:"模组7",
-            value:40
-        },
-        {
-            name:"模组8",
-            value:40
-        },
-    ]
-function colorMappingChange(value) {
-        var levelOption = getLevelOption(value);
-        chart.setOption({
-            series: [{
-                levels: levelOption
-            }]
-        });
+    // 弹窗
+    function showWindow(showmsg) {
+        $('#showdiv').show();   //显示弹窗
+        $('#cover').css('display','block'); //显示遮罩层
+
     }
 
-    var formatUtil = echarts.format;
-
-    function getLevelOption() {
-        return [
-            {
-                itemStyle: {
-                    normal: {
-                        borderWidth: 0,
-                        gapWidth: 5
-                    }
-                }
-            },
-            {
-                itemStyle: {
-                    normal: {
-                        gapWidth: 1
-                    }
-                }
-            },
-            {
-                colorSaturation: [0.35, 0.5],
-                itemStyle: {
-                    normal: {
-                        gapWidth: 1,
-                        borderColorSaturation: 0.6
-                    }
-                }
-            }
-        ];
+    // 关闭弹窗
+    function closeWindow() {
+        $('#showdiv').hide();   //隐藏弹窗
+        $('#cover').css('display','none');     //显示遮罩层
     }
 
-    myChart.setOption(option = {
-        tooltip: {
-            formatter: function (info) {
-                var value = info.value;
-                var treePathInfo = info.treePathInfo;
-                var treePath = [];
 
-                for (var i = 1; i < treePathInfo.length; i++) {
-                    treePath.push(treePathInfo[i].name);
-                }
-
-                return [
-                    '<div class="tooltip-title">' + formatUtil.encodeHTML(treePath.join('/')) + '</div>',
-                    '面积: ' + formatUtil.addCommas(value) + ' m²',
-                ].join('');
-            }
-        },
-
-        series: [
-            {
-                name:'模组拓扑',
-                type:'treemap',
-                visibleMin: 300,
-                roam:false,
-                squareRatio:1,
-                label: {
-                    show: true,
-                    formatter: '{b}'
-                },
-                itemStyle: {
-                    normal: {
-                        borderColor: '#fff'
-                    }
-                },
-                levels: getLevelOption(),
-                data: testData
-            }
-        ]
-    });
-
-    myChart.setOption(option);
 </script>
 </html>

@@ -1,32 +1,4 @@
 
-$('.select').on('blur', function () {
-        $(this).find('.select-ul').hide();
-    })
-    //下拉框点击出现下拉框内容
-$('.select-div').on('click', function () {
-    if ($(this).siblings('.select-ul').is(":hidden")) {
-        $(this).siblings('.select-ul').show();
-    } else {
-        $(this).siblings('.select-ul').hide();
-    }
-})
-
-
-$('.select-ul').on('click', 'li', function () {
-    $(this).addClass('active').siblings('li').removeClass('active').parent().hide().siblings('.select-div').html($(this).html());
-    var parentDiv = $(this).parent().parent().parent();
-})
-
-//鼠标滑动到按钮，按钮内容变成白色
-var imgName;
-$('.title-box').children('button').hover(function () {
-    imgName = $(this).children('img').attr('src').split('.png')[0];
-    $(this).children('img').attr('src', imgName + '_on.png');
-}, function () {
-    $(this).children('img').attr('src', imgName + '.png');
-
-});
-
 
 //发送卡拓扑图
 function tuopu() {
@@ -1503,47 +1475,39 @@ function tuopu() {
     myChart.setOption(option);
     // 处理点击事件并且弹出数据名称-params传入的参数
         myChart.on('click', function (params) {
-            $('.container').attr('style', 'visibility: visible').find('.pop-up').attr('style', 'visibility: visible').siblings().attr('style', 'visibility: hidden');
+            if(params.data.type == '屏体'){
+                $('#cover').css('display','block'); //显示遮罩层
+                $('.container').attr('style', 'visibility: visible').find('.pop-up').attr('style', 'visibility: visible').siblings().attr('style', 'visibility: hidden');
+            }else{
+             alert("暂未开放");
+            }
         });
 }
 
 //点击close-pop这个类时取消弹框
 $('.close-pop').on('click', function () {
+    $('#cover').css('display','none');
     $(this).parent().parent().hide().find('.cont-div').attr('style', 'visibility: hidden');
 })
 
 tuopu();
 
 function aiguozhe(item){
-    alert(item);
-    $('.modedetail').attr('style','display:block;');
+    if($('.modedetail').css('display') === 'none'){
+        $('.modedetail').attr('style','display:block;');
+        $('.set-div').attr('style','z-index:1;');
+    }else{
+        $(".modedetail").hide();
+        $('.set-div').attr('style','z-index:3;');
+    }
 }
 
-$('#dateBtn').on('click', function () {
-    if ($('#timeBox').is(":hidden")) {
-        $('#timeBox').show();
-        document.getElementById('timeBox').focus();
-    } else {
-        $('#timeBox').hide();
-    }
-})
+// $(document).on('click',function (e) {
+//     var target = $(e.target);
+//     if(target.closest(".modedetail").length == 0 && target.closest(".module").length == 0){
+//         $(".modedetail").hide();
+//     }
+// })
 
-$('#dateBtns').on('click', function () {
-    if ($('#timeBoxs').is(":hidden")) {
-        $('#timeBoxs').show();
-        document.getElementById('timeBoxs').focus();
 
-    } else {
-        $('#timeBoxs').hide();
-    }
-})
 
-$('#switchBtn').on('click', 'span', function () {
-    $(this).addClass('active').siblings().removeClass('active');
-    if ($(this).data('datatype') == 'income') {
-        $('#totalProfit').html('1920 * 1080');
-    } else if ($(this).data('datatype') == 'expend') {
-        $('#totalProfit').html('ZHULING');
-    }
-})
-;
