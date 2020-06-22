@@ -1,7 +1,50 @@
-
+var ledParasJson = null ;
+var senderOrderList = null ;
+function getJsonFile() {
+    $.ajax({
+        url: "/getJsonMessage",
+        data:null,
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            for(var i = 0;i<data.comList.length;i++){
+                //获取屏幕对象
+                ledParasJson = data.comList[i].ledParas;
+                //发送卡数组
+                senderOrderList = ledParasJson.senderOrderList;
+                console.log(senderOrderList);
+            }
+            // data = jQuery.parseJSON(data);
+            // dataType指明了返回数据为json类型，故不需要再反序列化
+        },
+        error: function () {
+            alert("获取后台参数失败");
+        }
+    });
+}
 
 //发送卡拓扑图
 function tuopu() {
+
+    getJsonFile();
+
+    //遍历发送卡列表可知发送卡数量
+    for(var i =0 ;i<senderOrderList.length;i++){
+        //当前发送卡信息
+        var senderOrder = senderOrderList[i];
+    }
+
+    //网口初始值-X轴上单个偏移差值为60一个单位(向右+60)
+    XInitPort = 290;
+    //网口初始值-Y轴上单个偏移差值为70一个单位（向下-70）
+    YInitPort = 1000;
+
+    //X轴上单个偏移差值为60一个单位(向右+60)----屏体（同网口）
+    XInit = 660
+    //Y轴上单个偏移差值为140一个单位(向下-140)----屏体
+    YInit = 960
+
+    //走
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('tuopu'));
     //矢量图形组
@@ -1230,64 +1273,7 @@ function tuopu() {
         //目标连接线
         links: [],
         //网格线
-        linesData: [
-            {//P2屏体拓扑连接线
-            coords: [
-                [290, 930],
-                [310, 930],
-                [310, 1090],
-                [723, 1090],
-                [723, 490]
-            ]
-        }, {//P3屏体拓扑连接线
-            coords: [
-                [290, 860],
-                [320, 860],
-                [320, 1080],
-                [780, 1080],
-                [780, 490]
-            ]
-        }, {//P4屏体拓扑连接线
-            coords: [
-                [290, 790],
-                [330, 790],
-                [330, 1070],
-                [840, 1070],
-                [840, 490]
-            ]
-        }, {//P5屏体拓扑连接线
-            coords: [
-                [350, 1000],
-                [350, 1060],
-                [900, 1060],
-                [900, 490]
-            ]
-        }, {//P6屏体拓扑连接线
-            coords: [
-                [350, 930],
-                [369, 930],
-                [369, 1050],
-                [960, 1050],
-                [960, 490]
-            ]
-        }, {//P7屏体拓扑连接线
-            coords: [
-                [350, 860],
-                [380, 860],
-                [380, 1040],
-                [1020, 1040],
-                [1020, 490]
-            ]
-        }, {//P8屏体拓扑连接线
-            coords: [
-                [350, 790],
-                [390, 790],
-                [390, 1030],
-                [1080, 1030],
-                [1080, 490]
-            ]
-        }
-        ]
+        linesData: []
     }
     var dataMap = new Map()
     //遍历SVG图形

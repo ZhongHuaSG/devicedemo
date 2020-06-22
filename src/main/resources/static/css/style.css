@@ -259,6 +259,7 @@ pre {
     align-items: center;
 }
 
+
 .set-box>label {
     background-image: url(../images/labeltitle.png);
     width:1.7rem;
@@ -292,6 +293,16 @@ pre {
     color: white;
     padding-left: 0.1rem;
     cursor: pointer;
+}
+
+.module-model {
+    margin-left: 2.9rem;
+    width: 8rem;
+    height: 4rem;
+    margin-top:-3.7rem;
+    background-image: url(../images/backgroundImage.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 
