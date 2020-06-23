@@ -1,52 +1,21 @@
-var ledParasJson = null ;
-var senderOrderList = null ;
-function getJsonFile() {
-    $.ajax({
-        url: "/getJsonMessage",
-        data:null,
-        type: "GET",
-        dataType: "json",
-        success: function(data) {
-            for(var i = 0;i<data.comList.length;i++){
-                //获取屏幕对象
-                ledParasJson = data.comList[i].ledParas;
-                //发送卡数组
-                senderOrderList = ledParasJson.senderOrderList;
-                console.log(senderOrderList);
-            }
-            // data = jQuery.parseJSON(data);
-            // dataType指明了返回数据为json类型，故不需要再反序列化
-        },
-        error: function () {
-            alert("获取后台参数失败");
-        }
-    });
-}
 
 //发送卡拓扑图
 function tuopu() {
 
-    getJsonFile();
-
-    //遍历发送卡列表可知发送卡数量
-    for(var i =0 ;i<senderOrderList.length;i++){
-        //当前发送卡信息
-        var senderOrder = senderOrderList[i];
-    }
+    var ledParasJson = null ;
+    var senderOrderList = [] ;
 
     //网口初始值-X轴上单个偏移差值为60一个单位(向右+60)
-    XInitPort = 290;
+    var XInitPort = 290;
     //网口初始值-Y轴上单个偏移差值为70一个单位（向下-70）
-    YInitPort = 1000;
+    var YInitPort = 1000;
+    //网口最大总数量
+    var MaxPort = 16;
 
     //X轴上单个偏移差值为60一个单位(向右+60)----屏体（同网口）
-    XInit = 660
+    var XInit = 660;
     //Y轴上单个偏移差值为140一个单位(向下-140)----屏体
-    YInit = 960
-
-    //走
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('tuopu'));
+    var YInit = 960;
     //矢量图形组
     var nodes = [{
         x: 0,
@@ -1275,6 +1244,54 @@ function tuopu() {
         //网格线
         linesData: []
     }
+
+    //请求后台参数
+    $.ajax({
+        url: "/getJsonMessage",
+        data:null,
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            for(var i = 0;i<data.comList.length;i++){
+                //获取屏幕对象
+                ledParasJson = data.comList[i].ledParas;
+                //发送卡数组
+                senderOrderList = ledParasJson.senderOrderList;
+
+                //遍历发送卡列表可知发送卡数量
+                for(var i = 0;i<senderOrderList.length;i++){
+                    //当前发送卡信息
+                    var senderOrder = senderOrderList[i];
+
+                    //获取走线端口数量
+                    var portNum = senderOrder.portOrder.length;
+                    //遍历走线接口
+                    for(var j = 0;j<portNum;j++){
+                        //走线详情信息
+                        var port = senderOrder.portOrder[j];
+                        console.log(port);
+                        console.log(parseInt(2/4));
+                        //当等于0时说明该接口排在Y轴第四个值
+                        console.log(4%4);
+                        //当整数部分大于1时候，则表示该接口在Y轴后面
+                        console.log(parseInt(5/4));
+                        console.log(5%4);
+                        console.log(parseInt(15/4));
+                        console.log(15%4);
+                    }
+                }
+            }
+            // data = jQuery.parseJSON(data);
+            // dataType指明了返回数据为json类型，故不需要再反序列化
+        },
+        error: function () {
+            alert("获取后台参数失败");
+        }
+    });
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('tuopu'));
+
     var dataMap = new Map()
     //遍历SVG图形
     for (var j = 0; j < nodes.length; j++) {
