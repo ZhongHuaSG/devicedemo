@@ -32,8 +32,8 @@
 <div id="main" class="container">
     <div class="pop-up">
         <span class="close-pop"></span>
-        <h2 class="title">UHPLL1.5</h2>
-        <h3  v-bind="info_title" style="width: 100%;height:0.4rem;font-size: 0.26rem;color:#0e94eb;margin-left:0.3rem;"><b>产品信息:<span style="color: white;">{{info_title.id}}</span></b></h3>
+        <h2 id="boxTitle" class="title"></h2>
+        <h3  style="width: 100%;height:0.4rem;font-size: 0.26rem;color:#0e94eb;margin-left:0.3rem;"><b>箱体型号:<span id="productTitle" style="color: white;"></span></b></h3>
         <!-- 模组信息弹框 -->
         <div  class="modedetail" >
             <!-- 模组ID -->
@@ -86,14 +86,14 @@
                 <label class="four-f" for="">&nbsp;&nbsp;&nbsp;传感器</label>
                 <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 2rem;height: 1rem;margin-top: 1.6rem;margin-left:-1.6rem;">
                     <ul style="margin-left:0.12rem;margin-top:-0.04rem;">
-                        <li style="margin-top: 0.08rem;color: #0e94eb;">电压：<span style="color: #E9E7E7">220V</span></li>
-                        <li style="margin-top: 0.08rem;color: #0e94eb;">电流：<span style="color: #E9E7E7">2A</span></li>
-                        <li style="margin-top: 0.08rem;color: #0e94eb;">湿度：<span style="color: #E9E7E7">30%RH</span></li>
-                        <li style="margin-top: 0.08rem;color: #0e94eb;">烟雾：<span style="color: #E9E7E7">333</span></li>
+                        <li style="margin-top: 0.08rem;color: #0e94eb;">电压：<span id="SENSOR_VOL" style="color: #E9E7E7"></span></li>
+                        <li style="margin-top: 0.08rem;color: #0e94eb;">电流：<span id="SENSOR_CURRENT" style="color: #E9E7E7">A</span></li>
+                        <li style="margin-top: 0.08rem;color: #0e94eb;">湿度：<span id="SENSOR_HUMI" style="color: #E9E7E7">%RH</span></li>
+                        <li style="margin-top: 0.08rem;color: #0e94eb;">烟雾：<span id="SENSOR_SMOG" style="color: #E9E7E7">333</span></li>
                     </ul>
                     <ul style="margin-left:1rem;margin-top:-1rem;">
-                        <li style="margin-top: 0.08rem;color: #0e94eb;">温度：<span style="color: #E9E7E7">35℃</span></li>
-                        <li style="margin-top: 0.08rem;color: #0e94eb;">亮度：<span style="color: #E9E7E7">30Lux</span></li>
+                        <li style="margin-top: 0.08rem;color: #0e94eb;">温度：<span id="SENSOR_TMP" style="color: #E9E7E7">℃</span></li>
+                        <li style="margin-top: 0.08rem;color: #0e94eb;">亮度：<span id="SENSOR_BRI" style="color: #E9E7E7">Lux</span></li>
                     </ul>
                 </div>
             </div>
@@ -197,7 +197,8 @@
             return {
                 //请求的回传参数
                 data: null,
-                info_title: "",
+                //自定义值
+                info_title: "uniluim",
                 //屏幕对象
                 ledParasJson : null ,
                 //发送卡列表
@@ -242,6 +243,9 @@
                 for(var i = 0;i<this.data.comList.length;i++){
                 //获取屏幕对象
                 this.ledParasJson = this.data.comList[i].ledParas;
+                console.log(this.ledParasJson);
+                $('#boxTitle').text(this.ledParasJson.common_Recparas.box_Name);
+                $('#productTitle').text(this.ledParasJson.common_Recparas.box_Type);
                 //发送卡数组
                 this.senderOrderList = this.ledParasJson.senderOrderList;
                 //遍历发送卡列表可知发送卡数量
@@ -559,8 +563,26 @@
                         if(params.data.type == '屏体'){
                             //屏体参数赋值
                             var detail = params.data.detail;
-                            this.info_title = detail.id;
-                            console.log(this.info_title);
+                            this.info_title = detail;
+                            //接收卡信息
+                            var rec = this.info_title.rec[0];
+                            console.log(rec);
+                            //传感器赋值
+                            $('#SENSOR_VOL').text(rec.sensor_Vol+"V");
+                            $('#SENSOR_CURRENT').text(rec.sensor_Current+"A");
+                            $('#SENSOR_HUMI').text(rec.sensor_Humi+"%RH");
+                            $('#SENSOR_SMOG').text(rec.sensor_Smog);
+                            $('#SENSOR_TMP').text(rec.sensor_Tmp+"℃");
+                            $('#SENSOR_BRI').text(rec.sensor_Bri+"Lux");
+                            //模组信息赋值
+
+                            //电源赋值
+
+                            //接收卡信息赋值
+
+                            //维修日志赋值
+
+                            //驱动IC赋值
                             $('#cover').css('display','block'); //显示遮罩层
                             $('.container').attr('style', 'visibility: visible').find('.pop-up').
                             attr('style', 'visibility: visible').siblings().attr('style', 'visibility: hidden');
