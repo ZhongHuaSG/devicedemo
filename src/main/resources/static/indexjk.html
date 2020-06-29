@@ -1,0 +1,2998 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN" id="webjk">
+<head>
+    <meta charset="UTF-8">
+    <title>洲明本地监控系统</title>
+    <style  type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 100%;
+        }
+
+        html {
+            overflow-y: auto;
+            overflow-x: hidden;
+            background-image: url(img/bg.jpg);
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            -webkit-font-smoothing: antialiased;
+            font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+
+        }
+
+
+        .index_content {
+            width: 100%;
+            height: 100%;
+        }
+
+        .index_nav {
+            height: 11.3%;
+            background-color: #1D8CE0;
+            color: #ffffff;
+            top: 0;
+            left: 0;
+            width: 100%;
+            position: fixed;
+            z-index: 9999;
+        }
+
+        .index_nav ul li {
+            font-size: 1em;
+            font-weight: 500;
+            opacity: 0.8;
+            cursor: pointer;
+            display: list-item;
+            z-index: 9999;
+            text-align: -webkit-match-parent;
+            list-style: none;
+            padding-left: 2.8%;
+        }
+
+
+        .index_nav ul .l_left {
+            float: left;
+            margin-top: -0.2%;
+            margin-left: 16%;
+        }
+
+        .index_nav ul .r_right {
+            float: right;
+            margin-top: 0.8%;
+        }
+
+        .index_nav ul li:hover {
+            opacity: 1;
+        }
+
+        .p1 {
+            margin-right: 16%;
+        }
+
+        .p2 {
+            margin-right: 6%;
+        }
+
+        .nav_active {
+            opacity: 1 !important;
+            color: #04449c;
+        }
+
+
+        .sz {
+            background-image: url(img/sz.svg);
+            width: 1em;
+            height: 2em;
+            background-repeat: no-repeat;
+        }
+
+
+        .kz {
+            background-image: url(img/kz.svg);
+            width: 1em;
+            height: 2em;
+            background-repeat: no-repeat;
+        }
+
+        .zm {
+            background-image: url(img/zm.svg);
+            width: 11.3em;
+            height: 3em;
+            background-repeat: no-repeat;
+        }
+
+
+        .asz {
+            background-image: url(img/sz1.svg);
+            width: 1em;
+            height: 2em;
+            background-repeat: no-repeat;
+        }
+
+        .akz {
+            background-image: url(img/kz1.svg);
+            width: 1em;
+            height: 2em;
+            background-repeat: no-repeat;
+        }
+
+        .azm {
+            background-image: url(img/zm1.svg);
+            width: 11.3em;
+            height: 3em;
+            background-repeat: no-repeat;
+        }
+
+
+        .nc {
+            height: 4em;
+            display: block;
+            margin-left: -300%;
+            letter-spacing: 0.0001em;
+            line-height: 5.8em;
+            -webkit-touch-callout: none; /* iOS Safari */
+
+            -webkit-user-select: none; /* Chrome/Safari/Opera */
+
+            -khtml-user-select: none; /* Konqueror */
+
+            -moz-user-select: none; /* Firefox */
+
+            -ms-user-select: none; /* Internet Explorer/Edge */
+
+            user-select: none; /* Non-prefixed version, currently not supported by any browser */
+        }
+
+
+        .nczm {
+            display: block;
+            margin-left: -18.7%;
+            margin-top: 25%;
+            font-size: larger;
+            width: 112%;
+            letter-spacing: 0.3em;
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Chrome/Safari/Opera */
+            -khtml-user-select: none; /* Konqueror */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently not supported by any browser */
+        }
+
+        .yh {
+            background-image: url(img/yh.svg);
+            background-repeat: no-repeat;
+            width: 2em;
+            height: 2em;
+            margin-left: 93%;
+            margin-top: 1%;
+            opacity: 0.8;
+            z-index: 9999;
+            position: relative;
+        }
+
+        .um {
+            width: 4em;
+            height: 5em;
+            position: absolute;
+            margin-left: -44%;
+            margin-top: 109%;
+            background-color: #ffffff;
+            border-radius: 0.3em;
+            border: 0.1em solid #ededed;
+            display: none;
+
+            top: 1.2em;
+            left: 0;
+        }
+
+        .yh:hover .um {
+            display: block;
+        }
+
+
+        .ncyh {
+            width: 6em;
+            height: 0.6em;
+            display: block;
+            line-height: 0.1em;
+            letter-spacing: 0.1em;
+            padding-top: 47%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Chrome/Safari/Opera */
+            -khtml-user-select: none; /* Konqueror */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently not supported by any browser */
+        }
+
+        .yh:hover {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        a.bw {
+            display: block;
+            text-decoration: none;
+            color: #999;
+            margin-left: 1em;
+            margin-top: 0.5em;
+        }
+
+        a.btc {
+            display: block;
+            text-decoration: none;
+            color: #999;
+            margin-left: 1em;
+            margin-top: 0.6em;
+        }
+
+        a:hover {
+            color: #1D8CE0;
+        }
+
+        .index_tabs {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            display: block;
+            margin-top: 76px;
+        }
+
+
+        .tab {
+            height: 100%;
+            width: 100%;
+            color: #20a0ff;
+            position: absolute;
+        }
+
+
+
+
+        .left {
+            width: 397px;
+            height: 571px;
+            float: left;
+            margin-left: 3px;
+            margin-top: 3px;
+        }
+
+        .left0 {
+            width: 397px;
+            height: 43%;
+            border: 0.001em solid #129ce6;
+        }
+
+
+        .lt0 {
+            background-color: #E5E9F2;
+            line-height: 30px;
+            font-weight: 500;
+            font-family: serif;
+        }
+
+        .azig {
+            margin-top: -176px;
+            margin-left: -21px;
+            position: absolute;
+        }
+
+        .kzqrun {
+            margin-top: 96px;
+            margin-left: 27px;
+            width: 100px;
+            height: 100px;
+            background: aqua;
+            animation: turn 1s linear infinite;
+            background: url(img/azyx.png) no-repeat center center;
+            position: relative;
+        }
+
+        .left1 {
+            width: 397px;
+            height: 55.5%;
+            border: 0.001em solid #129ce6;
+            position:relative;
+            margin-top: 8px;
+        }
+
+        .lt1 {
+            background-color: #E5E9F2;
+            line-height: 30px;
+            font-weight: 500;
+            font-family: serif;
+        }
+
+        .fskig {
+            margin-top: 133px;
+            margin-left: 10px;
+            position: absolute;
+        }
+
+        .fskrun {
+            margin-top: 155px;
+            margin-left: 11px;
+            width: 100px;
+            height: 100px;
+            background: aqua;
+            animation: turn 1s linear infinite;
+            background: url(img/fskyx.png) no-repeat center center;
+            position: absolute;
+        }
+
+
+        .center {
+            width: 450px;
+            height: 571px;
+            border: 0.001em solid #129ce6;
+            float: left;
+            margin-left: 6px;
+            margin-top: 3px;
+        }
+
+        .ct {
+            background-color: #E5E9F2;
+            line-height: 30px;
+            text-align: center;
+            font-weight: 500;
+            font-family: serif;
+        }
+
+
+        .right {
+            width: 397px;
+            height: 571px;
+            float: left;
+            margin-left: 6px;
+            margin-top: 3px;
+        }
+
+        .right0 {
+            width: 397px;
+            height: 43%;
+            border: 0.001em solid #129ce6;
+        }
+
+
+        .rt0 {
+            background-color: #E5E9F2;
+            line-height: 30px;
+            font-weight: 500;
+            font-family: serif;
+        }
+
+        .gx0 {
+            width: 397px;
+            height: 218px;
+            position: relative;
+        }
+
+        .right1 {
+            width: 397px;
+            height: 55.5%;
+            border: 0.001em solid #129ce6;
+            margin-top: 8px;
+            position: relative;
+        }
+
+        .rt1 {
+            background-color: #E5E9F2;
+            line-height: 30px;
+            font-weight: 500;
+            font-family: serif;
+        }
+
+
+        .dy {
+            width: 397px;
+            height: 407px;
+            margin-top: -254px;
+            margin-left: -110px;
+        }
+
+        .dl {
+            width: 397px;
+            height: 407px;
+            position: absolute;
+            margin-top: -363px;
+            margin-left: 135px;
+        }
+
+        .fs {
+            position: absolute;
+            margin-top: -370px;
+            margin-left: 160px;
+            width: 100px;
+            height: 100px;
+            animation: turn 1s linear infinite;
+            background: url(img/fs.svg) no-repeat center center;
+            z-index: 1;
+        }
+
+
+        /*
+          turn : 定义的动画名称
+          1s : 动画时间
+          linear : 动画以何种运行轨迹完成一个周期
+          infinite :规定动画应该无限次播放
+         */
+        @keyframes turn {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            25% {
+                -webkit-transform: rotate(90deg);
+            }
+            50% {
+                -webkit-transform: rotate(180deg);
+            }
+            75% {
+                -webkit-transform: rotate(270deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        .hjws {
+            width: 397px;
+            height: 407px;
+            position: relative;
+            margin-top: -18px;
+            margin-left: 11px;
+        }
+
+        .circle {
+            width: 10px;
+            height: 10px;
+            border-radius: 10%;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            font-size: .18rem;
+            color: #ffffff;
+            opacity: 1;
+            display: inline-block;
+            margin-left: 10px;
+            margin-top: 13px;
+
+        }
+
+        .ledstatus {
+            font: 13px/23px 'PingFang SC', Arial, 'Microsoft YaHei', sans-serif;
+            font-style: normal;
+            font-variant-ligatures: normal;
+            font-variant-caps: normal;
+            font-variant-numeric: normal;
+            font-variant-east-asian: normal;
+            font-weight: normal;
+            font-stretch: normal;
+            font-family: "PingFang SC", Arial, "Microsoft YaHei", sans-serif;
+        }
+
+
+
+        .onbutton {
+            font-weight: bold;
+            position: absolute;
+            margin-top: 30px;
+            margin-left: 91px;
+        }
+
+        div#ledswitch {
+            margin-top: 31px;
+            margin-left: 146px;
+        }
+
+        div#ledslider {
+            position: absolute;
+            width: 600px;
+            margin-left: 93px;
+            margin-top: 238px;
+            line-height: 35px;
+        }
+
+        .ledph1 {
+            float: left;
+            width: 73%;
+            margin-left: -2px;
+            margin-top: -21px;
+        }
+
+        .ledph2 {
+            float: left;
+            margin-left: 581px;
+            margin-top: -292px;
+            width: 73%;
+        }
+
+        div#input{
+            margin-top: 142px;
+            margin-left: 88px;
+        }
+
+
+        div#input1{
+            margin-top: -41px;
+            margin-left: 676px;
+        }
+
+        div#ledradio {
+            float: left;
+            margin-left: 94px;
+            margin-top: -115px;
+        }
+
+        .circle2 {
+            width: 10px;
+            height: 10px;
+            border-radius: 10%;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            font-size: .18rem;
+            color: #ffffff;
+            opacity: 1;
+            display: inline-block;
+            margin-left: 13px;
+            margin-top: 17px;
+        }
+
+        .clearfix:after, .clearfix:before {
+            display: table;
+            content: " "
+        }
+
+        .clearfix:after {
+            clear: both
+        }
+
+
+        .mainbox {
+            margin-left: 165px;
+            margin-top: -187px;
+            width: 520px;
+        }
+
+        .mainbox > ul {
+            margin-left: -.4rem;
+            margin-right: -.4rem;
+        }
+
+        .mainbox > ul > li {
+            float: left;
+            padding: 0 .4rem
+        }
+
+        .mainbox > ul > li {
+            width: 30%
+        }
+
+        .mainbox > ul > li:nth-child(2) {
+            width: 40%
+        }
+
+        .boxall {
+            height: 11.7rem;
+            width:13rem;
+            border: 1px solid rgba(25, 186, 139, .17);
+            padding: 0 .3rem .3rem .3rem;
+            background: rgba(255, 255, 255, .04);
+            background-size: 100% auto;
+            position: relative;
+            margin-bottom: .3rem;
+            z-index: 10;
+        }
+
+        .boxall:before,
+        .boxall:after {
+            position: absolute;
+            width: .1rem;
+            height: .1rem;
+            content: "";
+            border-top: 2px solid #02a6b5;
+            top: 0;
+        }
+
+        .boxall:before, .boxfoot:before {
+            border-left: 2px solid #02a6b5;
+            left: 0;
+        }
+
+        .boxall:after, .boxfoot:after {
+            border-right: 2px solid #02a6b5;
+            right: 0;
+        }
+
+
+        .boxfoot {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            left: 0;
+        }
+
+        .boxfoot:before,
+        .boxfoot:after {
+            position: absolute;
+            width: .1rem;
+            height: .1rem;
+            content: "";
+            border-bottom: 2px solid #02a6b5;
+            bottom: 0;
+        }
+
+
+        .sycm ul {
+            margin-left: -.5rem;
+            margin-right: -.5rem;
+            padding: 1.16rem 0;
+        }
+
+        .sycm li {
+            float: left;
+            width: 47.33%;
+            text-align: center;
+            position: relative
+        }
+
+        .sycm li:before {
+            position: absolute;
+            content: "";
+            height: 30%;
+            width: 1px;
+            background: rgba(255, 255, 255, .1);
+            right: 0;
+            top: 15%;
+        }
+
+        .sycm li:last-child:before {
+            width: 0;
+        }
+
+        .sycm li h2 {
+            font-size: 0.6rem;
+            color: #ffffff;
+            opacity: 0.7;
+        }
+
+        .sycm li span {
+            font-size: 0.5rem;
+            color: #ffffff;
+            opacity: 1;
+        }
+
+        ul li {
+            list-style-type: none;
+        }
+
+
+        .clearfix1:after, .clearfix1:before {
+            display: table;
+            content: " "
+        }
+
+        .clearfix1:after {
+            clear: both
+        }
+
+
+        .mainbox1 {
+            /*margin-top: 7px;*/
+            padding: .4rem .4rem 0rem .4rem;
+            position: absolute;
+        }
+
+        .mainbox1 > ul {
+            margin-left: -.4rem;
+            margin-right: -.4rem;
+        }
+
+        .mainbox1 > ul > li {
+            float: left;
+            padding: 0 .4rem
+        }
+
+        .mainbox1 > ul > li {
+            width: 30%
+        }
+
+        .mainbox1 > ul > li:nth-child(2) {
+            width: 40%
+        }
+
+        .boxall1 {
+            height: 7rem;width:22.8rem;
+            border: 1px solid rgba(25, 186, 139, .17);
+            padding: 0 .3rem .3rem .3rem;
+            background: rgba(255, 255, 255, .04);
+            background-size: 100% auto;
+            position: absolute;
+            margin-bottom: .3rem;
+            z-index: 10;
+            margin-top: 23px;
+        }
+
+        .boxall1:before,
+        .boxall1:after {
+            position: absolute;
+            width: .1rem;
+            height: .1rem;
+            content: "";
+            border-top: 2px solid #02a6b5;
+            top: 0;
+        }
+
+        .boxall1:before, .boxfoot1:before {
+            border-left: 2px solid #02a6b5;
+            left: 0;
+        }
+
+        .boxall1:after, .boxfoot1:after {
+            border-right: 2px solid #02a6b5;
+            right: 0;
+        }
+
+
+        .boxfoot1 {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            left: 0;
+        }
+
+        .boxfoot1:before,
+        .boxfoot1:after {
+            position: absolute;
+            width: .1rem;
+            height: .1rem;
+            content: "";
+            border-bottom: 2px solid #02a6b5;
+            bottom: 0;
+        }
+
+
+        .sycm1 {
+            margin-top: 9px;
+        }
+
+        .sycm1 ul {
+            margin-left: -.5rem;
+            margin-right: -.5rem;
+            padding: .16rem 0;
+            line-height: 22px;
+        }
+
+        .sycm1 li {
+            float: left;
+            width: 33.33%;
+            text-align: center;
+            position: relative
+        }
+
+        .sycm1 li:before {
+            position: absolute;
+            content: "";
+            height: 30%;
+            width: 1px;
+            background: rgba(255, 255, 255, .1);
+            right: 0;
+            top: 15%;
+        }
+
+        .sycm1 li:last-child:before {
+            width: 0;
+        }
+
+
+        .sycm1 li h2 {
+            font-size: 0.6rem;
+            color: #ffffff;
+            opacity: 0.7;
+        }
+
+        .sycm1 li span {
+            font-size: 0.5rem;
+            color: #ffffff;
+            opacity: 1;
+        }
+
+
+        .clearfix2:after, .clearfix2:before {
+            display: table;
+            content: " "
+        }
+
+        .clearfix2:after {
+            clear: both
+        }
+
+
+
+        .mainbox2 {
+            margin-top: 221px;
+            padding: .4rem .4rem 0rem .4rem;
+            margin-left: 2px;
+        }
+
+        .mainbox2 > ul {
+            margin-left: -.4rem;
+            margin-right: -.4rem;
+        }
+
+        .mainbox2 > ul > li {
+            float: left;
+            padding: 0 .4rem
+        }
+
+        .mainbox2 > ul > li {
+            width: 30%
+        }
+
+        .mainbox2 > ul > li:nth-child(2) {
+            width: 40%
+        }
+
+        .boxall2 {
+            height: 17rem;width:26.3rem;
+            border: 1px solid rgba(25, 186, 139, .17);
+            padding: 0 .3rem .3rem .3rem;
+            background-size: 100% auto;
+            position: relative;
+            margin-bottom: .3rem;
+            z-index: 10;
+        }
+
+        .boxall2:before,
+        .boxall2:after {
+            position: absolute;
+            width: .1rem;
+            height: .1rem;
+            content: "";
+            border-top: 2px solid #02a6b5;
+            top: 0;
+        }
+
+        .boxall2:before, .boxfoot2:before {
+            border-left: 2px solid #02a6b5;
+            left: 0;
+        }
+
+        .boxall2:after, .boxfoot2:after {
+            border-right: 2px solid #02a6b5;
+            right: 0;
+        }
+
+
+        .boxfoot2 {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            left: 0;
+        }
+
+        .boxfoot2:before,
+        .boxfoot2:after {
+            position: absolute;
+            width: .1rem;
+            height: .1rem;
+            content: "";
+            border-bottom: 2px solid #02a6b5;
+            bottom: 0;
+        }
+
+
+        .sycm2 {
+            margin-top: 53px;
+        }
+
+        .sycm2 ul {
+            margin-left: -.5rem;
+            margin-right: -.5rem;
+            padding: .16rem 0;
+            line-height: 22px;
+        }
+
+        .sycm2 li {
+            float: left;
+            width: 33.33%;
+            text-align: center;
+            position: relative
+        }
+
+        .sycm2 li:before {
+            position: absolute;
+            content: "";
+            height: 30%;
+            width: 1px;
+            background: rgba(255, 255, 255, .1);
+            right: 0;
+            top: 15%;
+        }
+
+        .sycm2 li:last-child:before {
+            width: 0;
+        }
+
+
+        .sycm2 li h2 {
+            font-size: 0.6rem;
+            color: #ffffff;
+            opacity: 0.7;
+        }
+
+        .sycm2 li span {
+            font-size: 0.5rem;
+            color: #ffffff;
+            opacity: 1;
+        }
+
+
+        @font-face {
+            font-family: 'UnidreamLED';
+            src: url('fonts/LED Dot-Matrix.ttf');
+        }
+
+
+        .timeshow {
+            margin-top: -20px;
+            margin-left: 139px;
+            position:absolute;
+        }
+
+        .curtitle {
+            font-family: "微软雅黑", serif;
+            font-size: 0.5rem;
+            color: #ffffff;
+            opacity: 0.6;
+        }
+
+        .current {
+            letter-spacing: 0.1em;
+            font-size: 1em;
+            font-family: 'UnidreamLED', serif;
+            color: #00ca6d;
+            margin-top: 10px;
+        }
+
+        .timeshow1 {
+            margin-top: -20px;
+            margin-left: 271px;
+            position: absolute;
+        }
+
+        .curtitle1 {
+            font-family: "微软雅黑", serif;
+            font-size: 0.5rem;
+            color: #ffffff;
+            opacity: 0.6;
+        }
+
+        .current1 {
+            letter-spacing: 0.1em;
+            font-size: 1em;
+            font-family: 'UnidreamLED', serif;
+            color: #00ca6d;
+            margin-top: 10px;
+        }
+
+
+        .fskimp {
+            margin-left: 265px;
+            margin-top: 166px;
+            position: absolute;
+        }
+
+        .fskimp h3 {
+            font-size: 0.6rem;
+            color: #ffffff;
+            opacity: 0.7;
+        }
+
+        .fskimp p {
+            font-size: 0.5rem;
+            color: #ffffff;
+            opacity: 1;
+            line-height: 31px;
+            text-decoration: underline;
+        }
+
+        .fskstatus {
+            font: 13px/23px 'PingFang SC', Arial, 'Microsoft YaHei', sans-serif;
+            font-style: normal;
+            font-variant-ligatures: normal;
+            font-variant-caps: normal;
+            font-variant-numeric: normal;
+            font-variant-east-asian: normal;
+            font-weight: normal;
+            font-stretch: normal;
+            font-family: "PingFang SC", Arial, "Microsoft YaHei", sans-serif;
+        }
+
+        .cssrun {
+            position: absolute;
+        }
+
+        .ledrun1 {
+            letter-spacing: 0.1em;
+            font-size: 3em;
+            font-family: 'UnidreamLED', serif;
+            color: #ff0000;
+            margin-top: 18px;
+            font-style: normal;
+            margin-left: -45px;
+
+        }
+
+        .ledrun2 {
+            letter-spacing: 0.1em;
+            font-size: 3em;
+            font-family: 'UnidreamLED', serif;
+            color: #00ff00;
+            margin-top: 18px;
+            font-style: normal;
+            margin-left: 15px;
+
+        }
+
+        .ledrun3 {
+            letter-spacing: 0.1em;
+            font-size: 3em;
+            font-family: 'UnidreamLED', serif;
+            color: #0000ff;
+            margin-top: 18px;
+            font-style: normal;
+            margin-left: 78px;
+
+        }
+
+
+
+        .ledsceen .cssrun {
+            margin-top: -478px;
+            margin-left: 90px;
+            width: 253px;
+            height: 133px;
+            line-height: 100px;
+            font-size: 2em;
+            font-family: sans-serif;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .ledsceen .cssrun {
+            background: url(img/led.svg) no-repeat center center;
+            color: #FBF2D5;
+            transform-origin: left;
+            transform: perspective(300px) rotateX(0deg);
+        }
+
+
+        .ledsceen .cssrun i {
+            position: absolute;
+            animation: marquee 5s linear infinite;
+
+        }
+
+
+        @keyframes marquee {
+            from {
+                left: 100%;
+            }
+            to {
+                left: -100%;
+            }
+        }
+
+
+    </style>
+
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/vue.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/echarts.min.js"></script>
+    <script src="js/echarts-liquidfill.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+
+
+
+</head>
+
+<body >
+<!-- 遮罩层 -->
+<div id="cover" style="background: #000; position: absolute; left: 0px; top: 0px;height: 100%; width: 100%;  filter: alpha(opacity=30); opacity: 0.3; display: none; z-index: 2 ">
+
+<div class="index_content"  id="app">
+    <div class="index_nav">
+        <ul>
+            <li class="l_left total_chose_fr  azm  nav_active" id="jk"><span class="nczm">洲明本地监控系统</span></li>
+            <li class="r_right p1 sz "><span class="nc">系统配置</span></li>
+            <li class="r_right p2 kz "><span class="nc">屏体控制</span></li>
+        </ul>
+
+        <div class="yh" id="byh">
+            <span class="ncyh">root</span>
+            <div id="user_menu" class="um">
+                <a class="bw" href="javascript:">账户</a>
+                <a class="btc" href="javascript:">退出</a>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- <div class="bg bg-blur"></div>-->
+    <div class="index_tabs">
+        <!--安防运作-->
+        <div class="tab" id="jkxt">
+            <div class="left">
+                <div class="left0"><h3 class="lt0">控制卡信息</h3>
+                    <div class="kzqrun"></div>
+                    <div class="azig"><img src="img/az.svg" alt=""></div>
+                    <div class="mainbox">
+                        <ul class="clearfix">
+                            <li>
+                                <div class="boxall" >
+                                    <div class="sycm">
+                                        <ul class="clearfix">
+                                            <li><h2>型号</h2><span>安卓</span></li>
+                                            <li><h2>版本</h2><span>1.01</span></li>
+                                        </ul>
+                                        <div  class="jkcontent" style="border-bottom: 1px solid rgba(255,255,255,.1)"></div>
+                                        <ul class="clearfix">
+                                            <li><h2>ip地址</h2><span v-for="cm in comlist">{{cm.LEDPARAS.ANDROID_IP}}</span></li>
+                                            <li><h2>mac地址</h2><span v-for="cm in comlist">{{cm.LEDPARAS.ANDROID_MAC}}</span></li>
+                                        </ul>
+                                        <div class="jkcontent" style="border-bottom: 1px solid rgba(255,255,255,.1)"></div>
+                                        <ul class="clearfix">
+                                            <li><h2>通讯状态</h2><span>正常</span></li>
+                                            <li><h2>信号强度</h2><span>强</span></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="boxfoot"></div>
+                                </div>
+                            </li>
+                            <li>
+
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+                <div class="left1">
+                    <h3 class="lt1">发送卡信息</h3>
+                    <h3 class="circle2" id="fskon"></h3>
+                    <span id="fskonspan" class="fskstatus"></span>
+                    <div id="show" class="timeshow">
+                        <h1 class="curtitle">运行时间</h1>
+                        <h3 id="ctime" class="current"></h3>
+                    </div>
+
+                    <div id="show1" class="timeshow1">
+                        <h1 class="curtitle1">累计时间</h1>
+                        <h3 id="ctime1" class="current1"></h3>
+                    </div>
+
+                    <div class="mainbox1">
+                        <ul class="clearfix1">
+                            <li>
+                                <div class="boxall1" >
+                                    <div class="sycm1">
+                                        <ul class="clearfix1">
+                                            <li v-for="cm in comlist"><h2>型号</h2><span v-for="sd in cm.LEDPARAS.SENDER_ORDER">{{sd.SENDER_TYPE}}</span></li>
+                                            <li v-for="cm in comlist"><h2>版本</h2><span v-for="sd in cm.LEDPARAS.SENDER_ORDER">{{sd.VER}}</span></li>
+                                            <li ><h2>通讯状态</h2><span>强</span></li>
+                                        </ul>
+                                        <div class="jkcontent" style="border-bottom: 1px solid rgba(255,255,255,.1)"></div>
+                                        <ul class="clearfix1">
+                                            <li  v-for="cm in comlist"><h2>ip地址</h2><span v-for="sd in cm.LEDPARAS.SENDER_ORDER">{{sd.IPADDR}}</span></li>
+                                            <li  v-for="cm in comlist"><h2>mac地址</h2><span v-for="sd in cm.LEDPARAS.SENDER_ORDER">{{sd.MACADDR}}</span></li>
+                                            <li  v-for="cm in comlist"><h2>输入电压</h2><span v-for="sd in cm.LEDPARAS.SENDER_ORDER">{{sd.VOLTAGE}}V</span></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="boxfoot1"></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="fskimp" v-for="cm in comlist">
+                        <ul>
+                        <li v-for="sd in cm.LEDPARAS.SENDER_ORDER">
+                            <h3>发送卡网口数</h3>
+                            <p><span >{{sd.PORT_ORDER.length}}</span></p>
+                        </li>
+                        </ul>
+                        <h3>带载箱体数</h3>
+                        <p v-for="sd in cm.LEDPARAS.SENDER_ORDER">{{sd.SENDER_BOXUSED}}</p>
+                    </div>
+                    <div class="fskrun"></div>
+                    <div class="fskig"><img src="img/fsk.svg" alt=""></div>
+                </div>
+            </div>
+
+            <div class="center">
+                <h3 class="ct">LED屏体信息</h3>
+                <div class="circle" id="ledon"></div>
+                <span id="ledonspan" class="ledstatus"></span>
+
+                <div class="mainbox2">
+                    <ul class="clearfix2">
+                        <li>
+                            <div class="boxall2" >
+                                <div class="sycm2">
+                                    <ul class="clearfix2">
+                                        <li><h2>屏体ID</h2><span  v-if="source.LEDSCREEN&&source.LEDSCREEN.INDEX">{{source.LEDSCREEN.INDEX}}</span></li>
+                                        <li><h2>分辨率</h2><span v-for="cm in comlist">{{cm.LEDPARAS.LED_RSLT}}</span></li>
+                                        <li><h2>间距</h2><span v-for="cm in comlist">{{cm.LEDPARAS.LED_SPACE}}</span></li>
+                                    </ul>
+                                    <div class="jkcontent" style="border-bottom: 1px solid rgba(255,255,255,.1)"></div>
+                                    <ul class="clearfix2">
+                                        <li><h2>屏体类型</h2><span v-for="cm in comlist">{{cm.LEDPARAS.LED_TYPE}}</span></li>
+                                        <li  v-for="cm in comlist"><h2>输入源</h2><span  v-for="sd in cm.LEDPARAS.SENDER_ORDER">{{sd.INPUTSOURCE}}</span></li>
+                                        <li  v-for="cm in comlist"><h2>刷新率</h2><span  v-for="sd in cm.LEDPARAS.SENDER_ORDER">{{sd.INSRC_FRE}}</span></li>
+                                    </ul>
+
+                                    <div style="border-bottom: 1px solid rgba(255,255,255,.1)"></div>
+                                    <ul class="clearfix2">
+                                        <li><h2>默认亮度</h2><span v-for="cm in comlist">{{cm.LEDPARAS.ENVI_BRIGHT}}</span></li>
+                                        <li><h2>通讯类型</h2><span >{{destination.INTERFACES}}</span></li>
+                                        <li><h2>维修时长</h2><span >1年</span></li>
+                                    </ul>
+
+                                </div>
+
+                                <div class="boxfoot2"></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="ledsceen">
+                    <div class="cssrun">
+                        <i class="ledrun1">L</i><i class="ledrun2">E</i><i class="ledrun3">D</i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right">
+                <div class="right0"><h3 class="rt0">光学参数信息</h3>
+                    <div>
+                        <div class="gx0" id="chartmain0"></div>
+                    </div>
+                </div>
+                <div class="right1"><h3 class="rt1">传感器信息</h3>
+                    <div class="hjws" id="chartmain3"></div>
+                    <div class="dy" id="chartmain1"></div>
+                    <div title="开">
+                        <div class="fs"></div>
+                    </div>
+                    <div class="dl" id="chartmain2"></div>
+                </div>
+            </div>
+
+            <div class="container-flex" tabindex="0" hidefocus="true">
+                <div class="box-center">
+                    <div class="center-bottom">
+                        <div class="city-data">
+                            <div id="tuopu" style="width: 16rem;height:8rem;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="pop-up">
+                    <span class="close-pop"></span>
+                    <h2 id="boxTitle" class="title"></h2>
+                    <h3  style="width: 100%;height:0.4rem;font-size: 0.26rem;color:#0e94eb;margin-left:0.3rem;"><b>箱体型号:<span id="productTitle" style="color: white;"></span></b></h3>
+                    <!-- 模组信息弹框 -->
+                    <div  class="modedetail" >
+                        <!-- 模组ID -->
+                        <h2 style="width: 1.4rem;height:0.4rem;line-height:0.37rem;text-align:center;font-size: 0.2rem;color:#0e94eb;margin-top: 0.75rem;margin-left: 0.45rem;background: url(/images/moduleDetailTitle.png) top left no-repeat">
+                            <b>模组ID</b>
+                        </h2>
+                        <ul style="width:3.4rem;font-size: 0.19rem;margin-left: 0.6rem;margin-top: 0.1rem;line-height: 0.3rem;">
+                            <!-- 分辨率 -->
+                            <li style="color: #0e94eb;">
+                                分辨率：<b><span id="MOD_RSL" style="color: #E9E7E7;margin-left: 1rem;">96 * 108</span></b>
+                            </li>
+                            <!-- 间距 -->
+                            <li style="color: #0e94eb;margin-top: 0.13rem;">
+                                间距：<b><span id="MOD_SPACE" style="color: #E9E7E7;margin-left: 1.19rem;">1.588</span></b>
+                            </li>
+                            <!-- 分割线 -->
+                            <li style="margin-top: 0.13rem;border-bottom:rgba(255, 255, 255, 0.2) 1px solid;"></li>
+                            <!-- 规格类型 -->
+                            <li style="color: #0e94eb;margin-top: 0.13rem;">
+                                规格型号：<b><span id="LAMP_PARA_STYLE" style="color: #E9E7E7;margin-left: 0.81rem;">SMD3258</span></b>
+                            </li>
+                            <!-- 亮度 -->
+                            <li style="color: #0e94eb;margin-top: 0.13rem;">
+                                亮度：<b><span id="LAMP_PARA_BRIGHT" style="color: #E9E7E7;margin-left: 1.19rem;">600</span></b>
+                            </li>
+                            <!-- 波长 -->
+                            <b style="color: #0e94eb;margin-top: 0.13rem;">
+                                波长(RGB)：<b><p id="LAMP_PARA_WAVELEN" style="color: #E9E7E7;">R:400~480,G:620~750,B:480~500</p></b>
+                                </li>
+                                <!-- 发光亮度 -->
+                                <li style="color: #0e94eb;margin-top: 0.13rem;">
+                                    发光角度：<b><span id="LAMP_PARA_ANGLE" style="color: #E9E7E7;margin-left: 0.81rem;">120</span></b>
+                                </li>
+                                <!-- 抗静电能力 -->
+                                <li style="color: #0e94eb;margin-top: 0.13rem;">
+                                    抗静电能力：<span id="LAMP_PARA_ANTISTATIC" style="color: #E9E7E7;margin-left: 0.62rem;"><b>700</b></span>
+                                </li>
+                                <!-- 漏电电流 -->
+                                <li style="color: #0e94eb;margin-top: 0.13rem;">
+                                    漏电电流：<b><span id="LAMP_PARA_LEAKAGE_CURRENT" style="color: #E9E7E7;margin-left: 0.81rem;">5</span></b>
+                                </li>
+                                <!-- 扫描方式 -->
+                                <li style="color: #0e94eb;margin-top: 0.13rem;">
+                                    扫描方式：<b><span id="MOD_SCAN_NUM" style="color: #E9E7E7;margin-left: 0.81rem;">27</span></b>
+                                </li>
+                        </ul>
+                    </div>
+                    <div class="set-div">
+                        <div class="set-box">
+                            <label class="four-f" for="">&nbsp;&nbsp;&nbsp;传感器</label>
+                            <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 2rem;height: 1rem;margin-top: 1.6rem;margin-left:-1.6rem;">
+                                <ul style="margin-left:0.12rem;margin-top:-0.04rem;">
+                                    <li style="margin-top: 0.08rem;color: #0e94eb;">电压：<span id="SENSOR_VOL" style="color: #E9E7E7"></span></li>
+                                    <li style="margin-top: 0.08rem;color: #0e94eb;">电流：<span id="SENSOR_CURRENT" style="color: #E9E7E7">A</span></li>
+                                    <li style="margin-top: 0.08rem;color: #0e94eb;">湿度：<span id="SENSOR_HUMI" style="color: #E9E7E7">%RH</span></li>
+                                    <li style="margin-top: 0.08rem;color: #0e94eb;">烟雾：<span id="SENSOR_SMOG" style="color: #E9E7E7">333</span></li>
+                                </ul>
+                                <ul style="margin-left:1rem;margin-top:-1rem;">
+                                    <li style="margin-top: 0.08rem;color: #0e94eb;">温度：<span id="SENSOR_TMP" style="color: #E9E7E7">℃</span></li>
+                                    <li style="margin-top: 0.08rem;color: #0e94eb;">亮度：<span id="SENSOR_BRI" style="color: #E9E7E7">Lux</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="set-box" style="margin-top: 1rem;height:0.8rem">
+                            <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;驱动IC</label>
+                            <div class="didimen1" style="font-size: small;border:1px solid #1dacfe;width: 1rem;height: 0.1985rem;margin-top: 0.7rem;margin-left:-1.6rem;">
+                                <ul style="margin-left:0.12rem;margin-top:-0.04rem;">
+                                    <li style="margin-top: 0.08rem;color: #0e94eb;"><span id="ICSYLE" style="color: #E9E7E7">MBI5153GP</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="set-box" style="margin-top:0.2rem;">
+                            <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电源：</label>
+                            <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 1.9rem;height: 1rem;margin-top: 1.6rem;margin-left:-1.6rem;">
+                                <ul style="margin-left:0.12rem;margin-top:-0.04rem;">
+                                    <li style="margin-top: 8px;color: #0e94eb;">最大功率：<span id="MAX_POWER" style="color: #E9E7E7">220W</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">电压：<span id="VOLTAGE" style="color: #E9E7E7">22V</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">实际功率：<span id="RT_POWERDIS" style="color: #E9E7E7">55W</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">平均功率：<span id="AVE_POWERDIS" style="color: #E9E7E7">43W</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="set-box" style="margin-top:1.2rem;">
+                            <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接收卡信息：</label>
+                            <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 2.5rem;height: 1.38rem;margin-top: 1.83rem;margin-left:-1.6rem;">
+                                <ul style="margin-left:0.12rem;margin-top:-0.04rem;">
+                                    <li style="margin-top: 0.08rem;color: #0e94eb;">接收卡名称：<span id="rec_Id" style="color: #E9E7E7">C160080</span></li>
+                                    <li style="margin-top: 0.08rem;color: #0e94eb;">接收卡个数：<span id="rec_Count" style="color: #E9E7E7">1</span></li>
+                                    <li style="margin-top: 0.08rem;color: #0e94eb;">运行时间：<span id="rec_TOTAL_WORKTIME" style="color: #E9E7E7">2h5m0s</span></li>
+                                    <li style="margin-top: 0.08rem;color: #0e94eb;">版本号：<span id="REC_VER" style="color: #E9E7E7">ZE0233-25</span></li>
+                                    <li style="margin-top: 0.08rem;color: #0e94eb;">带载面积：<span id="REC_Carrying_Area" style="color: #E9E7E7">209251m㎡</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- 模组拓扑 -->
+                        <div class="module-model">
+                            <!--  模组1 -->
+                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 0.02rem;border-style:none solid solid none;float: left;width: 1.945rem;height: 1.9rem;margin-top: 0.1rem;margin-left: 0.07rem;">
+
+                            </div>
+                            <!--  模组2 -->
+                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 0.02rem;border-style:none solid solid none;float: left;width: 1.945rem;height: 1.9rem;margin-top: 0.1rem;">
+
+                            </div>
+                            <!--  模组3 -->
+                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 0.02rem;border-style:none solid solid none;float: left;width: 1.945rem;height: 1.9rem;margin-top: 0.1rem;">
+
+                            </div>
+                            <!--  模组4 -->
+                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 0.02rem;border-style:none none solid none;float: left;width: 1.912rem;height: 1.9rem;margin-top: 0.1rem;">
+
+                            </div>
+
+                            <!--  模组5 -->
+                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 0.02rem;border-style:none solid none none;float: left;width: 1.945rem;height: 1.98rem;margin-left: 0.07rem;">
+
+                            </div>
+
+                            <!--  模组6-->
+                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 0.02rem;border-style:none solid none none;float: left;width: 1.945rem;height: 1.98rem;">
+
+                            </div>
+
+                            <!--  模组7-->
+                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 0.02rem;border-style:none solid none none;float: left;width: 1.945rem;height: 1.98rem;">
+
+                            </div>
+
+                            <!--  模组8-->
+                            <div class="module" onclick="aiguozhe('unilumin')" style="float: left;width: 1.945rem;height: 1.98rem;">
+
+                            </div>
+                        </div>
+                        <div class="set-box" style="margin-top:-4.4rem;float: right;margin-right:0.45rem;">
+                            <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;模组信息：</label>
+                            <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 1.5rem;margin-left:-1.6rem;height: 0.75rem;margin-top: 1.3rem;">
+                                <ul style="margin-left:0.12rem;margin-top:-0.04rem;">
+                                    <li style="margin-top: 0.08rem;color: #0e94eb;">模组个数：<span id="MOD_ORDER" style="color: #E9E7E7"></span></li>
+                                    <li style="margin-top: 0.08rem;color: #0e94eb;">正常模组：<span id="MOD_NORMAL" style="color: #E9E7E7">0</span></li>
+                                    <li style="margin-top: 0.08rem;color: #0e94eb;">故障模组：<span id="MOD_FAULT" style="color: #E9E7E7">8</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="tab" style="display: none;">
+            1
+        </div>
+
+        <div class="tab" style="display:none">
+            <div class="onbutton">
+                开关屏：
+            </div>
+
+            <div id="ledswitch">
+                <el-switch
+                        v-model="status"
+                        active-color="#13ce66"
+                        inactive-color="#ff4949" active-text="开" inactive-text="关">
+                </el-switch>
+            </div>
+
+            <div id="ledslider" class="ledph">
+                <template>
+                    <div class="ledph1">
+                        <div class="block">
+                            <span class="demonstration">亮度</span>
+                            <span>{{value1}}</span>
+                            <el-slider v-model="value1"></el-slider>
+                        </div>
+                        <div class="block">
+                            <span class="demonstration">色相</span>
+                            <span>{{value2}}</span>
+                            <el-slider v-model="value2"></el-slider>
+                        </div>
+                        <div class="block">
+                            <span class="demonstration">色温</span>
+                            <span>{{value3}}</span>
+                            <el-slider v-model="value3"></el-slider>
+                        </div>
+                        <div class="block">
+                            <span class="demonstration">色度</span>
+                            <span>{{value4}}</span>
+                            <el-slider v-model="value4"></el-slider>
+                        </div>
+                    </div>
+
+                    <div class="ledph2">
+                        <div class="block">
+                            <span class="demonstration">HDR</span>
+                            <span>{{value5}}</span>
+                            <el-slider v-model="value5"></el-slider>
+                        </div>
+
+                        <div class="block">
+                            <span class="demonstration">灰度增益</span>
+                            <span>{{value6}}</span>
+                            <el-slider v-model="value6"></el-slider>
+                        </div>
+                        <div class="block">
+                            <span class="demonstration">灰度基准值</span>
+                            <span>{{value7}}</span>
+                            <el-slider v-model="value7"></el-slider>
+                        </div>
+                        <div class="block">
+                            <span class="demonstration">增强器调整</span>
+                            <span>{{value8}}</span>
+                            <el-slider v-model="value8"></el-slider>
+                        </div>
+                    </div>
+
+
+                </template>
+            </div>
+
+
+            <div id="input">
+                <template>
+                    <el-select v-model="fblvalue" placeholder="请选择分辨率">
+                        <el-option
+                                v-for="item in fbloptions"
+                                active-text="正常"
+                                inactive-text="默认"
+                                :key="item.fblvalue"
+                                :label="item.label"
+                                :value="item.fblvalue">
+                        </el-option>
+                    </el-select>
+                </template>
+            </div>
+
+            <div id="input1">
+                <template>
+                    <el-select v-model="gmvalue" placeholder="请选择GAMMA">
+                        <el-option
+                                v-for="item in gmoptions"
+                                active-text="正常"
+                                inactive-text="默认"
+                                :key="item.gmvalue"
+                                :label="item.label"
+                                :value="item.gmvalue">
+                        </el-option>
+                    </el-select>
+                </template>
+            </div>
+
+            <div id="ledradio">
+                <template>
+                    <el-radio v-model="radio" label="1">HDMI</el-radio>
+                    <el-radio v-model="radio" label="2">DVI</el-radio>
+                    <el-radio v-model="radio" label="3">VGA</el-radio>
+                    <el-radio v-model="radio" label="4">DP</el-radio>
+<!--                    <el-radio v-model="radio" label="5">备选项</el-radio>-->
+                </template>
+            </div>
+            <button onclick="sendcmd()">发送</button>
+
+        </div>
+
+        <div class="tab" style="display: none">
+            3
+        </div>
+
+    </div>
+
+
+</div>
+</body>
+
+
+<script>
+    let _self = null;
+    let websocket = null;
+    let demo = new Vue({
+        el: '#app',
+        data () {
+            return {
+
+                //拓扑模块所需的值
+                //自定义值
+                info_title: null,
+                //屏幕对象
+                ledParasJson : null ,
+                //发送卡列表
+                senderOrderList : [],
+                //发送卡初始X值
+                XInitSender : 200,
+                //发送卡初始Y值
+                YInitSender : 1000,
+                //网口初始X值-X轴上单个偏移差值为60一个单位(向右+60)
+                XInitPort : 290,
+                //网口初始Y值-Y轴上单个偏移差值为70一个单位（向下-70）
+                YInitPort : 1000,
+                //网口最大总数量
+                MaxPort : 16,
+                //X轴上单个偏移差值为60一个单位(向右+60)----屏体（同网口）
+                XInit : [660,720,780,840,900,960,1020,1080],
+                //Y轴上单个偏移差值为140一个单位(向下-140)----屏体
+                YInit : [960,820,680,540,400,260,120,-20],
+                //矢量图形组
+                nodes : [{
+                    x: 0,
+                    y: 600,
+                    nodeName: '控制卡',
+                    name: '控制卡',
+                    type: '播放器',
+                    detail:null,
+                    svgPath: 'M885.76 919.552H116.736C53.248 919.552 1.024 867.328 1.024 803.84V284.672c0-63.488 52.224-115.712 115.712-115.712h769.024c63.488 0 115.712 52.224 115.712 115.712v519.168c0 63.488-52.224 115.712-115.712 115.712zM116.736 226.304c-31.744 0-58.368 25.6-58.368 58.368v519.168c0 31.744 25.6 58.368 58.368 58.368h769.024c31.744 0 58.368-25.6 58.368-58.368V284.672c0-31.744-25.6-58.368-58.368-58.368H116.736z M432.128 740.352c-15.36 0-30.72-4.096-44.032-12.288-25.6-15.36-40.96-43.008-40.96-72.704V458.752c0-30.72 15.36-57.344 40.96-72.704s57.344-16.384 83.968-2.048L658.432 481.28c27.648 14.336 46.08 44.032 46.08 75.776 0 31.744-17.408 60.416-46.08 75.776l-185.344 98.304c-13.312 6.144-26.624 9.216-40.96 9.216z m1.024-279.552v191.488l182.272-96.256L433.152 460.8z m184.32 97.28l20.48-37.888-20.48 37.888z',
+                    symbolSize: 70,
+                }
+                ],
+                //连接线数组
+                links : [],
+                //走线方式数组
+                portGroup : [],
+                /**
+                 * 上方是拓扑模块所需自定义值
+                 * */
+                comlist:"",
+                destination:"",
+                source:"",
+                bright:"",
+                gamma:"",
+                chroma:"",
+                contrast:"",
+                saturability:"",
+                hue:"",
+                envi_bright:"",
+                temp:"",
+                humidity:"",
+                voltage:"",
+                fan_ctrl:"",
+                current:"",
+                inputsource:"",
+                led_rslt:"",
+
+                status: true,
+                value1: 0,
+                value2: 50,
+                value3: 36,
+                value4: 48,
+                value5: 42,
+                value6: 0,
+                value7: 50,
+                value8: 36,
+                radio: '1',
+                fbloptions: [{
+                    fblvalue: '选项1',
+                    label: '1920*1080'
+                }, {
+                    fblvalue: '选项2',
+                    label: '1280*1024'
+                }, {
+                    fblvalue: '选项3',
+                    label: '2560*1600'
+                }, {
+                    fblvalue: '选项4',
+                    label: '3840*2160'
+                }],
+                fblvalue: '',
+                gmoptions: [{
+                    gmvalue: '选项1',
+                    label: '1.8'
+                }, {
+                    gmvalue: '选项2',
+                    label: '2'
+                }, {
+                    gmvalue: '选项3',
+                    label: '2.2'
+                }, {
+                    gmvalue: '选项4',
+                    label: '2.4'
+                }, {
+                        gmvalue: '选项5',
+                        label: '2.5'
+                },{
+                    gmvalue: '选项6',
+                    label: '2.8'
+                },{
+                    gmvalue: '选项7',
+                    label: '3'
+                }],
+                gmvalue: '',
+
+            }
+        },
+        mounted () {
+            _self = this;
+            // let websocket = null;
+            //判断当前浏览器是否支持WebSocket
+            if ('WebSocket' in window) {
+                let serverhost = "ws://" + window.location.hostname + ":" + "9090";
+                websocket = new WebSocket(serverhost);
+            } else {
+                alert('当前浏览器不支持websocket');
+            }
+            //连接发生错误的回调方法
+            websocket.onerror = function () {
+                console.log("WebSocket连接发生错误");
+                heartCheck.reset();
+            };
+            //连接成功建立的回调方法
+            websocket.onopen = function () {
+                console.log("WebSocket连接成功");
+                heartCheck.start();
+            };
+            //接收到消息的回调方法
+            websocket.onmessage = function (event) {
+                let jsonScreenObj = JSON.parse(event.data);
+                _self.comlist = jsonScreenObj.COMLIST;
+                _self.destination = jsonScreenObj.DESTINATION;
+                _self.source = jsonScreenObj.SOURCE;
+                let ledlist = _self.comlist;
+                let i;
+                //遍历屏体信息
+                for (i in ledlist) {
+                    _self.contrast=ledlist[i].LEDPARAS.CONTRAST;
+                    _self.saturability=ledlist[i].LEDPARAS.SATURABILITY;
+                    _self.hue = ledlist[i].LEDPARAS.HUE;
+                    _self.envi_bright= ledlist[i].LEDPARAS.ENVI_BRIGHT;
+                    _self.temp= ledlist[i].LEDPARAS.TEMP;
+                    _self.humidity= ledlist[i].LEDPARAS.HUMIDITY;
+                    _self.voltage= ledlist[i].LEDPARAS.VOLTAGE;
+                    _self.fan_ctrl= ledlist[i].LEDPARAS.FAN_CTRL;
+                    _self.current= ledlist[i].LEDPARAS.CURRENT;
+                    let senderlist = ledlist[i].LEDPARAS.SENDER_ORDER;
+                    let j;
+                    for (j in senderlist) {
+                    _self.bright = senderlist[j].BRIGHT;
+                    _self.gamma  = senderlist[j].GAMMA;
+                    _self.chroma = senderlist[j].CHROMA;
+                    _self.inputsource = senderlist[j].INPUTSOURCE;
+                    _self.led_rslt = senderlist[j].INSRC_RSLT;
+                    }
+
+                    //拓扑模块的数据处理
+                    //获取屏幕对象
+                    this.ledParasJson = ledlist[i].LEDPARAS;
+                    //外围参数拓展显示
+                    console.log(this.ledParasJson);
+                    //通用接收卡对象
+                    var recParas = this.ledParasJson.COMMON_RECPARAS;
+                    //通用模组对象
+                    var modParas = this.ledParasJson.COMMON_MODPARAS;
+                    $('#MOD_RSL').text(modParas.MOD_RSLT);
+                    $('#MOD_SPACE').text(modParas.MOD_SPACE+"MM");
+
+                    $('#MOD_SCAN_NUM').text(modParas.SCAN_NUM+"SCAN");
+                    //通用模组-灯光参数对象
+                    var lamp_Para =modParas.LAMP_PARA;
+                    $('#LAMP_PARA_STYLE').text(lamp_Para.STYLE);
+                    $('#LAMP_PARA_BRIGHT').text(lamp_Para.BRIGHT);
+                    $('#LAMP_PARA_WAVELEN').text(lamp_Para.WAVELEN);
+                    $('#LAMP_PARA_ANGLE').text("<="+lamp_Para.ANGLE+"度");
+                    $('#LAMP_PARA_ANTISTATIC').text("<"+lamp_Para.ANTISTATIC+"V");
+                    $('#LAMP_PARA_LEAKAGE_CURRENT').text("<"+lamp_Para.LEAKAGE_CURRENT+"uA");
+                    //箱体ID
+                    $('#boxTitle').text(recParas.BOX_NAME);
+                    //箱体类型
+                    $('#productTitle').text(recParas.BOX_TYPE);
+                    //模组个数
+                    $('#MOD_ORDER').text(recParas.MOD_ORDER);
+                    //接收卡带载面积计算：
+                    var Mod_Area_Group = modParas.MOD_SIZE.split("*");
+                    for(var s = 0;s<Mod_Area_Group.length;s++){
+                        Mod_Area_Group[s] = Mod_Area_Group[s].replace(/[^0-9]/ig,"");
+                    }
+                    //接收卡带载面积：
+                    $('#REC_Carrying_Area').text(parseInt((Mod_Area_Group[0]*Mod_Area_Group[1]*recParas.MODULE_CNT)/10000)+"mm²");
+
+                    //驱动IC
+                    $('#ICSYLE').text(modParas.ICSYLE);
+
+                    //发送卡数组
+                    this.senderOrderList = this.ledParasJson.SENDER_ORDER;
+
+                    //遍历发送卡列表可知发送卡数量
+                    for(var ip = 0;ip<this.senderOrderList.length;ip++){
+                        //当前发送卡信息
+                        var senderOrder = this.senderOrderList[ip];
+                        //接收卡版本号
+                        if(senderOrder.VER == '' ||senderOrder.VER == null){
+                            $('#REC_VER').text("暂无数据");
+                        }else{
+                            $('#REC_VER').text(senderOrder.VER);
+                        }
+                        //发送卡信息
+                        var sender ={
+                            x: this.XInitSender,
+                            y: this.YInitSender,
+                            nodeName: senderOrder.ID,
+                            name: senderOrder.ID,
+                            type: '发送卡',
+                            detail:'ok',
+                            svgPath: 'M868.48 104.96H155.52a32 32 0 0 0-32 32v538.24a32 32 0 0 0 32 32h712.96a32 32 0 0 0 32-32V136.96a32 32 0 0 0-32-32z m-32 64V390.4H187.52V168.96zM187.52 643.2V422.4h648.96v221.44z M252.8 232.96h32v74.88h-32zM334.72 232.96h32v74.88h-32zM252.8 502.4h32v74.88h-32zM334.72 502.4h32v74.88h-32zM868.48 853.12H600.96a94.72 94.72 0 0 0-56.96-56.96v-53.76h-64v53.76a94.72 94.72 0 0 0-56.96 56.96H155.52a32 32 0 1 0 0 64h267.52a94.08 94.08 0 0 0 177.92 0h267.52a32 32 0 0 0 0-64zM512 915.84a30.72 30.72 0 1 1 30.72-30.72 30.72 30.72 0 0 1-30.72 30.72z'
+                        }
+                        //新增拓扑连接线
+                        var lineSender = {
+                            source: '控制卡',
+                            target: senderOrder.ID,
+                            name: '连通',
+                            type: '网线',
+                            nodeName: '主网线'
+                        }
+                        //连接线新增
+                        this.links.push(lineSender);
+                        //矢量图形新增
+                        this.nodes.push(sender);
+                        //获取走线端口数量
+                        var portNum = senderOrder.PORT_ORDER.length;
+                        //遍历走线接口
+                        for(var jc = 0;jc<portNum;jc++){
+                            //走线详情信息
+                            var port = senderOrder.PORT_ORDER[jc];
+                            //判断索引是否能够取余4来判断在当前X轴的Y位置
+                            if((jc+1)%4 == 0){
+                                //当前port对象
+                                var singlePort = {
+                                    //X轴上单个偏移差值为60一个单位(向右+60)
+                                    x: this.XInitPort+parseInt((jc+1)/4-1)*60,
+                                    //Y轴上单个偏移差值为70一个单位（向下-70）
+                                    y: this.YInitPort-3*70,
+                                    symbolSize: 20,
+                                    nodeName: port.ID,
+                                    name: port.ID,
+                                    type: '网口',
+                                    detail:null,
+                                    svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
+                                };
+                                //走线方式数组添加
+                                this.nodes.push(singlePort);
+                            }else{
+                                var singlePort = {
+                                    //X轴上单个偏移差值为60一个单位(向右+60)
+                                    x: this.XInitPort+parseInt((jc+1)/4)*60,
+                                    //Y轴上单个偏移差值为70一个单位（向下-70）
+                                    y: this.YInitPort-(jc)%4*70,
+                                    symbolSize: 20,
+                                    nodeName: port.ID,
+                                    name: port.ID,
+                                    type: '网口',
+                                    detail:null,
+                                    svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
+                                };
+                                this.nodes.push(singlePort);
+                            }
+                            //遍历单个走线口的屏体信息
+                            for(var boxindex = 0;boxindex < port.BOX.length;boxindex++){
+                                var box = port.BOX[boxindex];
+                                //判断屏体顺序是否为1能和端口直连
+                                if(box.ORDER == 1){
+                                    var portBox = {
+                                        source: port.ID,
+                                        target: box.ID,
+                                        name: '连通',
+                                        type: '网线',
+                                        nodeName: '网线'
+                                    }
+                                    //端口连接线新增
+                                    this.links.push(portBox);
+                                }
+                                //判断小于最后一个屏体之间的相互串联
+                                if(box.ORDER < port.BOX.length){
+                                    var boxNext = port.BOX[boxindex+1]
+                                    var portBox = {
+                                        source: box.ID,
+                                        target: boxNext.ID,
+                                        name: '连通',
+                                        type: '串联',
+                                        nodeName: '串联'
+                                    }
+                                    this.links.push(portBox);
+                                }
+                                //单个屏体的信息
+                                var singleBox = {
+                                    x: this.XInit[box.XPOS-1],
+                                    y: this.YInit[box.YPOS-1],
+                                    symbolSize: 46,
+                                    nodeName: box.ID,
+                                    name: box.ID,
+                                    type: '屏体',
+                                    detail:box,
+                                    svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+                                }
+                                this.nodes.push(singleBox);
+                            }
+
+                        }
+                    }
+                    //拓扑所需数据遍历拆分完成
+                }
+
+                //拓扑图形的实现
+                var charts = {
+                    //拓扑模块
+                    nodes: [],
+                    //目标连接线
+                    links: [],
+                    //网格线
+                    linesData: []
+                }
+
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('tuopu'));
+
+                var dataMap = new Map();
+                //遍历SVG图形
+                for (var j = 0; j < this.nodes.length; j++) {
+                    const {
+                        x,
+                        y,
+                        nodeName,
+                        name,
+                        type,
+                        detail,
+                        svgPath,
+                        symbolSize
+                    } = this.nodes[j];
+                    if(type == '屏体'){
+                        var node = {
+                            nodeName,
+                            name,
+                            type,
+                            detail,
+                            value: [x, y],
+                            symbolSize: symbolSize || 50,
+                            symbol: 'path://' + svgPath,
+                            itemStyle: {
+                                color: '#043c58',
+                                emphasis: {
+                                    color: '#1D5D76'
+                                },
+                            }
+                        }
+                        dataMap.set(this.nodes[j].name, [x, y])
+                        charts.nodes.push(node)
+                    }else{
+                        var node = {
+                            nodeName,
+                            name,
+                            type,
+                            detail,
+                            value: [x, y],
+                            symbolSize: symbolSize || 50,
+                            symbol: 'path://' + svgPath,
+                            itemStyle: {
+                                color: 'orange',
+                                emphasis: {
+                                    color: '#FFDD00'
+                                },
+                            }
+                        }
+                        dataMap.set(this.nodes[j].name, [x, y])
+                        charts.nodes.push(node)
+                    }
+                }
+
+                //遍历目标连接线
+                for (var ipos = 0; ipos < this.links.length; ipos++) {
+                    var link = {
+                        source: this.links[ipos].source,
+                        target: this.links[ipos].target,
+                        type: this.links[ipos].type,
+                        nodeName: this.links[ipos].nodeName,
+                        label: {
+                            normal:{
+                                show:false
+                            },
+                            emphasis:{
+                                symbolSize:8,
+                                fontSize:38,
+                                color:'red',
+                                show: true,
+                                formatter: this.links[ipos].name
+                            }
+                        },
+                        lineStyle: {
+                            normal: {
+                                curveness:0.15,
+                                symbolSize:0
+                            },
+                            emphasis:{
+                                symbolSize:8,
+                                type: 'solid',
+                                color: '#20A0FF'
+                            }
+                        }
+                    }
+                    charts.links.push(link);
+                    // 组装动态移动的效果数据
+                    var lines = {
+                        coords:[
+                            dataMap.get(this.links[ipos].source),
+                            dataMap.get(this.links[ipos].target)
+                        ]
+                    };
+                    charts.linesData.push(lines);
+                }
+                option = {
+                    //提示框显示
+                    tooltip: {
+                        //显示延迟
+                        showDelay: 300,
+                        backgroundColor: '#1F2D3D',
+                        borderColor: '#324057',
+                        borderRadius: 4,           // 提示边框圆角，单位px，默认为4
+                        borderWidth: 1,            // 提示边框线宽，单位px，默认为0（无边框）
+                        padding: 5,                // 提示内边距，单位px，默认各方向内边距为5，
+                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                            type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
+                            lineStyle : {          // 直线指示器样式设置
+                                color: '#48b',
+                                width: 2,
+                                type: 'solid'
+                            },
+                            shadowStyle : {                       // 阴影指示器样式设置
+                                width: 'auto',                   // 阴影大小
+                                color: '#475669'  // 阴影颜色
+                            }
+                        },
+                        //动画变换延迟单位：s
+                        transitionDuration: 0.8,
+                        // formatter: '设备类型:{b}<br />序列号:<br />'
+                        formatter: function (item) {
+                            return '设备类型:<b style="color: green;">&nbsp;&nbsp;' + item.data.type + '</b><hr />' +
+                                '设备ID:<b style="color: green;">&nbsp;&nbsp;' + item.data.nodeName + '</b><hr />' +
+                                '型号：<b style="color: green;"></b><hr />' +
+                                '信号强度：<b style="color: green;">强</b><hr />' +
+                                '工作状态：<b style="color: green;">正常</b><hr />'
+                        }
+                    },
+                    // backgroundColor: "#0B1321",
+                    xAxis: {
+                        min: 0,
+                        max: 1000,
+                        show: false,
+                        type: 'value'
+                    },
+                    yAxis: {
+                        min: 0,
+                        max: 1000,
+                        show: false,
+                        type: 'value'
+                    },
+                    series: [{
+                        type: 'graph',
+                        coordinateSystem: 'cartesian2d',
+                        focusNodeAdjacency: true, // 鼠标移到节点上突出显示节点以及节点的边和邻接节点
+                        lineStyle: {
+                            normal: {
+                                width: 2,
+                                shadowColor: 'none'
+                            }
+                        },
+                        edgeSymbol: ['circle', 'arrow'],
+                        edgeSymbolSize: [4, 10],
+                        label: {
+                            show: true,
+                            position: 'bottom',
+                            color: 'orange',
+                            formatter: function (item) {
+                                return item.data.nodeName
+                            }
+                        },
+                        data: charts.nodes,
+                        links: charts.links
+                    },
+                        //     {
+                        //     type: 'lines',
+                        //     polyline: true,
+                        //     coordinateSystem: 'cartesian2d',
+                        //     lineStyle: {
+                        //         //设置网格线类型 dotted：虚线   solid:实线
+                        //         type: 'solid',
+                        //         width: 1,
+                        //         color: '#175064',
+                        //         curveness: 0.1
+                        //
+                        //     },
+                        //     effect: {
+                        //         show: true,
+                        //         trailLength: 0.1,
+                        //         symbol: 'arrow',
+                        //         color: 'orange',
+                        //         symbolSize: 8
+                        //     },
+                        //     data: charts.linesData
+                        // }
+                    ]
+                };
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+                // 处理点击事件并且弹出数据名称-params传入的参数
+                myChart.on('click', function (params) {
+                    if(params.data.type == '屏体'){
+                        //屏体参数赋值
+                        var detail = params.data.detail;
+                        this.info_title = detail;
+                        //接收卡信息
+                        var rec = this.info_title.REC[0];
+                        // console.log(rec);
+                        //传感器赋值
+                        $('#SENSOR_VOL').text(rec.SENSOR_VOL+"V");
+                        $('#SENSOR_CURRENT').text(rec.SENSOR_CURRENT+"A");
+                        $('#SENSOR_HUMI').text(rec.SENSOR_HUMI+"%RH");
+                        $('#SENSOR_SMOG').text(rec.SENSOR_SMOG);
+                        $('#SENSOR_TMP').text(rec.SENSOR_TMP+"℃");
+                        $('#SENSOR_BRI').text(rec.SENSOR_BRI+"Lux");
+
+                        //模组信息赋值
+                        //通过遍历计算故障模组数量
+                        var mod_Normal_count = 0;
+                        for(var i = 0;i<rec.mod.length;i++){
+                            if(rec.MOD[i].MOD_STATE == 1){
+                                mod_Normal_count++;
+                            }
+                        }
+                        //故障模组数
+                        $('#MOD_FAULT').text(rec.MOD.length-mod_Normal_count);
+                        //正常模组数
+                        $('#MOD_NORMAL').text(mod_Normal_count);
+
+                        //电源赋值
+                        //最大功率
+                        $('#MAX_POWER').text(rec.MAX_POWER+"W/m²");
+                        //电压
+                        $('#VOLTAGE').text(rec.VOLTAGE+"V");
+                        //实际功率
+                        $('#RT_POWERDIS').text(rec.RT_POWERDIS+"W/m²");
+                        //平均功率
+                        $('#AVE_POWERDIS').text(rec.AVE_POWERDIS+"W/m²");
+
+                        //接收卡信息赋值
+                        //接收卡名称
+                        $('#rec_Id').text(rec.REC_ID);
+                        //接收卡个数
+                        $('#rec_Count').text(detail.REC.length);
+                        //接收卡运行时间
+                        $('#rec_TOTAL_WORKTIME').text(rec.TOTAL_WORKTIME+"S");
+                        //维修日志赋值
+
+                        //驱动IC赋值
+                        $('#cover').css('display','block'); //显示遮罩层
+                        $('.container').attr('style', 'visibility: visible').find('.pop-up').
+                        attr('style', 'visibility: visible').siblings().attr('style', 'visibility: hidden');
+                    }else{
+                        alert("暂未开放");
+                    }
+                });
+
+                console.log("i", i);
+                console.log("ledlist[i]", ledlist[i]);
+                console.log("_self.bright", _self.bright);
+                console.log("ledlist", ledlist);
+                console.log("jsonScreenObj", jsonScreenObj);
+                console.log("comlist", _self.comlist);
+                console.log("destination", _self.destination);
+                console.log("source", _self.source);
+                let nowdt = new Date().getTime();
+                console.log("现在接收完数据后的时间" + nowdt);
+
+              /*  alert(_self.contrast);*/
+              /*  alert();*/
+
+                let option0 = {
+                    /* title: {
+                         text: '水球图',
+                     },*/
+                    /*  backgroundColor: '#ffffff',*/
+                    tooltip: {
+                        formatter: function(param) {
+                            if(param.seriesName==='亮度'||param.seriesName==="饱和度"){
+                                return param.seriesName + '\n'
+                                    + param.name + '\n'
+                                    + param.value*100;
+                            }else if(param.seriesName==="色相"){
+                               return param.seriesName + '\n'
+                                   + param.name + '\n'
+                                   + param.value*255;
+                            }else{
+                                return '{a}\n{b}\n{c}';
+                            }
+                        },
+                    },
+
+                    series: [{
+                        type: 'liquidFill',
+                        name: '亮度',
+                        radius: '30%',
+                        color: ['#195ba6'],
+                        center: ['20%', '23%'],
+                        data: [_self.bright/100],
+                        backgroundStyle: {
+                            borderWidth: 2,
+                            borderColor: '#1789fb',
+                            color: '#1c233f',
+                        },
+                        outline: {
+                            itemStyle: {
+                                borderWidth: 5,
+                                borderColor: '#1789fb',
+                                borderType: 'dashed',
+                            }
+                        },
+                        label: {
+                            normal: { //此处没有生效，本地生效 1
+                                formatter:  function(param) {
+                                    return param.seriesName + '\n'
+                                        + param.name + '\n'
+                                        + param.value*100;
+                                },
+                                textStyle: {
+                                    fontSize: 10,
+                                    color: '#e6e6e6',
+                                },
+                            },
+                        },
+                    },
+                        {
+
+                            type: 'liquidFill',
+                            name: '对比度',
+                            radius: '30%',
+                            color: ['#884046'],
+                            center: ['50%', '23%'],
+                            data: [_self.contrast],
+                            backgroundStyle: {
+                                borderWidth: 2,
+                                borderColor: '#eb5c4d',
+                                color: '#1c233f',
+                            },
+                            outline: {
+                                itemStyle: {
+                                    borderWidth: 5,
+                                    borderColor: '#eb5c4d',
+                                    borderType: 'dashed',
+                                }
+                            },
+                            label: {
+                                normal: { // 同上 2
+                                    formatter: '{a}\n{b}\n{c}',
+                                    textStyle: {
+                                        fontSize: 10,
+                                        color: '#e6e6e6',
+                                    },
+                                },
+                            },
+
+                        },
+                        {
+
+                            type: 'liquidFill',
+                            name: '饱和度',
+                            radius: '30%',
+                            color: ['#8a7e4e'],
+                            center: ['80%', '23%'],
+                            data: [_self.saturability/100],
+                            backgroundStyle: {
+                                borderWidth: 2,
+                                borderColor: '#f0d25c',
+                                color: '#1c233f',
+                            },
+                            outline: {
+                                itemStyle: {
+                                    borderWidth: 5,
+                                    borderColor: '#f0d25c',
+                                    borderType: 'dashed',
+                                }
+                            },
+                            label: {
+                                normal: { // 同上 3
+                                    formatter: function(param) {
+                                        return param.seriesName + '\n'
+                                            + param.name + '\n'
+                                            + param.value*100;
+                                    },
+                                    textStyle: {
+                                        fontSize: 10,
+                                        color: '#e6e6e6',
+                                    },
+                                },
+                            },
+
+                        },
+                        {
+                            type: 'liquidFill',
+                            name: '伽马',
+                            radius: '30%',
+                            color: ['#195ba6'],
+                            center: ['20%', '70%'],
+                            data: [_self.gamma],
+                            backgroundStyle: {
+                                borderWidth: 2,
+                                borderColor: '#1789fb',
+                                color: '#1c233f',
+                            },
+                            outline: {
+                                itemStyle: {
+                                    borderWidth: 5,
+                                    borderColor: '#1789fb',
+                                    borderType: 'dashed',
+                                }
+                            },
+                            label: {
+                                normal: { //此处没有生效，本地生效 4
+                                    formatter: '{a}\n{b}\n{c}',
+                                    textStyle: {
+                                        fontSize: 10,
+                                        color: '#e6e6e6',
+                                    },
+                                },
+                            },
+                        },
+                        {
+
+                            type: 'liquidFill',
+                            radius: '30%',
+                            name: '色温',
+                            color: ['#884046'],
+                            center: ['50%', '70%'],
+                            data: [_self.chroma],
+                            backgroundStyle: {
+                                borderWidth: 2,
+                                borderColor: '#eb5c4d',
+                                color: '#1c233f',
+                            },
+                            outline: {
+                                itemStyle: {
+                                    borderWidth: 5,
+                                    borderColor: '#eb5c4d',
+                                    borderType: 'dashed',
+                                }
+                            },
+                            label: {
+                                normal: { // 同上 5
+                                    formatter: '{a}\n{b}\n{c}',
+                                    textStyle: {
+                                        fontSize: 10,
+                                        color: '#e6e6e6',
+                                    },
+                                },
+                            },
+
+                        },
+                        {
+
+                            type: 'liquidFill',
+                            name: '色相',
+                            radius: '30%',
+                            color: ['#8a7e4e'],
+                            center: ['80%', '70%'],
+                            data: [_self.hue/255],
+                            backgroundStyle: {
+                                borderWidth: 2,
+                                borderColor: '#f0d25c',
+                                color: '#1c233f',
+                            },
+                            outline: {
+                                itemStyle: {
+                                    borderWidth: 5,
+                                    borderColor: '#f0d25c',
+                                    borderType: 'dashed',
+                                }
+                            },
+                            label: {
+                                normal: { // 同上 6
+                                    formatter: function(param) {
+                                        return param.seriesName + '\n'
+                                            + param.name + '\n'
+                                            + param.value*255;
+                                    },
+                                    textStyle: {
+                                        fontSize: 10,
+                                        color: '#e6e6e6',
+                                    },
+                                },
+                            },
+
+                        }
+                    ]
+                };
+
+
+                // 电压
+             /*   let dataDyArr =_self.voltage;
+                let dataArr1 = dataDyArr / 3;*/
+                let colorSet1 = {
+                    color: '#468EFD'
+                };
+                let option1 = {
+                    /*   backgroundColor: '#ffffff',*/
+                    tooltip: {
+                        formatter: function () {
+                            return "电压<br/>" + _self.voltage + "V";
+                        }
+                    },
+
+                    series: [
+                        {
+                            name: "传感器电压",
+                            type: "gauge",
+                            center: ['50%', '20%'],
+                            radius: '12%',
+                            splitNumber: 10,
+                            axisLine: {
+                                lineStyle: {
+                                    color: [
+                                        [_self.voltage/ 100, colorSet1.color],
+                                        [1, "#111F42"]
+                                    ],
+                                    width: 5
+                                }
+                            },
+                            axisLabel: {
+                                show: false,
+                            },
+                            axisTick: {
+                                show: false,
+
+                            },
+                            splitLine: {
+                                show: false,
+                            },
+                            itemStyle: {
+                                show: false,
+                            },
+                            detail: {
+                                formatter: function (value) {
+                                    if (value !== 0) {
+                                        let num = Math.round(value);
+                                        return parseInt(num).toFixed(0) + "V";
+                                    } else {
+                                        return 0;
+                                    }
+                                },
+                                offsetCenter: [0, 45],
+                                textStyle: {
+                                    padding: [0, 0, 0, 0],
+                                    fontSize: 13,
+                                    fontWeight: '700',
+                                    color: "#ffffff"
+                                }
+                            },
+                            title: { //标题
+                                show: true,
+                                offsetCenter: [0, 27], // x, y，单位px
+                                textStyle: {
+                                    color: "#ffffff",
+                                    fontSize: 12, //表盘上的标题文字大小
+                                    fontWeight: 400,
+                                    fontFamily: 'PingFangSC'
+                                }
+                            },
+                            data: [{
+                                name: "电压",
+                                value: _self.voltage,
+                            }],
+                            pointer: {
+                                show: true,
+                                length: '90%',
+                                radius: '30%',
+                                width: 3, //指针粗细
+                            },
+                            animationDuration: 5000,
+                        },
+                        {
+                            name: '外部刻度',
+                            type: 'gauge',
+                            center: ['50%', '20%'],
+                            radius: '16%',
+                            min: 0, //最小刻度
+                            max: 300, //最大刻度
+                            splitNumber: 10, //刻度数量
+                            startAngle: 225,
+                            endAngle: -45,
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    width: 1,
+                                    color: [
+                                        [1, 'rgba(0,0,0,0)']
+                                    ]
+                                }
+                            }, //仪表盘轴线
+                            axisLabel: {
+                                show: true,
+                                color: '#ffffff',
+                                distance: 10,
+                                fontSize: 5,
+                                formatter: function (v) {
+                                    switch (v + '') {
+                                        case '0':
+                                            return '0';
+                                        case '10':
+                                            return '10';
+                                        case '20':
+                                            return '20';
+                                        case '30':
+                                            return '30';
+                                        case '40':
+                                            return '40';
+                                        case '50':
+                                            return '50';
+                                        case '60':
+                                            return '60';
+                                        case '70':
+                                            return '70';
+                                        case '80':
+                                            return '80';
+                                        case '90':
+                                            return '90';
+                                        case '100':
+                                            return '100';
+                                        case '110':
+                                            return '110';
+                                        case '120':
+                                            return '120';
+                                        case '130':
+                                            return '130';
+                                        case '140':
+                                            return '140';
+                                        case '150':
+                                            return '150';
+                                        case '160':
+                                            return '160';
+                                        case '170':
+                                            return '170';
+                                        case '180':
+                                            return '180';
+                                        case '190':
+                                            return '190';
+                                        case '200':
+                                            return '200';
+                                        case '210':
+                                            return '210';
+                                        case '220':
+                                            return '220';
+                                        case '230':
+                                            return '230';
+                                        case '240':
+                                            return '240';
+                                        case '250':
+                                            return '250';
+                                        case '260':
+                                            return '260';
+                                        case '270':
+                                            return '270';
+                                        case '280':
+                                            return '280';
+                                        case '290':
+                                            return '290';
+                                        case '300':
+                                            return '300';
+                                    }
+                                }
+                            }, //刻度标签。
+                            axisTick: {
+                                show: true,
+                                splitNumber: 5,
+                                lineStyle: {
+                                    color: colorSet1.color, //用颜色渐变函数不起作用
+                                    width: 1,
+                                },
+                                length: -7
+                            }, //刻度样式
+                            splitLine: {
+                                show: true,
+                                length: -10,
+                                lineStyle: {
+                                    color: colorSet1.color, //用颜色渐变函数不起作用
+                                }
+                            }, //分隔线样式
+                            detail: {
+                                show: false
+                            },
+                            pointer: {
+                                show: false
+                            }
+                        },
+                    ]
+                };
+
+
+                // 电流
+               /* let dataArr2 = _self.current;*/
+                let colorSet2 = {
+                    color: '#468EFD'
+                };
+                let option2 = {
+                    /*   backgroundColor: '#ffffff',*/
+                    tooltip: {
+                        formatter: "{b}<br/>{c}A"
+                    },
+                    series: [
+                        // 电流
+                        {
+                            name: "传感器电流",
+                            type: "gauge",
+                            center: ['50%', '10%'],
+                            radius: '12%',
+
+                            splitNumber: 10,
+                            axisLine: {
+                                lineStyle: {
+                                    color: [
+                                        [_self.current / 100, colorSet2.color],
+                                        [1, "#111F42"]
+                                    ],
+                                    width: 5
+                                }
+                            },
+                            axisLabel: {
+                                show: false,
+                            },
+                            axisTick: {
+                                show: false,
+
+                            },
+                            splitLine: {
+                                show: false,
+                            },
+                            itemStyle: {
+                                show: false,
+                            },
+                            detail: {
+                                formatter: function (value) {
+                                    if (value !== 0) {
+                                        let num = Math.round(value);
+                                        return parseInt(num).toFixed(0) + "A";
+                                    } else {
+                                        return 0;
+                                    }
+                                },
+                                offsetCenter: [0, 45],
+                                textStyle: {
+                                    padding: [0, 0, 0, 0],
+                                    fontSize: 13,
+                                    fontWeight: '700',
+                                    color: "#ffffff"
+                                }
+                            },
+                            title: { //标题
+                                show: true,
+                                offsetCenter: [0, 27], // x, y，单位px
+                                textStyle: {
+                                    color: "#ffffff",
+                                    fontSize: 12, //表盘上的标题文字大小
+                                    fontWeight: 400,
+                                    fontFamily: 'PingFangSC'
+                                }
+                            },
+                            data: [{
+                                name: "电流",
+                                value: _self.current,
+                            }],
+                            pointer: {
+                                show: true,
+                                length: '90%',
+                                radius: '30%',
+                                width: 3, //指针粗细
+                            },
+                            animationDuration: 5000,
+                        },
+                        {
+                            name: '外部刻度',
+                            type: 'gauge',
+                            center: ['50%', '10%'],
+                            radius: '16%',
+                            min: 0, //最小刻度
+                            max: 100, //最大刻度
+                            splitNumber: 10, //刻度数量
+                            startAngle: 225,
+                            endAngle: -45,
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    width: 1,
+                                    color: [
+                                        [1, 'rgba(0,0,0,0)']
+                                    ]
+                                }
+                            }, //仪表盘轴线
+                            axisLabel: {
+                                show: true,
+                                color: '#ffffff',
+                                distance: 10,
+                                fontSize: 5,
+                                formatter: function (v) {
+                                    switch (v + '') {
+                                        case '0':
+                                            return '0';
+                                        case '10':
+                                            return '10';
+                                        case '20':
+                                            return '20';
+                                        case '30':
+                                            return '30';
+                                        case '40':
+                                            return '40';
+                                        case '50':
+                                            return '50';
+                                        case '60':
+                                            return '60';
+                                        case '70':
+                                            return '70';
+                                        case '80':
+                                            return '80';
+                                        case '90':
+                                            return '90';
+                                        case '100':
+                                            return '100';
+                                    }
+                                }
+                            }, //刻度标签。
+                            axisTick: {
+                                show: true,
+                                splitNumber: 5,
+                                lineStyle: {
+                                    color: colorSet2.color, //用颜色渐变函数不起作用
+                                    width: 1,
+                                },
+                                length: -7
+                            }, //刻度样式
+                            splitLine: {
+                                show: true,
+                                length: -10,
+                                lineStyle: {
+                                    color: colorSet2.color, //用颜色渐变函数不起作用
+                                }
+                            }, //分隔线样式
+                            detail: {
+                                show: false
+                            },
+                            pointer: {
+                                show: false
+                            }
+                        },
+                    ]
+                };
+
+
+                let option3 = {
+                    /* title: {
+                         text: '水球图',
+                     },*/
+                    /*backgroundColor: '#ffffff',*/
+                    tooltip: {
+                        formatter:  function(param) {
+                            return param.seriesName + '\n'
+                                + param.name + '\n'
+                                + param.value*100;
+                        },
+                    },
+                    series: [{
+                        type: 'liquidFill',
+                        name: '环境亮度',
+                        radius: '20%',
+                        color: ['#195ba6'],
+                        center: ['20%', '23%'],
+                        data: [_self.envi_bright/100],
+                        backgroundStyle: {
+                            borderWidth: 2,
+                            borderColor: '#1789fb',
+                            color: '#1c233f',
+                        },
+                        outline: {
+                            itemStyle: {
+                                borderWidth: 5,
+                                borderColor: '#1789fb',
+                                borderType: '',
+                            }
+                        },
+                        label: {
+                            normal: {
+                                formatter:  function(param) {
+                                    return param.seriesName + '\n'
+                                        + param.name + '\n'
+                                        + param.value*100;
+                                },
+                                textStyle: {
+                                    fontSize: 10,
+                                    color: '#e6e6e6',
+                                },
+                            },
+                        },
+                    },
+                        {
+
+                            type: 'liquidFill',
+                            name: '温度',
+                            radius: '20%',
+                            color: ['#884046'],
+                            center: ['50%', '23%'],
+                            data: [_self.temp/100],
+                            backgroundStyle: {
+                                borderWidth: 2,
+                                borderColor: '#eb5c4d',
+                                color: '#1c233f',
+                            },
+                            outline: {
+                                itemStyle: {
+                                    borderWidth: 5,
+                                    borderColor: '#eb5c4d',
+                                    borderType: '',
+                                }
+                            },
+                            label: {
+                                normal: {
+                                    formatter: function(param) {
+                                        return param.seriesName + '\n'
+                                            + param.name + '\n'
+                                            + param.value*100;
+                                    },
+                                    textStyle: {
+                                        fontSize: 10,
+                                        color: '#e6e6e6',
+                                    },
+                                },
+                            },
+
+                        },
+                        {
+                            type: 'liquidFill',
+                            name: '湿度',
+                            radius: '20%',
+                            color: ['#8a7e4e'],
+                            center: ['80%', '23%'],
+                            data: [_self.humidity/100],
+                            backgroundStyle: {
+                                borderWidth: 2,
+                                borderColor: '#f0d25c',
+                                color: '#1c233f',
+                            },
+                            outline: {
+                                itemStyle: {
+                                    borderWidth: 5,
+                                    borderColor: '#f0d25c',
+                                    borderType: '',
+                                }
+                            },
+                            label: {
+                                normal: {
+                                    formatter: function(param) {
+                                        return param.seriesName + '\n'
+                                            + param.name + '\n'
+                                            + param.value*100;
+                                    },
+                                    textStyle: {
+                                        fontSize: 10,
+                                        color: '#e6e6e6',
+                                    },
+                                },
+                            },
+
+                        }
+                    ]
+                };
+
+                //获取dom容器
+                let myChart0 = echarts.init(document.getElementById('chartmain0'));
+                // 使用刚指定的配置项和数据显示图表。
+                myChart0.setOption(option0);
+
+                let myChart1 = echarts.init(document.getElementById('chartmain1'));
+                myChart1.setOption(option1);
+
+                let myChart2 = echarts.init(document.getElementById('chartmain2'));
+                myChart2.setOption(option2);
+
+                let myChart3 = echarts.init(document.getElementById('chartmain3'));
+                myChart3.setOption(option3);
+
+
+            };
+            //连接关闭的回调方法
+            websocket.onclose = function (event) {
+                console.log("WebSocket连接关闭");
+                heartCheck.reset();
+                /*  if (event.code !== 4500) {
+  //4500为服务端在打开多tab时主动关闭返回的编码
+                      reconnect();//重连
+                  }*/
+            };
+            //监听窗口关闭事件，当窗口关闭时，主动去关闭WebSocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+            window.onbeforeunload = function () {
+                closeWebSocket();
+            };
+
+            //关闭WebSocket连接
+            function closeWebSocket() {
+                websocket.close();
+            }
+
+            let heartCheck = {
+                timeout: 60000,//60s
+                timeoutObj: null,
+                reset: function () {
+                    clearInterval(this.timeoutObj);
+                    this.start();
+                },
+                start: function () {
+                    this.timeoutObj = setInterval(function () {
+                        if (websocket.readyState === 1) {
+                            websocket.send("HeartBeat");
+                        }
+                    }, this.timeout)
+                }
+            };
+
+
+        },
+    });
+
+</script>
+<script>
+    $(function () {
+        $(".index_nav ul li").each(function (index) {
+            $(this).click(function () {
+                $(this).addClass("nav_active").siblings().removeClass("nav_active");
+                /*  $(".index_tabs .tab").eq(index).fadeIn().siblings("div").hide();*/
+                $(".index_tabs .tab").eq(index).show().siblings("div").hide();
+                setScrollTop(0, 0);
+                /* $("body").scroll().top();*/
+                if (index === 1) {
+                    $(this).addClass("asz");
+                    $(".index_nav ul li").removeClass("akz").removeClass("azm");
+                    $("#jk").addClass("zm");
+                } else if (index === 2) {
+                    $(this).addClass("akz");
+                    $(".index_nav ul li").removeClass("asz").removeClass("azm");
+                    $("#jk").addClass("zm");
+                } else {
+                    $(this).addClass("azm");
+                    $(".index_nav ul li").removeClass("asz").removeClass("akz");
+                }
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    /*new Vue().$mount('#app');*/
+
+    //设置滑动条默认打开滑动块位于最上面，最左边
+    function setScrollTop(x, y) {
+        let objScroll = document.getElementById("webjk");
+        if (objScroll) {
+            objScroll.scrollLeft = x;
+            objScroll.scrollTop = y;
+        }
+    }
+
+    function sendcmd() {
+        websocket.send("hello 帅哥");
+    }
+
+    $(function () {
+
+        let ledstatuspo = 1;
+        if (ledstatuspo === 1) {
+            $("#ledon").css({"background-color": "green"});
+            $("#ledonspan").html("在线");
+        } else {
+            $("#ledon").css({"background-color": "red"});
+            $("#ledonspan").html("在线");
+        }
+
+
+        let fskstatuspo = 1;
+        if (fskstatuspo === 1) {
+            $("#fskon").css({"background-color": "green"});
+            $("#fskonspan").html("在线");
+        } else {
+            $("#fskon").css({"background-color": "red"});
+            $("#fskonspan").html("离线");
+        }
+
+        setInterval(function () {
+            $("#ctime").html(nowtime());
+            $("#ctime1").html(nowtime());
+        });
+
+        function nowtime() {//将当前时间转换成yyyymmdd格式
+            let mydate = new Date();
+            return (mydate.getHours() < 10 ? "0" + mydate.getHours() : mydate.getHours())
+                + ":"
+                + (mydate.getMinutes() < 10 ? "0" + mydate.getMinutes() : mydate.getMinutes())
+                + ":"
+                + (mydate.getSeconds() < 10 ? "0" + mydate.getSeconds() : mydate.getSeconds());
+        }
+    })
+</script>
+
+<link rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="js/base.js"></script>
+<!--<script type="text/javascript" src="js/rem.js"></script>-->
+</html>
