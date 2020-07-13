@@ -42,4 +42,7 @@ public class SenderOrder {
     @JSONField(name="PORT_ORDER")
     private List<PortOrder> portOrder;
 
+    @JSONField(name="VER")
+    private String VER;
+
 }

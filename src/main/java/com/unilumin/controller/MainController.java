@@ -24,11 +24,12 @@ public class MainController {
      * */
     @GetMapping("/getJsonMessage")
     @ResponseBody
-    public Body getJsonMessage(){
+    public String getJsonMessage(){
         String s = ReadUtils.readJsonFile(name);
         Map<String,Object> lbody = JSON.parseObject(s);
         Body bodyBean = JSON.toJavaObject(JSON.parseObject(s),Body.class);
-        return bodyBean;
+        System.out.println(s);
+        return s;
     }
 
     /**

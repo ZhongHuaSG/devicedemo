@@ -54,7 +54,8 @@ public class shiroConfig {
         map.put("/bigshow","anon");
         map.put("/fangzhu","anon");
         //查看所有信息
-        map.put("//getJsonMessage","anon");
+        map.put("/getJsonMessage","anon");
+        map.put("/indexjk","anon");
         //对所有用户认证
         map.put("/**", "authc");
         //释放静态资源

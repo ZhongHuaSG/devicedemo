@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <title>洲明本地监控系统</title>
     <style  type="text/css">
+        /* 当屏幕分辨率不超过1920px的时候将body内容缩放成150% */
+       /* @media screen and (max-width: 1921px) {
+            body{
+                zoom: 150%;
+            }
+        }*/
+
+       /* @media screen and (min-width: 1600px) and (max-width: 1920px){
+            body{
+                zoom: 150%;
+            }
+        }*/
+       /* @media screen and (min-width: 2048px) and (max-width: 2560px){
+            body{
+                zoom: 10%;
+            }
+        }*/
         * {
             margin: 0;
             padding: 0;
@@ -14,6 +31,9 @@
             overflow-y: auto;
             overflow-x: hidden;
             background-image: url(img/bg.jpg);
+            background-repeat: no-repeat;
+            background-size:100% 100%;
+            background-attachment: fixed;
         }
 
         html, body {
@@ -200,11 +220,12 @@
             height: 0.6em;
             display: block;
             line-height: 0.1em;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.07em;
             padding-top: 47%;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
+            margin-left: -5px;
             -webkit-touch-callout: none; /* iOS Safari */
             -webkit-user-select: none; /* Chrome/Safari/Opera */
             -khtml-user-select: none; /* Konqueror */
@@ -290,9 +311,9 @@
             margin-left: 27px;
             width: 100px;
             height: 100px;
-            background: aqua;
+           /* background: aqua;
             animation: turn 1s linear infinite;
-            background: url(img/azyx.png) no-repeat center center;
+            background: url(img/azyx.png) no-repeat center center;*/
             position: relative;
         }
 
@@ -322,9 +343,9 @@
             margin-left: 11px;
             width: 100px;
             height: 100px;
-            background: aqua;
+        /*    background: aqua;
             animation: turn 1s linear infinite;
-            background: url(img/fskyx.png) no-repeat center center;
+            background: url(img/fskyx.png) no-repeat center center;*/
             position: absolute;
         }
 
@@ -1032,7 +1053,7 @@
 
         .ledrun2 {
             letter-spacing: 0.1em;
-            font-size: 3em;
+            font-size: 1em;
             font-family: 'UnidreamLED', serif;
             color: #00ff00;
             margin-top: 18px;
@@ -1075,7 +1096,7 @@
         }
 
 
-        .ledsceen .cssrun i {
+        .ledsceen .cssrun span {
             position: absolute;
             animation: marquee 5s linear infinite;
 
@@ -1087,15 +1108,21 @@
                 left: 100%;
             }
             to {
-                left: -100%;
+                left: -130%;
             }
         }
 
+        .checkspan{
+            color: #409EFF;
+        }
 
     </style>
 
     <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/index.css">
+
+
     <script src="js/vue.min.js"></script>
     <script src="js/index.js"></script>
     <script src="js/echarts.min.js"></script>
@@ -1104,11 +1131,11 @@
 
 
 
+
+
 </head>
 
 <body >
-<!-- 遮罩层 -->
-<div id="cover" style="background: #000; position: absolute; left: 0px; top: 0px;height: 100%; width: 100%;  filter: alpha(opacity=30); opacity: 0.3; display: none; z-index: 2 ">
 
 <div class="index_content"  id="app">
     <div class="index_nav">
@@ -1119,10 +1146,10 @@
         </ul>
 
         <div class="yh" id="byh">
-            <span class="ncyh">root</span>
+            <span class="ncyh">admin</span>
             <div id="user_menu" class="um">
                 <a class="bw" href="javascript:">账户</a>
-                <a class="btc" href="javascript:">退出</a>
+                <a class="btc" href="/logout">退出</a>
             </div>
         </div>
 
@@ -1188,15 +1215,15 @@
                                 <div class="boxall1" >
                                     <div class="sycm1">
                                         <ul class="clearfix1">
-                                            <li v-for="cm in comlist"><h2>型号</h2><span v-for="sd in cm.LEDPARAS.SENDER_ORDER">{{sd.SENDER_TYPE}}</span></li>
-                                            <li v-for="cm in comlist"><h2>版本</h2><span v-for="sd in cm.LEDPARAS.SENDER_ORDER">{{sd.VER}}</span></li>
+                                            <li v-for="cm in comlist"><h2>型号</h2><span  v-for="(sd,index) in cm.LEDPARAS.SENDER_ORDER"  v-if="index==0">{{sd.SENDER_TYPE}}</span></li>
+                                            <li v-for="cm in comlist"><h2>版本</h2><span v-for="(sd,index) in cm.LEDPARAS.SENDER_ORDER"   v-if="index==0">{{sd.VER}}</span></li>
                                             <li ><h2>通讯状态</h2><span>强</span></li>
                                         </ul>
                                         <div class="jkcontent" style="border-bottom: 1px solid rgba(255,255,255,.1)"></div>
                                         <ul class="clearfix1">
-                                            <li  v-for="cm in comlist"><h2>ip地址</h2><span v-for="sd in cm.LEDPARAS.SENDER_ORDER">{{sd.IPADDR}}</span></li>
-                                            <li  v-for="cm in comlist"><h2>mac地址</h2><span v-for="sd in cm.LEDPARAS.SENDER_ORDER">{{sd.MACADDR}}</span></li>
-                                            <li  v-for="cm in comlist"><h2>输入电压</h2><span v-for="sd in cm.LEDPARAS.SENDER_ORDER">{{sd.VOLTAGE}}V</span></li>
+                                            <li  v-for="cm in comlist"><h2>ip地址</h2><span  v-for="(sd,index) in cm.LEDPARAS.SENDER_ORDER"  v-if="index==0">{{sd.IPADDR}}</span></li>
+                                            <li  v-for="cm in comlist"><h2>mac地址</h2><span v-for="(sd,index) in cm.LEDPARAS.SENDER_ORDER"  v-if="index==0">{{sd.MACADDR}}</span></li>
+                                            <li  v-for="cm in comlist"><h2>输入电压</h2><span v-for="(sd,index) in cm.LEDPARAS.SENDER_ORDER"  v-if="index==0">{{sd.VOLTAGE}}V</span></li>
                                         </ul>
                                     </div>
 
@@ -1205,15 +1232,15 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="fskimp" v-for="cm in comlist">
+                    <div class="fskimp" >
                         <ul>
-                        <li v-for="sd in cm.LEDPARAS.SENDER_ORDER">
+                        <li>
                             <h3>发送卡网口数</h3>
-                            <p><span >{{sd.PORT_ORDER.length}}</span></p>
+                            <p><span >{{port_ordernum}}</span></p>
                         </li>
                         </ul>
                         <h3>带载箱体数</h3>
-                        <p v-for="sd in cm.LEDPARAS.SENDER_ORDER">{{sd.SENDER_BOXUSED}}</p>
+                        <p>{{sender_boxtotalnum}}</p>
                     </div>
                     <div class="fskrun"></div>
                     <div class="fskig"><img src="img/fsk.svg" alt=""></div>
@@ -1238,8 +1265,8 @@
                                     <div class="jkcontent" style="border-bottom: 1px solid rgba(255,255,255,.1)"></div>
                                     <ul class="clearfix2">
                                         <li><h2>屏体类型</h2><span v-for="cm in comlist">{{cm.LEDPARAS.LED_TYPE}}</span></li>
-                                        <li  v-for="cm in comlist"><h2>输入源</h2><span  v-for="sd in cm.LEDPARAS.SENDER_ORDER">{{sd.INPUTSOURCE}}</span></li>
-                                        <li  v-for="cm in comlist"><h2>刷新率</h2><span  v-for="sd in cm.LEDPARAS.SENDER_ORDER">{{sd.INSRC_FRE}}</span></li>
+                                        <li  v-for="cm in comlist"><h2>输入源</h2><span v-for="(sd,index) in cm.LEDPARAS.SENDER_ORDER"  v-if="index==0">{{sd.INPUTSOURCE}}</span></li>
+                                        <li  v-for="cm in comlist"><h2>刷新率</h2><span v-for="(sd,index) in cm.LEDPARAS.SENDER_ORDER"  v-if="index==0">{{sd.INSRC_FRE}}</span></li>
                                     </ul>
 
                                     <div style="border-bottom: 1px solid rgba(255,255,255,.1)"></div>
@@ -1260,7 +1287,8 @@
 
                 <div class="ledsceen">
                     <div class="cssrun">
-                        <i class="ledrun1">L</i><i class="ledrun2">E</i><i class="ledrun3">D</i>
+                       <!-- <i class="ledrun1">L</i><i class="ledrun2">E</i><i class="ledrun3">D</i>-->
+                        <span class="ledrun2" v-if="source.LEDSCREEN&&source.LEDSCREEN.INDEX">{{source.LEDSCREEN.INDEX}}</span>
                     </div>
                 </div>
             </div>
@@ -1285,7 +1313,7 @@
                 <div class="box-center">
                     <div class="center-bottom">
                         <div class="city-data">
-                            <div id="tuopu" style="width: 16rem;height:8rem;">
+                            <div id="tuopu" style="width: 1450px;height:800px;margin-left: -253px;margin-top: 48px;">
                             </div>
                         </div>
                     </div>
@@ -1295,82 +1323,83 @@
                 <div class="pop-up">
                     <span class="close-pop"></span>
                     <h2 id="boxTitle" class="title"></h2>
-                    <h3  style="width: 100%;height:0.4rem;font-size: 0.26rem;color:#0e94eb;margin-left:0.3rem;"><b>箱体型号:<span id="productTitle" style="color: white;"></span></b></h3>
+                    <h3  style="width: 100%;height:40px;font-size: 26px;color:#0e94eb;margin-left:527px;position: absolute;margin-top: 116px;">
+                        <b>箱体型号:<span id="productTitle" style="color: white;"></span></b></h3>
                     <!-- 模组信息弹框 -->
                     <div  class="modedetail" >
                         <!-- 模组ID -->
-                        <h2 style="width: 1.4rem;height:0.4rem;line-height:0.37rem;text-align:center;font-size: 0.2rem;color:#0e94eb;margin-top: 0.75rem;margin-left: 0.45rem;background: url(/images/moduleDetailTitle.png) top left no-repeat">
+                        <h2 style="width: 140px;height:40px;line-height:37px;text-align:center;font-size: 20px;color:#0e94eb;margin-top: 75px;margin-left: 45px;background: url(/images/moduleDetailTitle.png) top left no-repeat">
                             <b>模组ID</b>
                         </h2>
-                        <ul style="width:3.4rem;font-size: 0.19rem;margin-left: 0.6rem;margin-top: 0.1rem;line-height: 0.3rem;">
+                        <ul style="width:340px;font-size: 15px;margin-left: 60px;margin-top: 10px;line-height: 30px;">
                             <!-- 分辨率 -->
                             <li style="color: #0e94eb;">
-                                分辨率：<b><span id="MOD_RSL" style="color: #E9E7E7;margin-left: 1rem;">96 * 108</span></b>
+                                分辨率：<b><span id="MOD_RSL" style="color: #E9E7E7;margin-left: 100px;">96 * 108</span></b>
                             </li>
                             <!-- 间距 -->
-                            <li style="color: #0e94eb;margin-top: 0.13rem;">
-                                间距：<b><span id="MOD_SPACE" style="color: #E9E7E7;margin-left: 1.19rem;">1.588</span></b>
+                            <li style="color: #0e94eb;margin-top: 13px;">
+                                间距：<b><span id="MOD_SPACE" style="color: #E9E7E7;margin-left: 119px;">1.588</span></b>
                             </li>
                             <!-- 分割线 -->
-                            <li style="margin-top: 0.13rem;border-bottom:rgba(255, 255, 255, 0.2) 1px solid;"></li>
+                            <li style="margin-top: 13px;border-bottom:rgba(255, 255, 255, 0.2) 1px solid;"></li>
                             <!-- 规格类型 -->
-                            <li style="color: #0e94eb;margin-top: 0.13rem;">
-                                规格型号：<b><span id="LAMP_PARA_STYLE" style="color: #E9E7E7;margin-left: 0.81rem;">SMD3258</span></b>
+                            <li style="color: #0e94eb;margin-top: 13px;">
+                                规格型号：<b><span id="LAMP_PARA_STYLE" style="color: #E9E7E7;margin-left: 81px;">SMD3258</span></b>
                             </li>
                             <!-- 亮度 -->
-                            <li style="color: #0e94eb;margin-top: 0.13rem;">
-                                亮度：<b><span id="LAMP_PARA_BRIGHT" style="color: #E9E7E7;margin-left: 1.19rem;">600</span></b>
+                            <li style="color: #0e94eb;margin-top: 13px;">
+                                亮度：<b><span id="LAMP_PARA_BRIGHT" style="color: #E9E7E7;margin-left: 119px;">600</span></b>
                             </li>
                             <!-- 波长 -->
-                            <b style="color: #0e94eb;margin-top: 0.13rem;">
+                            <li style="color: #0e94eb;margin-top: 13px;">
                                 波长(RGB)：<b><p id="LAMP_PARA_WAVELEN" style="color: #E9E7E7;">R:400~480,G:620~750,B:480~500</p></b>
                                 </li>
                                 <!-- 发光亮度 -->
-                                <li style="color: #0e94eb;margin-top: 0.13rem;">
-                                    发光角度：<b><span id="LAMP_PARA_ANGLE" style="color: #E9E7E7;margin-left: 0.81rem;">120</span></b>
+                                <li style="color: #0e94eb;margin-top: 13px;">
+                                    发光角度：<b><span id="LAMP_PARA_ANGLE" style="color: #E9E7E7;margin-left: 81px;">120</span></b>
                                 </li>
                                 <!-- 抗静电能力 -->
-                                <li style="color: #0e94eb;margin-top: 0.13rem;">
-                                    抗静电能力：<span id="LAMP_PARA_ANTISTATIC" style="color: #E9E7E7;margin-left: 0.62rem;"><b>700</b></span>
+                                <li style="color: #0e94eb;margin-top: 13px;">
+                                    抗静电能力：<span id="LAMP_PARA_ANTISTATIC" style="color: #E9E7E7;margin-left: 62px;"><b>700</b></span>
                                 </li>
                                 <!-- 漏电电流 -->
-                                <li style="color: #0e94eb;margin-top: 0.13rem;">
-                                    漏电电流：<b><span id="LAMP_PARA_LEAKAGE_CURRENT" style="color: #E9E7E7;margin-left: 0.81rem;">5</span></b>
+                                <li style="color: #0e94eb;margin-top: 13px;">
+                                    漏电电流：<b><span id="LAMP_PARA_LEAKAGE_CURRENT" style="color: #E9E7E7;margin-left: 81px;">5</span></b>
                                 </li>
                                 <!-- 扫描方式 -->
-                                <li style="color: #0e94eb;margin-top: 0.13rem;">
-                                    扫描方式：<b><span id="MOD_SCAN_NUM" style="color: #E9E7E7;margin-left: 0.81rem;">27</span></b>
+                                <li style="color: #0e94eb;margin-top: 13px;">
+                                    扫描方式：<b><span id="MOD_SCAN_NUM" style="color: #E9E7E7;margin-left: 81px;">27</span></b>
                                 </li>
                         </ul>
                     </div>
                     <div class="set-div">
-                        <div class="set-box">
-                            <label class="four-f" for="">&nbsp;&nbsp;&nbsp;传感器</label>
-                            <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 2rem;height: 1rem;margin-top: 1.6rem;margin-left:-1.6rem;">
-                                <ul style="margin-left:0.12rem;margin-top:-0.04rem;">
-                                    <li style="margin-top: 0.08rem;color: #0e94eb;">电压：<span id="SENSOR_VOL" style="color: #E9E7E7"></span></li>
-                                    <li style="margin-top: 0.08rem;color: #0e94eb;">电流：<span id="SENSOR_CURRENT" style="color: #E9E7E7">A</span></li>
-                                    <li style="margin-top: 0.08rem;color: #0e94eb;">湿度：<span id="SENSOR_HUMI" style="color: #E9E7E7">%RH</span></li>
-                                    <li style="margin-top: 0.08rem;color: #0e94eb;">烟雾：<span id="SENSOR_SMOG" style="color: #E9E7E7">333</span></li>
+                        <div class="set-box"  style="margin-left: 6px;margin-top: 112px;position: absolute;">
+                            <label class="four-f">&nbsp;&nbsp;&nbsp;传感器</label>
+                            <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 200px;height: 100px;margin-top: 160px;margin-left:-160px;">
+                                <ul style="margin-left:12px;margin-top:-4px;">
+                                    <li style="margin-top: 8px;color: #0e94eb;">电压：<span id="SENSOR_VOL" style="color: #E9E7E7"></span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">电流：<span id="SENSOR_CURRENT" style="color: #E9E7E7">A</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">湿度：<span id="SENSOR_HUMI" style="color: #E9E7E7">%RH</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">烟雾：<span id="SENSOR_SMOG" style="color: #E9E7E7">333</span></li>
                                 </ul>
-                                <ul style="margin-left:1rem;margin-top:-1rem;">
-                                    <li style="margin-top: 0.08rem;color: #0e94eb;">温度：<span id="SENSOR_TMP" style="color: #E9E7E7">℃</span></li>
-                                    <li style="margin-top: 0.08rem;color: #0e94eb;">亮度：<span id="SENSOR_BRI" style="color: #E9E7E7">Lux</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="set-box" style="margin-top: 1rem;height:0.8rem">
-                            <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;驱动IC</label>
-                            <div class="didimen1" style="font-size: small;border:1px solid #1dacfe;width: 1rem;height: 0.1985rem;margin-top: 0.7rem;margin-left:-1.6rem;">
-                                <ul style="margin-left:0.12rem;margin-top:-0.04rem;">
-                                    <li style="margin-top: 0.08rem;color: #0e94eb;"><span id="ICSYLE" style="color: #E9E7E7">MBI5153GP</span></li>
+                                <ul style="margin-left:100px;margin-top:-100px;">
+                                    <li style="margin-top: 8px;color: #0e94eb;">温度：<span id="SENSOR_TMP" style="color: #E9E7E7">℃</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">亮度：<span id="SENSOR_BRI" style="color: #E9E7E7">Lux</span></li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="set-box" style="margin-top:0.2rem;">
-                            <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电源：</label>
-                            <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 1.9rem;height: 1rem;margin-top: 1.6rem;margin-left:-1.6rem;">
-                                <ul style="margin-left:0.12rem;margin-top:-0.04rem;">
+                        <div class="set-box" style="height: 80px;position: absolute;margin-top: 276px;margin-left: 4px;">
+                            <label >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;驱动IC</label>
+                            <div class="didimen1" style="font-size: small;border:1px solid #1dacfe;width: 100px;height: 19.85px;margin-top: 70px;margin-left:-160px;">
+                                <ul style="margin-left:12px;margin-top:4px;">
+                                    <li style="margin-top: 8px;color: #0e94eb;"><span id="ICSYLE" style="color: #E9E7E7">MBI5153GP</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="set-box" style="margin-top: 415px;position: absolute;">
+                            <label >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电源：</label>
+                            <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 190px;height: 100px;margin-top: 160px;margin-left:-160px;">
+                                <ul style="margin-left:12px;margin-top:-4px;">
                                     <li style="margin-top: 8px;color: #0e94eb;">最大功率：<span id="MAX_POWER" style="color: #E9E7E7">220W</span></li>
                                     <li style="margin-top: 8px;color: #0e94eb;">电压：<span id="VOLTAGE" style="color: #E9E7E7">22V</span></li>
                                     <li style="margin-top: 8px;color: #0e94eb;">实际功率：<span id="RT_POWERDIS" style="color: #E9E7E7">55W</span></li>
@@ -1378,64 +1407,66 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="set-box" style="margin-top:1.2rem;">
-                            <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接收卡信息：</label>
-                            <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 2.5rem;height: 1.38rem;margin-top: 1.83rem;margin-left:-1.6rem;">
-                                <ul style="margin-left:0.12rem;margin-top:-0.04rem;">
-                                    <li style="margin-top: 0.08rem;color: #0e94eb;">接收卡名称：<span id="rec_Id" style="color: #E9E7E7">C160080</span></li>
-                                    <li style="margin-top: 0.08rem;color: #0e94eb;">接收卡个数：<span id="rec_Count" style="color: #E9E7E7">1</span></li>
-                                    <li style="margin-top: 0.08rem;color: #0e94eb;">运行时间：<span id="rec_TOTAL_WORKTIME" style="color: #E9E7E7">2h5m0s</span></li>
-                                    <li style="margin-top: 0.08rem;color: #0e94eb;">版本号：<span id="REC_VER" style="color: #E9E7E7">ZE0233-25</span></li>
-                                    <li style="margin-top: 0.08rem;color: #0e94eb;">带载面积：<span id="REC_Carrying_Area" style="color: #E9E7E7">209251m㎡</span></li>
-                                </ul>
-                            </div>
-                        </div>
+
                         <!-- 模组拓扑 -->
                         <div class="module-model">
                             <!--  模组1 -->
-                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 0.02rem;border-style:none solid solid none;float: left;width: 1.945rem;height: 1.9rem;margin-top: 0.1rem;margin-left: 0.07rem;">
+                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 2px;border-style:none solid solid none;float: left;width: 194.5px;height: 190px;margin-top: 10px;margin-left: 7px;">
 
                             </div>
                             <!--  模组2 -->
-                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 0.02rem;border-style:none solid solid none;float: left;width: 1.945rem;height: 1.9rem;margin-top: 0.1rem;">
+                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 2px;border-style:none solid solid none;float: left;width: 194.5px;height: 190px;margin-top: 10px;">
 
                             </div>
                             <!--  模组3 -->
-                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 0.02rem;border-style:none solid solid none;float: left;width: 1.945rem;height: 1.9rem;margin-top: 0.1rem;">
+                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 2px;border-style:none solid solid none;float: left;width: 194.5px;height: 190px;margin-top: 10px;">
 
                             </div>
                             <!--  模组4 -->
-                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 0.02rem;border-style:none none solid none;float: left;width: 1.912rem;height: 1.9rem;margin-top: 0.1rem;">
+                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 2px;border-style:none none solid none;float: left;width: 191.2px;height: 190px;margin-top: 10px;">
 
                             </div>
 
                             <!--  模组5 -->
-                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 0.02rem;border-style:none solid none none;float: left;width: 1.945rem;height: 1.98rem;margin-left: 0.07rem;">
+                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 2px;border-style:none solid none none;float: left;width: 194.5px;height: 198px;margin-left: 7px;">
 
                             </div>
 
                             <!--  模组6-->
-                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 0.02rem;border-style:none solid none none;float: left;width: 1.945rem;height: 1.98rem;">
+                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 2px;border-style:none solid none none;float: left;width: 194.5px;height: 198px;">
 
                             </div>
 
                             <!--  模组7-->
-                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 0.02rem;border-style:none solid none none;float: left;width: 1.945rem;height: 1.98rem;">
+                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 2px;border-style:none solid none none;float: left;width: 194.5px;height: 198px;">
 
                             </div>
 
                             <!--  模组8-->
-                            <div class="module" onclick="aiguozhe('unilumin')" style="float: left;width: 1.945rem;height: 1.98rem;">
+                            <div class="module" onclick="aiguozhe('unilumin')" style="float: left;width: 194.5px;height: 198px;">
 
                             </div>
                         </div>
-                        <div class="set-box" style="margin-top:-4.4rem;float: right;margin-right:0.45rem;">
-                            <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;模组信息：</label>
-                            <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 1.5rem;margin-left:-1.6rem;height: 0.75rem;margin-top: 1.3rem;">
-                                <ul style="margin-left:0.12rem;margin-top:-0.04rem;">
-                                    <li style="margin-top: 0.08rem;color: #0e94eb;">模组个数：<span id="MOD_ORDER" style="color: #E9E7E7"></span></li>
-                                    <li style="margin-top: 0.08rem;color: #0e94eb;">正常模组：<span id="MOD_NORMAL" style="color: #E9E7E7">0</span></li>
-                                    <li style="margin-top: 0.08rem;color: #0e94eb;">故障模组：<span id="MOD_FAULT" style="color: #E9E7E7">8</span></li>
+                        <div class="set-box" style="margin-top: -180px;margin-left: 1066px">
+
+                            <label >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接收卡信息：</label>
+                            <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 170px;height: 138px;margin-top: 183px;margin-left:-160px;">
+                                <ul style="margin-left:12px;margin-top:-4px;">
+                                    <li style="margin-top: 8px;color: #0e94eb;">接收卡名称：<span id="rec_Id" style="color: #E9E7E7">C160080</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">接收卡个数：<span id="rec_Count" style="color: #E9E7E7">1</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">运行时间：<span id="rec_TOTAL_WORKTIME" style="color: #E9E7E7">2h5m0s</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">版本号：<span id="REC_VER" style="color: #E9E7E7">ZE0233-25</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">带载面积：<span id="REC_Carrying_Area" style="color: #E9E7E7">209251m㎡</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="set-box" style="float: right;margin-left: 1078px;position: absolute;margin-top: -255px;">
+                            <label >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;模组信息：</label>
+                            <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 150px;margin-left:-160px;height: 75px;margin-top: 130px;">
+                                <ul style="margin-left:12px;margin-top:-4px;">
+                                    <li style="margin-top: 8px;color: #0e94eb;">模组个数：<span id="MOD_ORDER" style="color: #E9E7E7"></span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">正常模组：<span id="MOD_NORMAL" style="color: #E9E7E7">0</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">故障模组：<span id="MOD_FAULT" style="color: #E9E7E7">8</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -1465,49 +1496,50 @@
             <div id="ledslider" class="ledph">
                 <template>
                     <div class="ledph1">
-                        <div class="block">
-                            <span class="demonstration">亮度</span>
-                            <span>{{value1}}</span>
-                            <el-slider v-model="value1"></el-slider>
+                        <div class="block"  >
+                            <span class="demonstration">亮度(0-100)</span>
+                            <span >{{value1}}</span>
+                           <el-slider  @change="onChangeValue1"   v-model="value1"></el-slider>
                         </div>
                         <div class="block">
-                            <span class="demonstration">色相</span>
+                            <span class="demonstration">色相(-20-20)</span>
                             <span>{{value2}}</span>
-                            <el-slider v-model="value2"></el-slider>
+                            <el-slider  @change="onChangeValue2"  v-model="value2" :min="-20" :max="20"></el-slider>
+                        </div>
+
+                        <div class="block">
+                            <span class="demonstration">色度(0-200)</span>
+                            <span >{{value4}}</span>
+                            <el-slider   @change="onChangeValue4" v-model="value4" :min="0" :max="200"></el-slider>
                         </div>
                         <div class="block">
-                            <span class="demonstration">色温</span>
-                            <span>{{value3}}</span>
-                            <el-slider v-model="value3"></el-slider>
-                        </div>
-                        <div class="block">
-                            <span class="demonstration">色度</span>
-                            <span>{{value4}}</span>
-                            <el-slider v-model="value4"></el-slider>
+                            <span class="demonstration" style="color: #606266">色温</span>
+                           <!-- <span>{{value3}}</span>-->
+                            <el-slider v-model="value3"  disabled style="color: #606266"></el-slider>
                         </div>
                     </div>
 
                     <div class="ledph2">
                         <div class="block">
                             <span class="demonstration">HDR</span>
-                            <span>{{value5}}</span>
+                            <span >{{value5}}</span>
                             <el-slider v-model="value5"></el-slider>
                         </div>
 
                         <div class="block">
-                            <span class="demonstration">灰度增益</span>
-                            <span>{{value6}}</span>
-                            <el-slider v-model="value6"></el-slider>
+                            <span class="demonstration" style="color: #606266">灰度增益</span>
+                           <!-- <span>{{value6}}</span>-->
+                            <el-slider v-model="value6"  disabled style="color: #606266"></el-slider>
                         </div>
                         <div class="block">
-                            <span class="demonstration">灰度基准值</span>
-                            <span>{{value7}}</span>
-                            <el-slider v-model="value7"></el-slider>
+                            <span class="demonstration" style="color: #606266">灰度基准值</span>
+                          <!--  <span>{{value7}}</span>-->
+                            <el-slider v-model="value7"  disabled style="color: #606266"></el-slider>
                         </div>
                         <div class="block">
-                            <span class="demonstration">增强器调整</span>
-                            <span>{{value8}}</span>
-                            <el-slider v-model="value8"></el-slider>
+                            <span class="demonstration" style="color: #606266">增强器调整</span>
+                            <!--<span>{{value8}}</span>-->
+                            <el-slider v-model="value8"  disabled style="color: #606266"></el-slider>
                         </div>
                     </div>
 
@@ -1518,7 +1550,7 @@
 
             <div id="input">
                 <template>
-                    <el-select v-model="fblvalue" placeholder="请选择分辨率">
+                    <el-select v-model="fblvalue"  @change="onChangeFblvalue"  placeholder="请选择分辨率">
                         <el-option
                                 v-for="item in fbloptions"
                                 active-text="正常"
@@ -1548,14 +1580,16 @@
 
             <div id="ledradio">
                 <template>
-                    <el-radio v-model="radio" label="1">HDMI</el-radio>
-                    <el-radio v-model="radio" label="2">DVI</el-radio>
-                    <el-radio v-model="radio" label="3">VGA</el-radio>
-                    <el-radio v-model="radio" label="4">DP</el-radio>
+                    <el-radio-group v-if="radio!=null" @change="onChangeRadio" v-model="radio">
+                    <el-radio v-model="radio"  label="HDMI"><span id="hdmitext">HDMI 无信号</span></el-radio>
+                    <el-radio v-model="radio"  label="DVI-D"><span id="dvitext">DVI-D 无信号</span></el-radio>
+                    <el-radio v-model="radio"  label="SDI"><span id="sditext">SDI 无信号</span></el-radio>
+                  <!--  <el-radio v-model="radio"  label="DP">DP</el-radio>-->
+                    </el-radio-group>
 <!--                    <el-radio v-model="radio" label="5">备选项</el-radio>-->
                 </template>
             </div>
-            <button onclick="sendcmd()">发送</button>
+          <!--  <button onclick="sendcmd()">发送</button>-->
 
         </div>
 
@@ -1577,47 +1611,6 @@
         el: '#app',
         data () {
             return {
-
-                //拓扑模块所需的值
-                //自定义值
-                info_title: null,
-                //屏幕对象
-                ledParasJson : null ,
-                //发送卡列表
-                senderOrderList : [],
-                //发送卡初始X值
-                XInitSender : 200,
-                //发送卡初始Y值
-                YInitSender : 1000,
-                //网口初始X值-X轴上单个偏移差值为60一个单位(向右+60)
-                XInitPort : 290,
-                //网口初始Y值-Y轴上单个偏移差值为70一个单位（向下-70）
-                YInitPort : 1000,
-                //网口最大总数量
-                MaxPort : 16,
-                //X轴上单个偏移差值为60一个单位(向右+60)----屏体（同网口）
-                XInit : [660,720,780,840,900,960,1020,1080],
-                //Y轴上单个偏移差值为140一个单位(向下-140)----屏体
-                YInit : [960,820,680,540,400,260,120,-20],
-                //矢量图形组
-                nodes : [{
-                    x: 0,
-                    y: 600,
-                    nodeName: '控制卡',
-                    name: '控制卡',
-                    type: '播放器',
-                    detail:null,
-                    svgPath: 'M885.76 919.552H116.736C53.248 919.552 1.024 867.328 1.024 803.84V284.672c0-63.488 52.224-115.712 115.712-115.712h769.024c63.488 0 115.712 52.224 115.712 115.712v519.168c0 63.488-52.224 115.712-115.712 115.712zM116.736 226.304c-31.744 0-58.368 25.6-58.368 58.368v519.168c0 31.744 25.6 58.368 58.368 58.368h769.024c31.744 0 58.368-25.6 58.368-58.368V284.672c0-31.744-25.6-58.368-58.368-58.368H116.736z M432.128 740.352c-15.36 0-30.72-4.096-44.032-12.288-25.6-15.36-40.96-43.008-40.96-72.704V458.752c0-30.72 15.36-57.344 40.96-72.704s57.344-16.384 83.968-2.048L658.432 481.28c27.648 14.336 46.08 44.032 46.08 75.776 0 31.744-17.408 60.416-46.08 75.776l-185.344 98.304c-13.312 6.144-26.624 9.216-40.96 9.216z m1.024-279.552v191.488l182.272-96.256L433.152 460.8z m184.32 97.28l20.48-37.888-20.48 37.888z',
-                    symbolSize: 70,
-                }
-                ],
-                //连接线数组
-                links : [],
-                //走线方式数组
-                portGroup : [],
-                /**
-                 * 上方是拓扑模块所需自定义值
-                 * */
                 comlist:"",
                 destination:"",
                 source:"",
@@ -1633,60 +1626,69 @@
                 voltage:"",
                 fan_ctrl:"",
                 current:"",
+
+                port_ordernum:"",
+                sender_boxtotalnum:"",
+
                 inputsource:"",
                 led_rslt:"",
 
                 status: true,
-                value1: 0,
-                value2: 50,
-                value3: 36,
-                value4: 48,
-                value5: 42,
-                value6: 0,
-                value7: 50,
-                value8: 36,
-                radio: '1',
+                value1: "",
+                value2: "",
+                value3: "",
+                value4: "",
+                value5: "",
+                value6: "",
+                value7: "",
+                value8: "",
+
+                radio:"",
+
                 fbloptions: [{
-                    fblvalue: '选项1',
+                    fblvalue: '1920*1080',
                     label: '1920*1080'
                 }, {
-                    fblvalue: '选项2',
+                    fblvalue: '1280*1024',
                     label: '1280*1024'
                 }, {
-                    fblvalue: '选项3',
+                    fblvalue: '2560*1600',
                     label: '2560*1600'
                 }, {
-                    fblvalue: '选项4',
+                    fblvalue: '3840*2160',
                     label: '3840*2160'
                 }],
                 fblvalue: '',
                 gmoptions: [{
-                    gmvalue: '选项1',
+                    gmvalue: 'PQ',
+                    label: 'PQ'
+                }, {
+                    gmvalue: '1.8',
                     label: '1.8'
                 }, {
-                    gmvalue: '选项2',
+                    gmvalue: '2',
                     label: '2'
                 }, {
-                    gmvalue: '选项3',
+                    gmvalue: '2.2',
                     label: '2.2'
                 }, {
-                    gmvalue: '选项4',
+                    gmvalue: '2.4',
                     label: '2.4'
                 }, {
-                        gmvalue: '选项5',
+                        gmvalue: '2.5',
                         label: '2.5'
                 },{
-                    gmvalue: '选项6',
+                    gmvalue: '2.8',
                     label: '2.8'
                 },{
-                    gmvalue: '选项7',
+                    gmvalue: '3',
                     label: '3'
                 }],
                 gmvalue: '',
-
             }
         },
         mounted () {
+            let count=0;
             _self = this;
             // let websocket = null;
             //判断当前浏览器是否支持WebSocket
@@ -1708,461 +1710,159 @@
             };
             //接收到消息的回调方法
             websocket.onmessage = function (event) {
-                let jsonScreenObj = JSON.parse(event.data);
-                _self.comlist = jsonScreenObj.COMLIST;
-                _self.destination = jsonScreenObj.DESTINATION;
-                _self.source = jsonScreenObj.SOURCE;
-                let ledlist = _self.comlist;
-                let i;
-                //遍历屏体信息
-                for (i in ledlist) {
-                    _self.contrast=ledlist[i].LEDPARAS.CONTRAST;
-                    _self.saturability=ledlist[i].LEDPARAS.SATURABILITY;
-                    _self.hue = ledlist[i].LEDPARAS.HUE;
-                    _self.envi_bright= ledlist[i].LEDPARAS.ENVI_BRIGHT;
-                    _self.temp= ledlist[i].LEDPARAS.TEMP;
-                    _self.humidity= ledlist[i].LEDPARAS.HUMIDITY;
-                    _self.voltage= ledlist[i].LEDPARAS.VOLTAGE;
-                    _self.fan_ctrl= ledlist[i].LEDPARAS.FAN_CTRL;
-                    _self.current= ledlist[i].LEDPARAS.CURRENT;
-                    let senderlist = ledlist[i].LEDPARAS.SENDER_ORDER;
-                    let j;
-                    for (j in senderlist) {
-                    _self.bright = senderlist[j].BRIGHT;
-                    _self.gamma  = senderlist[j].GAMMA;
-                    _self.chroma = senderlist[j].CHROMA;
-                    _self.inputsource = senderlist[j].INPUTSOURCE;
-                    _self.led_rslt = senderlist[j].INSRC_RSLT;
-                    }
+                    console.log(event.data);
+                    try{
+                        let respJsonScreenObj = JSON.parse(event.data);
+                        console.log("respJsonScreenObj"+respJsonScreenObj);
+                        let type;
+                        type=respJsonScreenObj.type;
+                        console.log("第一次收到数据"+count);
+                        console.log(type);
+                        switch (type) {
+                            case 100:
+                              /*  if(respJsonScreenObj.respContent==null||respJsonScreenObj.respContent===""){
+                                    window.location.reload();
+                                }*/
+                                let jsonScreenObj = JSON.parse(respJsonScreenObj.respContent);
+                                console.log("respJsonScreenObj.respContent监控"+respJsonScreenObj.respContent);
+                                console.log("jsonScreenObj监控"+jsonScreenObj);
+                                _self.comlist = jsonScreenObj.COMLIST;
+                                console.log("_self.comlist", _self.comlist);
+                                console.log("_self.comlist", _self.comlist.length);
+                                _self.destination = jsonScreenObj.DESTINATION;
+                                _self.source = jsonScreenObj.SOURCE;
+                                let ledlist = _self.comlist;
+                                let i;
+                                _self.port_ordernum=0;
+                                _self.sender_boxtotalnum=0;
+                                for (i in ledlist) {
+                                    _self.contrast=ledlist[i].LEDPARAS.CONTRAST;
+                                    _self.saturability=ledlist[i].LEDPARAS.SATURABILITY;
+                                    _self.hue = ledlist[i].LEDPARAS.HUE;
+                                    _self.value2 = parseInt(ledlist[i].LEDPARAS.HUE);
+                                    _self.envi_bright= ledlist[i].LEDPARAS.ENVI_BRIGHT;
+                                    _self.temp= ledlist[i].LEDPARAS.TEMP;
+                                    _self.humidity= ledlist[i].LEDPARAS.HUMIDITY;
+                                    _self.voltage= ledlist[i].LEDPARAS.VOLTAGE;
+                                    _self.fan_ctrl= ledlist[i].LEDPARAS.FAN_CTRL;
+                                    _self.current= ledlist[i].LEDPARAS.CURRENT;
+                                    let senderlist = ledlist[i].LEDPARAS.SENDER_ORDER;
+                                    let j;
 
-                    //拓扑模块的数据处理
-                    //获取屏幕对象
-                    this.ledParasJson = ledlist[i].LEDPARAS;
-                    //外围参数拓展显示
-                    console.log(this.ledParasJson);
-                    //通用接收卡对象
-                    var recParas = this.ledParasJson.COMMON_RECPARAS;
-                    //通用模组对象
-                    var modParas = this.ledParasJson.COMMON_MODPARAS;
-                    $('#MOD_RSL').text(modParas.MOD_RSLT);
-                    $('#MOD_SPACE').text(modParas.MOD_SPACE+"MM");
+                                    for (j in senderlist) {
+                                        _self.bright = senderlist[j].BRIGHT;
 
-                    $('#MOD_SCAN_NUM').text(modParas.SCAN_NUM+"SCAN");
-                    //通用模组-灯光参数对象
-                    var lamp_Para =modParas.LAMP_PARA;
-                    $('#LAMP_PARA_STYLE').text(lamp_Para.STYLE);
-                    $('#LAMP_PARA_BRIGHT').text(lamp_Para.BRIGHT);
-                    $('#LAMP_PARA_WAVELEN').text(lamp_Para.WAVELEN);
-                    $('#LAMP_PARA_ANGLE').text("<="+lamp_Para.ANGLE+"度");
-                    $('#LAMP_PARA_ANTISTATIC').text("<"+lamp_Para.ANTISTATIC+"V");
-                    $('#LAMP_PARA_LEAKAGE_CURRENT').text("<"+lamp_Para.LEAKAGE_CURRENT+"uA");
-                    //箱体ID
-                    $('#boxTitle').text(recParas.BOX_NAME);
-                    //箱体类型
-                    $('#productTitle').text(recParas.BOX_TYPE);
-                    //模组个数
-                    $('#MOD_ORDER').text(recParas.MOD_ORDER);
-                    //接收卡带载面积计算：
-                    var Mod_Area_Group = modParas.MOD_SIZE.split("*");
-                    for(var s = 0;s<Mod_Area_Group.length;s++){
-                        Mod_Area_Group[s] = Mod_Area_Group[s].replace(/[^0-9]/ig,"");
-                    }
-                    //接收卡带载面积：
-                    $('#REC_Carrying_Area').text(parseInt((Mod_Area_Group[0]*Mod_Area_Group[1]*recParas.MODULE_CNT)/10000)+"mm²");
+                                        _self.port_ordernum +=  parseInt(senderlist[j].PORT_ORDER.length);
+                                        _self.sender_boxtotalnum+= parseInt(senderlist[j].SENDER_BOXTOTAL);
 
-                    //驱动IC
-                    $('#ICSYLE').text(modParas.ICSYLE);
+                                        if(count===0){
+                                            _self.value1 = parseInt(senderlist[j].BRIGHT);
+                                        }
+                                        _self.gamma  = senderlist[j].GAMMA;
+                                        _self.gmvalue= senderlist[j].GAMMA;
+                                        _self.chroma = senderlist[j].CHROMA;
+                                        if(count===0){
+                                            _self.value3=senderlist[j].CHROMA;
+                                        }
+                                        _self.inputsource = senderlist[j].INPUTSOURCE;
+                                        if(count===0){
+                                            let sourceCont1= "";
+                                            let sourceCont2= "";
+                                            let sourceCont3= "";
+                                             sourceCont1= senderlist[j].INPUTSOURCE;
+                                             sourceCont2= senderlist[j].INSRC_RSLT;
+                                             sourceCont3= senderlist[j].INSRC_FRE;
+                                            _self.radio = sourceCont1;
+                                            if(_self.radio==="HDMI"){
+                                                $("#hdmitext").text(sourceCont1 +" "+ sourceCont2 +" "+ sourceCont3);
+                                                $("#hdmitext").addClass("checkspan");
+                                            }else if(_self.radio==="DVI-D"){
+                                                $("#dvitext").text(sourceCont1 +" "+ sourceCont2 +" "+ sourceCont3);
+                                                $("#dvitext").addClass("checkspan");
+                                            }else if(_self.radio==="SDI"){
+                                                $("#sditext").text(sourceCont1 +" "+ sourceCont2+" " + sourceCont3);
+                                                $("#sditext").addClass("checkspan");
+                                            }else{
+                                                console.log("未识别到输入源");
+                                            }
 
-                    //发送卡数组
-                    this.senderOrderList = this.ledParasJson.SENDER_ORDER;
+                                        }
+                                        _self.led_rslt = senderlist[j].INSRC_RSLT;
+                                        if(count===0){
+                                            _self.fblvalue = senderlist[j].INSRC_RSLT;
+                                        }
 
-                    //遍历发送卡列表可知发送卡数量
-                    for(var ip = 0;ip<this.senderOrderList.length;ip++){
-                        //当前发送卡信息
-                        var senderOrder = this.senderOrderList[ip];
-                        //接收卡版本号
-                        if(senderOrder.VER == '' ||senderOrder.VER == null){
-                            $('#REC_VER').text("暂无数据");
-                        }else{
-                            $('#REC_VER').text(senderOrder.VER);
-                        }
-                        //发送卡信息
-                        var sender ={
-                            x: this.XInitSender,
-                            y: this.YInitSender,
-                            nodeName: senderOrder.ID,
-                            name: senderOrder.ID,
-                            type: '发送卡',
-                            detail:'ok',
-                            svgPath: 'M868.48 104.96H155.52a32 32 0 0 0-32 32v538.24a32 32 0 0 0 32 32h712.96a32 32 0 0 0 32-32V136.96a32 32 0 0 0-32-32z m-32 64V390.4H187.52V168.96zM187.52 643.2V422.4h648.96v221.44z M252.8 232.96h32v74.88h-32zM334.72 232.96h32v74.88h-32zM252.8 502.4h32v74.88h-32zM334.72 502.4h32v74.88h-32zM868.48 853.12H600.96a94.72 94.72 0 0 0-56.96-56.96v-53.76h-64v53.76a94.72 94.72 0 0 0-56.96 56.96H155.52a32 32 0 1 0 0 64h267.52a94.08 94.08 0 0 0 177.92 0h267.52a32 32 0 0 0 0-64zM512 915.84a30.72 30.72 0 1 1 30.72-30.72 30.72 30.72 0 0 1-30.72 30.72z'
-                        }
-                        //新增拓扑连接线
-                        var lineSender = {
-                            source: '控制卡',
-                            target: senderOrder.ID,
-                            name: '连通',
-                            type: '网线',
-                            nodeName: '主网线'
-                        }
-                        //连接线新增
-                        this.links.push(lineSender);
-                        //矢量图形新增
-                        this.nodes.push(sender);
-                        //获取走线端口数量
-                        var portNum = senderOrder.PORT_ORDER.length;
-                        //遍历走线接口
-                        for(var jc = 0;jc<portNum;jc++){
-                            //走线详情信息
-                            var port = senderOrder.PORT_ORDER[jc];
-                            //判断索引是否能够取余4来判断在当前X轴的Y位置
-                            if((jc+1)%4 == 0){
-                                //当前port对象
-                                var singlePort = {
-                                    //X轴上单个偏移差值为60一个单位(向右+60)
-                                    x: this.XInitPort+parseInt((jc+1)/4-1)*60,
-                                    //Y轴上单个偏移差值为70一个单位（向下-70）
-                                    y: this.YInitPort-3*70,
-                                    symbolSize: 20,
-                                    nodeName: port.ID,
-                                    name: port.ID,
-                                    type: '网口',
-                                    detail:null,
-                                    svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
-                                };
-                                //走线方式数组添加
-                                this.nodes.push(singlePort);
-                            }else{
-                                var singlePort = {
-                                    //X轴上单个偏移差值为60一个单位(向右+60)
-                                    x: this.XInitPort+parseInt((jc+1)/4)*60,
-                                    //Y轴上单个偏移差值为70一个单位（向下-70）
-                                    y: this.YInitPort-(jc)%4*70,
-                                    symbolSize: 20,
-                                    nodeName: port.ID,
-                                    name: port.ID,
-                                    type: '网口',
-                                    detail:null,
-                                    svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
-                                };
-                                this.nodes.push(singlePort);
-                            }
-                            //遍历单个走线口的屏体信息
-                            for(var boxindex = 0;boxindex < port.BOX.length;boxindex++){
-                                var box = port.BOX[boxindex];
-                                //判断屏体顺序是否为1能和端口直连
-                                if(box.ORDER == 1){
-                                    var portBox = {
-                                        source: port.ID,
-                                        target: box.ID,
-                                        name: '连通',
-                                        type: '网线',
-                                        nodeName: '网线'
                                     }
-                                    //端口连接线新增
-                                    this.links.push(portBox);
+
                                 }
-                                //判断小于最后一个屏体之间的相互串联
-                                if(box.ORDER < port.BOX.length){
-                                    var boxNext = port.BOX[boxindex+1]
-                                    var portBox = {
-                                        source: box.ID,
-                                        target: boxNext.ID,
-                                        name: '连通',
-                                        type: '串联',
-                                        nodeName: '串联'
-                                    }
-                                    this.links.push(portBox);
+                                count++;
+                               /* console.log("port_ordernum",port_ordernum);
+                                console.log("sender_boxtotalnum",sender_boxtotalnum);*/
+
+                                console.log("radio"+_self.radio);
+                                console.log("第二次收到数据"+count);
+                                console.log("i", i);
+                                console.log("ledlist[i]", ledlist[i]);
+                                console.log("_self.bright", _self.bright);
+                                console.log("ledlist", ledlist);
+                                /*  console.log("jsonScreenObj", jsonScreenObj);*/
+                                console.log("comlist", _self.comlist);
+                                console.log("destination", _self.destination);
+                                console.log("source", _self.source);
+                                let nowdt = new Date().getTime();
+                                console.log("现在接收完数据后的时间" + nowdt);
+                                break;
+                            case   7:
+                                /*  let brightObj = JSON.parse(respJsonScreenObj.respContent);*/
+                                _self.value1=respJsonScreenObj.respContent;
+                                break;
+
+                            case   14:
+                                /*  let brightObj = JSON.parse(respJsonScreenObj.respContent);*/
+                                _self.value4=respJsonScreenObj.respContent;
+                                break;
+
+
+                            case   15:
+                                /*  let brightObj = JSON.parse(respJsonScreenObj.respContent);*/
+                                _self.value2=respJsonScreenObj.respContent;
+                                break;
+
+
+                            case   18:
+                                /* let led_rsltStrObj = JSON.parse(respJsonScreenObj.respContent);*/
+                                _self.fblvalue = respJsonScreenObj.respContent;
+                                break;
+                            case   19:
+                                let inputsourceObj = JSON.parse(respJsonScreenObj.respContent);
+                                _self.radio = inputsourceObj.iNPUTSOURCE;
+                                if(_self.radio==="HDMI"){
+                                    $("#hdmitext").text(inputsourceObj.iNPUTSOURCE+" "+inputsourceObj.iNSRC_RSLT+" "+inputsourceObj.iNSRC_FRE);
+                                    $("#hdmitext").addClass("checkspan");
+                                }else if(_self.radio==="DVI-D"){
+                                    $("#dvitext").text(inputsourceObj.iNPUTSOURCE+" "+inputsourceObj.iNSRC_RSLT+" "+inputsourceObj.iNSRC_FRE);
+                                    $("#dvitext").addClass("checkspan");
+                                }else if(_self.radio==="SDI"){
+                                    $("#sditext").text(inputsourceObj.iNPUTSOURCE+" "+inputsourceObj.iNSRC_RSLT+" "+inputsourceObj.iNSRC_FRE);
+                                    $("#sditext").addClass("checkspan");
+                                }else{
+                                    console.log("未识别到输入源");
                                 }
-                                //单个屏体的信息
-                                var singleBox = {
-                                    x: this.XInit[box.XPOS-1],
-                                    y: this.YInit[box.YPOS-1],
-                                    symbolSize: 46,
-                                    nodeName: box.ID,
-                                    name: box.ID,
-                                    type: '屏体',
-                                    detail:box,
-                                    svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
-                                }
-                                this.nodes.push(singleBox);
-                            }
-
+                                break;
+                            case   99:
+                                /* let pingObj = JSON.parse(respJsonScreenObj.respContent);*/
+                                let pingObj = respJsonScreenObj.respContent;
+                                /*  console.log("respJsonScreenObj.respContent心跳"+respJsonScreenObj.respContent);*/
+                                console.log("pingObj心跳"+pingObj);
+                                break;
+                            default:
+                                console.log("数据异常");
                         }
+                    }catch(e){
+                        /* heartCheck.reset();*/
+                        console.log("不是json格式的数据"+e);
                     }
-                    //拓扑所需数据遍历拆分完成
-                }
 
-                //拓扑图形的实现
-                var charts = {
-                    //拓扑模块
-                    nodes: [],
-                    //目标连接线
-                    links: [],
-                    //网格线
-                    linesData: []
-                }
-
-                // 基于准备好的dom，初始化echarts实例
-                var myChart = echarts.init(document.getElementById('tuopu'));
-
-                var dataMap = new Map();
-                //遍历SVG图形
-                for (var j = 0; j < this.nodes.length; j++) {
-                    const {
-                        x,
-                        y,
-                        nodeName,
-                        name,
-                        type,
-                        detail,
-                        svgPath,
-                        symbolSize
-                    } = this.nodes[j];
-                    if(type == '屏体'){
-                        var node = {
-                            nodeName,
-                            name,
-                            type,
-                            detail,
-                            value: [x, y],
-                            symbolSize: symbolSize || 50,
-                            symbol: 'path://' + svgPath,
-                            itemStyle: {
-                                color: '#043c58',
-                                emphasis: {
-                                    color: '#1D5D76'
-                                },
-                            }
-                        }
-                        dataMap.set(this.nodes[j].name, [x, y])
-                        charts.nodes.push(node)
-                    }else{
-                        var node = {
-                            nodeName,
-                            name,
-                            type,
-                            detail,
-                            value: [x, y],
-                            symbolSize: symbolSize || 50,
-                            symbol: 'path://' + svgPath,
-                            itemStyle: {
-                                color: 'orange',
-                                emphasis: {
-                                    color: '#FFDD00'
-                                },
-                            }
-                        }
-                        dataMap.set(this.nodes[j].name, [x, y])
-                        charts.nodes.push(node)
-                    }
-                }
-
-                //遍历目标连接线
-                for (var ipos = 0; ipos < this.links.length; ipos++) {
-                    var link = {
-                        source: this.links[ipos].source,
-                        target: this.links[ipos].target,
-                        type: this.links[ipos].type,
-                        nodeName: this.links[ipos].nodeName,
-                        label: {
-                            normal:{
-                                show:false
-                            },
-                            emphasis:{
-                                symbolSize:8,
-                                fontSize:38,
-                                color:'red',
-                                show: true,
-                                formatter: this.links[ipos].name
-                            }
-                        },
-                        lineStyle: {
-                            normal: {
-                                curveness:0.15,
-                                symbolSize:0
-                            },
-                            emphasis:{
-                                symbolSize:8,
-                                type: 'solid',
-                                color: '#20A0FF'
-                            }
-                        }
-                    }
-                    charts.links.push(link);
-                    // 组装动态移动的效果数据
-                    var lines = {
-                        coords:[
-                            dataMap.get(this.links[ipos].source),
-                            dataMap.get(this.links[ipos].target)
-                        ]
-                    };
-                    charts.linesData.push(lines);
-                }
-                option = {
-                    //提示框显示
-                    tooltip: {
-                        //显示延迟
-                        showDelay: 300,
-                        backgroundColor: '#1F2D3D',
-                        borderColor: '#324057',
-                        borderRadius: 4,           // 提示边框圆角，单位px，默认为4
-                        borderWidth: 1,            // 提示边框线宽，单位px，默认为0（无边框）
-                        padding: 5,                // 提示内边距，单位px，默认各方向内边距为5，
-                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                            type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
-                            lineStyle : {          // 直线指示器样式设置
-                                color: '#48b',
-                                width: 2,
-                                type: 'solid'
-                            },
-                            shadowStyle : {                       // 阴影指示器样式设置
-                                width: 'auto',                   // 阴影大小
-                                color: '#475669'  // 阴影颜色
-                            }
-                        },
-                        //动画变换延迟单位：s
-                        transitionDuration: 0.8,
-                        // formatter: '设备类型:{b}<br />序列号:<br />'
-                        formatter: function (item) {
-                            return '设备类型:<b style="color: green;">&nbsp;&nbsp;' + item.data.type + '</b><hr />' +
-                                '设备ID:<b style="color: green;">&nbsp;&nbsp;' + item.data.nodeName + '</b><hr />' +
-                                '型号：<b style="color: green;"></b><hr />' +
-                                '信号强度：<b style="color: green;">强</b><hr />' +
-                                '工作状态：<b style="color: green;">正常</b><hr />'
-                        }
-                    },
-                    // backgroundColor: "#0B1321",
-                    xAxis: {
-                        min: 0,
-                        max: 1000,
-                        show: false,
-                        type: 'value'
-                    },
-                    yAxis: {
-                        min: 0,
-                        max: 1000,
-                        show: false,
-                        type: 'value'
-                    },
-                    series: [{
-                        type: 'graph',
-                        coordinateSystem: 'cartesian2d',
-                        focusNodeAdjacency: true, // 鼠标移到节点上突出显示节点以及节点的边和邻接节点
-                        lineStyle: {
-                            normal: {
-                                width: 2,
-                                shadowColor: 'none'
-                            }
-                        },
-                        edgeSymbol: ['circle', 'arrow'],
-                        edgeSymbolSize: [4, 10],
-                        label: {
-                            show: true,
-                            position: 'bottom',
-                            color: 'orange',
-                            formatter: function (item) {
-                                return item.data.nodeName
-                            }
-                        },
-                        data: charts.nodes,
-                        links: charts.links
-                    },
-                        //     {
-                        //     type: 'lines',
-                        //     polyline: true,
-                        //     coordinateSystem: 'cartesian2d',
-                        //     lineStyle: {
-                        //         //设置网格线类型 dotted：虚线   solid:实线
-                        //         type: 'solid',
-                        //         width: 1,
-                        //         color: '#175064',
-                        //         curveness: 0.1
-                        //
-                        //     },
-                        //     effect: {
-                        //         show: true,
-                        //         trailLength: 0.1,
-                        //         symbol: 'arrow',
-                        //         color: 'orange',
-                        //         symbolSize: 8
-                        //     },
-                        //     data: charts.linesData
-                        // }
-                    ]
-                };
-                // 使用刚指定的配置项和数据显示图表。
-                myChart.setOption(option);
-                // 处理点击事件并且弹出数据名称-params传入的参数
-                myChart.on('click', function (params) {
-                    if(params.data.type == '屏体'){
-                        //屏体参数赋值
-                        var detail = params.data.detail;
-                        this.info_title = detail;
-                        //接收卡信息
-                        var rec = this.info_title.REC[0];
-                        // console.log(rec);
-                        //传感器赋值
-                        $('#SENSOR_VOL').text(rec.SENSOR_VOL+"V");
-                        $('#SENSOR_CURRENT').text(rec.SENSOR_CURRENT+"A");
-                        $('#SENSOR_HUMI').text(rec.SENSOR_HUMI+"%RH");
-                        $('#SENSOR_SMOG').text(rec.SENSOR_SMOG);
-                        $('#SENSOR_TMP').text(rec.SENSOR_TMP+"℃");
-                        $('#SENSOR_BRI').text(rec.SENSOR_BRI+"Lux");
-
-                        //模组信息赋值
-                        //通过遍历计算故障模组数量
-                        var mod_Normal_count = 0;
-                        for(var i = 0;i<rec.mod.length;i++){
-                            if(rec.MOD[i].MOD_STATE == 1){
-                                mod_Normal_count++;
-                            }
-                        }
-                        //故障模组数
-                        $('#MOD_FAULT').text(rec.MOD.length-mod_Normal_count);
-                        //正常模组数
-                        $('#MOD_NORMAL').text(mod_Normal_count);
-
-                        //电源赋值
-                        //最大功率
-                        $('#MAX_POWER').text(rec.MAX_POWER+"W/m²");
-                        //电压
-                        $('#VOLTAGE').text(rec.VOLTAGE+"V");
-                        //实际功率
-                        $('#RT_POWERDIS').text(rec.RT_POWERDIS+"W/m²");
-                        //平均功率
-                        $('#AVE_POWERDIS').text(rec.AVE_POWERDIS+"W/m²");
-
-                        //接收卡信息赋值
-                        //接收卡名称
-                        $('#rec_Id').text(rec.REC_ID);
-                        //接收卡个数
-                        $('#rec_Count').text(detail.REC.length);
-                        //接收卡运行时间
-                        $('#rec_TOTAL_WORKTIME').text(rec.TOTAL_WORKTIME+"S");
-                        //维修日志赋值
-
-                        //驱动IC赋值
-                        $('#cover').css('display','block'); //显示遮罩层
-                        $('.container').attr('style', 'visibility: visible').find('.pop-up').
-                        attr('style', 'visibility: visible').siblings().attr('style', 'visibility: hidden');
-                    }else{
-                        alert("暂未开放");
-                    }
-                });
-
-                console.log("i", i);
-                console.log("ledlist[i]", ledlist[i]);
-                console.log("_self.bright", _self.bright);
-                console.log("ledlist", ledlist);
-                console.log("jsonScreenObj", jsonScreenObj);
-                console.log("comlist", _self.comlist);
-                console.log("destination", _self.destination);
-                console.log("source", _self.source);
-                let nowdt = new Date().getTime();
-                console.log("现在接收完数据后的时间" + nowdt);
-
-              /*  alert(_self.contrast);*/
-              /*  alert();*/
 
                 let option0 = {
                     /* title: {
@@ -2179,8 +1879,20 @@
                                return param.seriesName + '\n'
                                    + param.name + '\n'
                                    + param.value*255;
+                            }else if(param.seriesName==='伽马'){
+                                return param.seriesName + '\n'
+                                    + param.name + '\n'
+                                    + _self.gamma;
+                            }else if(param.seriesName==='色温'){
+                                return param.seriesName + '\n'
+                                    + param.name + '\n'
+                                    + _self.chroma;
+                            }else if(param.seriesName==='对比度'){
+                                return param.seriesName + '\n'
+                                    + param.name + '\n'
+                                    + _self.contrast;
                             }else{
-                                return '{a}\n{b}\n{c}';
+                                return "";
                             }
                         },
                     },
@@ -2225,7 +1937,7 @@
                             radius: '30%',
                             color: ['#884046'],
                             center: ['50%', '23%'],
-                            data: [_self.contrast],
+                            data: [1],
                             backgroundStyle: {
                                 borderWidth: 2,
                                 borderColor: '#eb5c4d',
@@ -2240,7 +1952,11 @@
                             },
                             label: {
                                 normal: { // 同上 2
-                                    formatter: '{a}\n{b}\n{c}',
+                                    formatter: function(param) {
+                                        return param.seriesName + '\n'
+                                            + param.name + '\n'
+                                            + _self.contrast;
+                                    },
                                     textStyle: {
                                         fontSize: 10,
                                         color: '#e6e6e6',
@@ -2290,7 +2006,7 @@
                             radius: '30%',
                             color: ['#195ba6'],
                             center: ['20%', '70%'],
-                            data: [_self.gamma],
+                            data: [1],
                             backgroundStyle: {
                                 borderWidth: 2,
                                 borderColor: '#1789fb',
@@ -2305,7 +2021,11 @@
                             },
                             label: {
                                 normal: { //此处没有生效，本地生效 4
-                                    formatter: '{a}\n{b}\n{c}',
+                                    formatter:  function(param) {
+                                        return param.seriesName + '\n'
+                                            + param.name + '\n'
+                                            + _self.gamma;
+                                    },
                                     textStyle: {
                                         fontSize: 10,
                                         color: '#e6e6e6',
@@ -2320,7 +2040,7 @@
                             name: '色温',
                             color: ['#884046'],
                             center: ['50%', '70%'],
-                            data: [_self.chroma],
+                            data: [1],
                             backgroundStyle: {
                                 borderWidth: 2,
                                 borderColor: '#eb5c4d',
@@ -2335,7 +2055,11 @@
                             },
                             label: {
                                 normal: { // 同上 5
-                                    formatter: '{a}\n{b}\n{c}',
+                                    formatter:  function(param) {
+                                        return param.seriesName + '\n'
+                                            + param.name + '\n'
+                                            + _self.chroma;
+                                    },
                                     textStyle: {
                                         fontSize: 10,
                                         color: '#e6e6e6',
@@ -2382,7 +2106,6 @@
                     ]
                 };
 
-
                 // 电压
              /*   let dataDyArr =_self.voltage;
                 let dataArr1 = dataDyArr / 3;*/
@@ -2407,7 +2130,7 @@
                             axisLine: {
                                 lineStyle: {
                                     color: [
-                                        [_self.voltage/ 100, colorSet1.color],
+                                        [_self.voltage/ 300, colorSet1.color],
                                         [1, "#111F42"]
                                     ],
                                     width: 5
@@ -2429,7 +2152,7 @@
                             detail: {
                                 formatter: function (value) {
                                     if (value !== 0) {
-                                        let num = Math.round(value);
+                                        let num = Math.round(value*3);
                                         return parseInt(num).toFixed(0) + "V";
                                     } else {
                                         return 0;
@@ -2455,7 +2178,7 @@
                             },
                             data: [{
                                 name: "电压",
-                                value: _self.voltage,
+                                value: _self.voltage/3,
                             }],
                             pointer: {
                                 show: true,
@@ -2858,6 +2581,9 @@
                     ]
                 };
 
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('tuopu'));
+
                 //获取dom容器
                 let myChart0 = echarts.init(document.getElementById('chartmain0'));
                 // 使用刚指定的配置项和数据显示图表。
@@ -2872,6 +2598,651 @@
                 let myChart3 = echarts.init(document.getElementById('chartmain3'));
                 myChart3.setOption(option3);
 
+                //数据拆分
+                var ledParasJson = "";
+                var senderOrderList = [] ;
+
+                //发送卡初始X值
+                var XInitSender = 200;
+
+                //发送卡初始Y值
+                var YInitSender = 1000;
+
+                //网口初始X值-X轴上单个偏移差值为60一个单位(向右+60)
+                var XInitPort = 290;
+                //网口初始Y值-Y轴上单个偏移差值为70一个单位（向下-70）
+                var YInitPort = 1000;
+                //网口最大总数量
+                var MaxPort = 16;
+
+                //X轴上单个偏移差值为60一个单位(向右+60)----屏体（同网口）
+                var XInit = [560,630,700,770,840,910,980,1050];
+                //Y轴上单个偏移差值为140一个单位(向下-140)----屏体
+                var YInit = [960,840,720,600,480,360,240,120];
+                //矢量图形组
+                var nodes = [{
+                    x: 0,
+                    y: 600,
+                    nodeName: '控制卡',
+                    name: '控制卡',
+                    type: '播放器',
+                    detail:"OK",
+                    svgPath: 'M885.76 919.552H116.736C53.248 919.552 1.024 867.328 1.024 803.84V284.672c0-63.488 52.224-115.712 115.712-115.712h769.024c63.488 0 115.712 52.224 115.712 115.712v519.168c0 63.488-52.224 115.712-115.712 115.712zM116.736 226.304c-31.744 0-58.368 25.6-58.368 58.368v519.168c0 31.744 25.6 58.368 58.368 58.368h769.024c31.744 0 58.368-25.6 58.368-58.368V284.672c0-31.744-25.6-58.368-58.368-58.368H116.736z M432.128 740.352c-15.36 0-30.72-4.096-44.032-12.288-25.6-15.36-40.96-43.008-40.96-72.704V458.752c0-30.72 15.36-57.344 40.96-72.704s57.344-16.384 83.968-2.048L658.432 481.28c27.648 14.336 46.08 44.032 46.08 75.776 0 31.744-17.408 60.416-46.08 75.776l-185.344 98.304c-13.312 6.144-26.624 9.216-40.96 9.216z m1.024-279.552v191.488l182.272-96.256L433.152 460.8z m184.32 97.28l20.48-37.888-20.48 37.888z',
+                    symbolSize: 70,
+
+                }
+                ]
+                //连接线数组
+                var links = [];
+                //走线方式数组
+                var portGroup = [];
+
+
+                //请求后台参数
+                for(var i = 0;i<_self.comlist.length;i++){
+                    console.log("data.COMLIST.length"+_self.comlist.length);
+                    //获取屏幕对象
+                    ledParasJson = _self.comlist[i].LEDPARAS;
+                    //外围参数拓展显示
+                    // console.log(ledParasJson);
+                    //通用接收卡对象
+                    var recParas = ledParasJson.COMMON_RECPARAS;
+                    //通用模组对象
+                    var modParas = ledParasJson.COMMON_MODPARAS;
+                    $('#MOD_RSL').text(modParas.MOD_RSLT);
+                    $('#MOD_SPACE').text(modParas.MOD_SPACE+"MM");
+
+                    $('#MOD_SCAN_NUM').text(modParas.SCAN_NUM+"SCAN");
+                    //通用模组-灯光参数对象
+                    var lamp_Para =modParas.LAMP_PARA;
+                    $('#LAMP_PARA_STYLE').text(lamp_Para.STYLE);
+                    $('#LAMP_PARA_BRIGHT').text(lamp_Para.BRIGHT);
+                    $('#LAMP_PARA_WAVELEN').text(lamp_Para.WAVELEN);
+                    $('#LAMP_PARA_ANGLE').text("<="+lamp_Para.ANGLE+"度");
+                    $('#LAMP_PARA_ANTISTATIC').text("<"+lamp_Para.ANTISTATIC+"V");
+                    $('#LAMP_PARA_LEAKAGE_CURRENT').text("<"+lamp_Para.LEAKAGE_CURRENT+"uA");
+                    //箱体ID
+                    $('#boxTitle').text(recParas.BOX_NAME);
+                    //箱体类型
+                    $('#productTitle').text(recParas.BOX_TYPE);
+                    //模组个数
+                    $('#MOD_ORDER').text(recParas.MOD_ORDER);
+                    //接收卡带载面积计算：
+                    var Mod_Area_Group = modParas.MOD_SIZE.split("*");
+                    for(var s = 0;s<Mod_Area_Group.length;s++){
+                        Mod_Area_Group[s] = Mod_Area_Group[s].replace(/[^0-9]/ig,"");
+                    }
+                    //接收卡带载面积：
+                    $('#REC_Carrying_Area').text(parseInt((Mod_Area_Group[0]*Mod_Area_Group[1]*recParas.MODULE_CNT)/10000)+"mm²");
+
+                    //驱动IC
+                    $('#ICSYLE').text(modParas.ICSYLE);
+
+                    //发送卡数组
+                    senderOrderList = ledParasJson.SENDER_ORDER;
+                    //遍历发送卡列表可知发送卡数量
+                    for(var i = 0;i<senderOrderList.length;i++){
+                        //当前发送卡信息
+                        var senderOrder = senderOrderList[i];
+                        //接收卡版本号
+                        if(senderOrder.VER === '' ||senderOrder.VER == null){
+                            $('#REC_VER').text("暂无数据");
+                        }else{
+                            $('#REC_VER').text(senderOrder.VER);
+                        }
+                        //发送卡信息
+                        var sender ={
+                            x: XInitSender,
+                            y: YInitSender-i*300,
+                            nodeName: senderOrder.ID,
+                            name: senderOrder.ID,
+                            type: '发送卡',
+                            detail:'ok',
+                            svgPath: 'M868.48 104.96H155.52a32 32 0 0 0-32 32v538.24a32 32 0 0 0 32 32h712.96a32 32 0 0 0 32-32V136.96a32 32 0 0 0-32-32z m-32 64V390.4H187.52V168.96zM187.52 643.2V422.4h648.96v221.44z M252.8 232.96h32v74.88h-32zM334.72 232.96h32v74.88h-32zM252.8 502.4h32v74.88h-32zM334.72 502.4h32v74.88h-32zM868.48 853.12H600.96a94.72 94.72 0 0 0-56.96-56.96v-53.76h-64v53.76a94.72 94.72 0 0 0-56.96 56.96H155.52a32 32 0 1 0 0 64h267.52a94.08 94.08 0 0 0 177.92 0h267.52a32 32 0 0 0 0-64zM512 915.84a30.72 30.72 0 1 1 30.72-30.72 30.72 30.72 0 0 1-30.72 30.72z'
+
+                        }
+                        //新增拓扑连接线
+                        var lineSender = {
+                            source: '控制卡',
+                            target: senderOrder.ID,
+                            name: '连通',
+                            type: '网线',
+                            nodeName: '主网线'
+                        }
+                        //连接线新增
+                        links.push(lineSender);
+                        //矢量图形新增
+                        nodes.push(sender);
+                        //获取走线端口数量
+                        var portNum = senderOrder.PORT_ORDER.length;
+                        //遍历走线接口
+                       /* for(var j = 0;j<portNum;j++){
+                            //走线详情信息
+                            var port = senderOrder.PORT_ORDER[j];
+                            //判断索引是否能够取余4来判断在当前X轴的Y位置
+                            if((j+1)%4 === 0){
+                                //当前port对象
+                                var singlePort = {
+                                    //X轴上单个偏移差值为60一个单位(向右+60)
+                                    x: XInitPort+parseInt((j+1)/4-1)*60,
+                                    //Y轴上单个偏移差值为70一个单位（向下-70）
+                                    y: YInitPort-3*50-i*300,
+                                    symbolSize: 20,
+                                    nodeName: port.ID,
+                                    name: port.ID+senderOrder.ID,
+                                    type: '网口',
+                                    detail:null,
+                                    svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
+                                };
+                                //走线方式数组添加
+                                nodes.push(singlePort);
+                            }else{
+                                var singlePort = {
+                                    //X轴上单个偏移差值为60一个单位(向右+60)
+                                    x: XInitPort+parseInt((j+1)/4)*60,
+                                    //Y轴上单个偏移差值为70一个单位（向下-70）
+                                    y: YInitPort-(j)%4*50-i*300,
+                                    symbolSize: 20,
+                                    nodeName: port.ID,
+                                    name: port.ID+senderOrder.ID,
+                                    type: '网口',
+                                    detail:null,
+                                    svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
+                                };
+                                nodes.push(singlePort);
+                            }
+                            //遍历单个走线口的屏体信息
+                            for(var boxindex = 0;boxindex < port.BOX.length;boxindex++){
+                                var box = port.BOX[boxindex];
+                                //判断屏体顺序是否为1能和端口直连
+                                if(box.ORDER == 1){
+                                    var portBox = {
+                                        source: port.ID+senderOrder.ID,
+                                        target: senderOrder.ID+box.ID+boxindex,
+                                        name: '连通',
+                                        type: '网线',
+                                        nodeName: '网线'
+                                    }
+                                    //端口连接线新增
+                                    links.push(portBox);
+                                }
+                                //判断小于最后一个屏体之间的相互串联
+                                if(box.ORDER < port.BOX.length){
+                                    var boxNext = port.BOX[boxindex+1]
+                                    //当下个箱体为空时不执行
+                                    if(boxindex+1 < port.BOX.length){
+                                        var portBox = {
+                                            source: senderOrder.ID+box.ID+boxindex,
+                                            target: senderOrder.ID+boxNext.ID+(boxindex+1),
+                                            name: '连通',
+                                            type: '串联',
+                                            nodeName: '串联'
+                                        }
+                                        links.push(portBox);
+                                    }
+                                }
+                                //单个屏体的信息
+                                var singleBox = {
+                                    x: XInit[box.XPOS-1],
+                                    y: YInit[box.YPOS-1],
+                                    symbolSize: 46,
+                                    nodeName: "屏体"+box.ID,
+                                    name: senderOrder.ID+box.ID+boxindex,
+                                    type: '屏体',
+                                    detail:box,
+                                    svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+                                }
+                                nodes.push(singleBox);
+                            }
+
+                        }*/
+                        //遍历走线接口
+                        for(var j = 0;j<portNum;j++){
+
+                            //走线详情信息
+                            var port = senderOrder.PORT_ORDER[j];
+
+                            //新增归属关系
+                            var hiddenLine = {
+                                source: senderOrder.ID,
+                                target: port.ID+senderOrder.ID,
+                                name: '连通',
+                                type: 0,
+                                nodeName: '主网线'
+                            }
+                            links.push(hiddenLine);
+                            //判断索引是否能够取余4来判断在当前X轴的Y位置
+                            if((j+1)%4 == 0){
+                                //当前port对象
+                                var singlePort = {
+                                    //X轴上单个偏移差值为60一个单位(向右+60)
+                                    x: XInitPort+parseInt((j+1)/4-1)*60,
+                                    //Y轴上单个偏移差值为70一个单位（向下-70）
+                                    y: YInitPort-3*50-i*300,
+                                    symbolSize: 20,
+                                    nodeName: port.ID,
+                                    name: port.ID+senderOrder.ID,
+                                    type: '网口',
+                                    detail:null,
+                                    svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
+                                };
+                                //走线方式数组添加
+                                nodes.push(singlePort);
+                            }else{
+                                var singlePort = {
+                                    //X轴上单个偏移差值为60一个单位(向右+60)
+                                    x: XInitPort+parseInt((j+1)/4)*60,
+                                    //Y轴上单个偏移差值为70一个单位（向下-70）
+                                    y: YInitPort-(j)%4*50-i*300,
+                                    symbolSize: 20,
+                                    nodeName: port.ID,
+                                    name: port.ID+senderOrder.ID,
+                                    type: '网口',
+                                    detail:null,
+                                    svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
+                                };
+                                nodes.push(singlePort);
+                            }
+                            //遍历单个走线口的屏体信息
+                            for(var boxindex = 0;boxindex < port.BOX.length;boxindex++){
+
+                                var box = port.BOX[boxindex];
+
+                                //新增归属关系
+                                var hiddenLine = {
+                                    source: senderOrder.ID,
+                                    target: senderOrder.ID+box.ID+boxindex,
+                                    name: '连通',
+                                    type: 0,
+                                    nodeName: '主网线'
+                                }
+                                links.push(hiddenLine);
+
+                                //判断屏体顺序是否为1能和端口直连
+                                if(box.ORDER == 1){
+                                    var box_State;
+                                    //判断箱体状态
+                                    if(box.BOX_STATE == '1'){
+                                        box_State = "连通"
+                                    }else if(box.BOX_STATE == '2'){
+                                        box_State = "警告"
+                                    }else if(box.BOX_STATE == '3'){
+                                        box_State = "故障"
+                                    }else{
+                                        box_State = "无法检测"
+                                    }
+                                    var portBox = {
+                                        source: port.ID+senderOrder.ID,
+                                        target: senderOrder.ID+box.ID+boxindex,
+                                        name: box_State,
+                                        type: '网线',
+                                        nodeName: '网线'
+                                    }
+                                    //端口连接线新增
+                                    links.push(portBox);
+                                }else{
+                                    //新增归属关系
+                                    var hiddenLineForPort = {
+                                        source: port.ID+senderOrder.ID,
+                                        target: senderOrder.ID+box.ID+boxindex,
+                                        name: '连通',
+                                        type: 0,
+                                        nodeName: '主网线'
+                                    }
+                                    links.push(hiddenLineForPort);
+                                }
+                                //判断小于最后一个屏体之间的相互串联
+                                if(box.ORDER < port.BOX.length){
+
+                                    var boxNext = port.BOX[boxindex+1]
+                                    //当下个箱体为空时不执行
+                                    if(boxindex+1 < port.BOX.length){
+                                        var box_State;
+                                        //判断箱体状态
+                                        if(box.BOX_STATE === 1){
+                                            box_State = "连通"
+                                        }else if(box.BOX_STATE === 2){
+                                            box_State = "警告"
+                                        }else if(box.BOX_STATE === 3){
+                                            box_State = "故障"
+                                        }else{
+                                            box_State = "无法检测"
+                                        }
+                                        var portBox = {
+                                            source: senderOrder.ID+box.ID+boxindex,
+                                            target: senderOrder.ID+boxNext.ID+(boxindex+1),
+                                            name: box_State,
+                                            type: '串联',
+                                            nodeName: '串联'
+                                        }
+                                        links.push(portBox);
+                                    }
+                                }
+                                //单个屏体的信息
+                                var singleBox = {
+                                    x: XInit[box.XPOS-1],
+                                    y: YInit[box.YPOS-1],
+                                    symbolSize: 46,
+                                    nodeName: "屏体"+box.ID,
+                                    name: senderOrder.ID+box.ID+boxindex,
+                                    type: '屏体',
+                                    detail:box,
+                                    svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+                                }
+                                nodes.push(singleBox);
+                            }
+
+                        }
+                    }
+
+                }
+
+                // data = jQuery.parseJSON(data);
+                // dataType指明了返回数据为json类型，故不需要再反序列化
+                //拓扑图形实现
+                var charts = {
+                    //拓扑模块
+                    nodes: [],
+                    //目标连接线
+                    links: [],
+                    //网格线
+                    linesData: []
+                }
+
+
+                var dataMap = new Map();
+                //遍历SVG图形
+                for (var j = 0; j < nodes.length; j++) {
+                    const {
+                        x,
+                        y,
+                        nodeName,
+                        name,
+                        type,
+                        detail,
+                        svgPath,
+                        symbolSize
+                    } = nodes[j];
+                    if(type == '屏体'){
+                        var node = {
+                            nodeName,
+                            name,
+                            type,
+                            detail,
+                            value: [x, y],
+                            symbolSize: symbolSize || 50,
+                            symbol: 'path://' + svgPath,
+                            itemStyle: {
+                                color: '#043c58',
+                                emphasis: {
+                                    color: '#1D5D76'
+                                },
+                            }
+                        }
+                        dataMap.set(nodes[j].name, [x, y])
+                        charts.nodes.push(node)
+                    }else{
+                        var node = {
+                            nodeName,
+                            name,
+                            type,
+                            detail,
+                            value: [x, y],
+                            symbolSize: symbolSize || 50,
+                            symbol: 'path://' + svgPath,
+                            itemStyle: {
+                                color: '#468efd',
+                                emphasis: {
+                                    color: '#7ca9ee'
+                                },
+                            }
+                        }
+                        dataMap.set(nodes[j].name, [x, y])
+                        charts.nodes.push(node)
+                    }
+                }
+
+                //遍历目标连接线
+                for (var i = 0; i < links.length; i++) {
+                    var link;
+                    if(links[i].type == 0){
+                        link = {
+                            source: links[i].source,
+                            target: links[i].target,
+                            type: '',
+                            nodeName: '',
+                            label: {
+                                show:false
+                            },
+                            lineStyle :{
+                                width: 0, // 线宽是0
+                                color: 'rgba(0, 0, 0, 0)' // 线的颜色是透明的
+                            },
+                        }
+                    }else{
+
+
+                        var lineColor ;
+                        if(links[i].name === '连通'){
+                            lineColor = '#7CFC00';
+                        }else if(links[i].name === '警告'){
+                            lineColor = '#FFFF00';
+                        }else if(links[i].name === '故障'){
+                            lineColor = '#FF0000';
+                        }else{
+                            lineColor = '#a1afc9';
+                        }
+                        var lineSize = 2;
+                        if(links[i].type == '串联'){
+                            lineSize = 6;
+                        }
+                        link = {
+                            source: links[i].source,
+                            target: links[i].target,
+                            type: links[i].type,
+                            nodeName: links[i].nodeName,
+                            label: {
+                                normal:{
+                                    show:false,
+                                },
+                                emphasis:{
+                                    symbolSize:8,
+                                    fontSize:38,
+                                    color:'red',
+                                    show: true,
+                                    formatter: links[i].name
+                                }
+                            },
+                            lineStyle:{
+                                normal: {
+                                    width:lineSize,
+                                    curveness:0.15,
+                                    symbolSize:lineSize,
+                                    color: lineColor
+                                },
+                                emphasis:{
+                                    symbolSize:lineSize,
+                                    type: 'solid',
+                                    color: lineColor
+                                }
+                            },
+                        }
+                    }
+                    charts.links.push(link);
+                    // 组装动态移动的效果数据
+                    var lines = {
+                        coords:[
+                            dataMap.get(links[i].source),
+                            dataMap.get(links[i].target)
+                        ]
+                    };
+                    charts.linesData.push(lines);
+                }
+
+                option = {
+                    //提示框显示
+                    tooltip: {
+                        //显示延迟
+                        showDelay: 300,
+                        backgroundColor: '#1F2D3D',
+                        borderColor: '#324057',
+                        borderRadius: 4,           // 提示边框圆角，单位px，默认为4
+                        borderWidth: 1,            // 提示边框线宽，单位px，默认为0（无边框）
+                        padding: 5,                // 提示内边距，单位px，默认各方向内边距为5，
+                        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                            type : 'line',         // 默认为直线，可选为：'line' | 'shadow'
+                            lineStyle : {          // 直线指示器样式设置
+                                color: '#48b',
+                                width: 2,
+                                type: 'solid'
+                            },
+                            shadowStyle : {                       // 阴影指示器样式设置
+                                width: 'auto',                   // 阴影大小
+                                color: '#475669'  // 阴影颜色
+                            }
+                        },
+                        //动画变换延迟单位：s
+                        transitionDuration: 0.8,
+                        // formatter: '设备类型:{b}<br />序列号:<br />'
+                        formatter: function (item) {
+                            if(item.data.type == '屏体'){
+                                var box_State;
+                                //判断箱体状态
+                                if(item.data.detail.BOX_STATE == '1'){
+                                    box_State = "连通"
+                                }else if(item.data.detail.BOX_STATE == '2'){
+                                    box_State = "警告"
+                                }else if(item.data.detail.BOX_STATE == '3'){
+                                    box_State = "故障"
+                                }else{
+                                    box_State = "无法检测"
+                                }
+                                return '设备类型:<b style="color: green;">&nbsp;&nbsp;' + item.data.type + '</b><hr />' +
+                                    '设备ID:<b style="color: green;">&nbsp;&nbsp;' + item.data.nodeName + '</b><hr />' +
+                                    '箱体坐标(X-Y)：<b style="color: green;">' +item.data.detail.XPOS+'-'+item.data.detail.YPOS +'</b><hr />' +
+                                    '信号强度：<b style="color: green;">强</b><hr />' +
+                                    '工作状态：<b style="color: green;">'+box_State+'</b><hr />';
+                            }else{
+                                return '设备类型:<b style="color: green;">&nbsp;&nbsp;' + item.data.type + '</b><hr />' +
+                                    '设备ID:<b style="color: green;">&nbsp;&nbsp;' + item.data.nodeName + '</b><hr />' +
+                                    '信号强度：<b style="color: green;">强</b><hr />' +
+                                    '工作状态：<b style="color: green;">连通</b><hr />'
+                            }
+                        }
+                    },
+                    // backgroundColor: "#0B1321",
+                    xAxis: {
+                        min: 0,
+                        max: 1000,
+                        show: false,
+                        type: 'value'
+                    },
+                    yAxis: {
+                        min: 0,
+                        max: 1000,
+                        show: false,
+                        type: 'value'
+                    },
+                    series: [{
+                        type: 'graph',
+                        coordinateSystem: 'cartesian2d',
+                        focusNodeAdjacency: true, // 鼠标移到节点上突出显示节点以及节点的边和邻接节点
+                        edgeSymbol: ['circle', 'arrow'],
+                        edgeSymbolSize: [4, 10],
+                        label: {
+                            show: true,
+                            position: 'bottom',
+                            color: '#ffffff',
+                            formatter: function (item) {
+                                return item.data.nodeName
+                            }
+                        },
+                        data: charts.nodes,
+                        links: charts.links
+                    },
+                        //     {
+                        //     type: 'lines',
+                        //     polyline: true,
+                        //     coordinateSystem: 'cartesian2d',
+                        //     lineStyle: {
+                        //         //设置网格线类型 dotted：虚线   solid:实线
+                        //         type: 'solid',
+                        //         width: 1,
+                        //         color: '#175064',
+                        //         curveness: 0.1
+                        //
+                        //     },
+                        //     effect: {
+                        //         show: true,
+                        //         trailLength: 0.1,
+                        //         symbol: 'arrow',
+                        //         color: 'orange',
+                        //         symbolSize: 8
+                        //     },
+                        //     data: charts.linesData
+                        // }
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+                // 处理点击事件并且弹出数据名称-params传入的参数
+                myChart.on('click', function (params) {
+                    if(params.data.type == '屏体'){
+                        //屏体参数赋值
+                        var detail = params.data.detail;
+                        info_title = detail;
+                        //接收卡信息
+                        var rec = info_title.REC[0];
+                        // console.log(rec);
+                        //传感器赋值
+                        $('#SENSOR_VOL').text(rec.SENSOR_VOL+"V");
+                        $('#SENSOR_CURRENT').text(rec.SENSOR_CURRENT+"A");
+                        $('#SENSOR_HUMI').text(rec.SENSOR_HUMI+"%RH");
+                        $('#SENSOR_SMOG').text(rec.SENSOR_SMOG);
+                        $('#SENSOR_TMP').text(rec.SENSOR_TMP+"℃");
+                        $('#SENSOR_BRI').text(rec.SENSOR_BRI+"Lux");
+
+                        //模组信息赋值
+                        //通过遍历计算故障模组数量
+                        var mod_Normal_count = 0;
+                        for(var i = 0;i<rec.MOD.length;i++){
+                            if(rec.MOD[i].MOD_STATE === 1){
+                                mod_Normal_count++;
+                            }
+                        }
+                        //故障模组数
+                        $('#MOD_FAULT').text(rec.MOD.length-mod_Normal_count);
+                        //正常模组数
+                        $('#MOD_NORMAL').text(mod_Normal_count);
+
+                        //电源赋值
+                        //最大功率
+                        $('#MAX_POWER').text(rec.MAX_POWER+"W/m²");
+                        //电压
+                        $('#VOLTAGE').text(rec.VOLTAGE+"V");
+                        //实际功率
+                        $('#RT_POWERDIS').text(rec.RT_POWERDIS+"W/m²");
+                        //平均功率
+                        $('#AVE_POWERDIS').text(rec.AVE_POWERDIS+"W/m²");
+
+                        //接收卡信息赋值
+                        //接收卡名称
+                        $('#rec_Id').text(rec.REC_ID);
+                        //接收卡个数
+                        $('#rec_Count').text(detail.REC.length);
+                        //接收卡运行时间
+                        $('#rec_TOTAL_WORKTIME').text(rec.TOTAL_WORKTIME+"S");
+                        //维修日志赋值
+
+                        //驱动IC赋值
+                        $('#cover').css('display','block'); //显示遮罩层
+                        $('.container').attr('style', 'visibility: visible').find('.pop-up').
+                        attr('style', 'visibility: visible').siblings().attr('style', 'visibility: hidden');
+                    }else{
+                        alert("暂未开放");
+                    }
+                });
 
             };
             //连接关闭的回调方法
@@ -2903,7 +3274,11 @@
                 start: function () {
                     this.timeoutObj = setInterval(function () {
                         if (websocket.readyState === 1) {
-                            websocket.send("HeartBeat");
+                            let wsHeartBeat={
+                                type:99,
+                                content:"HeartBeat"
+                            };
+                            websocket.send(JSON.stringify(wsHeartBeat));
                         }
                     }, this.timeout)
                 }
@@ -2911,9 +3286,53 @@
 
 
         },
+        methods:{
+            onChangeValue1() {
+                /* alert(this.value1);*/
+                let ledbright={
+                    type:7,
+                    content:this.value1
+                };
+                websocket.send(JSON.stringify(ledbright));
+            },
+            onChangeValue2() {
+                /* alert(this.value1);*/
+                let hueContent={
+                    type:15,
+                    content:this.value2
+                };
+                websocket.send(JSON.stringify(hueContent));
+            },
+            onChangeValue4() {
+                /* alert(this.value1);*/
+                let colorContent={
+                    type:14,
+                    content:this.value4
+                };
+                websocket.send(JSON.stringify(colorContent));
+            },
+            onChangeFblvalue() {
+                /* alert(this.value1);*/
+                let ledfblvalue={
+                    type:18,
+                    content:this.fblvalue
+                };
+                websocket.send(JSON.stringify(ledfblvalue));
+            },
+            onChangeRadio() {
+                /* alert(this.value1);*/
+                let ledredio={
+                    type:19,
+                    content:this.radio
+                };
+                websocket.send(JSON.stringify(ledredio));
+            }
+        },
+
     });
 
 </script>
+
 <script>
     $(function () {
         $(".index_nav ul li").each(function (index) {
@@ -2951,9 +3370,13 @@
         }
     }
 
-    function sendcmd() {
+   /* function onChangeValue() {
+        alert(3);
+    }*/
+   /* function sendcmd() {
+        alert( demo.$data.bright);
         websocket.send("hello 帅哥");
-    }
+    }*/
 
     $(function () {
 
@@ -2992,7 +3415,36 @@
     })
 </script>
 
-<link rel="stylesheet" href="css/style.css">
-<script type="text/javascript" src="js/base.js"></script>
+<!--<script type="text/javascript" src="js/base.js"></script>-->
 <!--<script type="text/javascript" src="js/rem.js"></script>-->
+<script>
+
+    //点击close-pop这个类时取消弹框
+    $('.close-pop').on('click', function () {
+        $('#cover').css('display','none');
+        $(this).parent().parent().hide().find('.cont-div').attr('style', 'visibility: hidden');
+    })
+
+
+    function aiguozhe(item){
+        if($('.modedetail').css('display') === 'none'){
+            $('.modedetail').attr('style','display:block;');
+            $('.set-div').attr('style','z-index:1;');
+        }else{
+            $(".modedetail").hide();
+            $('.set-div').attr('style','z-index:3;');
+        }
+    }
+
+    // $(document).on('click',function (e) {
+    //     var target = $(e.target);
+    //     if(target.closest(".modedetail").length == 0 && target.closest(".module").length == 0){
+    //         $(".modedetail").hide();
+    //     }
+    // })
+
+
+
+
+</script>
 </html>

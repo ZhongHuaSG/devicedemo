@@ -55,5 +55,11 @@ public class IndexController {
     @RequestMapping(value = "/fangzhu")
     public String FangZhu(){ return "forward:fangzhu.html"; }
 
+    /**
+     * 跳转袁工的页面接口
+     * */
+    @RequestMapping(value = "/indexjk")
+    public String JK(){ return "forward:indexjk.html"; }
+
 
 }
