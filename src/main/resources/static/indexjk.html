@@ -3,24 +3,1157 @@
 <head>
     <meta charset="UTF-8">
     <title>洲明本地监控系统</title>
+    <!--    <style  type="text/css">-->
+    <!--        /* 当屏幕分辨率不超过1920px的时候将body内容缩放成150% */-->
+    <!--       /* @media screen and (max-width: 1921px) {-->
+    <!--            body{-->
+    <!--                zoom: 150%;-->
+    <!--            }-->
+    <!--        }*/-->
+
+    <!--       /* @media screen and (min-width: 1600px) and (max-width: 1920px){-->
+    <!--            body{-->
+    <!--                zoom: 150%;-->
+    <!--            }-->
+    <!--        }*/-->
+    <!--       /* @media screen and (min-width: 2048px) and (max-width: 2560px){-->
+    <!--            body{-->
+    <!--                zoom: 10%;-->
+    <!--            }-->
+    <!--        }*/-->
+    <!--        * {-->
+    <!--            margin: 0;-->
+    <!--            padding: 0;-->
+    <!--            font-size: 100%;-->
+    <!--        }-->
+
+    <!--        html {-->
+    <!--            overflow-y: auto;-->
+    <!--            overflow-x: hidden;-->
+    <!--            background-image: url(img/bg.jpg);-->
+    <!--            background-repeat: no-repeat;-->
+    <!--            background-size:100% 100%;-->
+    <!--            background-attachment: fixed;-->
+    <!--        }-->
+
+    <!--        html, body {-->
+    <!--            width: 100%;-->
+    <!--            height: 100%;-->
+    <!--            -webkit-font-smoothing: antialiased;-->
+    <!--            font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;-->
+
+    <!--        }-->
+
+
+    <!--        .index_content {-->
+    <!--            width: 100%;-->
+    <!--            height: 100%;-->
+    <!--        }-->
+
+    <!--        .index_nav {-->
+    <!--            height: 11.3%;-->
+    <!--            background-color: #1D8CE0;-->
+    <!--            color: #ffffff;-->
+    <!--            top: 0;-->
+    <!--            left: 0;-->
+    <!--            width: 100%;-->
+    <!--            position: fixed;-->
+    <!--            z-index: 9999;-->
+    <!--        }-->
+
+    <!--        .index_nav ul li {-->
+    <!--            font-size: 1em;-->
+    <!--            font-weight: 500;-->
+    <!--            opacity: 0.8;-->
+    <!--            cursor: pointer;-->
+    <!--            display: list-item;-->
+    <!--            z-index: 9999;-->
+    <!--            text-align: -webkit-match-parent;-->
+    <!--            list-style: none;-->
+    <!--            padding-left: 2.8%;-->
+    <!--        }-->
+
+
+    <!--        .index_nav ul .l_left {-->
+    <!--            float: left;-->
+    <!--            margin-top: -0.2%;-->
+    <!--            margin-left: 16%;-->
+    <!--        }-->
+
+    <!--        .index_nav ul .r_right {-->
+    <!--            float: right;-->
+    <!--            margin-top: 0.8%;-->
+    <!--        }-->
+
+    <!--        .index_nav ul li:hover {-->
+    <!--            opacity: 1;-->
+    <!--        }-->
+
+    <!--        .p1 {-->
+    <!--            margin-right: 16%;-->
+    <!--        }-->
+
+    <!--        .p2 {-->
+    <!--            margin-right: 6%;-->
+    <!--        }-->
+
+    <!--        .nav_active {-->
+    <!--            opacity: 1 !important;-->
+    <!--            color: #04449c;-->
+    <!--        }-->
+
+
+    <!--        .sz {-->
+    <!--            background-image: url(img/sz.svg);-->
+    <!--            width: 1em;-->
+    <!--            height: 2em;-->
+    <!--            background-repeat: no-repeat;-->
+    <!--        }-->
+
+
+    <!--        .kz {-->
+    <!--            background-image: url(img/kz.svg);-->
+    <!--            width: 1em;-->
+    <!--            height: 2em;-->
+    <!--            background-repeat: no-repeat;-->
+    <!--        }-->
+
+    <!--        .zm {-->
+    <!--            background-image: url(img/zm.svg);-->
+    <!--            width: 11.3em;-->
+    <!--            height: 3em;-->
+    <!--            background-repeat: no-repeat;-->
+    <!--        }-->
+
+
+    <!--        .asz {-->
+    <!--            background-image: url(img/sz1.svg);-->
+    <!--            width: 1em;-->
+    <!--            height: 2em;-->
+    <!--            background-repeat: no-repeat;-->
+    <!--        }-->
+
+    <!--        .akz {-->
+    <!--            background-image: url(img/kz1.svg);-->
+    <!--            width: 1em;-->
+    <!--            height: 2em;-->
+    <!--            background-repeat: no-repeat;-->
+    <!--        }-->
+
+    <!--        .azm {-->
+    <!--            background-image: url(img/zm1.svg);-->
+    <!--            width: 11.3em;-->
+    <!--            height: 3em;-->
+    <!--            background-repeat: no-repeat;-->
+    <!--        }-->
+
+
+    <!--        .nc {-->
+    <!--            height: 4em;-->
+    <!--            display: block;-->
+    <!--            margin-left: -300%;-->
+    <!--            letter-spacing: 0.0001em;-->
+    <!--            line-height: 5.8em;-->
+    <!--            -webkit-touch-callout: none; /* iOS Safari */-->
+
+    <!--            -webkit-user-select: none; /* Chrome/Safari/Opera */-->
+
+    <!--            -khtml-user-select: none; /* Konqueror */-->
+
+    <!--            -moz-user-select: none; /* Firefox */-->
+
+    <!--            -ms-user-select: none; /* Internet Explorer/Edge */-->
+
+    <!--            user-select: none; /* Non-prefixed version, currently not supported by any browser */-->
+    <!--        }-->
+
+
+    <!--        .nczm {-->
+    <!--            display: block;-->
+    <!--            margin-left: -18.7%;-->
+    <!--            margin-top: 25%;-->
+    <!--            font-size: larger;-->
+    <!--            width: 112%;-->
+    <!--            letter-spacing: 0.3em;-->
+    <!--            -webkit-touch-callout: none; /* iOS Safari */-->
+    <!--            -webkit-user-select: none; /* Chrome/Safari/Opera */-->
+    <!--            -khtml-user-select: none; /* Konqueror */-->
+    <!--            -moz-user-select: none; /* Firefox */-->
+    <!--            -ms-user-select: none; /* Internet Explorer/Edge */-->
+    <!--            user-select: none; /* Non-prefixed version, currently not supported by any browser */-->
+    <!--        }-->
+
+    <!--        .yh {-->
+    <!--            background-image: url(img/yh.svg);-->
+    <!--            background-repeat: no-repeat;-->
+    <!--            width: 2em;-->
+    <!--            height: 2em;-->
+    <!--            margin-left: 93%;-->
+    <!--            margin-top: 1%;-->
+    <!--            opacity: 0.8;-->
+    <!--            z-index: 9999;-->
+    <!--            position: relative;-->
+    <!--        }-->
+
+    <!--        .um {-->
+    <!--            width: 4em;-->
+    <!--            height: 5em;-->
+    <!--            position: absolute;-->
+    <!--            margin-left: -44%;-->
+    <!--            margin-top: 109%;-->
+    <!--            background-color: #ffffff;-->
+    <!--            border-radius: 0.3em;-->
+    <!--            border: 0.1em solid #ededed;-->
+    <!--            display: none;-->
+
+    <!--            top: 1.2em;-->
+    <!--            left: 0;-->
+    <!--        }-->
+
+    <!--        .yh:hover .um {-->
+    <!--            display: block;-->
+    <!--        }-->
+
+
+    <!--        .ncyh {-->
+    <!--            width: 6em;-->
+    <!--            height: 0.6em;-->
+    <!--            display: block;-->
+    <!--            line-height: 0.1em;-->
+    <!--            letter-spacing: 0.07em;-->
+    <!--            padding-top: 47%;-->
+    <!--            overflow: hidden;-->
+    <!--            white-space: nowrap;-->
+    <!--            text-overflow: ellipsis;-->
+    <!--            margin-left: -5px;-->
+    <!--            -webkit-touch-callout: none; /* iOS Safari */-->
+    <!--            -webkit-user-select: none; /* Chrome/Safari/Opera */-->
+    <!--            -khtml-user-select: none; /* Konqueror */-->
+    <!--            -moz-user-select: none; /* Firefox */-->
+    <!--            -ms-user-select: none; /* Internet Explorer/Edge */-->
+    <!--            user-select: none; /* Non-prefixed version, currently not supported by any browser */-->
+    <!--        }-->
+
+    <!--        .yh:hover {-->
+    <!--            opacity: 1;-->
+    <!--            cursor: pointer;-->
+    <!--        }-->
+
+    <!--        a.bw {-->
+    <!--            display: block;-->
+    <!--            text-decoration: none;-->
+    <!--            color: #999;-->
+    <!--            margin-left: 1em;-->
+    <!--            margin-top: 0.5em;-->
+    <!--        }-->
+
+    <!--        a.btc {-->
+    <!--            display: block;-->
+    <!--            text-decoration: none;-->
+    <!--            color: #999;-->
+    <!--            margin-left: 1em;-->
+    <!--            margin-top: 0.6em;-->
+    <!--        }-->
+
+    <!--        a:hover {-->
+    <!--            color: #1D8CE0;-->
+    <!--        }-->
+
+    <!--        .index_tabs {-->
+    <!--            width: 100%;-->
+    <!--            height: 100%;-->
+    <!--            position: absolute;-->
+    <!--            display: block;-->
+    <!--            margin-top: 76px;-->
+    <!--        }-->
+
+
+    <!--        .tab {-->
+    <!--            height: 100%;-->
+    <!--            width: 100%;-->
+    <!--            color: #20a0ff;-->
+    <!--            position: absolute;-->
+    <!--        }-->
+
+
+
+
+    <!--        .left {-->
+    <!--            width: 397px;-->
+    <!--            height: 571px;-->
+    <!--            float: left;-->
+    <!--            margin-left: 3px;-->
+    <!--            margin-top: 3px;-->
+    <!--        }-->
+
+    <!--        .left0 {-->
+    <!--            width: 397px;-->
+    <!--            height: 43%;-->
+    <!--            border: 0.001em solid #129ce6;-->
+    <!--        }-->
+
+
+    <!--        .lt0 {-->
+    <!--            background-color: #E5E9F2;-->
+    <!--            line-height: 30px;-->
+    <!--            font-weight: 500;-->
+    <!--            font-family: serif;-->
+    <!--        }-->
+
+    <!--        .azig {-->
+    <!--            margin-top: -176px;-->
+    <!--            margin-left: -21px;-->
+    <!--            position: absolute;-->
+    <!--        }-->
+
+    <!--        .kzqrun {-->
+    <!--            margin-top: 96px;-->
+    <!--            margin-left: 27px;-->
+    <!--            width: 100px;-->
+    <!--            height: 100px;-->
+    <!--           /* background: aqua;-->
+    <!--            animation: turn 1s linear infinite;-->
+    <!--            background: url(img/azyx.png) no-repeat center center;*/-->
+    <!--            position: relative;-->
+    <!--        }-->
+
+    <!--        .left1 {-->
+    <!--            width: 397px;-->
+    <!--            height: 55.5%;-->
+    <!--            border: 0.001em solid #129ce6;-->
+    <!--            position:relative;-->
+    <!--            margin-top: 8px;-->
+    <!--        }-->
+
+    <!--        .lt1 {-->
+    <!--            background-color: #E5E9F2;-->
+    <!--            line-height: 30px;-->
+    <!--            font-weight: 500;-->
+    <!--            font-family: serif;-->
+    <!--        }-->
+
+    <!--        .fskig {-->
+    <!--            margin-top: 133px;-->
+    <!--            margin-left: 10px;-->
+    <!--            position: absolute;-->
+    <!--        }-->
+
+    <!--        .fskrun {-->
+    <!--            margin-top: 155px;-->
+    <!--            margin-left: 11px;-->
+    <!--            width: 100px;-->
+    <!--            height: 100px;-->
+    <!--        /*    background: aqua;-->
+    <!--            animation: turn 1s linear infinite;-->
+    <!--            background: url(img/fskyx.png) no-repeat center center;*/-->
+    <!--            position: absolute;-->
+    <!--        }-->
+
+
+    <!--        .center {-->
+    <!--            width: 450px;-->
+    <!--            height: 571px;-->
+    <!--            border: 0.001em solid #129ce6;-->
+    <!--            float: left;-->
+    <!--            margin-left: 6px;-->
+    <!--            margin-top: 3px;-->
+    <!--        }-->
+
+    <!--        .ct {-->
+    <!--            background-color: #E5E9F2;-->
+    <!--            line-height: 30px;-->
+    <!--            text-align: center;-->
+    <!--            font-weight: 500;-->
+    <!--            font-family: serif;-->
+    <!--        }-->
+
+
+    <!--        .right {-->
+    <!--            width: 397px;-->
+    <!--            height: 571px;-->
+    <!--            float: left;-->
+    <!--            margin-left: 6px;-->
+    <!--            margin-top: 3px;-->
+    <!--        }-->
+
+    <!--        .right0 {-->
+    <!--            width: 397px;-->
+    <!--            height: 43%;-->
+    <!--            border: 0.001em solid #129ce6;-->
+    <!--        }-->
+
+
+    <!--        .rt0 {-->
+    <!--            background-color: #E5E9F2;-->
+    <!--            line-height: 30px;-->
+    <!--            font-weight: 500;-->
+    <!--            font-family: serif;-->
+    <!--        }-->
+
+    <!--        .gx0 {-->
+    <!--            width: 397px;-->
+    <!--            height: 218px;-->
+    <!--            position: relative;-->
+    <!--        }-->
+
+    <!--        .right1 {-->
+    <!--            width: 397px;-->
+    <!--            height: 55.5%;-->
+    <!--            border: 0.001em solid #129ce6;-->
+    <!--            margin-top: 8px;-->
+    <!--            position: relative;-->
+    <!--        }-->
+
+    <!--        .rt1 {-->
+    <!--            background-color: #E5E9F2;-->
+    <!--            line-height: 30px;-->
+    <!--            font-weight: 500;-->
+    <!--            font-family: serif;-->
+    <!--        }-->
+
+
+    <!--        .dy {-->
+    <!--            width: 397px;-->
+    <!--            height: 407px;-->
+    <!--            margin-top: -254px;-->
+    <!--            margin-left: -110px;-->
+    <!--        }-->
+
+    <!--        .dl {-->
+    <!--            width: 397px;-->
+    <!--            height: 407px;-->
+    <!--            position: absolute;-->
+    <!--            margin-top: -363px;-->
+    <!--            margin-left: 135px;-->
+    <!--        }-->
+
+    <!--        .fs {-->
+    <!--            position: absolute;-->
+    <!--            margin-top: -370px;-->
+    <!--            margin-left: 160px;-->
+    <!--            width: 100px;-->
+    <!--            height: 100px;-->
+    <!--            /*animation: turn 1s linear infinite;*/-->
+    <!--            animation-play-state: paused;-->
+    <!--            background: url(img/fs.svg) no-repeat center center;-->
+    <!--            z-index: 1;-->
+    <!--        }-->
+
+    <!--        .fs1{-->
+    <!--            /*animation-play-state: paused;*/-->
+    <!--            animation: turn 1s linear infinite;-->
+    <!--        }-->
+
+
+    <!--        /*-->
+    <!--          turn : 定义的动画名称-->
+    <!--          1s : 动画时间-->
+    <!--          linear : 动画以何种运行轨迹完成一个周期-->
+    <!--          infinite :规定动画应该无限次播放-->
+    <!--         */-->
+    <!--        @keyframes turn {-->
+    <!--            0% {-->
+    <!--                -webkit-transform: rotate(0deg);-->
+    <!--            }-->
+    <!--            25% {-->
+    <!--                -webkit-transform: rotate(90deg);-->
+    <!--            }-->
+    <!--            50% {-->
+    <!--                -webkit-transform: rotate(180deg);-->
+    <!--            }-->
+    <!--            75% {-->
+    <!--                -webkit-transform: rotate(270deg);-->
+    <!--            }-->
+    <!--            100% {-->
+    <!--                -webkit-transform: rotate(360deg);-->
+    <!--            }-->
+    <!--        }-->
+
+    <!--        .hjws {-->
+    <!--            width: 397px;-->
+    <!--            height: 407px;-->
+    <!--            position: relative;-->
+    <!--            margin-top: -18px;-->
+    <!--            margin-left: 11px;-->
+    <!--        }-->
+
+    <!--        .circle {-->
+    <!--            width: 10px;-->
+    <!--            height: 10px;-->
+    <!--            border-radius: 10%;-->
+    <!--            -moz-border-radius: 50%;-->
+    <!--            -webkit-border-radius: 50%;-->
+    <!--            font-size: .18rem;-->
+    <!--            color: #ffffff;-->
+    <!--            opacity: 1;-->
+    <!--            display: inline-block;-->
+    <!--            margin-left: 10px;-->
+    <!--            margin-top: 13px;-->
+
+    <!--        }-->
+
+    <!--        .ledstatus {-->
+    <!--            font: 13px/23px 'PingFang SC', Arial, 'Microsoft YaHei', sans-serif;-->
+    <!--            font-style: normal;-->
+    <!--            font-variant-ligatures: normal;-->
+    <!--            font-variant-caps: normal;-->
+    <!--            font-variant-numeric: normal;-->
+    <!--            font-variant-east-asian: normal;-->
+    <!--            font-weight: normal;-->
+    <!--            font-stretch: normal;-->
+    <!--            font-family: "PingFang SC", Arial, "Microsoft YaHei", sans-serif;-->
+    <!--        }-->
+
+
+
+    <!--        .onbutton {-->
+    <!--            font-weight: bold;-->
+    <!--            position: absolute;-->
+    <!--            margin-top: 30px;-->
+    <!--            margin-left: 91px;-->
+    <!--        }-->
+
+    <!--        div#ledswitch {-->
+    <!--            margin-top: 146px;-->
+    <!--            margin-left: 936px;-->
+    <!--            position: absolute;-->
+    <!--        }-->
+
+    <!--        div#ledslider {-->
+    <!--            position: absolute;-->
+    <!--            width: 600px;-->
+    <!--            margin-left: 93px;-->
+    <!--            margin-top: 238px;-->
+    <!--            line-height: 35px;-->
+    <!--        }-->
+
+    <!--        .ledph1 {-->
+    <!--            float: left;-->
+    <!--            width: 73%;-->
+    <!--            margin-left: -2px;-->
+    <!--            margin-top: -21px;-->
+    <!--        }-->
+
+    <!--        .ledph2 {-->
+    <!--            float: left;-->
+    <!--            margin-left: 581px;-->
+    <!--            margin-top: -292px;-->
+    <!--            width: 73%;-->
+    <!--        }-->
+
+    <!--        div#input{-->
+    <!--            margin-top: 142px;-->
+    <!--            margin-left: 88px;-->
+    <!--        }-->
+
+
+    <!--        div#input1{-->
+    <!--            margin-top: -41px;-->
+    <!--            margin-left: 676px;-->
+    <!--        }-->
+
+    <!--        div#ledradio {-->
+    <!--            float: left;-->
+    <!--            margin-left: 94px;-->
+    <!--            margin-top: -115px;-->
+    <!--        }-->
+
+    <!--        .circle2 {-->
+    <!--            width: 10px;-->
+    <!--            height: 10px;-->
+    <!--            border-radius: 10%;-->
+    <!--            -moz-border-radius: 50%;-->
+    <!--            -webkit-border-radius: 50%;-->
+    <!--            font-size: .18rem;-->
+    <!--            color: #ffffff;-->
+    <!--            opacity: 1;-->
+    <!--            display: inline-block;-->
+    <!--            margin-left: 13px;-->
+    <!--            margin-top: 17px;-->
+    <!--        }-->
+
+    <!--        .clearfix:after, .clearfix:before {-->
+    <!--            display: table;-->
+    <!--            content: " "-->
+    <!--        }-->
+
+    <!--        .clearfix:after {-->
+    <!--            clear: both-->
+    <!--        }-->
+
+
+    <!--        .mainbox {-->
+    <!--            margin-left: 165px;-->
+    <!--            margin-top: -187px;-->
+    <!--            width: 520px;-->
+    <!--        }-->
+
+    <!--        .mainbox > ul {-->
+    <!--            margin-left: -.4rem;-->
+    <!--            margin-right: -.4rem;-->
+    <!--        }-->
+
+    <!--        .mainbox > ul > li {-->
+    <!--            float: left;-->
+    <!--            padding: 0 .4rem-->
+    <!--        }-->
+
+    <!--        .mainbox > ul > li {-->
+    <!--            width: 30%-->
+    <!--        }-->
+
+    <!--        .mainbox > ul > li:nth-child(2) {-->
+    <!--            width: 40%-->
+    <!--        }-->
+
+    <!--        .boxall {-->
+    <!--            height: 11.7rem;-->
+    <!--            width:13rem;-->
+    <!--            border: 1px solid rgba(25, 186, 139, .17);-->
+    <!--            padding: 0 .3rem .3rem .3rem;-->
+    <!--            background: rgba(255, 255, 255, .04);-->
+    <!--            background-size: 100% auto;-->
+    <!--            position: relative;-->
+    <!--            margin-bottom: .3rem;-->
+    <!--            z-index: 10;-->
+    <!--        }-->
+
+    <!--        .boxall:before,-->
+    <!--        .boxall:after {-->
+    <!--            position: absolute;-->
+    <!--            width: .1rem;-->
+    <!--            height: .1rem;-->
+    <!--            content: "";-->
+    <!--            border-top: 2px solid #02a6b5;-->
+    <!--            top: 0;-->
+    <!--        }-->
+
+    <!--        .boxall:before, .boxfoot:before {-->
+    <!--            border-left: 2px solid #02a6b5;-->
+    <!--            left: 0;-->
+    <!--        }-->
+
+    <!--        .boxall:after, .boxfoot:after {-->
+    <!--            border-right: 2px solid #02a6b5;-->
+    <!--            right: 0;-->
+    <!--        }-->
+
+
+    <!--        .boxfoot {-->
+    <!--            position: absolute;-->
+    <!--            bottom: 0;-->
+    <!--            width: 100%;-->
+    <!--            left: 0;-->
+    <!--        }-->
+
+    <!--        .boxfoot:before,-->
+    <!--        .boxfoot:after {-->
+    <!--            position: absolute;-->
+    <!--            width: .1rem;-->
+    <!--            height: .1rem;-->
+    <!--            content: "";-->
+    <!--            border-bottom: 2px solid #02a6b5;-->
+    <!--            bottom: 0;-->
+    <!--        }-->
+
+
+    <!--        .sycm ul {-->
+    <!--            margin-left: -.5rem;-->
+    <!--            margin-right: -.5rem;-->
+    <!--            padding: 1.16rem 0;-->
+    <!--        }-->
+
+    <!--        .sycm li {-->
+    <!--            float: left;-->
+    <!--            width: 47.33%;-->
+    <!--            text-align: center;-->
+    <!--            position: relative-->
+    <!--        }-->
+
+    <!--        .sycm li:before {-->
+    <!--            position: absolute;-->
+    <!--            content: "";-->
+    <!--            height: 30%;-->
+    <!--            width: 1px;-->
+    <!--            background: rgba(255, 255, 255, .1);-->
+    <!--            right: 0;-->
+    <!--            top: 15%;-->
+    <!--        }-->
+
+    <!--        .sycm li:last-child:before {-->
+    <!--            width: 0;-->
+    <!--        }-->
+
+    <!--        .sycm li h2 {-->
+    <!--            font-size: 0.6rem;-->
+    <!--            color: #ffffff;-->
+    <!--            opacity: 0.7;-->
+    <!--        }-->
+
+    <!--        .sycm li span {-->
+    <!--            font-size: 0.5rem;-->
+    <!--            color: #ffffff;-->
+    <!--            opacity: 1;-->
+    <!--        }-->
+
+    <!--        ul li {-->
+    <!--            list-style-type: none;-->
+    <!--        }-->
+
+
+    <!--        .clearfix1:after, .clearfix1:before {-->
+    <!--            display: table;-->
+    <!--            content: " "-->
+    <!--        }-->
+
+    <!--        .clearfix1:after {-->
+    <!--            clear: both-->
+    <!--        }-->
+
+
+    <!--        .mainbox1 {-->
+    <!--            /*margin-top: 7px;*/-->
+    <!--            padding: .4rem .4rem 0rem .4rem;-->
+    <!--            position: absolute;-->
+    <!--        }-->
+
+    <!--        .mainbox1 > ul {-->
+    <!--            margin-left: -.4rem;-->
+    <!--            margin-right: -.4rem;-->
+    <!--        }-->
+
+    <!--        .mainbox1 > ul > li {-->
+    <!--            float: left;-->
+    <!--            padding: 0 .4rem-->
+    <!--        }-->
+
+    <!--        .mainbox1 > ul > li {-->
+    <!--            width: 30%-->
+    <!--        }-->
+
+    <!--        .mainbox1 > ul > li:nth-child(2) {-->
+    <!--            width: 40%-->
+    <!--        }-->
+
+    <!--        .boxall1 {-->
+    <!--            height: 7rem;width:22.8rem;-->
+    <!--            border: 1px solid rgba(25, 186, 139, .17);-->
+    <!--            padding: 0 .3rem .3rem .3rem;-->
+    <!--            background: rgba(255, 255, 255, .04);-->
+    <!--            background-size: 100% auto;-->
+    <!--            position: absolute;-->
+    <!--            margin-bottom: .3rem;-->
+    <!--            z-index: 10;-->
+    <!--            margin-top: 23px;-->
+    <!--        }-->
+
+    <!--        .boxall1:before,-->
+    <!--        .boxall1:after {-->
+    <!--            position: absolute;-->
+    <!--            width: .1rem;-->
+    <!--            height: .1rem;-->
+    <!--            content: "";-->
+    <!--            border-top: 2px solid #02a6b5;-->
+    <!--            top: 0;-->
+    <!--        }-->
+
+    <!--        .boxall1:before, .boxfoot1:before {-->
+    <!--            border-left: 2px solid #02a6b5;-->
+    <!--            left: 0;-->
+    <!--        }-->
+
+    <!--        .boxall1:after, .boxfoot1:after {-->
+    <!--            border-right: 2px solid #02a6b5;-->
+    <!--            right: 0;-->
+    <!--        }-->
+
+
+    <!--        .boxfoot1 {-->
+    <!--            position: absolute;-->
+    <!--            bottom: 0;-->
+    <!--            width: 100%;-->
+    <!--            left: 0;-->
+    <!--        }-->
+
+    <!--        .boxfoot1:before,-->
+    <!--        .boxfoot1:after {-->
+    <!--            position: absolute;-->
+    <!--            width: .1rem;-->
+    <!--            height: .1rem;-->
+    <!--            content: "";-->
+    <!--            border-bottom: 2px solid #02a6b5;-->
+    <!--            bottom: 0;-->
+    <!--        }-->
+
+
+    <!--        .sycm1 {-->
+    <!--            margin-top: 9px;-->
+    <!--        }-->
+
+    <!--        .sycm1 ul {-->
+    <!--            margin-left: -.5rem;-->
+    <!--            margin-right: -.5rem;-->
+    <!--            padding: .16rem 0;-->
+    <!--            line-height: 22px;-->
+    <!--        }-->
+
+    <!--        .sycm1 li {-->
+    <!--            float: left;-->
+    <!--            width: 33.33%;-->
+    <!--            text-align: center;-->
+    <!--            position: relative-->
+    <!--        }-->
+
+    <!--        .sycm1 li:before {-->
+    <!--            position: absolute;-->
+    <!--            content: "";-->
+    <!--            height: 30%;-->
+    <!--            width: 1px;-->
+    <!--            background: rgba(255, 255, 255, .1);-->
+    <!--            right: 0;-->
+    <!--            top: 15%;-->
+    <!--        }-->
+
+    <!--        .sycm1 li:last-child:before {-->
+    <!--            width: 0;-->
+    <!--        }-->
+
+
+    <!--        .sycm1 li h2 {-->
+    <!--            font-size: 0.6rem;-->
+    <!--            color: #ffffff;-->
+    <!--            opacity: 0.7;-->
+    <!--        }-->
+
+    <!--        .sycm1 li span {-->
+    <!--            font-size: 0.5rem;-->
+    <!--            color: #ffffff;-->
+    <!--            opacity: 1;-->
+    <!--        }-->
+
+
+    <!--        .clearfix2:after, .clearfix2:before {-->
+    <!--            display: table;-->
+    <!--            content: " "-->
+    <!--        }-->
+
+    <!--        .clearfix2:after {-->
+    <!--            clear: both-->
+    <!--        }-->
+
+
+
+    <!--        .mainbox2 {-->
+    <!--            margin-top: 221px;-->
+    <!--            padding: .4rem .4rem 0rem .4rem;-->
+    <!--            margin-left: 2px;-->
+    <!--        }-->
+
+    <!--        .mainbox2 > ul {-->
+    <!--            margin-left: -.4rem;-->
+    <!--            margin-right: -.4rem;-->
+    <!--        }-->
+
+    <!--        .mainbox2 > ul > li {-->
+    <!--            float: left;-->
+    <!--            padding: 0 .4rem-->
+    <!--        }-->
+
+    <!--        .mainbox2 > ul > li {-->
+    <!--            width: 30%-->
+    <!--        }-->
+
+    <!--        .mainbox2 > ul > li:nth-child(2) {-->
+    <!--            width: 40%-->
+    <!--        }-->
+
+    <!--        .boxall2 {-->
+    <!--            height: 17rem;width:26.3rem;-->
+    <!--            border: 1px solid rgba(25, 186, 139, .17);-->
+    <!--            padding: 0 .3rem .3rem .3rem;-->
+    <!--            background-size: 100% auto;-->
+    <!--            position: relative;-->
+    <!--            margin-bottom: .3rem;-->
+    <!--            z-index: 10;-->
+    <!--        }-->
+
+    <!--        .boxall2:before,-->
+    <!--        .boxall2:after {-->
+    <!--            position: absolute;-->
+    <!--            width: .1rem;-->
+    <!--            height: .1rem;-->
+    <!--            content: "";-->
+    <!--            border-top: 2px solid #02a6b5;-->
+    <!--            top: 0;-->
+    <!--        }-->
+
+    <!--        .boxall2:before, .boxfoot2:before {-->
+    <!--            border-left: 2px solid #02a6b5;-->
+    <!--            left: 0;-->
+    <!--        }-->
+
+    <!--        .boxall2:after, .boxfoot2:after {-->
+    <!--            border-right: 2px solid #02a6b5;-->
+    <!--            right: 0;-->
+    <!--        }-->
+
+
+    <!--        .boxfoot2 {-->
+    <!--            position: absolute;-->
+    <!--            bottom: 0;-->
+    <!--            width: 100%;-->
+    <!--            left: 0;-->
+    <!--        }-->
+
+    <!--        .boxfoot2:before,-->
+    <!--        .boxfoot2:after {-->
+    <!--            position: absolute;-->
+    <!--            width: .1rem;-->
+    <!--            height: .1rem;-->
+    <!--            content: "";-->
+    <!--            border-bottom: 2px solid #02a6b5;-->
+    <!--            bottom: 0;-->
+    <!--        }-->
+
+
+    <!--        .sycm2 {-->
+    <!--            margin-top: 53px;-->
+    <!--        }-->
+
+    <!--        .sycm2 ul {-->
+    <!--            margin-left: -.5rem;-->
+    <!--            margin-right: -.5rem;-->
+    <!--            padding: .16rem 0;-->
+    <!--            line-height: 22px;-->
+    <!--        }-->
+
+    <!--        .sycm2 li {-->
+    <!--            float: left;-->
+    <!--            width: 33.33%;-->
+    <!--            text-align: center;-->
+    <!--            position: relative-->
+    <!--        }-->
+
+    <!--        .sycm2 li:before {-->
+    <!--            position: absolute;-->
+    <!--            content: "";-->
+    <!--            height: 30%;-->
+    <!--            width: 1px;-->
+    <!--            background: rgba(255, 255, 255, .1);-->
+    <!--            right: 0;-->
+    <!--            top: 15%;-->
+    <!--        }-->
+
+    <!--        .sycm2 li:last-child:before {-->
+    <!--            width: 0;-->
+    <!--        }-->
+
+
+    <!--        .sycm2 li h2 {-->
+    <!--            font-size: 0.6rem;-->
+    <!--            color: #ffffff;-->
+    <!--            opacity: 0.7;-->
+    <!--        }-->
+
+    <!--        .sycm2 li span {-->
+    <!--            font-size: 0.5rem;-->
+    <!--            color: #ffffff;-->
+    <!--            opacity: 1;-->
+    <!--        }-->
+
+
+    <!--        @font-face {-->
+    <!--            font-family: 'UnidreamLED';-->
+    <!--            src: url('fonts/LED Dot-Matrix.ttf');-->
+    <!--        }-->
+
+
+    <!--        .timeshow {-->
+    <!--            margin-top: -20px;-->
+    <!--            margin-left: 139px;-->
+    <!--            position:absolute;-->
+    <!--        }-->
+
+    <!--        .curtitle {-->
+    <!--            font-family: "微软雅黑", serif;-->
+    <!--            font-size: 0.5rem;-->
+    <!--            color: #ffffff;-->
+    <!--            opacity: 0.6;-->
+    <!--        }-->
+
+    <!--        .current {-->
+    <!--            letter-spacing: 0.1em;-->
+    <!--            font-size: 1em;-->
+    <!--            font-family: 'UnidreamLED', serif;-->
+    <!--            color: #00ca6d;-->
+    <!--            margin-top: 10px;-->
+    <!--        }-->
+
+    <!--        .timeshow1 {-->
+    <!--            margin-top: -20px;-->
+    <!--            margin-left: 271px;-->
+    <!--            position: absolute;-->
+    <!--        }-->
+
+    <!--        .curtitle1 {-->
+    <!--            font-family: "微软雅黑", serif;-->
+    <!--            font-size: 0.5rem;-->
+    <!--            color: #ffffff;-->
+    <!--            opacity: 0.6;-->
+    <!--        }-->
+
+    <!--        .current1 {-->
+    <!--            letter-spacing: 0.1em;-->
+    <!--            font-size: 1em;-->
+    <!--            font-family: 'UnidreamLED', serif;-->
+    <!--            color: #00ca6d;-->
+    <!--            margin-top: 10px;-->
+    <!--        }-->
+
+
+    <!--        .fskimp {-->
+    <!--            margin-left: 265px;-->
+    <!--            margin-top: 166px;-->
+    <!--            position: absolute;-->
+    <!--        }-->
+
+    <!--        .fskimp h3 {-->
+    <!--            font-size: 0.6rem;-->
+    <!--            color: #ffffff;-->
+    <!--            opacity: 0.7;-->
+    <!--        }-->
+
+    <!--        .fskimp p {-->
+    <!--            font-size: 0.5rem;-->
+    <!--            color: #ffffff;-->
+    <!--            opacity: 1;-->
+    <!--            line-height: 31px;-->
+    <!--            text-decoration: underline;-->
+    <!--        }-->
+
+    <!--        .fskstatus {-->
+    <!--            font: 13px/23px 'PingFang SC', Arial, 'Microsoft YaHei', sans-serif;-->
+    <!--            font-style: normal;-->
+    <!--            font-variant-ligatures: normal;-->
+    <!--            font-variant-caps: normal;-->
+    <!--            font-variant-numeric: normal;-->
+    <!--            font-variant-east-asian: normal;-->
+    <!--            font-weight: normal;-->
+    <!--            font-stretch: normal;-->
+    <!--            font-family: "PingFang SC", Arial, "Microsoft YaHei", sans-serif;-->
+    <!--        }-->
+
+    <!--        .cssrun {-->
+    <!--            position: absolute;-->
+    <!--        }-->
+
+    <!--        .ledrun1 {-->
+    <!--            letter-spacing: 0.1em;-->
+    <!--            font-size: 3em;-->
+    <!--            font-family: 'UnidreamLED', serif;-->
+    <!--            color: #ff0000;-->
+    <!--            margin-top: 18px;-->
+    <!--            font-style: normal;-->
+    <!--            margin-left: -45px;-->
+
+    <!--        }-->
+
+    <!--        .ledrun2 {-->
+    <!--            letter-spacing: 0.1em;-->
+    <!--            font-size: 1em;-->
+    <!--            font-family: 'UnidreamLED', serif;-->
+    <!--            color: #00ff00;-->
+    <!--            margin-top: 18px;-->
+    <!--            font-style: normal;-->
+    <!--            margin-left: 15px;-->
+
+    <!--        }-->
+
+    <!--        .ledrun3 {-->
+    <!--            letter-spacing: 0.1em;-->
+    <!--            font-size: 3em;-->
+    <!--            font-family: 'UnidreamLED', serif;-->
+    <!--            color: #0000ff;-->
+    <!--            margin-top: 18px;-->
+    <!--            font-style: normal;-->
+    <!--            margin-left: 78px;-->
+
+    <!--        }-->
+
+
+
+    <!--        .ledsceen .cssrun {-->
+    <!--            margin-top: -478px;-->
+    <!--            margin-left: 90px;-->
+    <!--            width: 253px;-->
+    <!--            height: 133px;-->
+    <!--            line-height: 100px;-->
+    <!--            font-size: 2em;-->
+    <!--            font-family: sans-serif;-->
+    <!--            font-weight: bold;-->
+    <!--            white-space: nowrap;-->
+    <!--            overflow: hidden;-->
+    <!--        }-->
+
+    <!--        .ledsceen .cssrun {-->
+    <!--            background: url(img/led.svg) no-repeat center center;-->
+    <!--            color: #FBF2D5;-->
+    <!--            transform-origin: left;-->
+    <!--            transform: perspective(300px) rotateX(0deg);-->
+    <!--        }-->
+
+
+    <!--        .ledsceen .cssrun span {-->
+    <!--            position: absolute;-->
+    <!--            animation: marquee 5s linear infinite;-->
+
+    <!--        }-->
+
+
+    <!--        @keyframes marquee {-->
+    <!--            from {-->
+    <!--                left: 100%;-->
+    <!--            }-->
+    <!--            to {-->
+    <!--                left: -130%;-->
+    <!--            }-->
+    <!--        }-->
+
+    <!--        .checkspan{-->
+    <!--            color: #409EFF;-->
+    <!--        }-->
+
+    <!--        .sliderclass{-->
+    <!--            color: #606266;-->
+    <!--        }-->
+
+    <!--        .hdrslstyle{-->
+    <!--            color: #606266;-->
+    <!--        }-->
+
+    <!--    </style>-->
     <style  type="text/css">
         /* 当屏幕分辨率不超过1920px的时候将body内容缩放成150% */
-       /* @media screen and (max-width: 1921px) {
-            body{
-                zoom: 150%;
-            }
-        }*/
+        /* @media screen and (max-width: 1921px) {
+             body{
+                 zoom: 150%;
+             }
+         }*/
 
-       /* @media screen and (min-width: 1600px) and (max-width: 1920px){
+        /*@media screen and (min-width: 1600px) and (max-width: 1920px){*/
+
+        /* }*/
+        /*!*适应pad端 宽度在640-1000之间*!*/
+        @media screen and (min-width: 640px) and (max-width: 1000px) {
             body{
-                zoom: 150%;
+                zoom: 80%;
             }
-        }*/
-       /* @media screen and (min-width: 2048px) and (max-width: 2560px){
-            body{
-                zoom: 10%;
-            }
-        }*/
+        }
+        /* @media screen and (min-width: 2048px) and (max-width: 2560px){
+             body{
+                 zoom: 10%;
+             }
+         }*/
         * {
             margin: 0;
             padding: 0;
@@ -311,9 +1444,9 @@
             margin-left: 27px;
             width: 100px;
             height: 100px;
-           /* background: aqua;
-            animation: turn 1s linear infinite;
-            background: url(img/azyx.png) no-repeat center center;*/
+            /* background: aqua;
+             animation: turn 1s linear infinite;
+             background: url(img/azyx.png) no-repeat center center;*/
             position: relative;
         }
 
@@ -343,9 +1476,9 @@
             margin-left: 11px;
             width: 100px;
             height: 100px;
-        /*    background: aqua;
-            animation: turn 1s linear infinite;
-            background: url(img/fskyx.png) no-repeat center center;*/
+            /*    background: aqua;
+                animation: turn 1s linear infinite;
+                background: url(img/fskyx.png) no-repeat center center;*/
             position: absolute;
         }
 
@@ -433,9 +1566,15 @@
             margin-left: 160px;
             width: 100px;
             height: 100px;
-            animation: turn 1s linear infinite;
+            /*animation: turn 1s linear infinite;*/
+            animation-play-state: paused;
             background: url(img/fs.svg) no-repeat center center;
             z-index: 1;
+        }
+
+        .fs1{
+            /*animation-play-state: paused;*/
+            animation: turn 1s linear infinite;
         }
 
 
@@ -508,8 +1647,9 @@
         }
 
         div#ledswitch {
-            margin-top: 31px;
-            margin-left: 146px;
+            margin-top: 146px;
+            margin-left: 936px;
+            position: absolute;
         }
 
         div#ledslider {
@@ -1116,7 +2256,15 @@
             color: #409EFF;
         }
 
+        .sliderclass{
+            color: #606266;
+        }
+        .hdrslstyle{
+            color: #606266;
+        }
+
     </style>
+
 
     <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/style.css">
@@ -1200,14 +2348,14 @@
                     <h3 class="circle2" id="fskon"></h3>
                     <span id="fskonspan" class="fskstatus"></span>
                     <div id="show" class="timeshow">
-                        <h1 class="curtitle">运行时间</h1>
+                        <h2 class="curtitle">当前运行时间</h2>
                         <h3 id="ctime" class="current"></h3>
                     </div>
 
-                    <div id="show1" class="timeshow1">
-                        <h1 class="curtitle1">累计时间</h1>
+                    <!--<div id="show1" class="timeshow1">
+                        <h2 class="curtitle1">累计时间</h2>
                         <h3 id="ctime1" class="current1"></h3>
-                    </div>
+                    </div>-->
 
                     <div class="mainbox1">
                         <ul class="clearfix1">
@@ -1234,10 +2382,10 @@
                     </div>
                     <div class="fskimp" >
                         <ul>
-                        <li>
-                            <h3>发送卡网口数</h3>
-                            <p><span >{{port_ordernum}}</span></p>
-                        </li>
+                            <li>
+                                <h3>发送卡网口数</h3>
+                                <p><span >{{port_ordernum}}</span></p>
+                            </li>
                         </ul>
                         <h3>带载箱体数</h3>
                         <p>{{sender_boxtotalnum}}</p>
@@ -1259,21 +2407,21 @@
                                 <div class="sycm2">
                                     <ul class="clearfix2">
                                         <li><h2>屏体ID</h2><span  v-if="source.LEDSCREEN&&source.LEDSCREEN.INDEX">{{source.LEDSCREEN.INDEX}}</span></li>
-                                        <li><h2>分辨率</h2><span v-for="cm in comlist">{{cm.LEDPARAS.LED_RSLT}}</span></li>
-                                        <li><h2>间距</h2><span v-for="cm in comlist">{{cm.LEDPARAS.LED_SPACE}}</span></li>
+                                        <li><h2>屏体分辨率</h2><span v-for="cm in comlist">{{cm.LEDPARAS.LED_RSLT}}</span></li>
+                                        <li><h2>LED间距</h2><span v-for="cm in comlist">{{cm.LEDPARAS.LED_SPACE}}</span></li>
                                     </ul>
                                     <div class="jkcontent" style="border-bottom: 1px solid rgba(255,255,255,.1)"></div>
                                     <ul class="clearfix2">
+                                        <li><h2>厂家</h2><span v-for="cm in comlist">{{cm.LEDPARAS.CUSTOM}}</span></li>
                                         <li><h2>屏体类型</h2><span v-for="cm in comlist">{{cm.LEDPARAS.LED_TYPE}}</span></li>
-                                        <li  v-for="cm in comlist"><h2>输入源</h2><span v-for="(sd,index) in cm.LEDPARAS.SENDER_ORDER"  v-if="index==0">{{sd.INPUTSOURCE}}</span></li>
-                                        <li  v-for="cm in comlist"><h2>刷新率</h2><span v-for="(sd,index) in cm.LEDPARAS.SENDER_ORDER"  v-if="index==0">{{sd.INSRC_FRE}}</span></li>
+                                        <li><h2>屏体刷新率</h2><span>{{screenfresh}}</span></li>
                                     </ul>
 
                                     <div style="border-bottom: 1px solid rgba(255,255,255,.1)"></div>
                                     <ul class="clearfix2">
-                                        <li><h2>默认亮度</h2><span v-for="cm in comlist">{{cm.LEDPARAS.ENVI_BRIGHT}}</span></li>
                                         <li><h2>通讯类型</h2><span >{{destination.INTERFACES}}</span></li>
-                                        <li><h2>维修时长</h2><span >1年</span></li>
+                                        <li  v-for="cm in comlist"><h2>输入源</h2><span v-for="(sd,index) in cm.LEDPARAS.SENDER_ORDER"  v-if="index==0">{{sd.INPUTSOURCE}}</span></li>
+                                        <li  v-for="cm in comlist"><h2>输入源刷新率</h2><span v-for="(sd,index) in cm.LEDPARAS.SENDER_ORDER"  v-if="index==0">{{sd.INSRC_FRE}}</span></li>
                                     </ul>
 
                                 </div>
@@ -1287,7 +2435,7 @@
 
                 <div class="ledsceen">
                     <div class="cssrun">
-                       <!-- <i class="ledrun1">L</i><i class="ledrun2">E</i><i class="ledrun3">D</i>-->
+                        <!-- <i class="ledrun1">L</i><i class="ledrun2">E</i><i class="ledrun3">D</i>-->
                         <span class="ledrun2" v-if="source.LEDSCREEN&&source.LEDSCREEN.INDEX">{{source.LEDSCREEN.INDEX}}</span>
                     </div>
                 </div>
@@ -1299,11 +2447,11 @@
                         <div class="gx0" id="chartmain0"></div>
                     </div>
                 </div>
-                <div class="right1"><h3 class="rt1">传感器信息</h3>
+                <div class="right1" style="display: none;"><h3 class="rt1">传感器信息</h3>
                     <div class="hjws" id="chartmain3"></div>
                     <div class="dy" id="chartmain1"></div>
                     <div title="开">
-                        <div class="fs"></div>
+                        <div class="fs" id="fssvgturn"></div>
                     </div>
                     <div class="dl" id="chartmain2"></div>
                 </div>
@@ -1327,83 +2475,71 @@
                         <b>箱体型号:<span id="productTitle" style="color: white;"></span></b></h3>
                     <!-- 模组信息弹框 -->
                     <div  class="modedetail" >
-                        <!-- 模组ID -->
+                        <!-- 模组信息 -->
                         <h2 style="width: 140px;height:40px;line-height:37px;text-align:center;font-size: 20px;color:#0e94eb;margin-top: 75px;margin-left: 45px;background: url(/images/moduleDetailTitle.png) top left no-repeat">
-                            <b>模组ID</b>
+                            <b>模组信息</b>
                         </h2>
                         <ul style="width:340px;font-size: 15px;margin-left: 60px;margin-top: 10px;line-height: 30px;">
                             <!-- 分辨率 -->
                             <li style="color: #0e94eb;">
-                                分辨率：<b><span id="MOD_RSL" style="color: #E9E7E7;margin-left: 100px;">96 * 108</span></b>
+                                分辨率：<b><span id="MOD_RSL" style="color: #E9E7E7;margin-left: 100px;"></span></b>
                             </li>
                             <!-- 间距 -->
                             <li style="color: #0e94eb;margin-top: 13px;">
-                                间距：<b><span id="MOD_SPACE" style="color: #E9E7E7;margin-left: 119px;">1.588</span></b>
+                                间距：<b><span id="MOD_SPACE" style="color: #E9E7E7;margin-left: 119px;"></span></b>
                             </li>
                             <!-- 分割线 -->
                             <li style="margin-top: 13px;border-bottom:rgba(255, 255, 255, 0.2) 1px solid;"></li>
                             <!-- 规格类型 -->
                             <li style="color: #0e94eb;margin-top: 13px;">
-                                规格型号：<b><span id="LAMP_PARA_STYLE" style="color: #E9E7E7;margin-left: 81px;">SMD3258</span></b>
+                                规格型号：<b><span id="LAMP_PARA_STYLE" style="color: #E9E7E7;margin-left: 81px;"></span></b>
                             </li>
                             <!-- 亮度 -->
                             <li style="color: #0e94eb;margin-top: 13px;">
-                                亮度：<b><span id="LAMP_PARA_BRIGHT" style="color: #E9E7E7;margin-left: 119px;">600</span></b>
+                                亮度：<b><span id="LAMP_PARA_BRIGHT" style="color: #E9E7E7;margin-left: 119px;"></span></b>
                             </li>
-                            <!-- 波长 -->
+                            <!-- 发光亮度 -->
                             <li style="color: #0e94eb;margin-top: 13px;">
-                                波长(RGB)：<b><p id="LAMP_PARA_WAVELEN" style="color: #E9E7E7;">R:400~480,G:620~750,B:480~500</p></b>
-                                </li>
-                                <!-- 发光亮度 -->
-                                <li style="color: #0e94eb;margin-top: 13px;">
-                                    发光角度：<b><span id="LAMP_PARA_ANGLE" style="color: #E9E7E7;margin-left: 81px;">120</span></b>
-                                </li>
-                                <!-- 抗静电能力 -->
-                                <li style="color: #0e94eb;margin-top: 13px;">
-                                    抗静电能力：<span id="LAMP_PARA_ANTISTATIC" style="color: #E9E7E7;margin-left: 62px;"><b>700</b></span>
-                                </li>
-                                <!-- 漏电电流 -->
-                                <li style="color: #0e94eb;margin-top: 13px;">
-                                    漏电电流：<b><span id="LAMP_PARA_LEAKAGE_CURRENT" style="color: #E9E7E7;margin-left: 81px;">5</span></b>
-                                </li>
-                                <!-- 扫描方式 -->
-                                <li style="color: #0e94eb;margin-top: 13px;">
-                                    扫描方式：<b><span id="MOD_SCAN_NUM" style="color: #E9E7E7;margin-left: 81px;">27</span></b>
-                                </li>
+                                发光角度：<b><span id="LAMP_PARA_ANGLE" style="color: #E9E7E7;margin-left: 81px;"></span></b>
+                            </li>
+
+                            <!-- 扫描方式 -->
+                            <li style="color: #0e94eb;margin-top: 13px;">
+                                扫描方式：<b><span id="MOD_SCAN_NUM" style="color: #E9E7E7;margin-left: 81px;"></span></b>
+                            </li>
                         </ul>
                     </div>
                     <div class="set-div">
-                        <div class="set-box"  style="margin-left: 6px;margin-top: 112px;position: absolute;">
+                        <div class="sensor_Message" >
                             <label class="four-f">&nbsp;&nbsp;&nbsp;传感器</label>
-                            <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 200px;height: 100px;margin-top: 160px;margin-left:-160px;">
+                            <div class="didimen1">
                                 <ul style="margin-left:12px;margin-top:-4px;">
                                     <li style="margin-top: 8px;color: #0e94eb;">电压：<span id="SENSOR_VOL" style="color: #E9E7E7"></span></li>
                                     <li style="margin-top: 8px;color: #0e94eb;">电流：<span id="SENSOR_CURRENT" style="color: #E9E7E7">A</span></li>
-                                    <li style="margin-top: 8px;color: #0e94eb;">湿度：<span id="SENSOR_HUMI" style="color: #E9E7E7">%RH</span></li>
-                                    <li style="margin-top: 8px;color: #0e94eb;">烟雾：<span id="SENSOR_SMOG" style="color: #E9E7E7">333</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">亮度范围：<span id="SENSOR_BRI" style="color: #E9E7E7">cd/m²</span></li>
                                 </ul>
-                                <ul style="margin-left:100px;margin-top:-100px;">
+                                <ul class="tempoge">
                                     <li style="margin-top: 8px;color: #0e94eb;">温度：<span id="SENSOR_TMP" style="color: #E9E7E7">℃</span></li>
-                                    <li style="margin-top: 8px;color: #0e94eb;">亮度：<span id="SENSOR_BRI" style="color: #E9E7E7">Lux</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">湿度：<span id="SENSOR_HUMI" style="color: #E9E7E7">%RH</span></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="set-box" style="height: 80px;position: absolute;margin-top: 276px;margin-left: 4px;">
                             <label >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;驱动IC</label>
-                            <div class="didimen1" style="font-size: small;border:1px solid #1dacfe;width: 100px;height: 19.85px;margin-top: 70px;margin-left:-160px;">
+                            <div class="didimen2">
                                 <ul style="margin-left:12px;margin-top:4px;">
-                                    <li style="margin-top: 8px;color: #0e94eb;"><span id="ICSYLE" style="color: #E9E7E7">MBI5153GP</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;"><span id="ICSYLE" style="color: #E9E7E7"></span></li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="set-box" style="margin-top: 415px;position: absolute;">
+                        <div class="Power_Message" >
                             <label >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电源：</label>
-                            <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 190px;height: 100px;margin-top: 160px;margin-left:-160px;">
+                            <div class="didimen3" >
                                 <ul style="margin-left:12px;margin-top:-4px;">
-                                    <li style="margin-top: 8px;color: #0e94eb;">最大功率：<span id="MAX_POWER" style="color: #E9E7E7">220W</span></li>
-                                    <li style="margin-top: 8px;color: #0e94eb;">电压：<span id="VOLTAGE" style="color: #E9E7E7">22V</span></li>
-                                    <li style="margin-top: 8px;color: #0e94eb;">实际功率：<span id="RT_POWERDIS" style="color: #E9E7E7">55W</span></li>
-                                    <li style="margin-top: 8px;color: #0e94eb;">平均功率：<span id="AVE_POWERDIS" style="color: #E9E7E7">43W</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">最大功率：<span id="MAX_POWER" style="color: #E9E7E7"></span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">电压：<span id="VOLTAGE" style="color: #E9E7E7"></span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">实际功率：<span id="RT_POWERDIS" style="color: #E9E7E7"></span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">平均功率：<span id="AVE_POWERDIS" style="color: #E9E7E7"></span></li>
                                 </ul>
                             </div>
                         </div>
@@ -1411,62 +2547,64 @@
                         <!-- 模组拓扑 -->
                         <div class="module-model">
                             <!--  模组1 -->
-                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 2px;border-style:none solid solid none;float: left;width: 194.5px;height: 190px;margin-top: 10px;margin-left: 7px;">
+                            <div class="module1" onclick="aiguozhe('unilumin')" >
 
                             </div>
                             <!--  模组2 -->
-                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 2px;border-style:none solid solid none;float: left;width: 194.5px;height: 190px;margin-top: 10px;">
+                            <div class="module2" onclick="aiguozhe('unilumin')" >
 
                             </div>
                             <!--  模组3 -->
-                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 2px;border-style:none solid solid none;float: left;width: 194.5px;height: 190px;margin-top: 10px;">
+                            <div class="module3" onclick="aiguozhe('unilumin')" >
 
                             </div>
                             <!--  模组4 -->
-                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 2px;border-style:none none solid none;float: left;width: 191.2px;height: 190px;margin-top: 10px;">
+                            <div class="module4" onclick="aiguozhe('unilumin')" >
 
                             </div>
 
                             <!--  模组5 -->
-                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 2px;border-style:none solid none none;float: left;width: 194.5px;height: 198px;margin-left: 7px;">
+                            <div class="module5" onclick="aiguozhe('unilumin')" >
 
                             </div>
 
                             <!--  模组6-->
-                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 2px;border-style:none solid none none;float: left;width: 194.5px;height: 198px;">
+                            <div class="module6" onclick="aiguozhe('unilumin')" >
 
                             </div>
 
                             <!--  模组7-->
-                            <div class="module" onclick="aiguozhe('unilumin')" style="border: black 2px;border-style:none solid none none;float: left;width: 194.5px;height: 198px;">
+                            <div class="module7" onclick="aiguozhe('unilumin')" >
 
                             </div>
 
                             <!--  模组8-->
-                            <div class="module" onclick="aiguozhe('unilumin')" style="float: left;width: 194.5px;height: 198px;">
+                            <div class="module8" onclick="aiguozhe('unilumin')" >
 
                             </div>
                         </div>
-                        <div class="set-box" style="margin-top: -180px;margin-left: 1066px">
+                        <div class="rec_Message" >
 
                             <label >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接收卡信息：</label>
-                            <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 170px;height: 138px;margin-top: 183px;margin-left:-160px;">
+                            <div class="didimen4">
                                 <ul style="margin-left:12px;margin-top:-4px;">
-                                    <li style="margin-top: 8px;color: #0e94eb;">接收卡名称：<span id="rec_Id" style="color: #E9E7E7">C160080</span></li>
-                                    <li style="margin-top: 8px;color: #0e94eb;">接收卡个数：<span id="rec_Count" style="color: #E9E7E7">1</span></li>
-                                    <li style="margin-top: 8px;color: #0e94eb;">运行时间：<span id="rec_TOTAL_WORKTIME" style="color: #E9E7E7">2h5m0s</span></li>
-                                    <li style="margin-top: 8px;color: #0e94eb;">版本号：<span id="REC_VER" style="color: #E9E7E7">ZE0233-25</span></li>
-                                    <li style="margin-top: 8px;color: #0e94eb;">带载面积：<span id="REC_Carrying_Area" style="color: #E9E7E7">209251m㎡</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">接收卡名称：<span id="rec_Id" style="color: #E9E7E7"></span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">接收卡个数：<span id="rec_Count" style="color: #E9E7E7"></span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">版本号：<span id="REC_VER" style="color: #E9E7E7"></span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">带载面积：<span id="REC_Carrying_Area" style="color: #E9E7E7">m㎡</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">接收卡工作状态：<span id="BOX_MASTER" style="color: #E9E7E7"></span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">网口状态：<span id="PORT_MASTER" style="color: #E9E7E7"></span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">电源状态：<span id="POWER_MASTER" style="color: #E9E7E7"></span></li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="set-box" style="float: right;margin-left: 1078px;position: absolute;margin-top: -255px;">
+                        <div class="module_Message" >
                             <label >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;模组信息：</label>
-                            <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 150px;margin-left:-160px;height: 75px;margin-top: 130px;">
+                            <div class="didimen5">
                                 <ul style="margin-left:12px;margin-top:-4px;">
                                     <li style="margin-top: 8px;color: #0e94eb;">模组个数：<span id="MOD_ORDER" style="color: #E9E7E7"></span></li>
-                                    <li style="margin-top: 8px;color: #0e94eb;">正常模组：<span id="MOD_NORMAL" style="color: #E9E7E7">0</span></li>
-                                    <li style="margin-top: 8px;color: #0e94eb;">故障模组：<span id="MOD_FAULT" style="color: #E9E7E7">8</span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">正常模组：<span id="MOD_NORMAL" style="color: #E9E7E7"></span></li>
+                                    <li style="margin-top: 8px;color: #0e94eb;">故障模组：<span id="MOD_FAULT" style="color: #E9E7E7"></span></li>
                                 </ul>
                             </div>
                         </div>
@@ -1481,65 +2619,67 @@
         </div>
 
         <div class="tab" style="display:none">
-            <div class="onbutton">
-                开关屏：
-            </div>
+            <!-- <div class="onbutton">
+                 开关屏
+             </div>-->
 
             <div id="ledswitch">
                 <el-switch
-                        v-model="status"
+                        v-model="status1"
+                        @change="swichchange"
                         active-color="#13ce66"
-                        inactive-color="#ff4949" active-text="开" inactive-text="关">
+                        inactive-color="#ff4949" active-text="HDR开" inactive-text="HDR关">
                 </el-switch>
+                <span id="bitnum">16位</span>
             </div>
 
             <div id="ledslider" class="ledph">
                 <template>
                     <div class="ledph1">
                         <div class="block"  >
-                            <span class="demonstration">亮度(0-100)</span>
+                            <span class="demonstration">亮度[0-100]</span>
                             <span >{{value1}}</span>
-                           <el-slider  @change="onChangeValue1"   v-model="value1"></el-slider>
+                            <el-slider  @change="onChangeValue1"   v-model="value1"></el-slider>
                         </div>
                         <div class="block">
-                            <span class="demonstration">色相(-20-20)</span>
+                            <span class="demonstration">色相[-20-20]</span>
                             <span>{{value2}}</span>
                             <el-slider  @change="onChangeValue2"  v-model="value2" :min="-20" :max="20"></el-slider>
                         </div>
 
                         <div class="block">
-                            <span class="demonstration">色度(0-200)</span>
+                            <span class="demonstration">色度[0-200]</span>
                             <span >{{value4}}</span>
                             <el-slider   @change="onChangeValue4" v-model="value4" :min="0" :max="200"></el-slider>
                         </div>
                         <div class="block">
                             <span class="demonstration" style="color: #606266">色温</span>
-                           <!-- <span>{{value3}}</span>-->
-                            <el-slider v-model="value3"  disabled style="color: #606266"></el-slider>
+                            <!-- <span>{{value3}}</span>-->
+                            <el-slider v-model="value3"  disabled ></el-slider>
                         </div>
                     </div>
 
                     <div class="ledph2">
                         <div class="block">
-                            <span class="demonstration">HDR</span>
-                            <span >{{value5}}</span>
-                            <el-slider v-model="value5"></el-slider>
+                            <span class="demonstration sliderclass" id="hdrslider">HDR[0-100]</span>
+                            <span id="hdrslidervalue" class="hdrslstyle">{{value5}}</span>
+                            <el-slider v-model="value5" @change="onChangeValue5"  max="100" v-bind:disabled="!status1"></el-slider>
                         </div>
 
                         <div class="block">
                             <span class="demonstration" style="color: #606266">灰度增益</span>
-                           <!-- <span>{{value6}}</span>-->
-                            <el-slider v-model="value6"  disabled style="color: #606266"></el-slider>
+                            <!-- <span>{{value6}}</span>-->
+                            <el-slider v-model="value6"  disabled ></el-slider>
                         </div>
                         <div class="block">
                             <span class="demonstration" style="color: #606266">灰度基准值</span>
-                          <!--  <span>{{value7}}</span>-->
-                            <el-slider v-model="value7"  disabled style="color: #606266"></el-slider>
+                            <!--  <span>{{value7}}</span>-->
+                            <el-slider v-model="value7"  disabled ></el-slider>
                         </div>
                         <div class="block">
                             <span class="demonstration" style="color: #606266">增强器调整</span>
                             <!--<span>{{value8}}</span>-->
-                            <el-slider v-model="value8"  disabled style="color: #606266"></el-slider>
+                            <el-slider v-model="value8"  disabled ></el-slider>
                         </div>
                     </div>
 
@@ -1565,7 +2705,7 @@
 
             <div id="input1">
                 <template>
-                    <el-select v-model="gmvalue" placeholder="请选择GAMMA">
+                    <el-select v-model="gmvalue"   @change="changegmavalue" placeholder="请选择GAMMA">
                         <el-option
                                 v-for="item in gmoptions"
                                 active-text="正常"
@@ -1574,6 +2714,14 @@
                                 :label="item.label"
                                 :value="item.gmvalue">
                         </el-option>
+                        <!--<el-option
+                                v-for="item in gmoptions2"
+                                active-text="正常"
+                                inactive-text="默认"
+                                :key="item.gmvalue"
+                                :label="item.label"
+                                :value="item.gmvalue">
+                        </el-option>-->
                     </el-select>
                 </template>
             </div>
@@ -1581,15 +2729,13 @@
             <div id="ledradio">
                 <template>
                     <el-radio-group v-if="radio!=null" @change="onChangeRadio" v-model="radio">
-                    <el-radio v-model="radio"  label="HDMI"><span id="hdmitext">HDMI 无信号</span></el-radio>
-                    <el-radio v-model="radio"  label="DVI-D"><span id="dvitext">DVI-D 无信号</span></el-radio>
-                    <el-radio v-model="radio"  label="SDI"><span id="sditext">SDI 无信号</span></el-radio>
-                  <!--  <el-radio v-model="radio"  label="DP">DP</el-radio>-->
+                        <el-radio v-model="radio"  label="HDMI"><span id="hdmitext">HDMI 无信号</span></el-radio>
+                        <el-radio v-model="radio"  label="DVI-D"><span id="dvitext">DVI-D 无信号</span></el-radio>
+                        <el-radio v-model="radio"  label="SDI"><span id="sditext">SDI 无信号</span></el-radio>
+                        <!--  <el-radio v-model="radio"  label="DP">DP</el-radio>-->
                     </el-radio-group>
-<!--                    <el-radio v-model="radio" label="5">备选项</el-radio>-->
                 </template>
             </div>
-          <!--  <button onclick="sendcmd()">发送</button>-->
 
         </div>
 
@@ -1627,13 +2773,23 @@
                 fan_ctrl:"",
                 current:"",
 
+                ledid:"",
+                fsstatusvue:"",
+
+                senderstatuslist:"",
+                senderid:"",
+                hostip:"",
+                senderstatus:"",
+
                 port_ordernum:"",
                 sender_boxtotalnum:"",
+
+                screenfresh:"",
 
                 inputsource:"",
                 led_rslt:"",
 
-                status: true,
+                status1: false,
                 value1: "",
                 value2: "",
                 value3: "",
@@ -1659,31 +2815,41 @@
                     label: '3840*2160'
                 }],
                 fblvalue: '',
-                gmoptions: [{
-                    gmvalue: 'PQ',
-                    label: 'PQ'
-                }, {
-                    gmvalue: '1.8',
+                gmoptions: [ {
+                    gmvalue: '0',
                     label: '1.8'
-                }, {
-                    gmvalue: '2',
+                },{
+                    gmvalue: '1',
                     label: '2'
                 }, {
-                    gmvalue: '2.2',
+                    gmvalue: '2',
                     label: '2.2'
                 }, {
-                    gmvalue: '2.4',
+                    gmvalue: '3',
                     label: '2.4'
                 }, {
-                        gmvalue: '2.5',
-                        label: '2.5'
+                    gmvalue: '4',
+                    label: '2.5'
                 },{
-                    gmvalue: '2.8',
+                    gmvalue: '5',
                     label: '2.8'
                 },{
-                    gmvalue: '3',
+                    gmvalue: '6',
                     label: '3'
+                },{
+                    gmvalue: '7',
+                    label: 'linear'
                 }],
+                /*  gmoptions2:[{
+                      gmvalue: 'SDR->HDR',
+                      label: 'SDR->HDR'
+                  },{
+                  gmvalue: 'HLG',
+                  label: 'HLG'
+              },{
+                  gmvalue: 'PQ',
+                  label: 'PQ'
+              }],*/
                 gmvalue: '',
             }
         },
@@ -1710,158 +2876,351 @@
             };
             //接收到消息的回调方法
             websocket.onmessage = function (event) {
-                    console.log(event.data);
-                    try{
-                        let respJsonScreenObj = JSON.parse(event.data);
-                        console.log("respJsonScreenObj"+respJsonScreenObj);
-                        let type;
-                        type=respJsonScreenObj.type;
-                        console.log("第一次收到数据"+count);
-                        console.log(type);
-                        switch (type) {
-                            case 100:
-                              /*  if(respJsonScreenObj.respContent==null||respJsonScreenObj.respContent===""){
-                                    window.location.reload();
-                                }*/
-                                let jsonScreenObj = JSON.parse(respJsonScreenObj.respContent);
-                                console.log("respJsonScreenObj.respContent监控"+respJsonScreenObj.respContent);
-                                console.log("jsonScreenObj监控"+jsonScreenObj);
-                                _self.comlist = jsonScreenObj.COMLIST;
-                                console.log("_self.comlist", _self.comlist);
-                                console.log("_self.comlist", _self.comlist.length);
-                                _self.destination = jsonScreenObj.DESTINATION;
-                                _self.source = jsonScreenObj.SOURCE;
-                                let ledlist = _self.comlist;
-                                let i;
-                                _self.port_ordernum=0;
-                                _self.sender_boxtotalnum=0;
-                                for (i in ledlist) {
-                                    _self.contrast=ledlist[i].LEDPARAS.CONTRAST;
-                                    _self.saturability=ledlist[i].LEDPARAS.SATURABILITY;
-                                    _self.hue = ledlist[i].LEDPARAS.HUE;
-                                    _self.value2 = parseInt(ledlist[i].LEDPARAS.HUE);
-                                    _self.envi_bright= ledlist[i].LEDPARAS.ENVI_BRIGHT;
-                                    _self.temp= ledlist[i].LEDPARAS.TEMP;
-                                    _self.humidity= ledlist[i].LEDPARAS.HUMIDITY;
-                                    _self.voltage= ledlist[i].LEDPARAS.VOLTAGE;
-                                    _self.fan_ctrl= ledlist[i].LEDPARAS.FAN_CTRL;
-                                    _self.current= ledlist[i].LEDPARAS.CURRENT;
-                                    let senderlist = ledlist[i].LEDPARAS.SENDER_ORDER;
-                                    let j;
+                console.log(event.data);
+                try{
+                    let respJsonScreenObj = JSON.parse(event.data);
+                    console.log("respJsonScreenObj"+respJsonScreenObj);
+                    let type;
+                    type=respJsonScreenObj.type;
+                    console.log("第一次收到数据"+count);
+                    console.log(type);
+                    switch (type) {
+                        case 100:
+                            /*  if(respJsonScreenObj.respContent==null||respJsonScreenObj.respContent===""){
+                                  window.location.reload();
+                              }*/
 
-                                    for (j in senderlist) {
-                                        _self.bright = senderlist[j].BRIGHT;
+                            let jsonScreenObj = JSON.parse(respJsonScreenObj.respContent);
+                            console.log("respJsonScreenObj.respContent监控"+respJsonScreenObj.respContent);
+                            console.log("jsonScreenObj监控"+jsonScreenObj);
+                            _self.ledid=jsonScreenObj.SOURCE.LEDSCREEN.INDEX;
 
-                                        _self.port_ordernum +=  parseInt(senderlist[j].PORT_ORDER.length);
-                                        _self.sender_boxtotalnum+= parseInt(senderlist[j].SENDER_BOXTOTAL);
+                            _self.senderstatus="1";
 
-                                        if(count===0){
-                                            _self.value1 = parseInt(senderlist[j].BRIGHT);
-                                        }
-                                        _self.gamma  = senderlist[j].GAMMA;
-                                        _self.gmvalue= senderlist[j].GAMMA;
-                                        _self.chroma = senderlist[j].CHROMA;
-                                        if(count===0){
-                                            _self.value3=senderlist[j].CHROMA;
-                                        }
-                                        _self.inputsource = senderlist[j].INPUTSOURCE;
-                                        if(count===0){
-                                            let sourceCont1= "";
-                                            let sourceCont2= "";
-                                            let sourceCont3= "";
-                                             sourceCont1= senderlist[j].INPUTSOURCE;
-                                             sourceCont2= senderlist[j].INSRC_RSLT;
-                                             sourceCont3= senderlist[j].INSRC_FRE;
-                                            _self.radio = sourceCont1;
-                                            if(_self.radio==="HDMI"){
-                                                $("#hdmitext").text(sourceCont1 +" "+ sourceCont2 +" "+ sourceCont3);
-                                                $("#hdmitext").addClass("checkspan");
-                                            }else if(_self.radio==="DVI-D"){
-                                                $("#dvitext").text(sourceCont1 +" "+ sourceCont2 +" "+ sourceCont3);
-                                                $("#dvitext").addClass("checkspan");
-                                            }else if(_self.radio==="SDI"){
-                                                $("#sditext").text(sourceCont1 +" "+ sourceCont2+" " + sourceCont3);
-                                                $("#sditext").addClass("checkspan");
-                                            }else{
-                                                console.log("未识别到输入源");
-                                            }
 
+                            /*if (_self.senderstatus === "1") {
+                                $("#fskon").css({"background-color": "green"});
+                                $("#fskonspan").html("在线");
+                            } else if(_self.senderstatus === "0"||_self.senderstatus===''||typeof (_self.senderstatus)==="undefined"){
+                                $("#fskon").css({"background-color": "red"});
+                                $("#fskonspan").html("离线");
+                            }else{
+                                $("#fskon").css({"background-color": "yellow"});
+                                $("#fskonspan").html("故障");
+                            }*/
+                            if (_self.senderstatus === "1") {
+                                $("#fskon").css({"background-color": "green"});
+                                $("#fskonspan").html("在线");
+                                $("#ledon").css({"background-color": "green"});
+                                $("#ledonspan").html("在线");
+                                $("#ledonspan").css({"color":"green"});
+                            } else{
+                                $("#fskon").css({"background-color": "red"});
+                                $("#fskonspan").html("离线");
+                                _self.ledid="";
+                                $("#ledon").css({"background-color": "red"});
+                                $("#ledonspan").html("离线");
+                                $("#ledonspan").css({"color":"red"});
+                            }
+
+                            console.log("_self.ledid"+_self.ledid);
+
+                            if (_self.ledid === ''||typeof (_self.ledid)==="undefined") {
+                                $("#ledon").css({"background-color": "red"});
+                                $("#ledonspan").html("离线");
+                                $("#ledonspan").css({"color":"red"});
+                            } else {
+                                $("#ledon").css({"background-color": "green"});
+                                $("#ledonspan").html("在线");
+                            }
+
+
+
+                            _self.comlist = jsonScreenObj.COMLIST;
+                            console.log("_self.comlist", _self.comlist);
+                            console.log("_self.comlist", _self.comlist.length);
+                            _self.destination = jsonScreenObj.DESTINATION;
+                            _self.source = jsonScreenObj.SOURCE;
+                            let ledlist = _self.comlist;
+                            let i;
+                            _self.port_ordernum=0;
+                            _self.sender_boxtotalnum=0;
+                            for (i in ledlist) {
+                                /* _self.fsstatusvue=ledlist[i].LEDPARAS.FAN_CTRL;
+
+
+                                 if (_self.fsstatusvue==="1") {
+                                     $("#fssvgturn").addClass("fs1");
+                                 } else {
+                                     $("#fssvgturn").removeClass("fs1");
+                                 }
+*/
+                                _self.contrast=ledlist[i].LEDPARAS.CONTRAST;
+                                _self.saturability=ledlist[i].LEDPARAS.SATURABILITY;
+                                /*_self.hue = ledlist[i].LEDPARAS.HUE;*/
+                                /* if(count===0){
+                                     _self.value2 = parseInt(ledlist[i].LEDPARAS.HUE);
+                                 }*/
+                                _self.envi_bright= ledlist[i].LEDPARAS.ENVI_BRIGHT;
+                                _self.temp= ledlist[i].LEDPARAS.TEMP;
+                                _self.humidity= ledlist[i].LEDPARAS.HUMIDITY;
+                                _self.voltage= ledlist[i].LEDPARAS.VOLTAGE;
+                                _self.fan_ctrl= ledlist[i].LEDPARAS.FAN_CTRL;
+                                _self.current= ledlist[i].LEDPARAS.CURRENT;
+                                let senderlist = ledlist[i].LEDPARAS.SENDER_ORDER;
+                                /*let portorderonelist=senderlist[0].PORT_ORDER;
+                                    let boxonelist=portorderonelist[0].BOX;
+                                    let reonelist=boxonelist[0].REC;
+                                    _self.screenfresh=reonelist[0].REFRESH;*/
+                                let j;
+
+                                for (j in senderlist) {
+
+                                    if(count===0){
+                                        _self.value2 = parseInt(senderlist[j].HUE);
+                                    }
+
+                                    _self.bright = senderlist[j].BRIGHT;
+
+                                    _self.hue =  senderlist[j].HUE;
+
+
+
+                                    let portorderlist=senderlist[j].PORT_ORDER;
+                                    let t;
+                                    for(t in portorderlist){
+                                        let boxlist=portorderlist[t].BOX;
+
+                                        if(boxlist[0].BOX_STATE === "1"){
+                                            _self.port_ordernum +=1;
+                                            console.log( "_self.port_ordernum"+ _self.port_ordernum);
                                         }
-                                        _self.led_rslt = senderlist[j].INSRC_RSLT;
-                                        if(count===0){
-                                            _self.fblvalue = senderlist[j].INSRC_RSLT;
-                                        }
+                                        let  reccardlist=boxlist[0].REC;
+                                        _self.screenfresh=reccardlist[0].REFRESH;
+                                        console.log("_self.screenfresh"+_self.screenfresh);
 
                                     }
 
+                                    /* _self.port_ordernum +=  parseInt(senderlist[j].PORT_ORDER.length);*/
+                                    _self.sender_boxtotalnum+= parseInt(senderlist[j].SENDER_BOXUSED);
+
+                                    if(count===0){
+                                        _self.value1 = parseInt(senderlist[j].BRIGHT);
+                                        /* _self.gmvalue= senderlist[j].GAMMA;*/
+                                    }
+                                    _self.gamma  = senderlist[j].GAMMA;
+
+                                    _self.chroma = senderlist[j].CHROMA;
+                                    if(count===0){
+                                        _self.value3=senderlist[j].CHROMA;
+                                    }
+                                    _self.inputsource = senderlist[j].INPUTSOURCE;
+                                    if(count===0){
+                                        console.log("senderlist[j].INPUTSOURCE"+senderlist[j].INPUTSOURCE);
+                                        console.log("senderlist[j].INSRC_RSLT"+senderlist[j].INSRC_RSLT);
+                                        console.log("senderlist[j].INSRC_FRE"+senderlist[j].INSRC_FRE);
+                                        let   sourceCont1;
+                                        let   sourceCont2;
+                                        let   sourceCont3;
+
+                                        if(typeof(senderlist[j].INPUTSOURCE)==="undefined"){
+                                            sourceCont1="";
+                                            console.log("if sourceCont1"+sourceCont1);
+                                        }else{
+                                            sourceCont1= senderlist[j].INPUTSOURCE;
+                                        }
+
+                                        if(typeof(senderlist[j].INSRC_RSLT)==="undefined"){
+                                            sourceCont2="";
+                                            console.log("if sourceCont2"+sourceCont2);
+                                        }else{
+                                            sourceCont2= senderlist[j].INSRC_RSLT;
+                                        }
+
+                                        if(typeof(senderlist[j].INSRC_FRE)==="undefined"){
+                                            sourceCont3="";
+                                        }else{
+                                            sourceCont3= senderlist[j].INSRC_FRE;
+                                        }
+
+                                        _self.radio = sourceCont1;
+                                        if(_self.radio==="HDMI"){
+                                            $("#hdmitext").text(sourceCont1 +" "+ sourceCont2 +" "+ sourceCont3);
+                                            $("#hdmitext").addClass("checkspan");
+                                        }else if(_self.radio==="DVI-D"){
+                                            $("#dvitext").text(sourceCont1 +" "+ sourceCont2 +" "+ sourceCont3);
+                                            $("#dvitext").addClass("checkspan");
+                                        }else if(_self.radio==="SDI"){
+                                            $("#sditext").text(sourceCont1 +" "+ sourceCont2+" " + sourceCont3);
+                                            $("#sditext").addClass("checkspan");
+                                        }else{
+                                            console.log("未识别到输入源");
+                                        }
+
+                                    }
+                                    _self.led_rslt = senderlist[j].INSRC_RSLT;
+                                    if(count===0){
+                                        _self.fblvalue = senderlist[j].INSRC_RSLT;
+                                    }
+
                                 }
-                                count++;
-                               /* console.log("port_ordernum",port_ordernum);
-                                console.log("sender_boxtotalnum",sender_boxtotalnum);*/
 
-                                console.log("radio"+_self.radio);
-                                console.log("第二次收到数据"+count);
-                                console.log("i", i);
-                                console.log("ledlist[i]", ledlist[i]);
-                                console.log("_self.bright", _self.bright);
-                                console.log("ledlist", ledlist);
-                                /*  console.log("jsonScreenObj", jsonScreenObj);*/
-                                console.log("comlist", _self.comlist);
-                                console.log("destination", _self.destination);
-                                console.log("source", _self.source);
-                                let nowdt = new Date().getTime();
-                                console.log("现在接收完数据后的时间" + nowdt);
-                                break;
-                            case   7:
-                                /*  let brightObj = JSON.parse(respJsonScreenObj.respContent);*/
-                                _self.value1=respJsonScreenObj.respContent;
-                                break;
-
-                            case   14:
-                                /*  let brightObj = JSON.parse(respJsonScreenObj.respContent);*/
-                                _self.value4=respJsonScreenObj.respContent;
-                                break;
+                            }
+                            count++;
 
 
-                            case   15:
-                                /*  let brightObj = JSON.parse(respJsonScreenObj.respContent);*/
-                                _self.value2=respJsonScreenObj.respContent;
-                                break;
+
+                            /*let fskpo = 1;
+                            if (fskpo === 1) {
+                                $("#fskon").css({"background-color": "green"});
+                                $("#fskonspan").html("在线");
+                            } else {
+                                $("#fskon").css({"background-color": "red"});
+                                $("#fskonspan").html("离线");
+                            }*/
 
 
-                            case   18:
-                                /* let led_rsltStrObj = JSON.parse(respJsonScreenObj.respContent);*/
-                                _self.fblvalue = respJsonScreenObj.respContent;
-                                break;
-                            case   19:
-                                let inputsourceObj = JSON.parse(respJsonScreenObj.respContent);
-                                _self.radio = inputsourceObj.iNPUTSOURCE;
-                                if(_self.radio==="HDMI"){
-                                    $("#hdmitext").text(inputsourceObj.iNPUTSOURCE+" "+inputsourceObj.iNSRC_RSLT+" "+inputsourceObj.iNSRC_FRE);
-                                    $("#hdmitext").addClass("checkspan");
-                                }else if(_self.radio==="DVI-D"){
-                                    $("#dvitext").text(inputsourceObj.iNPUTSOURCE+" "+inputsourceObj.iNSRC_RSLT+" "+inputsourceObj.iNSRC_FRE);
-                                    $("#dvitext").addClass("checkspan");
-                                }else if(_self.radio==="SDI"){
-                                    $("#sditext").text(inputsourceObj.iNPUTSOURCE+" "+inputsourceObj.iNSRC_RSLT+" "+inputsourceObj.iNSRC_FRE);
-                                    $("#sditext").addClass("checkspan");
-                                }else{
-                                    console.log("未识别到输入源");
-                                }
-                                break;
-                            case   99:
-                                /* let pingObj = JSON.parse(respJsonScreenObj.respContent);*/
-                                let pingObj = respJsonScreenObj.respContent;
-                                /*  console.log("respJsonScreenObj.respContent心跳"+respJsonScreenObj.respContent);*/
-                                console.log("pingObj心跳"+pingObj);
-                                break;
-                            default:
-                                console.log("数据异常");
-                        }
-                    }catch(e){
-                        /* heartCheck.reset();*/
-                        console.log("不是json格式的数据"+e);
+
+
+                            /* console.log("port_ordernum",port_ordernum);
+                             console.log("sender_boxtotalnum",sender_boxtotalnum);*/
+
+                            console.log("radio"+_self.radio);
+                            console.log("第二次收到数据"+count);
+                            console.log("i", i);
+                            console.log("ledlist[i]", ledlist[i]);
+                            console.log("_self.bright", _self.bright);
+                            console.log("ledlist", ledlist);
+                            /*  console.log("jsonScreenObj", jsonScreenObj);*/
+                            console.log("comlist", _self.comlist);
+                            console.log("destination", _self.destination);
+                            console.log("source", _self.source);
+                            let nowdt = new Date().getTime();
+                            console.log("现在接收完数据后的时间" + nowdt.toString());
+                            break;
+                        //亮度
+                        case   7:
+                            /*  let brightObj = JSON.parse(respJsonScreenObj.respContent);*/
+                            _self.value1=respJsonScreenObj.respContent;
+                            break;
+
+
+                        //发送卡状态
+
+                        case  8:
+                            let senderstatuslistobj= JSON.parse(respJsonScreenObj.respContent);
+                            console.log("senderstatuslistobj"+senderstatuslistobj);
+                            _self.senderstatuslist=senderstatuslistobj;
+                            let sdslobj=_self.senderstatuslist;
+                            _self.senderstatus =sdslobj[0].status;
+                            _self.senderid =sdslobj[0].senderId;
+                            _self.hostip =sdslobj[0].hostIp;
+                            console.log("_self.senderstatus",_self.senderstatus);
+                            console.log("_self.senderid",_self.senderid);
+                            console.log("_self.hostip",_self.hostip);
+                            if (_self.senderstatus === "1") {
+                                $("#fskon").css({"background-color": "green"});
+                                $("#fskonspan").html("在线");
+                                $("#fskonspan").css({"color":"green"});
+
+                                $("#ledon").css({"background-color": "green"});
+                                $("#ledonspan").html("在线");
+                            } else{
+                                $("#fskon").css({"background-color": "red"});
+                                $("#fskonspan").html("离线");
+                                $("#fskonspan").css({"color":"red"});
+                                _self.ledid="";
+                                $("#ledon").css({"background-color": "red"});
+                                $("#ledonspan").html("离线");
+                                $("#ledonspan").css({"color":"red"});
+                            }
+                            /*  if (_self.senderstatus === "1") {
+                                  $("#fskon").css({"background-color": "green"});
+                                  $("#fskonspan").html("在线");
+                              } else if(_self.senderstatus === "0"||_self.senderstatus===''||typeof (_self.senderstatus)==="undefined"){
+                                  $("#fskon").css({"background-color": "red"});
+                                  $("#fskonspan").html("离线");
+                              }else{
+                                  $("#fskon").css({"background-color": "yellow"});
+                                  $("#fskonspan").html("故障");
+                        }*/
+                            /* let k;
+                             for(k in senderstatuslistobj){
+                                 _self.senderid =senderstatuslistobj[k].senderId;
+                                 _self.hostip =senderstatuslistobj[k].hostIp;
+                                 _self.senderstatus =senderstatuslistobj[k].status;
+                             }*/
+                            break;
+                        //色度
+                        case   14:
+                            /*  let brightObj = JSON.parse(respJsonScreenObj.respContent);*/
+                            _self.value4=respJsonScreenObj.respContent;
+                            break;
+
+                        //色相
+                        case   15:
+                            /*  let brightObj = JSON.parse(respJsonScreenObj.respContent);*/
+                            _self.value2=respJsonScreenObj.respContent;
+                            break;
+
+                        //gama
+                        case   17:
+                            /*  let brightObj = JSON.parse(respJsonScreenObj.respContent);*/
+                            _self.gmvalue=respJsonScreenObj.respContent;
+                            break;
+                        //分辨率
+                        case   18:
+                            /* let led_rsltStrObj = JSON.parse(respJsonScreenObj.respContent);*/
+                            _self.fblvalue = respJsonScreenObj.respContent;
+                            break;
+                        //输入源 分辨率 刷新率
+                        case   19:
+                            let inputsourceObj = JSON.parse(respJsonScreenObj.respContent);
+                            _self.radio = inputsourceObj.iNPUTSOURCE;
+                            if(_self.radio==="HDMI"){
+                                $("#hdmitext").text(inputsourceObj.iNPUTSOURCE+" "+inputsourceObj.iNSRC_RSLT+" "+inputsourceObj.iNSRC_FRE);
+                                $("#hdmitext").addClass("checkspan");
+                            }else if(_self.radio==="DVI-D"){
+                                $("#dvitext").text(inputsourceObj.iNPUTSOURCE+" "+inputsourceObj.iNSRC_RSLT+" "+inputsourceObj.iNSRC_FRE);
+                                $("#dvitext").addClass("checkspan");
+                            }else if(_self.radio==="SDI"){
+                                $("#sditext").text(inputsourceObj.iNPUTSOURCE+" "+inputsourceObj.iNSRC_RSLT+" "+inputsourceObj.iNSRC_FRE);
+                                $("#sditext").addClass("checkspan");
+                            }else{
+                                console.log("未识别到输入源");
+                            }
+                            break;
+
+                        //hdr开关
+                        case   20:
+                            /*  let brightObj = JSON.parse(respJsonScreenObj.respContent);*/
+                            /*   _self.value2=respJsonScreenObj.respContent;*/
+                            if(respJsonScreenObj.respContent==="1"){
+                                _self.status1=true;
+                            }else{
+                                _self.status1=false;
+                            }
+                            break;
+                        //hdr设置
+                        case   21:
+                            /* let led_rsltStrObj = JSON.parse(respJsonScreenObj.respContent);*/
+                            _self.value5 = respJsonScreenObj.respContent;
+
+                            break;
+                        //心跳
+                        case   99:
+                            /* let pingObj = JSON.parse(respJsonScreenObj.respContent);*/
+                            let pingObj = respJsonScreenObj.respContent;
+                            /*  console.log("respJsonScreenObj.respContent心跳"+respJsonScreenObj.respContent);*/
+                            console.log("pingObj心跳"+pingObj);
+                            break;
+                        default:
+                            console.log("数据异常");
                     }
+                }catch(e){
+                    /* heartCheck.reset();*/
+                    console.log("不是json格式的数据"+e);
+                }
 
 
                 let option0 = {
@@ -1871,14 +3230,14 @@
                     /*  backgroundColor: '#ffffff',*/
                     tooltip: {
                         formatter: function(param) {
-                            if(param.seriesName==='亮度'||param.seriesName==="饱和度"){
+                            if(param.seriesName==='亮度'){
+                                return param.seriesName + '\n'
+                                    + param.name + '\n'
+                                    + param.value*100+'%';
+                            }else if(param.seriesName==='色相'){
                                 return param.seriesName + '\n'
                                     + param.name + '\n'
                                     + param.value*100;
-                            }else if(param.seriesName==="色相"){
-                               return param.seriesName + '\n'
-                                   + param.name + '\n'
-                                   + param.value*255;
                             }else if(param.seriesName==='伽马'){
                                 return param.seriesName + '\n'
                                     + param.name + '\n'
@@ -1886,12 +3245,9 @@
                             }else if(param.seriesName==='色温'){
                                 return param.seriesName + '\n'
                                     + param.name + '\n'
-                                    + _self.chroma;
-                            }else if(param.seriesName==='对比度'){
-                                return param.seriesName + '\n'
-                                    + param.name + '\n'
-                                    + _self.contrast;
-                            }else{
+                                    + param.value+'k';
+                            }
+                            else{
                                 return "";
                             }
                         },
@@ -1921,7 +3277,7 @@
                                 formatter:  function(param) {
                                     return param.seriesName + '\n'
                                         + param.name + '\n'
-                                        + param.value*100;
+                                        + param.value*100+"%";
                                 },
                                 textStyle: {
                                     fontSize: 10,
@@ -1933,46 +3289,11 @@
                         {
 
                             type: 'liquidFill',
-                            name: '对比度',
-                            radius: '30%',
-                            color: ['#884046'],
-                            center: ['50%', '23%'],
-                            data: [1],
-                            backgroundStyle: {
-                                borderWidth: 2,
-                                borderColor: '#eb5c4d',
-                                color: '#1c233f',
-                            },
-                            outline: {
-                                itemStyle: {
-                                    borderWidth: 5,
-                                    borderColor: '#eb5c4d',
-                                    borderType: 'dashed',
-                                }
-                            },
-                            label: {
-                                normal: { // 同上 2
-                                    formatter: function(param) {
-                                        return param.seriesName + '\n'
-                                            + param.name + '\n'
-                                            + _self.contrast;
-                                    },
-                                    textStyle: {
-                                        fontSize: 10,
-                                        color: '#e6e6e6',
-                                    },
-                                },
-                            },
-
-                        },
-                        {
-
-                            type: 'liquidFill',
-                            name: '饱和度',
+                            name: '色温',
                             radius: '30%',
                             color: ['#8a7e4e'],
                             center: ['80%', '23%'],
-                            data: [_self.saturability/100],
+                            data: [_self.chroma],
                             backgroundStyle: {
                                 borderWidth: 2,
                                 borderColor: '#f0d25c',
@@ -1990,7 +3311,7 @@
                                     formatter: function(param) {
                                         return param.seriesName + '\n'
                                             + param.name + '\n'
-                                            + param.value*100;
+                                            +param.value +'k';
                                     },
                                     textStyle: {
                                         fontSize: 10,
@@ -2036,46 +3357,11 @@
                         {
 
                             type: 'liquidFill',
-                            radius: '30%',
-                            name: '色温',
-                            color: ['#884046'],
-                            center: ['50%', '70%'],
-                            data: [1],
-                            backgroundStyle: {
-                                borderWidth: 2,
-                                borderColor: '#eb5c4d',
-                                color: '#1c233f',
-                            },
-                            outline: {
-                                itemStyle: {
-                                    borderWidth: 5,
-                                    borderColor: '#eb5c4d',
-                                    borderType: 'dashed',
-                                }
-                            },
-                            label: {
-                                normal: { // 同上 5
-                                    formatter:  function(param) {
-                                        return param.seriesName + '\n'
-                                            + param.name + '\n'
-                                            + _self.chroma;
-                                    },
-                                    textStyle: {
-                                        fontSize: 10,
-                                        color: '#e6e6e6',
-                                    },
-                                },
-                            },
-
-                        },
-                        {
-
-                            type: 'liquidFill',
                             name: '色相',
                             radius: '30%',
                             color: ['#8a7e4e'],
                             center: ['80%', '70%'],
-                            data: [_self.hue/255],
+                            data: [_self.hue/100],
                             backgroundStyle: {
                                 borderWidth: 2,
                                 borderColor: '#f0d25c',
@@ -2093,7 +3379,7 @@
                                     formatter: function(param) {
                                         return param.seriesName + '\n'
                                             + param.name + '\n'
-                                            + param.value*255;
+                                            + param.value*100;
                                     },
                                     textStyle: {
                                         fontSize: 10,
@@ -2107,8 +3393,8 @@
                 };
 
                 // 电压
-             /*   let dataDyArr =_self.voltage;
-                let dataArr1 = dataDyArr / 3;*/
+                /*   let dataDyArr =_self.voltage;
+                   let dataArr1 = dataDyArr / 3;*/
                 let colorSet1 = {
                     color: '#468EFD'
                 };
@@ -2153,9 +3439,10 @@
                                 formatter: function (value) {
                                     if (value !== 0) {
                                         let num = Math.round(value*3);
-                                        return parseInt(num).toFixed(0) + "V";
+                                        /* return parseInt(num).toFixed(0) + "V";*/
+                                        return parseInt(num).toFixed(0) === 'NaN' ? '' : parseInt(num).toFixed(0) + "V";
                                     } else {
-                                        return 0;
+                                        return " ";
                                     }
                                 },
                                 offsetCenter: [0, 45],
@@ -2307,7 +3594,7 @@
 
 
                 // 电流
-               /* let dataArr2 = _self.current;*/
+                /* let dataArr2 = _self.current;*/
                 let colorSet2 = {
                     color: '#468EFD'
                 };
@@ -2351,9 +3638,9 @@
                                 formatter: function (value) {
                                     if (value !== 0) {
                                         let num = Math.round(value);
-                                        return parseInt(num).toFixed(0) + "A";
+                                        return (parseInt(num).toFixed(0) === 'NaN' ? '' : parseInt(num).toFixed(0) + "A" );
                                     } else {
-                                        return 0;
+                                        return " ";
                                     }
                                 },
                                 offsetCenter: [0, 45],
@@ -2609,7 +3896,7 @@
                 var YInitSender = 1000;
 
                 //网口初始X值-X轴上单个偏移差值为60一个单位(向右+60)
-                var XInitPort = 290;
+                var XInitPort = 210;
                 //网口初始Y值-Y轴上单个偏移差值为70一个单位（向下-70）
                 var YInitPort = 1000;
                 //网口最大总数量
@@ -2633,7 +3920,7 @@
                 }
                 ]
                 //连接线数组
-                var links = [];
+                var links = []
                 //走线方式数组
                 var portGroup = [];
 
@@ -2659,8 +3946,6 @@
                     $('#LAMP_PARA_BRIGHT').text(lamp_Para.BRIGHT);
                     $('#LAMP_PARA_WAVELEN').text(lamp_Para.WAVELEN);
                     $('#LAMP_PARA_ANGLE').text("<="+lamp_Para.ANGLE+"度");
-                    $('#LAMP_PARA_ANTISTATIC').text("<"+lamp_Para.ANTISTATIC+"V");
-                    $('#LAMP_PARA_LEAKAGE_CURRENT').text("<"+lamp_Para.LEAKAGE_CURRENT+"uA");
                     //箱体ID
                     $('#boxTitle').text(recParas.BOX_NAME);
                     //箱体类型
@@ -2699,7 +3984,6 @@
                             type: '发送卡',
                             detail:'ok',
                             svgPath: 'M868.48 104.96H155.52a32 32 0 0 0-32 32v538.24a32 32 0 0 0 32 32h712.96a32 32 0 0 0 32-32V136.96a32 32 0 0 0-32-32z m-32 64V390.4H187.52V168.96zM187.52 643.2V422.4h648.96v221.44z M252.8 232.96h32v74.88h-32zM334.72 232.96h32v74.88h-32zM252.8 502.4h32v74.88h-32zM334.72 502.4h32v74.88h-32zM868.48 853.12H600.96a94.72 94.72 0 0 0-56.96-56.96v-53.76h-64v53.76a94.72 94.72 0 0 0-56.96 56.96H155.52a32 32 0 1 0 0 64h267.52a94.08 94.08 0 0 0 177.92 0h267.52a32 32 0 0 0 0-64zM512 915.84a30.72 30.72 0 1 1 30.72-30.72 30.72 30.72 0 0 1-30.72 30.72z'
-
                         }
                         //新增拓扑连接线
                         var lineSender = {
@@ -2716,87 +4000,6 @@
                         //获取走线端口数量
                         var portNum = senderOrder.PORT_ORDER.length;
                         //遍历走线接口
-                       /* for(var j = 0;j<portNum;j++){
-                            //走线详情信息
-                            var port = senderOrder.PORT_ORDER[j];
-                            //判断索引是否能够取余4来判断在当前X轴的Y位置
-                            if((j+1)%4 === 0){
-                                //当前port对象
-                                var singlePort = {
-                                    //X轴上单个偏移差值为60一个单位(向右+60)
-                                    x: XInitPort+parseInt((j+1)/4-1)*60,
-                                    //Y轴上单个偏移差值为70一个单位（向下-70）
-                                    y: YInitPort-3*50-i*300,
-                                    symbolSize: 20,
-                                    nodeName: port.ID,
-                                    name: port.ID+senderOrder.ID,
-                                    type: '网口',
-                                    detail:null,
-                                    svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
-                                };
-                                //走线方式数组添加
-                                nodes.push(singlePort);
-                            }else{
-                                var singlePort = {
-                                    //X轴上单个偏移差值为60一个单位(向右+60)
-                                    x: XInitPort+parseInt((j+1)/4)*60,
-                                    //Y轴上单个偏移差值为70一个单位（向下-70）
-                                    y: YInitPort-(j)%4*50-i*300,
-                                    symbolSize: 20,
-                                    nodeName: port.ID,
-                                    name: port.ID+senderOrder.ID,
-                                    type: '网口',
-                                    detail:null,
-                                    svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
-                                };
-                                nodes.push(singlePort);
-                            }
-                            //遍历单个走线口的屏体信息
-                            for(var boxindex = 0;boxindex < port.BOX.length;boxindex++){
-                                var box = port.BOX[boxindex];
-                                //判断屏体顺序是否为1能和端口直连
-                                if(box.ORDER == 1){
-                                    var portBox = {
-                                        source: port.ID+senderOrder.ID,
-                                        target: senderOrder.ID+box.ID+boxindex,
-                                        name: '连通',
-                                        type: '网线',
-                                        nodeName: '网线'
-                                    }
-                                    //端口连接线新增
-                                    links.push(portBox);
-                                }
-                                //判断小于最后一个屏体之间的相互串联
-                                if(box.ORDER < port.BOX.length){
-                                    var boxNext = port.BOX[boxindex+1]
-                                    //当下个箱体为空时不执行
-                                    if(boxindex+1 < port.BOX.length){
-                                        var portBox = {
-                                            source: senderOrder.ID+box.ID+boxindex,
-                                            target: senderOrder.ID+boxNext.ID+(boxindex+1),
-                                            name: '连通',
-                                            type: '串联',
-                                            nodeName: '串联'
-                                        }
-                                        links.push(portBox);
-                                    }
-                                }
-                                //单个屏体的信息
-                                var singleBox = {
-                                    x: XInit[box.XPOS-1],
-                                    y: YInit[box.YPOS-1],
-                                    symbolSize: 46,
-                                    nodeName: "屏体"+box.ID,
-                                    name: senderOrder.ID+box.ID+boxindex,
-                                    type: '屏体',
-                                    detail:box,
-                                    svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
-                                }
-                                nodes.push(singleBox);
-                            }
-
-                        }*/
-                        //遍历走线接口
                         for(var j = 0;j<portNum;j++){
 
                             //走线详情信息
@@ -2812,7 +4015,7 @@
                             }
                             links.push(hiddenLine);
                             //判断索引是否能够取余4来判断在当前X轴的Y位置
-                            if((j+1)%4 == 0){
+                            if((j+1)%4 === 0){
                                 //当前port对象
                                 var singlePort = {
                                     //X轴上单个偏移差值为60一个单位(向右+60)
@@ -2859,14 +4062,14 @@
                                 links.push(hiddenLine);
 
                                 //判断屏体顺序是否为1能和端口直连
-                                if(box.ORDER == 1){
+                                if(box.ORDER === '1'){
                                     var box_State;
                                     //判断箱体状态
-                                    if(box.BOX_STATE == '1'){
+                                    if(box.BOX_STATE === '1'){
                                         box_State = "连通"
-                                    }else if(box.BOX_STATE == '2'){
+                                    }else if(box.BOX_STATE === '2'){
                                         box_State = "警告"
-                                    }else if(box.BOX_STATE == '3'){
+                                    }else if(box.BOX_STATE === '3'){
                                         box_State = "故障"
                                     }else{
                                         box_State = "无法检测"
@@ -2899,11 +4102,11 @@
                                     if(boxindex+1 < port.BOX.length){
                                         var box_State;
                                         //判断箱体状态
-                                        if(box.BOX_STATE === 1){
+                                        if(box.BOX_STATE === '1'){
                                             box_State = "连通"
-                                        }else if(box.BOX_STATE === 2){
+                                        }else if(box.BOX_STATE === '2'){
                                             box_State = "警告"
-                                        }else if(box.BOX_STATE === 3){
+                                        }else if(box.BOX_STATE === '3'){
                                             box_State = "故障"
                                         }else{
                                             box_State = "无法检测"
@@ -2933,8 +4136,44 @@
                             }
 
                         }
+
                     }
 
+                }
+
+                //判断更新发送卡字段是否为空
+                if(typeof (senderstatuslist)!="undefined"){
+
+                    for (var i = 0; i < nodes.length; i++) {
+                        if(nodes[i].type === '发送卡'){
+                            if(nodes[i].nodeName === senderstatuslist.senderId){
+                                nodes[i].detail = 'uncheck'
+                            }
+                        }
+                    }
+
+                    for(var s = 0;s < links.length;s++){
+                        if(links[s].target === senderstatuslist.senderId){
+                            links[s]. name = "无法检测";
+                        }
+                        //当原设备是有问题发送卡
+                        if(links[s].source === senderstatuslist.senderId){
+
+                            for(var ok = 0;ok < links.length;ok++){
+                                //有问题网口
+                                if(links[s].target === links[ok].source){
+                                    links[ok]. name = "无法检测";
+                                    //有问题的直连屏体
+                                    for(var rts = 0;rts < links.length;rts++){
+                                        if(links[ok].target === links[rts].source){
+                                            links[rts]. name = "无法检测";
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
                 }
 
                 // data = jQuery.parseJSON(data);
@@ -2949,7 +4188,6 @@
                     linesData: []
                 }
 
-
                 var dataMap = new Map();
                 //遍历SVG图形
                 for (var j = 0; j < nodes.length; j++) {
@@ -2963,7 +4201,7 @@
                         svgPath,
                         symbolSize
                     } = nodes[j];
-                    if(type == '屏体'){
+                    if(type === '屏体'){
                         var node = {
                             nodeName,
                             name,
@@ -2982,6 +4220,10 @@
                         dataMap.set(nodes[j].name, [x, y])
                         charts.nodes.push(node)
                     }else{
+                        var color = '#468efd';
+                        if(detail === 'uncheck'){
+                            color = '#a1afc9';
+                        }
                         var node = {
                             nodeName,
                             name,
@@ -2991,9 +4233,9 @@
                             symbolSize: symbolSize || 50,
                             symbol: 'path://' + svgPath,
                             itemStyle: {
-                                color: '#468efd',
+                                color: color,
                                 emphasis: {
-                                    color: '#7ca9ee'
+                                    color: color
                                 },
                             }
                         }
@@ -3005,7 +4247,7 @@
                 //遍历目标连接线
                 for (var i = 0; i < links.length; i++) {
                     var link;
-                    if(links[i].type == 0){
+                    if(links[i].type === 0){
                         link = {
                             source: links[i].source,
                             target: links[i].target,
@@ -3021,7 +4263,6 @@
                         }
                     }else{
 
-
                         var lineColor ;
                         if(links[i].name === '连通'){
                             lineColor = '#7CFC00';
@@ -3033,13 +4274,13 @@
                             lineColor = '#a1afc9';
                         }
                         var lineSize = 2;
-                        if(links[i].type == '串联'){
+                        if(links[i].type === '串联'){
                             lineSize = 6;
                         }
                         link = {
                             source: links[i].source,
                             target: links[i].target,
-                            type: links[i].type,
+                            type: 'netlink',
                             nodeName: links[i].nodeName,
                             label: {
                                 normal:{
@@ -3047,7 +4288,7 @@
                                 },
                                 emphasis:{
                                     symbolSize:8,
-                                    fontSize:38,
+                                    fontSize:25,
                                     color:'red',
                                     show: true,
                                     formatter: links[i].name
@@ -3105,14 +4346,14 @@
                         transitionDuration: 0.8,
                         // formatter: '设备类型:{b}<br />序列号:<br />'
                         formatter: function (item) {
-                            if(item.data.type == '屏体'){
+                            if(item.data.type === '屏体'){
                                 var box_State;
                                 //判断箱体状态
-                                if(item.data.detail.BOX_STATE == '1'){
+                                if(item.data.detail.BOX_STATE === '1'){
                                     box_State = "连通"
-                                }else if(item.data.detail.BOX_STATE == '2'){
+                                }else if(item.data.detail.BOX_STATE === '2'){
                                     box_State = "警告"
-                                }else if(item.data.detail.BOX_STATE == '3'){
+                                }else if(item.data.detail.BOX_STATE === '3'){
                                     box_State = "故障"
                                 }else{
                                     box_State = "无法检测"
@@ -3120,13 +4361,13 @@
                                 return '设备类型:<b style="color: green;">&nbsp;&nbsp;' + item.data.type + '</b><hr />' +
                                     '设备ID:<b style="color: green;">&nbsp;&nbsp;' + item.data.nodeName + '</b><hr />' +
                                     '箱体坐标(X-Y)：<b style="color: green;">' +item.data.detail.XPOS+'-'+item.data.detail.YPOS +'</b><hr />' +
-                                    '信号强度：<b style="color: green;">强</b><hr />' +
                                     '工作状态：<b style="color: green;">'+box_State+'</b><hr />';
-                            }else{
+                            }else if(item.data.type === 'netlink'){
+                                return '设备类型:<b style="color: green;">&nbsp;&nbsp;' + item.data.type + '</b><hr />';
+                            }
+                            else{
                                 return '设备类型:<b style="color: green;">&nbsp;&nbsp;' + item.data.type + '</b><hr />' +
-                                    '设备ID:<b style="color: green;">&nbsp;&nbsp;' + item.data.nodeName + '</b><hr />' +
-                                    '信号强度：<b style="color: green;">强</b><hr />' +
-                                    '工作状态：<b style="color: green;">连通</b><hr />'
+                                    '设备ID:<b style="color: green;">&nbsp;&nbsp;' + item.data.nodeName + '</b><hr />' ;
                             }
                         }
                     },
@@ -3160,27 +4401,7 @@
                         data: charts.nodes,
                         links: charts.links
                     },
-                        //     {
-                        //     type: 'lines',
-                        //     polyline: true,
-                        //     coordinateSystem: 'cartesian2d',
-                        //     lineStyle: {
-                        //         //设置网格线类型 dotted：虚线   solid:实线
-                        //         type: 'solid',
-                        //         width: 1,
-                        //         color: '#175064',
-                        //         curveness: 0.1
-                        //
-                        //     },
-                        //     effect: {
-                        //         show: true,
-                        //         trailLength: 0.1,
-                        //         symbol: 'arrow',
-                        //         color: 'orange',
-                        //         symbolSize: 8
-                        //     },
-                        //     data: charts.linesData
-                        // }
+
                     ]
                 };
 
@@ -3188,7 +4409,7 @@
                 myChart.setOption(option);
                 // 处理点击事件并且弹出数据名称-params传入的参数
                 myChart.on('click', function (params) {
-                    if(params.data.type == '屏体'){
+                    if(params.data.type === '屏体'){
                         //屏体参数赋值
                         var detail = params.data.detail;
                         info_title = detail;
@@ -3199,9 +4420,8 @@
                         $('#SENSOR_VOL').text(rec.SENSOR_VOL+"V");
                         $('#SENSOR_CURRENT').text(rec.SENSOR_CURRENT+"A");
                         $('#SENSOR_HUMI').text(rec.SENSOR_HUMI+"%RH");
-                        $('#SENSOR_SMOG').text(rec.SENSOR_SMOG);
                         $('#SENSOR_TMP').text(rec.SENSOR_TMP+"℃");
-                        $('#SENSOR_BRI').text(rec.SENSOR_BRI+"Lux");
+                        $('#SENSOR_BRI').text(rec.SENSOR_BRI+"cd/m²");
 
                         //模组信息赋值
                         //通过遍历计算故障模组数量
@@ -3231,16 +4451,37 @@
                         $('#rec_Id').text(rec.REC_ID);
                         //接收卡个数
                         $('#rec_Count').text(detail.REC.length);
-                        //接收卡运行时间
-                        $('#rec_TOTAL_WORKTIME').text(rec.TOTAL_WORKTIME+"S");
+
+
+                        var BOX_MASTER = detail.BOX_MASTER;
+                        // 主接收卡  01 主接收卡工作   02 备份接收卡工作
+                        if(BOX_MASTER === '1'){
+                            $('#BOX_MASTER').text('主接收卡工作');
+                        }else{
+                            $('#BOX_MASTER').text('备份接收卡工作');
+                        }
+                        var PORT_MASTER = detail.PORT_MASTER;
+                        // 网口状态   01 A网口工作   02 B网口工作
+                        if(PORT_MASTER === '1'){
+                            $('#PORT_MASTER').text('A网口工作');
+                        }else{
+                            $('#PORT_MASTER').text('B网口工作');
+                        }
+
+                        var POWER_MASTER = detail.POWER_MASTER;
+                        // 电源状态   10 备份电源在线   11 主，备电源都在线
+                        if(POWER_MASTER === '1'){
+                            $('#POWER_MASTER').text('备份电源在线');
+                        }else{
+                            $('#POWER_MASTER').text('主，备电源都在线');
+                        }
+
                         //维修日志赋值
 
                         //驱动IC赋值
                         $('#cover').css('display','block'); //显示遮罩层
                         $('.container').attr('style', 'visibility: visible').find('.pop-up').
                         attr('style', 'visibility: visible').siblings().attr('style', 'visibility: hidden');
-                    }else{
-                        alert("暂未开放");
                     }
                 });
 
@@ -3263,6 +4504,7 @@
             function closeWebSocket() {
                 websocket.close();
             }
+
 
             let heartCheck = {
                 timeout: 60000,//60s
@@ -3295,6 +4537,41 @@
                 };
                 websocket.send(JSON.stringify(ledbright));
             },
+
+            onChangeFblvalue() {
+                /* alert(this.value1);*/
+                let ledfblvalue={
+                    type:18,
+                    content:this.fblvalue
+                };
+                websocket.send(JSON.stringify(ledfblvalue));
+            },
+            onChangeRadio() {
+                /* alert(this.value1);*/
+                if(this.radio==="HDMI"){
+                    let ledredio={
+                        type:19,
+                        content:0
+                    };
+                    websocket.send(JSON.stringify(ledredio));
+                }else if(this.radio==="DVI-D"){
+                    let ledredio={
+                        type:19,
+                        content:1
+                    };
+                    websocket.send(JSON.stringify(ledredio));
+                }else if(this.radio==="SDI"){
+                    let ledredio={
+                        type:19,
+                        content:2
+                    };
+                    websocket.send(JSON.stringify(ledredio));
+                }else{
+
+                }
+
+
+            },
             onChangeValue2() {
                 /* alert(this.value1);*/
                 let hueContent={
@@ -3311,21 +4588,110 @@
                 };
                 websocket.send(JSON.stringify(colorContent));
             },
-            onChangeFblvalue() {
-                /* alert(this.value1);*/
-                let ledfblvalue={
-                    type:18,
-                    content:this.fblvalue
-                };
-                websocket.send(JSON.stringify(ledfblvalue));
+            swichchange(){
+                if(this.status1===true){
+                    this.gmvalue="SDR->HDR";
+                    this.value5=100;
+                    $("#bitnum").html("20位");
+                    $("#hdrslider").removeClass("sliderclass");
+                    $("#hdrslidervalue").removeClass("hdrslstyle");
+                    this.gmoptions=[{
+                        gmvalue: '100',
+                        label: 'SDR->HDR'
+                    },{
+                        gmvalue: '101',
+                        label: 'HLG'
+                    },{
+                        gmvalue: '102',
+                        label: 'PQ'
+                    }];
+                    let hdrswichonContent={
+                        type:20,
+                        content:1
+                    };
+                    websocket.send(JSON.stringify(hdrswichonContent));
+                    /* $("#hdrswich").attr("disabled");*/
+                }else{
+                    this.gmvalue="";
+                    this.value5=0;
+                    $("#bitnum").html("16位");
+                    $("#hdrslider").addClass("sliderclass");
+                    $("#hdrslidervalue").addClass("hdrslstyle");
+                    this.gmoptions=[{
+                        gmvalue: '0',
+                        label: '1.8'
+                    },{
+                        gmvalue: '1',
+                        label: '2'
+                    }, {
+                        gmvalue: '2',
+                        label: '2.2'
+                    }, {
+                        gmvalue: '3',
+                        label: '2.4'
+                    }, {
+                        gmvalue: '4',
+                        label: '2.5'
+                    },{
+                        gmvalue: '5',
+                        label: '2.8'
+                    },{
+                        gmvalue: '6',
+                        label: '3'
+                    },{
+                        gmvalue: '7',
+                        label: 'linear'
+                    }];
+                    let hdrswichoffContent={
+                        type:20,
+                        content:0
+                    };
+                    websocket.send(JSON.stringify(hdrswichoffContent));
+                }
+
             },
-            onChangeRadio() {
-                /* alert(this.value1);*/
-                let ledredio={
-                    type:19,
-                    content:this.radio
+            changegmavalue(){
+                let gmaContent={
+                    type:17,
+                    content:this.gmvalue
                 };
-                websocket.send(JSON.stringify(ledredio));
+                websocket.send(JSON.stringify(gmaContent));
+                /*  if(this.gmvalue==="2"){
+                      let ledredio={
+                          type:19,
+                          content:1
+                      };
+                      websocket.send(JSON.stringify(ledredio));
+                  }else if(this.gmvalue==="DVI-D"){
+                      let ledredio={
+                          type:19,
+                          content:1
+                      };
+                      websocket.send(JSON.stringify(ledredio));
+                  }else if(this.gmvalue==="SDI"){
+                      let ledredio={
+                          type:19,
+                          content:2
+                      };
+                      websocket.send(JSON.stringify(ledredio));
+                  }else if(this.gmvalue==="HDMI"){
+
+                  }else if(this.gmvalue==="HDMI"){
+
+                  }else if(this.gmvalue==="HDMI"){
+
+                  }else if(this.gmvalue==="HDMI"){
+
+                  }*/
+
+            },
+            onChangeValue5(){
+                /* alert(this.value1);*/
+                let hdrContent={
+                    type:21,
+                    content:this.value5
+                };
+                websocket.send(JSON.stringify(hdrContent));
             }
         },
 
@@ -3370,53 +4736,46 @@
         }
     }
 
-   /* function onChangeValue() {
-        alert(3);
-    }*/
-   /* function sendcmd() {
-        alert( demo.$data.bright);
-        websocket.send("hello 帅哥");
-    }*/
 
     $(function () {
+        var hour,minute,second;//时 分 秒
+        hour=minute=second=0;//初始化
 
-        let ledstatuspo = 1;
-        if (ledstatuspo === 1) {
-            $("#ledon").css({"background-color": "green"});
-            $("#ledonspan").html("在线");
-        } else {
-            $("#ledon").css({"background-color": "red"});
-            $("#ledonspan").html("在线");
+        var int;
+        var millisecond=0;//毫秒
+        /*  function Reset()//重置
+          {
+              window.clearInterval(int);
+              millisecond=hour=minute=second=0;
+              document.getElementById('timetext').value='00:00:00';
+          }*/
+
+        /*  function start()//开始
+          {
+              int=setInterval(timer,1000);
+          }*/
+
+        setInterval(timer,1000);
+        //计时
+        function timer(){
+            second++;
+            if(second>=60){
+                second=0;
+                minute=minute+1;
+            }
+
+            if(minute>=60){
+                minute=0;
+                hour=hour+1;
+            }
+            /* document.getElementById('timetext').value=hour+':'+minute+':'+second;*/
+            $("#ctime").html(hour+':'+minute+':'+second);
+
         }
 
-
-        let fskstatuspo = 1;
-        if (fskstatuspo === 1) {
-            $("#fskon").css({"background-color": "green"});
-            $("#fskonspan").html("在线");
-        } else {
-            $("#fskon").css({"background-color": "red"});
-            $("#fskonspan").html("离线");
-        }
-
-        setInterval(function () {
-            $("#ctime").html(nowtime());
-            $("#ctime1").html(nowtime());
-        });
-
-        function nowtime() {//将当前时间转换成yyyymmdd格式
-            let mydate = new Date();
-            return (mydate.getHours() < 10 ? "0" + mydate.getHours() : mydate.getHours())
-                + ":"
-                + (mydate.getMinutes() < 10 ? "0" + mydate.getMinutes() : mydate.getMinutes())
-                + ":"
-                + (mydate.getSeconds() < 10 ? "0" + mydate.getSeconds() : mydate.getSeconds());
-        }
     })
 </script>
 
-<!--<script type="text/javascript" src="js/base.js"></script>-->
-<!--<script type="text/javascript" src="js/rem.js"></script>-->
 <script>
 
     //点击close-pop这个类时取消弹框
@@ -3435,15 +4794,6 @@
             $('.set-div').attr('style','z-index:3;');
         }
     }
-
-    // $(document).on('click',function (e) {
-    //     var target = $(e.target);
-    //     if(target.closest(".modedetail").length == 0 && target.closest(".module").length == 0){
-    //         $(".modedetail").hide();
-    //     }
-    // })
-
-
 
 
 </script>
