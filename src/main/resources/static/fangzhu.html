@@ -6,42 +6,63 @@
 </head>
 <body>
 <!-- 遮罩层 -->
-<div id="cover" style="background: #000; position: absolute; left: 0px; top: 0px;height: 100%; width: 100%;  filter: alpha(opacity=30); opacity: 0.3; display: none; z-index: 2 ">
-
+<div id="canvas">
 </div>
 
-<!-- 弹窗 -->
-<div id="showdiv" style="width: 80%; margin: 0 auto; height: 9.5rem; border: 1px solid #999; display: none; position: absolute; top: 40%; left: 10%; z-index: 3; background: #fff">
-    <!-- 按钮 -->
-    <div style="background: #418BCA; width: 80%; margin: 0 auto; height: 1.5rem; line-height: 1.5rem; text-align: center;color: #fff;margin-top: 1rem; -moz-border-radius: .128rem; -webkit-border-radius: .128rem; border-radius: .128rem;font-size: .59733rem;" onclick="closeWindow()">
-        确 定
-    </div>
-</div>
-<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-<div id="main" style="margin-top:10em; width: 600px;height:600px;border: red 1px solid;">
-
-    <p>IAKDJAWKDAWLKDAWJK</p>
-    <h1>ARE YOU OK!!!!</h1>
-
-</div>
 </body>
 <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="js/echarts.min.js"></script>
+<script type="text/javascript" src="http://www.jtopo.com/download/jtopo-0.4.8-min.js"></script>
 <script type="text/javascript">
+    $(document).ready(function(){
+        var canvas = document.getElementById('canvas');
+        var stage = new JTopo.Stage(canvas);
+        //显示工具栏
+        showJTopoToobar(stage);
+        var scene = new JTopo.Scene(stage);
+        scene.background = './img/bg.jpg';
 
-    // 弹窗
-    function showWindow(showmsg) {
-        $('#showdiv').show();   //显示弹窗
-        $('#cover').css('display','block'); //显示遮罩层
+        var node = new JTopo.Node("Hello");
+        node.setLocation(409, 269);
+        scene.add(node);
 
-    }
+        node.mousedown(function(event){
+            if(event.button == 2){
+                node.text = '按下右键';
+            }else if(event.button == 1){
+                node.text = '按下中键';
+            }else if(event.button == 0){
+                node.text = '按下左键';
+            }
+        });
 
-    // 关闭弹窗
-    function closeWindow() {
-        $('#showdiv').hide();   //隐藏弹窗
-        $('#cover').css('display','none');     //显示遮罩层
-    }
+        node.mouseup(function(event){
+            if(event.button == 2){
+                node.text = '松开右键';
+            }else if(event.button == 1){
+                node.text = '松开中键';
+            }else if(event.button == 0){
+                node.text = '松开左键';
+            }
+        });
+        node.click(function(event){
+            console.log("单击");
+        });
+        node.dbclick(function(event){
+            console.log("双击");
+        });
+        node.mousedrag(function(event){
+            console.log("拖拽");
+        });
+        node.mouseover(function(event){
+            console.log("mouseover");
+        });
+        node.mousemove(function(event){
+            console.log("mousemove");
+        });
+        node.mouseout(function(event){
+            console.log("mouseout");
+        });
 
-
+    });
 </script>
 </html>

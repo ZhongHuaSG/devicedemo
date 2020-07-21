@@ -49,32 +49,46 @@ function getCanShu() {
         dataType: "json",
         success: function(data) {
             //发送卡初始X值
-            var XInitSender = 100;
+            var XInitSender = 200;
 
             //发送卡初始Y值
-            var YInitSender = 900;
+            var YInitSender = 830;
 
             //网口初始X值-X轴上单个偏移差值为60一个单位(向右+60)
-            var XInitPort = 135;
+            var XInitPort = 250;
             //网口初始Y值-Y轴上单个偏移差值为70一个单位（向下-70）
-            var YInitPort = 940;
+            var YInitPort = 910;
             //网口最大总数量
             var MaxPort = 16;
 
             //X轴上单个偏移差值为60一个单位(向右+60)----屏体（同网口）
             var XInit = [560,630,700,770,840,910,980,1050];
             //Y轴上单个偏移差值为140一个单位(向下-140)----屏体
-            var YInit = [860,740,620,500,380,260,140,20];
+            var YInit = [810,690,570,450,330,210,90,-30];
+
+            //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
+            var curWwwPath = window.document.location.href;
+            //获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
+            var pathName = window.document.location.pathname;
+            var pos = curWwwPath.indexOf(pathName);
+            //获取主机地址，如： http://localhost:8083
+            var localhostPaht = curWwwPath.substring(0, pos);
+            //获取带"/"的项目名，如：/uimcardprj
+            var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+
+
+
             //矢量图形组
             var nodes = [{
                 x: 0,
-                y: 600,
+                y: 530,
                 nodeName: '控制卡',
                 name: '控制卡',
                 type: '播放器',
                 detail:"OK",
-                svgPath: 'M885.76 919.552H116.736C53.248 919.552 1.024 867.328 1.024 803.84V284.672c0-63.488 52.224-115.712 115.712-115.712h769.024c63.488 0 115.712 52.224 115.712 115.712v519.168c0 63.488-52.224 115.712-115.712 115.712zM116.736 226.304c-31.744 0-58.368 25.6-58.368 58.368v519.168c0 31.744 25.6 58.368 58.368 58.368h769.024c31.744 0 58.368-25.6 58.368-58.368V284.672c0-31.744-25.6-58.368-58.368-58.368H116.736z M432.128 740.352c-15.36 0-30.72-4.096-44.032-12.288-25.6-15.36-40.96-43.008-40.96-72.704V458.752c0-30.72 15.36-57.344 40.96-72.704s57.344-16.384 83.968-2.048L658.432 481.28c27.648 14.336 46.08 44.032 46.08 75.776 0 31.744-17.408 60.416-46.08 75.776l-185.344 98.304c-13.312 6.144-26.624 9.216-40.96 9.216z m1.024-279.552v191.488l182.272-96.256L433.152 460.8z m184.32 97.28l20.48-37.888-20.48 37.888z',
-                symbolSize: 70,
+                // svgPath: 'M868.48 104.96H155.52a32 32 0 0 0-32 32v538.24a32 32 0 0 0 32 32h712.96a32 32 0 0 0 32-32V136.96a32 32 0 0 0-32-32z m-32 64V390.4H187.52V168.96zM187.52 643.2V422.4h648.96v221.44z M252.8 232.96h32v74.88h-32zM334.72 232.96h32v74.88h-32zM252.8 502.4h32v74.88h-32zM334.72 502.4h32v74.88h-32zM868.48 853.12H600.96a94.72 94.72 0 0 0-56.96-56.96v-53.76h-64v53.76a94.72 94.72 0 0 0-56.96 56.96H155.52a32 32 0 1 0 0 64h267.52a94.08 94.08 0 0 0 177.92 0h267.52a32 32 0 0 0 0-64zM512 915.84a30.72 30.72 0 1 1 30.72-30.72 30.72 30.72 0 0 1-30.72 30.72z',
+                svgPath:'image://'+localhostPaht+'/images/player.png',
+                symbolSize: 100,
 
             }
             ]
@@ -82,7 +96,6 @@ function getCanShu() {
             var links = [];
             //走线方式数组
             var portGroup = [];
-
 
             //请求后台参数
             for(var i = 0;i< data.COMLIST.length;i++){
@@ -139,12 +152,13 @@ function getCanShu() {
                     var sender ={
                         x: XInitSender,
                         y: YInitSender-i*300,
+                        symbolSize: [80,50],
                         nodeName: senderOrder.ID,
                         name: senderOrder.ID,
                         type: '发送卡',
                         detail:'ok',
-                        svgPath: 'M868.48 104.96H155.52a32 32 0 0 0-32 32v538.24a32 32 0 0 0 32 32h712.96a32 32 0 0 0 32-32V136.96a32 32 0 0 0-32-32z m-32 64V390.4H187.52V168.96zM187.52 643.2V422.4h648.96v221.44z M252.8 232.96h32v74.88h-32zM334.72 232.96h32v74.88h-32zM252.8 502.4h32v74.88h-32zM334.72 502.4h32v74.88h-32zM868.48 853.12H600.96a94.72 94.72 0 0 0-56.96-56.96v-53.76h-64v53.76a94.72 94.72 0 0 0-56.96 56.96H155.52a32 32 0 1 0 0 64h267.52a94.08 94.08 0 0 0 177.92 0h267.52a32 32 0 0 0 0-64zM512 915.84a30.72 30.72 0 1 1 30.72-30.72 30.72 30.72 0 0 1-30.72 30.72z'
-
+                        // svgPath: 'M 0 265.6 v 448 h 192 v 64 h 128 v -64 h 384 v 64 h 128 v -64 h 192 v -448 H 0 Z m 960 384 H 64 v -320 h 896 v 320 Z m -64 -256 h -256 v 192 h 256 v -192 Z m -64 128 h -128 v -64 h 128 v 64 Z m -640 -64 H 128 v -64 h 64 v 64 Z m 128 0 H 256 v -64 h 64 v 64 Z m 128 0 h -64 v -64 h 64 v 64 Z m -256 128 H 128 v -64 h 64 v 64 Z m 128 0 H 256 v -64 h 64 v 64 Z m 128 0 h -64 v -64 h 64 v 64 Z m 128 -128 h -64 v -64 h 64 v 64 Z m 0 128 h -64 v -64 h 64 v 64 Z'
+                        svgPath:'image://'+localhostPaht+'/images/senderReal.png'
                     }
                     //新增拓扑连接线
                     var lineSender = {
@@ -269,7 +283,7 @@ function getCanShu() {
                                 name: port.ID+senderOrder.ID,
                                 type: '网口',
                                 detail:null,
-                                svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
+                                svgPath: 'path://M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
                             };
                             //走线方式数组添加
                             nodes.push(singlePort);
@@ -284,7 +298,7 @@ function getCanShu() {
                                 name: port.ID+senderOrder.ID,
                                 type: '网口',
                                 detail:null,
-                                svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
+                                svgPath: 'path://M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
                             };
                             nodes.push(singlePort);
                         }
@@ -540,7 +554,7 @@ function getCanShu() {
                     }
                     dataMap.set(nodes[j].name, [x, y])
                     charts.nodes.push(node)
-                }else{
+                }else if(type == '未连接网口'){
                     var node = {
                         nodeName,
                         name,
@@ -549,6 +563,24 @@ function getCanShu() {
                         value: [x, y],
                         symbolSize: symbolSize || 50,
                         symbol: 'path://' + svgPath,
+                        itemStyle: {
+                            color: '#75878a',
+                            emphasis: {
+                                color: '#808080'
+                            },
+                        }
+                    }
+                    dataMap.set(nodes[j].name, [x, y])
+                    charts.nodes.push(node)
+                }else{
+                    var node = {
+                        nodeName,
+                        name,
+                        type,
+                        detail,
+                        value: [x, y],
+                        symbolSize: symbolSize || 50,
+                        symbol:  svgPath,
                         itemStyle: {
                             color: '#468efd',
                             emphasis: {
@@ -560,6 +592,7 @@ function getCanShu() {
                     charts.nodes.push(node)
                 }
             }
+            //判断网口的索引是否大于4
             var sopindex = 1;
             //遍历目标连接线
             for (var i = 0; i < links.length; i++) {
@@ -584,15 +617,36 @@ function getCanShu() {
                     var lineColor ;
                     var lines;
                     // 组装动态移动的效果数据
-                    // 组装动态移动的效果数据
+                    //拐角线的重组
                     if(links[i].nodeName == "网线"){
                         var SourceX = dataMap.get(links[i].source)[0];
                         var SourceY = dataMap.get(links[i].source)[1];
                         var TategerX = dataMap.get(links[i].target)[0];
+                        //当目标Y值小于YInit[4]，该屏体已经在第五组
                         var TategerY = dataMap.get(links[i].target)[1];
-                        var Source0 = [SourceX+sopindex*7,SourceY]
-                        var Source = [SourceX+sopindex*7,SourceY+sopindex*66]
-                        var Target = [TategerX,SourceY+sopindex*66]
+                        //第一个点--在网口出来的位置
+                        var Source0;
+                        //第二个点--在网口上方的位置
+                        var Source ;
+                        //第三个点--在屏体上方的位置
+                        var Target;
+                        //当目标Y坐标小于Y轴第四个屏体的Y坐标
+                        if(TategerY < YInit[4] && SourceY > YInitPort - 151){
+                            Source0 = [SourceX+sopindex*7,SourceY]
+                            Source = [SourceX-sopindex*21,SourceY-sopindex*198]
+                            Target = [TategerX,SourceY-sopindex*198]
+                        }
+                        //当源坐标Y坐标等于第一行时
+                        else if(SourceY > YInitPort - 151){
+                            Source0 = [SourceX+sopindex*7,SourceY]
+                            Source = [SourceX+sopindex*7,SourceY+sopindex*66]
+                            Target = [TategerX,SourceY+sopindex*66]
+                        }
+                        else{
+                            Source0 = [SourceX+sopindex*7,SourceY]
+                            Source = [SourceX+sopindex*7,TategerY+sopindex*66]
+                            Target = [TategerX,TategerY+sopindex*66]
+                        }
                         lines = {
                             coords:[
                                 dataMap.get(links[i].source),
@@ -608,7 +662,37 @@ function getCanShu() {
                         if(s>4){
                             sopindex = 1;
                         }
-                    }else{
+                    }else if(links[i].nodeName == "主网线"){
+                        var SourceX = dataMap.get(links[i].source)[0];
+                        var SourceY = dataMap.get(links[i].source)[1];
+                        var TategerX = dataMap.get(links[i].target)[0];
+                        var TategerY = dataMap.get(links[i].target)[1];
+
+                        if(SourceY == TategerY){
+                            lines = {
+                                coords:[
+                                    dataMap.get(links[i].source),
+                                    dataMap.get(links[i].target)
+                                ],
+                                type: links[i].type,
+                                nodeName: links[i].nodeName,
+                            };
+                        }else{
+                            var center = [SourceX,TategerY];
+                            lines = {
+                                coords:[
+                                    dataMap.get(links[i].source),
+                                    center,
+                                    dataMap.get(links[i].target)
+                                ],
+                                type: links[i].type,
+                                nodeName: links[i].nodeName,
+                            };
+                        }
+
+                        console.log(dataMap.get(links[i].source));
+                        console.log(dataMap.get(links[i].target));
+                    } else{
                         lines = {
                             coords:[
                                 dataMap.get(links[i].source),
