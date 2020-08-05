@@ -76,8 +76,6 @@ function getCanShu() {
             //获取带"/"的项目名，如：/uimcardprj
             var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
 
-
-
             //矢量图形组
             var nodes = [{
                 x: 0,
@@ -541,7 +539,8 @@ function getCanShu() {
                         symbolSize: symbolSize || 50,
                         symbol: 'path://' + svgPath,
                         label:{
-                            position: ['24%', '42%']
+                            position: ['9%', '42%'],
+                            fontSize:20
                         },
                         itemStyle: {
                             borderColor: 'rgba(147, 235, 248, 1)',
@@ -757,7 +756,11 @@ function getCanShu() {
             option = {
                 legend: {
                     data:['连通','无法检测','警告','故障'],
-                    icon: "circle"
+                    icon: "circle",
+                    textStyle: {
+                        fontSize: 25,
+                        fontWeight: "lighter"
+                    }
                 },
                 //提示框显示
                 tooltip: {

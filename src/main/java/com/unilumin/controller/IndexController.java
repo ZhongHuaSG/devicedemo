@@ -61,5 +61,11 @@ public class IndexController {
     @RequestMapping(value = "/indexjk")
     public String JK(){ return "forward:indexjk.html"; }
 
+    /**
+     * 跳转屏体设置页面接口
+     * */
+    @RequestMapping(value = "/deviceoption")
+    public String DO(){ return "forward:deviceoption.html"; }
+
 
 }

@@ -53,6 +53,7 @@ public class shiroConfig {
         //登录
         map.put("/bigshow","anon");
         map.put("/fangzhu","anon");
+        map.put("/deviceoption","anon");
         //查看所有信息
         map.put("/getJsonMessage","anon");
         map.put("/indexjk","anon");

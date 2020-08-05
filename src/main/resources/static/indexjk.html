@@ -2614,8 +2614,23 @@
 
         </div>
 
+        <!-- 屏体设置 -->
         <div class="tab" style="display: none;">
             1
+            <div id="app" style="border: black 1px solid">
+                <div style="margin-top: 20px;">
+                    <el-tabs v-model="editableTabsValue" type="card" closable @tab-remove="removeTab">
+                        <el-tab-pane
+                                v-for="(item, index) in editableTabs"
+                                :key="item.name"
+                                :label="item.title"
+                                :name="item.name"
+                        >
+                            {{item.content}}
+                        </el-tab-pane>
+                    </el-tabs>
+                </div>
+            </div>
         </div>
 
         <div class="tab" style="display:none">
