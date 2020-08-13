@@ -2,1136 +2,8 @@
 <html lang="zh-CN" id="webjk">
 <head>
     <meta charset="UTF-8">
+<!--    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
     <title>洲明本地监控系统</title>
-    <!--    <style  type="text/css">-->
-    <!--        /* 当屏幕分辨率不超过1920px的时候将body内容缩放成150% */-->
-    <!--       /* @media screen and (max-width: 1921px) {-->
-    <!--            body{-->
-    <!--                zoom: 150%;-->
-    <!--            }-->
-    <!--        }*/-->
-
-    <!--       /* @media screen and (min-width: 1600px) and (max-width: 1920px){-->
-    <!--            body{-->
-    <!--                zoom: 150%;-->
-    <!--            }-->
-    <!--        }*/-->
-    <!--       /* @media screen and (min-width: 2048px) and (max-width: 2560px){-->
-    <!--            body{-->
-    <!--                zoom: 10%;-->
-    <!--            }-->
-    <!--        }*/-->
-    <!--        * {-->
-    <!--            margin: 0;-->
-    <!--            padding: 0;-->
-    <!--            font-size: 100%;-->
-    <!--        }-->
-
-    <!--        html {-->
-    <!--            overflow-y: auto;-->
-    <!--            overflow-x: hidden;-->
-    <!--            background-image: url(img/bg.jpg);-->
-    <!--            background-repeat: no-repeat;-->
-    <!--            background-size:100% 100%;-->
-    <!--            background-attachment: fixed;-->
-    <!--        }-->
-
-    <!--        html, body {-->
-    <!--            width: 100%;-->
-    <!--            height: 100%;-->
-    <!--            -webkit-font-smoothing: antialiased;-->
-    <!--            font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;-->
-
-    <!--        }-->
-
-
-    <!--        .index_content {-->
-    <!--            width: 100%;-->
-    <!--            height: 100%;-->
-    <!--        }-->
-
-    <!--        .index_nav {-->
-    <!--            height: 11.3%;-->
-    <!--            background-color: #1D8CE0;-->
-    <!--            color: #ffffff;-->
-    <!--            top: 0;-->
-    <!--            left: 0;-->
-    <!--            width: 100%;-->
-    <!--            position: fixed;-->
-    <!--            z-index: 9999;-->
-    <!--        }-->
-
-    <!--        .index_nav ul li {-->
-    <!--            font-size: 1em;-->
-    <!--            font-weight: 500;-->
-    <!--            opacity: 0.8;-->
-    <!--            cursor: pointer;-->
-    <!--            display: list-item;-->
-    <!--            z-index: 9999;-->
-    <!--            text-align: -webkit-match-parent;-->
-    <!--            list-style: none;-->
-    <!--            padding-left: 2.8%;-->
-    <!--        }-->
-
-
-    <!--        .index_nav ul .l_left {-->
-    <!--            float: left;-->
-    <!--            margin-top: -0.2%;-->
-    <!--            margin-left: 16%;-->
-    <!--        }-->
-
-    <!--        .index_nav ul .r_right {-->
-    <!--            float: right;-->
-    <!--            margin-top: 0.8%;-->
-    <!--        }-->
-
-    <!--        .index_nav ul li:hover {-->
-    <!--            opacity: 1;-->
-    <!--        }-->
-
-    <!--        .p1 {-->
-    <!--            margin-right: 16%;-->
-    <!--        }-->
-
-    <!--        .p2 {-->
-    <!--            margin-right: 6%;-->
-    <!--        }-->
-
-    <!--        .nav_active {-->
-    <!--            opacity: 1 !important;-->
-    <!--            color: #04449c;-->
-    <!--        }-->
-
-
-    <!--        .sz {-->
-    <!--            background-image: url(img/sz.svg);-->
-    <!--            width: 1em;-->
-    <!--            height: 2em;-->
-    <!--            background-repeat: no-repeat;-->
-    <!--        }-->
-
-
-    <!--        .kz {-->
-    <!--            background-image: url(img/kz.svg);-->
-    <!--            width: 1em;-->
-    <!--            height: 2em;-->
-    <!--            background-repeat: no-repeat;-->
-    <!--        }-->
-
-    <!--        .zm {-->
-    <!--            background-image: url(img/zm.svg);-->
-    <!--            width: 11.3em;-->
-    <!--            height: 3em;-->
-    <!--            background-repeat: no-repeat;-->
-    <!--        }-->
-
-
-    <!--        .asz {-->
-    <!--            background-image: url(img/sz1.svg);-->
-    <!--            width: 1em;-->
-    <!--            height: 2em;-->
-    <!--            background-repeat: no-repeat;-->
-    <!--        }-->
-
-    <!--        .akz {-->
-    <!--            background-image: url(img/kz1.svg);-->
-    <!--            width: 1em;-->
-    <!--            height: 2em;-->
-    <!--            background-repeat: no-repeat;-->
-    <!--        }-->
-
-    <!--        .azm {-->
-    <!--            background-image: url(img/zm1.svg);-->
-    <!--            width: 11.3em;-->
-    <!--            height: 3em;-->
-    <!--            background-repeat: no-repeat;-->
-    <!--        }-->
-
-
-    <!--        .nc {-->
-    <!--            height: 4em;-->
-    <!--            display: block;-->
-    <!--            margin-left: -300%;-->
-    <!--            letter-spacing: 0.0001em;-->
-    <!--            line-height: 5.8em;-->
-    <!--            -webkit-touch-callout: none; /* iOS Safari */-->
-
-    <!--            -webkit-user-select: none; /* Chrome/Safari/Opera */-->
-
-    <!--            -khtml-user-select: none; /* Konqueror */-->
-
-    <!--            -moz-user-select: none; /* Firefox */-->
-
-    <!--            -ms-user-select: none; /* Internet Explorer/Edge */-->
-
-    <!--            user-select: none; /* Non-prefixed version, currently not supported by any browser */-->
-    <!--        }-->
-
-
-    <!--        .nczm {-->
-    <!--            display: block;-->
-    <!--            margin-left: -18.7%;-->
-    <!--            margin-top: 25%;-->
-    <!--            font-size: larger;-->
-    <!--            width: 112%;-->
-    <!--            letter-spacing: 0.3em;-->
-    <!--            -webkit-touch-callout: none; /* iOS Safari */-->
-    <!--            -webkit-user-select: none; /* Chrome/Safari/Opera */-->
-    <!--            -khtml-user-select: none; /* Konqueror */-->
-    <!--            -moz-user-select: none; /* Firefox */-->
-    <!--            -ms-user-select: none; /* Internet Explorer/Edge */-->
-    <!--            user-select: none; /* Non-prefixed version, currently not supported by any browser */-->
-    <!--        }-->
-
-    <!--        .yh {-->
-    <!--            background-image: url(img/yh.svg);-->
-    <!--            background-repeat: no-repeat;-->
-    <!--            width: 2em;-->
-    <!--            height: 2em;-->
-    <!--            margin-left: 93%;-->
-    <!--            margin-top: 1%;-->
-    <!--            opacity: 0.8;-->
-    <!--            z-index: 9999;-->
-    <!--            position: relative;-->
-    <!--        }-->
-
-    <!--        .um {-->
-    <!--            width: 4em;-->
-    <!--            height: 5em;-->
-    <!--            position: absolute;-->
-    <!--            margin-left: -44%;-->
-    <!--            margin-top: 109%;-->
-    <!--            background-color: #ffffff;-->
-    <!--            border-radius: 0.3em;-->
-    <!--            border: 0.1em solid #ededed;-->
-    <!--            display: none;-->
-
-    <!--            top: 1.2em;-->
-    <!--            left: 0;-->
-    <!--        }-->
-
-    <!--        .yh:hover .um {-->
-    <!--            display: block;-->
-    <!--        }-->
-
-
-    <!--        .ncyh {-->
-    <!--            width: 6em;-->
-    <!--            height: 0.6em;-->
-    <!--            display: block;-->
-    <!--            line-height: 0.1em;-->
-    <!--            letter-spacing: 0.07em;-->
-    <!--            padding-top: 47%;-->
-    <!--            overflow: hidden;-->
-    <!--            white-space: nowrap;-->
-    <!--            text-overflow: ellipsis;-->
-    <!--            margin-left: -5px;-->
-    <!--            -webkit-touch-callout: none; /* iOS Safari */-->
-    <!--            -webkit-user-select: none; /* Chrome/Safari/Opera */-->
-    <!--            -khtml-user-select: none; /* Konqueror */-->
-    <!--            -moz-user-select: none; /* Firefox */-->
-    <!--            -ms-user-select: none; /* Internet Explorer/Edge */-->
-    <!--            user-select: none; /* Non-prefixed version, currently not supported by any browser */-->
-    <!--        }-->
-
-    <!--        .yh:hover {-->
-    <!--            opacity: 1;-->
-    <!--            cursor: pointer;-->
-    <!--        }-->
-
-    <!--        a.bw {-->
-    <!--            display: block;-->
-    <!--            text-decoration: none;-->
-    <!--            color: #999;-->
-    <!--            margin-left: 1em;-->
-    <!--            margin-top: 0.5em;-->
-    <!--        }-->
-
-    <!--        a.btc {-->
-    <!--            display: block;-->
-    <!--            text-decoration: none;-->
-    <!--            color: #999;-->
-    <!--            margin-left: 1em;-->
-    <!--            margin-top: 0.6em;-->
-    <!--        }-->
-
-    <!--        a:hover {-->
-    <!--            color: #1D8CE0;-->
-    <!--        }-->
-
-    <!--        .index_tabs {-->
-    <!--            width: 100%;-->
-    <!--            height: 100%;-->
-    <!--            position: absolute;-->
-    <!--            display: block;-->
-    <!--            margin-top: 76px;-->
-    <!--        }-->
-
-
-    <!--        .tab {-->
-    <!--            height: 100%;-->
-    <!--            width: 100%;-->
-    <!--            color: #20a0ff;-->
-    <!--            position: absolute;-->
-    <!--        }-->
-
-
-
-
-    <!--        .left {-->
-    <!--            width: 397px;-->
-    <!--            height: 571px;-->
-    <!--            float: left;-->
-    <!--            margin-left: 3px;-->
-    <!--            margin-top: 3px;-->
-    <!--        }-->
-
-    <!--        .left0 {-->
-    <!--            width: 397px;-->
-    <!--            height: 43%;-->
-    <!--            border: 0.001em solid #129ce6;-->
-    <!--        }-->
-
-
-    <!--        .lt0 {-->
-    <!--            background-color: #E5E9F2;-->
-    <!--            line-height: 30px;-->
-    <!--            font-weight: 500;-->
-    <!--            font-family: serif;-->
-    <!--        }-->
-
-    <!--        .azig {-->
-    <!--            margin-top: -176px;-->
-    <!--            margin-left: -21px;-->
-    <!--            position: absolute;-->
-    <!--        }-->
-
-    <!--        .kzqrun {-->
-    <!--            margin-top: 96px;-->
-    <!--            margin-left: 27px;-->
-    <!--            width: 100px;-->
-    <!--            height: 100px;-->
-    <!--           /* background: aqua;-->
-    <!--            animation: turn 1s linear infinite;-->
-    <!--            background: url(img/azyx.png) no-repeat center center;*/-->
-    <!--            position: relative;-->
-    <!--        }-->
-
-    <!--        .left1 {-->
-    <!--            width: 397px;-->
-    <!--            height: 55.5%;-->
-    <!--            border: 0.001em solid #129ce6;-->
-    <!--            position:relative;-->
-    <!--            margin-top: 8px;-->
-    <!--        }-->
-
-    <!--        .lt1 {-->
-    <!--            background-color: #E5E9F2;-->
-    <!--            line-height: 30px;-->
-    <!--            font-weight: 500;-->
-    <!--            font-family: serif;-->
-    <!--        }-->
-
-    <!--        .fskig {-->
-    <!--            margin-top: 133px;-->
-    <!--            margin-left: 10px;-->
-    <!--            position: absolute;-->
-    <!--        }-->
-
-    <!--        .fskrun {-->
-    <!--            margin-top: 155px;-->
-    <!--            margin-left: 11px;-->
-    <!--            width: 100px;-->
-    <!--            height: 100px;-->
-    <!--        /*    background: aqua;-->
-    <!--            animation: turn 1s linear infinite;-->
-    <!--            background: url(img/fskyx.png) no-repeat center center;*/-->
-    <!--            position: absolute;-->
-    <!--        }-->
-
-
-    <!--        .center {-->
-    <!--            width: 450px;-->
-    <!--            height: 571px;-->
-    <!--            border: 0.001em solid #129ce6;-->
-    <!--            float: left;-->
-    <!--            margin-left: 6px;-->
-    <!--            margin-top: 3px;-->
-    <!--        }-->
-
-    <!--        .ct {-->
-    <!--            background-color: #E5E9F2;-->
-    <!--            line-height: 30px;-->
-    <!--            text-align: center;-->
-    <!--            font-weight: 500;-->
-    <!--            font-family: serif;-->
-    <!--        }-->
-
-
-    <!--        .right {-->
-    <!--            width: 397px;-->
-    <!--            height: 571px;-->
-    <!--            float: left;-->
-    <!--            margin-left: 6px;-->
-    <!--            margin-top: 3px;-->
-    <!--        }-->
-
-    <!--        .right0 {-->
-    <!--            width: 397px;-->
-    <!--            height: 43%;-->
-    <!--            border: 0.001em solid #129ce6;-->
-    <!--        }-->
-
-
-    <!--        .rt0 {-->
-    <!--            background-color: #E5E9F2;-->
-    <!--            line-height: 30px;-->
-    <!--            font-weight: 500;-->
-    <!--            font-family: serif;-->
-    <!--        }-->
-
-    <!--        .gx0 {-->
-    <!--            width: 397px;-->
-    <!--            height: 218px;-->
-    <!--            position: relative;-->
-    <!--        }-->
-
-    <!--        .right1 {-->
-    <!--            width: 397px;-->
-    <!--            height: 55.5%;-->
-    <!--            border: 0.001em solid #129ce6;-->
-    <!--            margin-top: 8px;-->
-    <!--            position: relative;-->
-    <!--        }-->
-
-    <!--        .rt1 {-->
-    <!--            background-color: #E5E9F2;-->
-    <!--            line-height: 30px;-->
-    <!--            font-weight: 500;-->
-    <!--            font-family: serif;-->
-    <!--        }-->
-
-
-    <!--        .dy {-->
-    <!--            width: 397px;-->
-    <!--            height: 407px;-->
-    <!--            margin-top: -254px;-->
-    <!--            margin-left: -110px;-->
-    <!--        }-->
-
-    <!--        .dl {-->
-    <!--            width: 397px;-->
-    <!--            height: 407px;-->
-    <!--            position: absolute;-->
-    <!--            margin-top: -363px;-->
-    <!--            margin-left: 135px;-->
-    <!--        }-->
-
-    <!--        .fs {-->
-    <!--            position: absolute;-->
-    <!--            margin-top: -370px;-->
-    <!--            margin-left: 160px;-->
-    <!--            width: 100px;-->
-    <!--            height: 100px;-->
-    <!--            /*animation: turn 1s linear infinite;*/-->
-    <!--            animation-play-state: paused;-->
-    <!--            background: url(img/fs.svg) no-repeat center center;-->
-    <!--            z-index: 1;-->
-    <!--        }-->
-
-    <!--        .fs1{-->
-    <!--            /*animation-play-state: paused;*/-->
-    <!--            animation: turn 1s linear infinite;-->
-    <!--        }-->
-
-
-    <!--        /*-->
-    <!--          turn : 定义的动画名称-->
-    <!--          1s : 动画时间-->
-    <!--          linear : 动画以何种运行轨迹完成一个周期-->
-    <!--          infinite :规定动画应该无限次播放-->
-    <!--         */-->
-    <!--        @keyframes turn {-->
-    <!--            0% {-->
-    <!--                -webkit-transform: rotate(0deg);-->
-    <!--            }-->
-    <!--            25% {-->
-    <!--                -webkit-transform: rotate(90deg);-->
-    <!--            }-->
-    <!--            50% {-->
-    <!--                -webkit-transform: rotate(180deg);-->
-    <!--            }-->
-    <!--            75% {-->
-    <!--                -webkit-transform: rotate(270deg);-->
-    <!--            }-->
-    <!--            100% {-->
-    <!--                -webkit-transform: rotate(360deg);-->
-    <!--            }-->
-    <!--        }-->
-
-    <!--        .hjws {-->
-    <!--            width: 397px;-->
-    <!--            height: 407px;-->
-    <!--            position: relative;-->
-    <!--            margin-top: -18px;-->
-    <!--            margin-left: 11px;-->
-    <!--        }-->
-
-    <!--        .circle {-->
-    <!--            width: 10px;-->
-    <!--            height: 10px;-->
-    <!--            border-radius: 10%;-->
-    <!--            -moz-border-radius: 50%;-->
-    <!--            -webkit-border-radius: 50%;-->
-    <!--            font-size: .18rem;-->
-    <!--            color: #ffffff;-->
-    <!--            opacity: 1;-->
-    <!--            display: inline-block;-->
-    <!--            margin-left: 10px;-->
-    <!--            margin-top: 13px;-->
-
-    <!--        }-->
-
-    <!--        .ledstatus {-->
-    <!--            font: 13px/23px 'PingFang SC', Arial, 'Microsoft YaHei', sans-serif;-->
-    <!--            font-style: normal;-->
-    <!--            font-variant-ligatures: normal;-->
-    <!--            font-variant-caps: normal;-->
-    <!--            font-variant-numeric: normal;-->
-    <!--            font-variant-east-asian: normal;-->
-    <!--            font-weight: normal;-->
-    <!--            font-stretch: normal;-->
-    <!--            font-family: "PingFang SC", Arial, "Microsoft YaHei", sans-serif;-->
-    <!--        }-->
-
-
-
-    <!--        .onbutton {-->
-    <!--            font-weight: bold;-->
-    <!--            position: absolute;-->
-    <!--            margin-top: 30px;-->
-    <!--            margin-left: 91px;-->
-    <!--        }-->
-
-    <!--        div#ledswitch {-->
-    <!--            margin-top: 146px;-->
-    <!--            margin-left: 936px;-->
-    <!--            position: absolute;-->
-    <!--        }-->
-
-    <!--        div#ledslider {-->
-    <!--            position: absolute;-->
-    <!--            width: 600px;-->
-    <!--            margin-left: 93px;-->
-    <!--            margin-top: 238px;-->
-    <!--            line-height: 35px;-->
-    <!--        }-->
-
-    <!--        .ledph1 {-->
-    <!--            float: left;-->
-    <!--            width: 73%;-->
-    <!--            margin-left: -2px;-->
-    <!--            margin-top: -21px;-->
-    <!--        }-->
-
-    <!--        .ledph2 {-->
-    <!--            float: left;-->
-    <!--            margin-left: 581px;-->
-    <!--            margin-top: -292px;-->
-    <!--            width: 73%;-->
-    <!--        }-->
-
-    <!--        div#input{-->
-    <!--            margin-top: 142px;-->
-    <!--            margin-left: 88px;-->
-    <!--        }-->
-
-
-    <!--        div#input1{-->
-    <!--            margin-top: -41px;-->
-    <!--            margin-left: 676px;-->
-    <!--        }-->
-
-    <!--        div#ledradio {-->
-    <!--            float: left;-->
-    <!--            margin-left: 94px;-->
-    <!--            margin-top: -115px;-->
-    <!--        }-->
-
-    <!--        .circle2 {-->
-    <!--            width: 10px;-->
-    <!--            height: 10px;-->
-    <!--            border-radius: 10%;-->
-    <!--            -moz-border-radius: 50%;-->
-    <!--            -webkit-border-radius: 50%;-->
-    <!--            font-size: .18rem;-->
-    <!--            color: #ffffff;-->
-    <!--            opacity: 1;-->
-    <!--            display: inline-block;-->
-    <!--            margin-left: 13px;-->
-    <!--            margin-top: 17px;-->
-    <!--        }-->
-
-    <!--        .clearfix:after, .clearfix:before {-->
-    <!--            display: table;-->
-    <!--            content: " "-->
-    <!--        }-->
-
-    <!--        .clearfix:after {-->
-    <!--            clear: both-->
-    <!--        }-->
-
-
-    <!--        .mainbox {-->
-    <!--            margin-left: 165px;-->
-    <!--            margin-top: -187px;-->
-    <!--            width: 520px;-->
-    <!--        }-->
-
-    <!--        .mainbox > ul {-->
-    <!--            margin-left: -.4rem;-->
-    <!--            margin-right: -.4rem;-->
-    <!--        }-->
-
-    <!--        .mainbox > ul > li {-->
-    <!--            float: left;-->
-    <!--            padding: 0 .4rem-->
-    <!--        }-->
-
-    <!--        .mainbox > ul > li {-->
-    <!--            width: 30%-->
-    <!--        }-->
-
-    <!--        .mainbox > ul > li:nth-child(2) {-->
-    <!--            width: 40%-->
-    <!--        }-->
-
-    <!--        .boxall {-->
-    <!--            height: 11.7rem;-->
-    <!--            width:13rem;-->
-    <!--            border: 1px solid rgba(25, 186, 139, .17);-->
-    <!--            padding: 0 .3rem .3rem .3rem;-->
-    <!--            background: rgba(255, 255, 255, .04);-->
-    <!--            background-size: 100% auto;-->
-    <!--            position: relative;-->
-    <!--            margin-bottom: .3rem;-->
-    <!--            z-index: 10;-->
-    <!--        }-->
-
-    <!--        .boxall:before,-->
-    <!--        .boxall:after {-->
-    <!--            position: absolute;-->
-    <!--            width: .1rem;-->
-    <!--            height: .1rem;-->
-    <!--            content: "";-->
-    <!--            border-top: 2px solid #02a6b5;-->
-    <!--            top: 0;-->
-    <!--        }-->
-
-    <!--        .boxall:before, .boxfoot:before {-->
-    <!--            border-left: 2px solid #02a6b5;-->
-    <!--            left: 0;-->
-    <!--        }-->
-
-    <!--        .boxall:after, .boxfoot:after {-->
-    <!--            border-right: 2px solid #02a6b5;-->
-    <!--            right: 0;-->
-    <!--        }-->
-
-
-    <!--        .boxfoot {-->
-    <!--            position: absolute;-->
-    <!--            bottom: 0;-->
-    <!--            width: 100%;-->
-    <!--            left: 0;-->
-    <!--        }-->
-
-    <!--        .boxfoot:before,-->
-    <!--        .boxfoot:after {-->
-    <!--            position: absolute;-->
-    <!--            width: .1rem;-->
-    <!--            height: .1rem;-->
-    <!--            content: "";-->
-    <!--            border-bottom: 2px solid #02a6b5;-->
-    <!--            bottom: 0;-->
-    <!--        }-->
-
-
-    <!--        .sycm ul {-->
-    <!--            margin-left: -.5rem;-->
-    <!--            margin-right: -.5rem;-->
-    <!--            padding: 1.16rem 0;-->
-    <!--        }-->
-
-    <!--        .sycm li {-->
-    <!--            float: left;-->
-    <!--            width: 47.33%;-->
-    <!--            text-align: center;-->
-    <!--            position: relative-->
-    <!--        }-->
-
-    <!--        .sycm li:before {-->
-    <!--            position: absolute;-->
-    <!--            content: "";-->
-    <!--            height: 30%;-->
-    <!--            width: 1px;-->
-    <!--            background: rgba(255, 255, 255, .1);-->
-    <!--            right: 0;-->
-    <!--            top: 15%;-->
-    <!--        }-->
-
-    <!--        .sycm li:last-child:before {-->
-    <!--            width: 0;-->
-    <!--        }-->
-
-    <!--        .sycm li h2 {-->
-    <!--            font-size: 0.6rem;-->
-    <!--            color: #ffffff;-->
-    <!--            opacity: 0.7;-->
-    <!--        }-->
-
-    <!--        .sycm li span {-->
-    <!--            font-size: 0.5rem;-->
-    <!--            color: #ffffff;-->
-    <!--            opacity: 1;-->
-    <!--        }-->
-
-    <!--        ul li {-->
-    <!--            list-style-type: none;-->
-    <!--        }-->
-
-
-    <!--        .clearfix1:after, .clearfix1:before {-->
-    <!--            display: table;-->
-    <!--            content: " "-->
-    <!--        }-->
-
-    <!--        .clearfix1:after {-->
-    <!--            clear: both-->
-    <!--        }-->
-
-
-    <!--        .mainbox1 {-->
-    <!--            /*margin-top: 7px;*/-->
-    <!--            padding: .4rem .4rem 0rem .4rem;-->
-    <!--            position: absolute;-->
-    <!--        }-->
-
-    <!--        .mainbox1 > ul {-->
-    <!--            margin-left: -.4rem;-->
-    <!--            margin-right: -.4rem;-->
-    <!--        }-->
-
-    <!--        .mainbox1 > ul > li {-->
-    <!--            float: left;-->
-    <!--            padding: 0 .4rem-->
-    <!--        }-->
-
-    <!--        .mainbox1 > ul > li {-->
-    <!--            width: 30%-->
-    <!--        }-->
-
-    <!--        .mainbox1 > ul > li:nth-child(2) {-->
-    <!--            width: 40%-->
-    <!--        }-->
-
-    <!--        .boxall1 {-->
-    <!--            height: 7rem;width:22.8rem;-->
-    <!--            border: 1px solid rgba(25, 186, 139, .17);-->
-    <!--            padding: 0 .3rem .3rem .3rem;-->
-    <!--            background: rgba(255, 255, 255, .04);-->
-    <!--            background-size: 100% auto;-->
-    <!--            position: absolute;-->
-    <!--            margin-bottom: .3rem;-->
-    <!--            z-index: 10;-->
-    <!--            margin-top: 23px;-->
-    <!--        }-->
-
-    <!--        .boxall1:before,-->
-    <!--        .boxall1:after {-->
-    <!--            position: absolute;-->
-    <!--            width: .1rem;-->
-    <!--            height: .1rem;-->
-    <!--            content: "";-->
-    <!--            border-top: 2px solid #02a6b5;-->
-    <!--            top: 0;-->
-    <!--        }-->
-
-    <!--        .boxall1:before, .boxfoot1:before {-->
-    <!--            border-left: 2px solid #02a6b5;-->
-    <!--            left: 0;-->
-    <!--        }-->
-
-    <!--        .boxall1:after, .boxfoot1:after {-->
-    <!--            border-right: 2px solid #02a6b5;-->
-    <!--            right: 0;-->
-    <!--        }-->
-
-
-    <!--        .boxfoot1 {-->
-    <!--            position: absolute;-->
-    <!--            bottom: 0;-->
-    <!--            width: 100%;-->
-    <!--            left: 0;-->
-    <!--        }-->
-
-    <!--        .boxfoot1:before,-->
-    <!--        .boxfoot1:after {-->
-    <!--            position: absolute;-->
-    <!--            width: .1rem;-->
-    <!--            height: .1rem;-->
-    <!--            content: "";-->
-    <!--            border-bottom: 2px solid #02a6b5;-->
-    <!--            bottom: 0;-->
-    <!--        }-->
-
-
-    <!--        .sycm1 {-->
-    <!--            margin-top: 9px;-->
-    <!--        }-->
-
-    <!--        .sycm1 ul {-->
-    <!--            margin-left: -.5rem;-->
-    <!--            margin-right: -.5rem;-->
-    <!--            padding: .16rem 0;-->
-    <!--            line-height: 22px;-->
-    <!--        }-->
-
-    <!--        .sycm1 li {-->
-    <!--            float: left;-->
-    <!--            width: 33.33%;-->
-    <!--            text-align: center;-->
-    <!--            position: relative-->
-    <!--        }-->
-
-    <!--        .sycm1 li:before {-->
-    <!--            position: absolute;-->
-    <!--            content: "";-->
-    <!--            height: 30%;-->
-    <!--            width: 1px;-->
-    <!--            background: rgba(255, 255, 255, .1);-->
-    <!--            right: 0;-->
-    <!--            top: 15%;-->
-    <!--        }-->
-
-    <!--        .sycm1 li:last-child:before {-->
-    <!--            width: 0;-->
-    <!--        }-->
-
-
-    <!--        .sycm1 li h2 {-->
-    <!--            font-size: 0.6rem;-->
-    <!--            color: #ffffff;-->
-    <!--            opacity: 0.7;-->
-    <!--        }-->
-
-    <!--        .sycm1 li span {-->
-    <!--            font-size: 0.5rem;-->
-    <!--            color: #ffffff;-->
-    <!--            opacity: 1;-->
-    <!--        }-->
-
-
-    <!--        .clearfix2:after, .clearfix2:before {-->
-    <!--            display: table;-->
-    <!--            content: " "-->
-    <!--        }-->
-
-    <!--        .clearfix2:after {-->
-    <!--            clear: both-->
-    <!--        }-->
-
-
-
-    <!--        .mainbox2 {-->
-    <!--            margin-top: 221px;-->
-    <!--            padding: .4rem .4rem 0rem .4rem;-->
-    <!--            margin-left: 2px;-->
-    <!--        }-->
-
-    <!--        .mainbox2 > ul {-->
-    <!--            margin-left: -.4rem;-->
-    <!--            margin-right: -.4rem;-->
-    <!--        }-->
-
-    <!--        .mainbox2 > ul > li {-->
-    <!--            float: left;-->
-    <!--            padding: 0 .4rem-->
-    <!--        }-->
-
-    <!--        .mainbox2 > ul > li {-->
-    <!--            width: 30%-->
-    <!--        }-->
-
-    <!--        .mainbox2 > ul > li:nth-child(2) {-->
-    <!--            width: 40%-->
-    <!--        }-->
-
-    <!--        .boxall2 {-->
-    <!--            height: 17rem;width:26.3rem;-->
-    <!--            border: 1px solid rgba(25, 186, 139, .17);-->
-    <!--            padding: 0 .3rem .3rem .3rem;-->
-    <!--            background-size: 100% auto;-->
-    <!--            position: relative;-->
-    <!--            margin-bottom: .3rem;-->
-    <!--            z-index: 10;-->
-    <!--        }-->
-
-    <!--        .boxall2:before,-->
-    <!--        .boxall2:after {-->
-    <!--            position: absolute;-->
-    <!--            width: .1rem;-->
-    <!--            height: .1rem;-->
-    <!--            content: "";-->
-    <!--            border-top: 2px solid #02a6b5;-->
-    <!--            top: 0;-->
-    <!--        }-->
-
-    <!--        .boxall2:before, .boxfoot2:before {-->
-    <!--            border-left: 2px solid #02a6b5;-->
-    <!--            left: 0;-->
-    <!--        }-->
-
-    <!--        .boxall2:after, .boxfoot2:after {-->
-    <!--            border-right: 2px solid #02a6b5;-->
-    <!--            right: 0;-->
-    <!--        }-->
-
-
-    <!--        .boxfoot2 {-->
-    <!--            position: absolute;-->
-    <!--            bottom: 0;-->
-    <!--            width: 100%;-->
-    <!--            left: 0;-->
-    <!--        }-->
-
-    <!--        .boxfoot2:before,-->
-    <!--        .boxfoot2:after {-->
-    <!--            position: absolute;-->
-    <!--            width: .1rem;-->
-    <!--            height: .1rem;-->
-    <!--            content: "";-->
-    <!--            border-bottom: 2px solid #02a6b5;-->
-    <!--            bottom: 0;-->
-    <!--        }-->
-
-
-    <!--        .sycm2 {-->
-    <!--            margin-top: 53px;-->
-    <!--        }-->
-
-    <!--        .sycm2 ul {-->
-    <!--            margin-left: -.5rem;-->
-    <!--            margin-right: -.5rem;-->
-    <!--            padding: .16rem 0;-->
-    <!--            line-height: 22px;-->
-    <!--        }-->
-
-    <!--        .sycm2 li {-->
-    <!--            float: left;-->
-    <!--            width: 33.33%;-->
-    <!--            text-align: center;-->
-    <!--            position: relative-->
-    <!--        }-->
-
-    <!--        .sycm2 li:before {-->
-    <!--            position: absolute;-->
-    <!--            content: "";-->
-    <!--            height: 30%;-->
-    <!--            width: 1px;-->
-    <!--            background: rgba(255, 255, 255, .1);-->
-    <!--            right: 0;-->
-    <!--            top: 15%;-->
-    <!--        }-->
-
-    <!--        .sycm2 li:last-child:before {-->
-    <!--            width: 0;-->
-    <!--        }-->
-
-
-    <!--        .sycm2 li h2 {-->
-    <!--            font-size: 0.6rem;-->
-    <!--            color: #ffffff;-->
-    <!--            opacity: 0.7;-->
-    <!--        }-->
-
-    <!--        .sycm2 li span {-->
-    <!--            font-size: 0.5rem;-->
-    <!--            color: #ffffff;-->
-    <!--            opacity: 1;-->
-    <!--        }-->
-
-
-    <!--        @font-face {-->
-    <!--            font-family: 'UnidreamLED';-->
-    <!--            src: url('fonts/LED Dot-Matrix.ttf');-->
-    <!--        }-->
-
-
-    <!--        .timeshow {-->
-    <!--            margin-top: -20px;-->
-    <!--            margin-left: 139px;-->
-    <!--            position:absolute;-->
-    <!--        }-->
-
-    <!--        .curtitle {-->
-    <!--            font-family: "微软雅黑", serif;-->
-    <!--            font-size: 0.5rem;-->
-    <!--            color: #ffffff;-->
-    <!--            opacity: 0.6;-->
-    <!--        }-->
-
-    <!--        .current {-->
-    <!--            letter-spacing: 0.1em;-->
-    <!--            font-size: 1em;-->
-    <!--            font-family: 'UnidreamLED', serif;-->
-    <!--            color: #00ca6d;-->
-    <!--            margin-top: 10px;-->
-    <!--        }-->
-
-    <!--        .timeshow1 {-->
-    <!--            margin-top: -20px;-->
-    <!--            margin-left: 271px;-->
-    <!--            position: absolute;-->
-    <!--        }-->
-
-    <!--        .curtitle1 {-->
-    <!--            font-family: "微软雅黑", serif;-->
-    <!--            font-size: 0.5rem;-->
-    <!--            color: #ffffff;-->
-    <!--            opacity: 0.6;-->
-    <!--        }-->
-
-    <!--        .current1 {-->
-    <!--            letter-spacing: 0.1em;-->
-    <!--            font-size: 1em;-->
-    <!--            font-family: 'UnidreamLED', serif;-->
-    <!--            color: #00ca6d;-->
-    <!--            margin-top: 10px;-->
-    <!--        }-->
-
-
-    <!--        .fskimp {-->
-    <!--            margin-left: 265px;-->
-    <!--            margin-top: 166px;-->
-    <!--            position: absolute;-->
-    <!--        }-->
-
-    <!--        .fskimp h3 {-->
-    <!--            font-size: 0.6rem;-->
-    <!--            color: #ffffff;-->
-    <!--            opacity: 0.7;-->
-    <!--        }-->
-
-    <!--        .fskimp p {-->
-    <!--            font-size: 0.5rem;-->
-    <!--            color: #ffffff;-->
-    <!--            opacity: 1;-->
-    <!--            line-height: 31px;-->
-    <!--            text-decoration: underline;-->
-    <!--        }-->
-
-    <!--        .fskstatus {-->
-    <!--            font: 13px/23px 'PingFang SC', Arial, 'Microsoft YaHei', sans-serif;-->
-    <!--            font-style: normal;-->
-    <!--            font-variant-ligatures: normal;-->
-    <!--            font-variant-caps: normal;-->
-    <!--            font-variant-numeric: normal;-->
-    <!--            font-variant-east-asian: normal;-->
-    <!--            font-weight: normal;-->
-    <!--            font-stretch: normal;-->
-    <!--            font-family: "PingFang SC", Arial, "Microsoft YaHei", sans-serif;-->
-    <!--        }-->
-
-    <!--        .cssrun {-->
-    <!--            position: absolute;-->
-    <!--        }-->
-
-    <!--        .ledrun1 {-->
-    <!--            letter-spacing: 0.1em;-->
-    <!--            font-size: 3em;-->
-    <!--            font-family: 'UnidreamLED', serif;-->
-    <!--            color: #ff0000;-->
-    <!--            margin-top: 18px;-->
-    <!--            font-style: normal;-->
-    <!--            margin-left: -45px;-->
-
-    <!--        }-->
-
-    <!--        .ledrun2 {-->
-    <!--            letter-spacing: 0.1em;-->
-    <!--            font-size: 1em;-->
-    <!--            font-family: 'UnidreamLED', serif;-->
-    <!--            color: #00ff00;-->
-    <!--            margin-top: 18px;-->
-    <!--            font-style: normal;-->
-    <!--            margin-left: 15px;-->
-
-    <!--        }-->
-
-    <!--        .ledrun3 {-->
-    <!--            letter-spacing: 0.1em;-->
-    <!--            font-size: 3em;-->
-    <!--            font-family: 'UnidreamLED', serif;-->
-    <!--            color: #0000ff;-->
-    <!--            margin-top: 18px;-->
-    <!--            font-style: normal;-->
-    <!--            margin-left: 78px;-->
-
-    <!--        }-->
-
-
-
-    <!--        .ledsceen .cssrun {-->
-    <!--            margin-top: -478px;-->
-    <!--            margin-left: 90px;-->
-    <!--            width: 253px;-->
-    <!--            height: 133px;-->
-    <!--            line-height: 100px;-->
-    <!--            font-size: 2em;-->
-    <!--            font-family: sans-serif;-->
-    <!--            font-weight: bold;-->
-    <!--            white-space: nowrap;-->
-    <!--            overflow: hidden;-->
-    <!--        }-->
-
-    <!--        .ledsceen .cssrun {-->
-    <!--            background: url(img/led.svg) no-repeat center center;-->
-    <!--            color: #FBF2D5;-->
-    <!--            transform-origin: left;-->
-    <!--            transform: perspective(300px) rotateX(0deg);-->
-    <!--        }-->
-
-
-    <!--        .ledsceen .cssrun span {-->
-    <!--            position: absolute;-->
-    <!--            animation: marquee 5s linear infinite;-->
-
-    <!--        }-->
-
-
-    <!--        @keyframes marquee {-->
-    <!--            from {-->
-    <!--                left: 100%;-->
-    <!--            }-->
-    <!--            to {-->
-    <!--                left: -130%;-->
-    <!--            }-->
-    <!--        }-->
-
-    <!--        .checkspan{-->
-    <!--            color: #409EFF;-->
-    <!--        }-->
-
-    <!--        .sliderclass{-->
-    <!--            color: #606266;-->
-    <!--        }-->
-
-    <!--        .hdrslstyle{-->
-    <!--            color: #606266;-->
-    <!--        }-->
-
-    <!--    </style>-->
     <style  type="text/css">
         /* 当屏幕分辨率不超过1920px的时候将body内容缩放成150% */
         /* @media screen and (max-width: 1921px) {
@@ -1144,16 +16,11 @@
 
         /* }*/
         /*!*适应pad端 宽度在640-1000之间*!*/
-        @media screen and (min-width: 640px) and (max-width: 1000px) {
-            body{
-                zoom: 80%;
-            }
-        }
-        /* @media screen and (min-width: 2048px) and (max-width: 2560px){
+        @media screen and (min-width: 2048px) and (max-width: 2560px){
              body{
-                 zoom: 10%;
+                 zoom: 150;
              }
-         }*/
+         }
         * {
             margin: 0;
             padding: 0;
@@ -2267,8 +1134,8 @@
 
 
     <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/style.css">
 
 
     <script src="js/vue.min.js"></script>
@@ -2276,11 +1143,6 @@
     <script src="js/echarts.min.js"></script>
     <script src="js/echarts-liquidfill.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
-
-
-
-
-
 </head>
 
 <body >
@@ -2447,7 +1309,7 @@
                         <div class="gx0" id="chartmain0"></div>
                     </div>
                 </div>
-                <div class="right1" style="display: none;"><h3 class="rt1">传感器信息</h3>
+                <div class="right1" style="display:none;"><h3 class="rt1">传感器信息</h3>
                     <div class="hjws" id="chartmain3"></div>
                     <div class="dy" id="chartmain1"></div>
                     <div title="开">
@@ -2461,7 +1323,7 @@
                 <div class="box-center">
                     <div class="center-bottom">
                         <div class="city-data">
-                            <div id="tuopu" style="width: 1450px;height:800px;margin-left: -253px;margin-top: 48px;">
+                            <div id="tuopu">
                             </div>
                         </div>
                     </div>
@@ -2471,12 +1333,12 @@
                 <div class="pop-up">
                     <span class="close-pop"></span>
                     <h2 id="boxTitle" class="title"></h2>
-                    <h3  style="width: 100%;height:40px;font-size: 26px;color:#0e94eb;margin-left:527px;position: absolute;margin-top: 116px;">
+                    <h3>
                         <b>箱体型号:<span id="productTitle" style="color: white;"></span></b></h3>
                     <!-- 模组信息弹框 -->
                     <div  class="modedetail" >
                         <!-- 模组信息 -->
-                        <h2 style="width: 140px;height:40px;line-height:37px;text-align:center;font-size: 20px;color:#0e94eb;margin-top: 75px;margin-left: 45px;background: url(/images/moduleDetailTitle.png) top left no-repeat">
+                        <h2>
                             <b>模组信息</b>
                         </h2>
                         <ul style="width:340px;font-size: 15px;margin-left: 60px;margin-top: 10px;line-height: 30px;">
@@ -2489,7 +1351,7 @@
                                 间距：<b><span id="MOD_SPACE" style="color: #E9E7E7;margin-left: 119px;"></span></b>
                             </li>
                             <!-- 分割线 -->
-                            <li style="margin-top: 13px;border-bottom:rgba(255, 255, 255, 0.2) 1px solid;"></li>
+                            <li class="fengexian"></li>
                             <!-- 规格类型 -->
                             <li style="color: #0e94eb;margin-top: 13px;">
                                 规格型号：<b><span id="LAMP_PARA_STYLE" style="color: #E9E7E7;margin-left: 81px;"></span></b>
@@ -2513,7 +1375,7 @@
                         <div class="sensor_Message" >
                             <label class="four-f">&nbsp;&nbsp;&nbsp;传感器</label>
                             <div class="didimen1">
-                                <ul style="margin-left:12px;margin-top:-4px;">
+                                <ul class="sensor_Message_1">
                                     <li style="margin-top: 8px;color: #0e94eb;">电压：<span id="SENSOR_VOL" style="color: #E9E7E7"></span></li>
                                     <li style="margin-top: 8px;color: #0e94eb;">电流：<span id="SENSOR_CURRENT" style="color: #E9E7E7">A</span></li>
                                     <li style="margin-top: 8px;color: #0e94eb;">亮度范围：<span id="SENSOR_BRI" style="color: #E9E7E7">cd/m²</span></li>
@@ -2524,7 +1386,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="set-box" style="height: 80px;position: absolute;margin-top: 276px;margin-left: 4px;">
+                        <div class="driverIc">
                             <label >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;驱动IC</label>
                             <div class="didimen2">
                                 <ul style="margin-left:12px;margin-top:4px;">
@@ -2614,21 +1476,145 @@
 
         </div>
 
-        <!-- 屏体设置 -->
+        <!-- 箱体设置 -->
         <div class="tab" style="display: none;">
             1
-            <div id="app" style="border: black 1px solid">
-                <div style="margin-top: 20px;">
-                    <el-tabs v-model="editableTabsValue" type="card" closable @tab-remove="removeTab">
-                        <el-tab-pane
-                                v-for="(item, index) in editableTabs"
-                                :key="item.name"
-                                :label="item.title"
-                                :name="item.name"
-                        >
-                            {{item.content}}
-                        </el-tab-pane>
-                    </el-tabs>
+
+            <div id="boxconnect">
+                <div class="addtab">
+                    <el-button
+                            size="small"
+                            @click="addTab(editableTabsValue)"
+                    >
+                        新增屏体+
+                    </el-button>
+                </div>
+                <div class="selectSender">
+                    <label>
+                        <b>发送卡：</b>
+                    </label>
+                    <template>
+                        <el-select v-model="singleSender" size="small" @change="changSender(singleSender)" placeholder="请选择">
+                            <el-option
+                                    v-for="item in senderItem"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </template>
+                </div>
+                <el-tabs v-model="editableTabsValue" @tab-click="senderTabClick" type="card" closable @tab-remove="removeTab">
+                    <el-tab-pane
+                            v-for="(item, index) in editableTabs"
+                            :key="item.name"
+                            :label="item.title"
+                            :name="item.name"
+                    >
+                        <h1>参数设置-{{item.content}}</h1>
+                        <div class="portRow">
+                            <div class="portRow-Label">
+                                <label>发送卡网口设置</label>
+                            </div>
+                            <el-radio-group v-model="port_radio" size="small">
+                                <el-radio-button label="P1"></el-radio-button>
+                                <el-radio-button label="P2" disabled ></el-radio-button>
+                                <el-radio-button label="P3"></el-radio-button>
+                                <el-radio-button label="P4"></el-radio-button>
+                            </el-radio-group>
+
+                            <el-radio-group v-model="port_radio" size="small">
+                                <el-radio-button label="P5"></el-radio-button>
+                                <el-radio-button label="P6"></el-radio-button>
+                                <el-radio-button label="P7"></el-radio-button>
+                                <el-radio-button label="P8"></el-radio-button>
+                            </el-radio-group>
+
+                            <div class="port-smallNum">
+                                <el-radio-group v-model="port_radio" size="small">
+                                    <el-radio-button label="P9"></el-radio-button>
+                                    <el-radio-button label="P10"></el-radio-button>
+                                    <el-radio-button label="P11"></el-radio-button>
+                                    <el-radio-button label="P12"></el-radio-button>
+                                </el-radio-group>
+                            </div>
+
+                            <div class="port-meidunNum">
+                                <el-radio-group v-model="port_radio" size="small">
+                                    <el-radio-button label="P13"></el-radio-button>
+                                    <el-radio-button label="P14"></el-radio-button>
+                                    <el-radio-button label="P15"></el-radio-button>
+                                    <el-radio-button label="P16"></el-radio-button>
+                                </el-radio-group>
+                            </div>
+                        </div>
+                        <div class="pianyiliang">
+                            <h2>发送卡偏移量</h2>
+                            <div class="XXX">
+                                <label>偏移量-X</label>
+                                <el-input-number v-model="pianyinumX" controls-position="right" @change="handleChange_pianyiliangX" size="mini" :min="-1000" :max="1000"></el-input-number>
+                            </div>
+
+                            <div class="YYY">
+                                <label>偏移量-Y</label>
+                                <el-input-number v-model="pianyinumY" controls-position="right" @change="handleChange_pianyiliangY" size="mini" :min="-1000" :max="1000"></el-input-number>
+                            </div>
+                            <div class="context">
+                                <label>偏移量</label>
+                                <h2>(  {{pianyinumX}},{{pianyinumY}} )</h2>
+                            </div>
+                        </div>
+                        <div class="pingti-option">
+                            <div class="row-label">
+                                <label>箱体列数</label>
+                            </div>
+                            <el-input-number v-model="rowNum" size="mini" @change="handleRowChange" :min="0" :max="10" label="描述文字"></el-input-number>
+
+                            <div class="line-counter">
+                                <div class="row-label" >
+                                    <label>箱体行数</label>
+                                </div>
+                                <el-input-number v-model="lineNum" size="mini" @change="handleLineChange" :min="0" :max="12" label="描述文字"></el-input-number>
+                            </div>
+                        </div>
+                        <div class="boxType">
+                            <label>箱体类型：</label>
+                            <el-input v-model="boxtype" placeholder="箱体类型"></el-input>
+                        </div>
+                        <div class="box-width-height">
+                            <div class="box_width">
+                                <label>箱体宽度:</label>
+                                <el-input
+                                        size="mini"
+                                        placeholder="箱体宽度"
+                                        v-model="box_width"
+                                        :disabled="true">
+                                </el-input>
+                            </div>
+                            <div class="box_height">
+                                <label>箱体长度:</label>
+                                <el-input
+                                        size="mini"
+                                        placeholder="箱体长度"
+                                        v-model="box_height"
+                                        :disabled="true">
+                                </el-input>
+                            </div>
+                        </div>
+                        <h1>箱体连接-{{item.content}}</h1>
+                        <div class="box-connetor">
+                            <el-button type="primary" @click="connetorfirst" plain>主要按钮</el-button>
+                            <el-button type="success" @click="connetorSecond" plain>成功按钮</el-button>
+                            <div class="secondhang">
+                                <el-button type="info" @click="connetorthird" plain>信息按钮</el-button>
+                                <el-button type="warning" @click="connetorFouth" plain>警告按钮</el-button>
+                            </div>
+                        </div>
+                    </el-tab-pane>
+                </el-tabs>
+
+                <div class="box-Connect-box">
+                    <canvas id="box-canvas" width="1035" height="760" style="position: absolute;"> 你的浏览器不支持 canvas，请升级你的浏览器。</canvas>
                 </div>
             </div>
         </div>
@@ -2772,6 +1758,65 @@
         el: '#app',
         data () {
             return {
+                /**
+                 * 屏体设置所需参数
+                 * */
+                //当前发送卡
+                singleSender:'sender1',
+                //发送卡列表
+                senderItem:[{
+                    value: 'sender1',
+                    label: '发送卡1'
+                }, {
+                    value: 'sender2',
+                    label: '发送卡2'
+                }, {
+                    value: 'sender3',
+                    label: '发送卡3'
+                }, {
+                    value: 'sender4',
+                    label: '发送卡4'
+                }, {
+                    value: 'sender5',
+                    label: '发送卡5'
+                }],
+                //箱体长度
+                box_height:'',
+                //箱体宽度
+                box_width: '',
+                //箱体类型
+                boxtype: '',
+                //偏移量-X
+                pianyinumX: 0,
+                //偏移量-Y
+                pianyinumY: 0,
+                //箱体列数
+                rowNum: 0,
+                //箱体行数
+                lineNum: 0,
+                //网口选择
+                port_radio:'',
+                //tab索引
+                editableTabsIndex: '0',
+                //tab起始值
+                editableTabsValue: '1',
+                //tab数据
+                editableTabs: [{
+                    title: '屏体 1',
+                    name: '1',
+                    content: '屏体 1',
+                    contextbody:{
+                        row: 0,
+                        line: 0,
+                        port: [{
+                            name:'P1'
+                        },{
+                            name:'P2'
+                        }]
+                    }
+                }],
+                tabIndex: 1,
+
                 comlist:"",
                 destination:"",
                 source:"",
@@ -3271,7 +2316,7 @@
                     series: [{
                         type: 'liquidFill',
                         name: '亮度',
-                        radius: '30%',
+                        radius: '40%',
                         color: ['#195ba6'],
                         center: ['20%', '23%'],
                         data: [_self.bright/100],
@@ -3295,7 +2340,7 @@
                                         + param.value*100+"%";
                                 },
                                 textStyle: {
-                                    fontSize: 10,
+                                    fontSize: 18,
                                     color: '#e6e6e6',
                                 },
                             },
@@ -3305,7 +2350,7 @@
 
                             type: 'liquidFill',
                             name: '色温',
-                            radius: '30%',
+                            radius: '40%',
                             color: ['#8a7e4e'],
                             center: ['80%', '23%'],
                             data: [_self.chroma],
@@ -3329,7 +2374,7 @@
                                             +param.value +'k';
                                     },
                                     textStyle: {
-                                        fontSize: 10,
+                                        fontSize: 18,
                                         color: '#e6e6e6',
                                     },
                                 },
@@ -3339,7 +2384,7 @@
                         {
                             type: 'liquidFill',
                             name: '伽马',
-                            radius: '30%',
+                            radius: '40%',
                             color: ['#195ba6'],
                             center: ['20%', '70%'],
                             data: [1],
@@ -3363,7 +2408,7 @@
                                             + _self.gamma;
                                     },
                                     textStyle: {
-                                        fontSize: 10,
+                                        fontSize: 18,
                                         color: '#e6e6e6',
                                     },
                                 },
@@ -3373,7 +2418,7 @@
 
                             type: 'liquidFill',
                             name: '色相',
-                            radius: '30%',
+                            radius: '40%',
                             color: ['#8a7e4e'],
                             center: ['80%', '70%'],
                             data: [_self.hue/100],
@@ -3397,7 +2442,7 @@
                                             + param.value*100;
                                     },
                                     textStyle: {
-                                        fontSize: 10,
+                                        fontSize: 18,
                                         color: '#e6e6e6',
                                     },
                                 },
@@ -3781,7 +2826,7 @@
                     series: [{
                         type: 'liquidFill',
                         name: '环境亮度',
-                        radius: '20%',
+                        radius: '25%',
                         color: ['#195ba6'],
                         center: ['20%', '23%'],
                         data: [_self.envi_bright/100],
@@ -3805,7 +2850,7 @@
                                         + param.value*100;
                                 },
                                 textStyle: {
-                                    fontSize: 10,
+                                    fontSize: 14,
                                     color: '#e6e6e6',
                                 },
                             },
@@ -3815,7 +2860,7 @@
 
                             type: 'liquidFill',
                             name: '温度',
-                            radius: '20%',
+                            radius: '25%',
                             color: ['#884046'],
                             center: ['50%', '23%'],
                             data: [_self.temp/100],
@@ -3839,7 +2884,7 @@
                                             + param.value*100;
                                     },
                                     textStyle: {
-                                        fontSize: 10,
+                                        fontSize: 16,
                                         color: '#e6e6e6',
                                     },
                                 },
@@ -3849,7 +2894,7 @@
                         {
                             type: 'liquidFill',
                             name: '湿度',
-                            radius: '20%',
+                            radius: '25%',
                             color: ['#8a7e4e'],
                             center: ['80%', '23%'],
                             data: [_self.humidity/100],
@@ -3873,7 +2918,7 @@
                                             + param.value*100;
                                     },
                                     textStyle: {
-                                        fontSize: 10,
+                                        fontSize: 16,
                                         color: '#e6e6e6',
                                     },
                                 },
@@ -3917,10 +2962,20 @@
                 //网口最大总数量
                 var MaxPort = 16;
 
-                //X轴上单个偏移差值为60一个单位(向右+60)----屏体（同网口）
+                //X轴上单个偏移差值为60一个单位(向右+60)----箱体（同网口）
                 var XInit = [560,630,700,770,840,910,980,1050];
-                //Y轴上单个偏移差值为140一个单位(向下-140)----屏体
+                //Y轴上单个偏移差值为140一个单位(向下-140)----箱体
                 var YInit = [810,690,570,450,330,210,90,-30];
+                //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
+                var curWwwPath = window.document.location.href;
+                //获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
+                var pathName = window.document.location.pathname;
+                var pos = curWwwPath.indexOf(pathName);
+                //获取主机地址，如： http://localhost:8083
+                var localhostPaht = curWwwPath.substring(0, pos);
+                //获取带"/"的项目名，如：/uimcardprj
+                var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+
                 //矢量图形组
                 var nodes = [{
                     x: 0,
@@ -3929,7 +2984,8 @@
                     name: '控制卡',
                     type: '播放器',
                     detail:"OK",
-                    svgPath: 'M868.48 104.96H155.52a32 32 0 0 0-32 32v538.24a32 32 0 0 0 32 32h712.96a32 32 0 0 0 32-32V136.96a32 32 0 0 0-32-32z m-32 64V390.4H187.52V168.96zM187.52 643.2V422.4h648.96v221.44z M252.8 232.96h32v74.88h-32zM334.72 232.96h32v74.88h-32zM252.8 502.4h32v74.88h-32zM334.72 502.4h32v74.88h-32zM868.48 853.12H600.96a94.72 94.72 0 0 0-56.96-56.96v-53.76h-64v53.76a94.72 94.72 0 0 0-56.96 56.96H155.52a32 32 0 1 0 0 64h267.52a94.08 94.08 0 0 0 177.92 0h267.52a32 32 0 0 0 0-64zM512 915.84a30.72 30.72 0 1 1 30.72-30.72 30.72 30.72 0 0 1-30.72 30.72z',
+                    // svgPath: 'M868.48 104.96H155.52a32 32 0 0 0-32 32v538.24a32 32 0 0 0 32 32h712.96a32 32 0 0 0 32-32V136.96a32 32 0 0 0-32-32z m-32 64V390.4H187.52V168.96zM187.52 643.2V422.4h648.96v221.44z M252.8 232.96h32v74.88h-32zM334.72 232.96h32v74.88h-32zM252.8 502.4h32v74.88h-32zM334.72 502.4h32v74.88h-32zM868.48 853.12H600.96a94.72 94.72 0 0 0-56.96-56.96v-53.76h-64v53.76a94.72 94.72 0 0 0-56.96 56.96H155.52a32 32 0 1 0 0 64h267.52a94.08 94.08 0 0 0 177.92 0h267.52a32 32 0 0 0 0-64zM512 915.84a30.72 30.72 0 1 1 30.72-30.72 30.72 30.72 0 0 1-30.72 30.72z',
+                    svgPath:'image://'+localhostPaht+'/images/player.png',
                     symbolSize: 100,
 
                 }
@@ -4000,8 +3056,8 @@
                             name: senderOrder.ID,
                             type: '发送卡',
                             detail:'ok',
-                            svgPath: 'M 0 265.6 v 448 h 192 v 64 h 128 v -64 h 384 v 64 h 128 v -64 h 192 v -448 H 0 Z m 960 384 H 64 v -320 h 896 v 320 Z m -64 -256 h -256 v 192 h 256 v -192 Z m -64 128 h -128 v -64 h 128 v 64 Z m -640 -64 H 128 v -64 h 64 v 64 Z m 128 0 H 256 v -64 h 64 v 64 Z m 128 0 h -64 v -64 h 64 v 64 Z m -256 128 H 128 v -64 h 64 v 64 Z m 128 0 H 256 v -64 h 64 v 64 Z m 128 0 h -64 v -64 h 64 v 64 Z m 128 -128 h -64 v -64 h 64 v 64 Z m 0 128 h -64 v -64 h 64 v 64 Z'
-
+                            // svgPath: 'M 0 265.6 v 448 h 192 v 64 h 128 v -64 h 384 v 64 h 128 v -64 h 192 v -448 H 0 Z m 960 384 H 64 v -320 h 896 v 320 Z m -64 -256 h -256 v 192 h 256 v -192 Z m -64 128 h -128 v -64 h 128 v 64 Z m -640 -64 H 128 v -64 h 64 v 64 Z m 128 0 H 256 v -64 h 64 v 64 Z m 128 0 h -64 v -64 h 64 v 64 Z m -256 128 H 128 v -64 h 64 v 64 Z m 128 0 H 256 v -64 h 64 v 64 Z m 128 0 h -64 v -64 h 64 v 64 Z m 128 -128 h -64 v -64 h 64 v 64 Z m 0 128 h -64 v -64 h 64 v 64 Z'
+                            svgPath:'image://'+localhostPaht+'/images/senderReal.png'
                         }
                         //新增拓扑连接线
                         var lineSender = {
@@ -4053,10 +3109,10 @@
                                  };
                                  nodes.push(singlePort);
                              }
-                             //遍历单个走线口的屏体信息
+                             //遍历单个走线口的箱体信息
                              for(var boxindex = 0;boxindex < port.BOX.length;boxindex++){
                                  var box = port.BOX[boxindex];
-                                 //判断屏体顺序是否为1能和端口直连
+                                 //判断箱体顺序是否为1能和端口直连
                                  if(box.ORDER == 1){
                                      var portBox = {
                                          source: port.ID+senderOrder.ID,
@@ -4068,7 +3124,7 @@
                                      //端口连接线新增
                                      links.push(portBox);
                                  }
-                                 //判断小于最后一个屏体之间的相互串联
+                                 //判断小于最后一个箱体之间的相互串联
                                  if(box.ORDER < port.BOX.length){
                                      var boxNext = port.BOX[boxindex+1]
                                      //当下个箱体为空时不执行
@@ -4083,14 +3139,14 @@
                                          links.push(portBox);
                                      }
                                  }
-                                 //单个屏体的信息
+                                 //单个箱体的信息
                                  var singleBox = {
                                      x: XInit[box.XPOS-1],
                                      y: YInit[box.YPOS-1],
                                      symbolSize: 46,
-                                     nodeName: "屏体"+box.ID,
+                                     nodeName: "箱体"+box.ID,
                                      name: senderOrder.ID+box.ID+boxindex,
-                                     type: '屏体',
+                                     type: '箱体',
                                      detail:box,
                                      svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
                                  }
@@ -4126,7 +3182,7 @@
                                     name: port.ID+senderOrder.ID,
                                     type: '网口',
                                     detail:null,
-                                    svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
+                                    svgPath: 'path://M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
                                 };
                                 //走线方式数组添加
                                 nodes.push(singlePort);
@@ -4141,11 +3197,11 @@
                                     name: port.ID+senderOrder.ID,
                                     type: '网口',
                                     detail:null,
-                                    svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
+                                    svgPath: 'path://M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
                                 };
                                 nodes.push(singlePort);
                             }
-                            //遍历单个走线口的屏体信息
+                            //遍历单个走线口的箱体信息
                             for(var boxindex = 0;boxindex < port.BOX.length;boxindex++){
 
                                 var box = port.BOX[boxindex];
@@ -4160,7 +3216,7 @@
                                 }
                                 links.push(hiddenLine);
 
-                                //判断屏体顺序是否为1能和端口直连
+                                //判断箱体顺序是否为1能和端口直连
                                 if(box.ORDER == 1){
                                     var box_State;
                                     //判断箱体状态
@@ -4193,7 +3249,7 @@
                                     nodeName: '主网线'
                                 }
                                 links.push(hiddenLineForPort);
-                                //判断小于最后一个屏体之间的相互串联
+                                //判断小于最后一个箱体之间的相互串联
                                 if(box.ORDER < port.BOX.length){
                                     var boxNext = port.BOX[boxindex+1]
                                     //当下个箱体为空时不执行
@@ -4219,14 +3275,14 @@
                                         links.push(portBox);
                                     }
                                 }
-                                //单个屏体的信息
+                                //单个箱体的信息
                                 var singleBox = {
                                     x: XInit[box.XPOS-1],
                                     y: YInit[box.YPOS-1],
                                     symbolSize: 70,
-                                    nodeName: "屏体"+box.ID,
+                                    nodeName: "箱体"+box.ID,
                                     name: senderOrder.ID+box.ID+boxindex,
-                                    type: '屏体',
+                                    type: '箱体',
                                     detail:box,
                                     svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
                                 }
@@ -4308,7 +3364,7 @@
                                         //有问题网口
                                         if(links[s].target === links[ok].source){
                                             links[ok]. name = "无法检测";
-                                            //有问题的直连屏体
+                                            //有问题的直连箱体
                                             for(var rts = 0;rts < links.length;rts++){
                                                 if(links[ok].target === links[rts].source){
                                                     links[rts]. name = "无法检测";
@@ -4355,7 +3411,7 @@
                         svgPath,
                         symbolSize
                     } = nodes[j];
-                    if(type == '屏体'){
+                    if(type == '箱体'){
                         var BoxColor ;
                         var BoxEmColor ;
                         //判断箱体状态
@@ -4384,7 +3440,8 @@
                             symbolSize: symbolSize || 50,
                             symbol: 'path://' + svgPath,
                             label:{
-                                position: ['24%', '42%']
+                                position: ['9%', '42%'],
+                                fontSize:20
                             },
                             itemStyle: {
                                 borderColor: 'rgba(147, 235, 248, 1)',
@@ -4423,7 +3480,7 @@
                             detail,
                             value: [x, y],
                             symbolSize: symbolSize || 50,
-                            symbol: 'path://' + svgPath,
+                            symbol: svgPath,
                             itemStyle: {
                                 color: '#468efd',
                                 emphasis: {
@@ -4465,15 +3522,15 @@
                             var SourceX = dataMap.get(links[i].source)[0];
                             var SourceY = dataMap.get(links[i].source)[1];
                             var TategerX = dataMap.get(links[i].target)[0];
-                            //当目标Y值小于YInit[4]，该屏体已经在第五组
+                            //当目标Y值小于YInit[4]，该箱体已经在第五组
                             var TategerY = dataMap.get(links[i].target)[1];
                             //第一个点--在网口出来的位置
                             var Source0;
                             //第二个点--在网口上方的位置
                             var Source ;
-                            //第三个点--在屏体上方的位置
+                            //第三个点--在箱体上方的位置
                             var Target;
-                            //当目标Y坐标小于Y轴第四个屏体的Y坐标
+                            //当目标Y坐标小于Y轴第四个箱体的Y坐标
                             if(TategerY < YInit[4] && SourceY > YInitPort - 151){
                                 Source0 = [SourceX+sopindex*7,SourceY]
                                 Source = [SourceX-sopindex*21,SourceY-sopindex*198]
@@ -4600,7 +3657,11 @@
                 option = {
                     legend: {
                         data:['连通','无法检测','警告','故障'],
-                        icon: "circle"
+                        icon: "circle",
+                        textStyle: {
+                            fontSize: 25,
+                            fontWeight: "lighter"
+                        }
                     },
                     //提示框显示
                     tooltip: {
@@ -4627,7 +3688,7 @@
                         transitionDuration: 0.8,
                         // formatter: '设备类型:{b}<br />序列号:<br />'
                         formatter: function (item) {
-                            if(item.data.type == '屏体'){
+                            if(item.data.type == '箱体'){
                                 var box_State;
                                 //判断箱体状态
                                 if(item.data.detail == 'uncheck' ){
@@ -4793,8 +3854,8 @@
                 myChart.setOption(option);
                 // 处理点击事件并且弹出数据名称-params传入的参数
                 myChart.on('click', function (params) {
-                    if(params.data.type == '屏体'){
-                        //屏体参数赋值
+                    if(params.data.type == '箱体'){
+                        //箱体参数赋值
                         var detail = params.data.detail;
                         info_title = detail;
                         //接收卡信息
@@ -4888,6 +3949,9 @@
                 }
             };
 
+
+        },
+        watch : {
 
         },
         methods:{
@@ -5055,6 +4119,125 @@
                 };
                 websocket.send(JSON.stringify(hdrContent));
             }
+
+
+
+            ,/**
+             * tab新增方法
+             * */
+            addTab(targetName) {
+                //新的Tab名字序号
+                let newTabName = ++this.tabIndex + '';
+                this.editableTabs.push({
+                    title: '屏体 '+newTabName,
+                    name: newTabName,
+                    content: '屏体 '+newTabName,
+                    contextbody:{
+                        row: 0,
+                        line: 0,
+                        port:[{
+                            name:'P1'
+                        },{
+                            name:'P2'
+                        }]
+                    }
+                });
+                this.editableTabsValue = newTabName;
+            },
+
+            /**
+             * tab删除方法
+             * */
+            removeTab(targetName) {
+                let tabs = this.editableTabs;
+                let activeName = this.editableTabsValue;
+                if (activeName === targetName) {
+                    tabs.forEach((tab, index) => {
+                        if (tab.name === targetName) {
+                            let nextTab = tabs[index + 1] || tabs[index - 1];
+                            if (nextTab) {
+                                activeName = nextTab.name;
+                            }
+                        }
+                    });
+                }
+
+                this.editableTabsValue = activeName;
+                this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+            },
+
+            /**
+             * 偏移量X改变
+             * */
+            handleChange_pianyiliangX(value){
+                console.log(value);
+            },
+
+            /**
+             * 偏移量Y改变
+             * */
+            handleChange_pianyiliangY(value){
+                console.log(value);
+            },
+
+            /**
+             * 箱体列数计数器改变的方法
+             * */
+            handleRowChange(value) {
+                draw(this.rowNum,this.lineNum);
+            },
+            /**
+             * 箱体行数计数器改变的方法
+             * */
+            handleLineChange(value) {
+                draw(this.rowNum,this.lineNum);
+            },
+
+            /**
+             *  发送卡tab转换的方法
+             * **/
+            senderTabClick(tab, event){
+                console.log(tab, event);
+                console.log("tab索引"+tab.index);
+                this.editableTabsIndex = tab.index;
+
+                this.rowNum = this.editableTabs[tab.index].contextbody.row ;
+                this.lineNum = this.editableTabs[tab.index].contextbody.line;
+            },
+
+            /**
+             * 发送卡改变方法
+             * */
+            changSender(value){
+                console.log("发送卡改变:"+value);
+            },
+
+            /**
+             * 顺序走线方式按钮
+             * */
+            connetorfirst(){
+                drawArrow(ctx, 150, 100, 400,100,30,30,10,'#f36');
+            },
+
+            /**
+             * 竖直顺序走线方式按钮
+             * */
+            connetorSecond(){
+
+            },
+
+            /**
+             * 逆序走线方式按钮
+             * */
+            connetorthird(){
+
+            },
+            /**
+             * 逆序走线方式按钮
+             * */
+            connetorFouth(){
+
+            }
         },
 
     });
@@ -5157,6 +4340,120 @@
         }
     }
 
+    //定义canvas图形
+    var canvas = document.getElementById('box-canvas');
+    var ctx = canvas.getContext("2d");
 
+    //注：使用这个函数，需要给Canvas元素的position设为absolute。
+    //要判断事件对象发生的位置，事件对象e的layerX和layerY属性表示Canvas内部坐标系中的坐标
+    function getEventPosition(ev){
+        var x, y;
+        if (ev.layerX || ev.layerX == 0) {
+            x = ev.layerX;
+            y = ev.layerY;
+        } else if (ev.offsetX || ev.offsetX == 0) { // Opera
+            x = ev.offsetX;
+            y = ev.offsetY;
+        }
+        return {x: x, y: y};
+    }
+
+    canvas.addEventListener('click',function (e) {
+        p = getEventPosition(e);
+
+        //初始值--//绘制矩形ctx.fillRect (102*i+10,s*62+10, 100, 60);
+        //真实X值
+        var realX = p.x-10;
+        console.log("X取整数=="+Math.ceil(realX/102));
+        //真实Y值
+        var realY = p.y-10;
+        //通过取整确定点击的箱体是第几行或者第几列
+        console.log("Y取整数=="+Math.ceil(realY/62));
+        // alert("第"+Math.ceil(realX/102)+"列 第"+Math.ceil(realY/62)+"行，即：（"+Math.ceil(realX/102)+","+Math.ceil(realY/62)+"）");
+    },false);
+
+
+    //生成箱体的封装方法
+    function draw(rowNum,lineNum){
+        if(!canvas.getContext) return;
+        if(typeof (lastRowIndex)!="undefined" && typeof (lastRowIndex)!=""){
+            if(typeof (lastLineIndex)!="undefined" && typeof (lastLineIndex)!=""){
+                let rowcha = lastRowIndex-rowNum;
+                let linecha = lastLineIndex-lineNum;
+                //当row没有改变得时候
+                if(rowcha === 0){
+                    for(let i = 0;i<linecha+1;i++){
+                        let realLineIndex = lastLineIndex-i;
+                        for(let s = 0;s<rowNum;s++){
+                            ctx.clearRect (s*102+10,realLineIndex*62+10, 100, 60);
+                        }
+                    }
+                    //当line没有改变得时候
+                }else if(linecha === 0){
+                    for(let i = 0;i<rowcha+1;i++){
+                        let realRowIndex = lastRowIndex-i;
+                        for(let s = 0;s< lineNum;s++){
+                            ctx.clearRect (realRowIndex*102+10,s*62+10,100,60);
+                        }
+                    }
+                }
+
+                if(rowNum > lastRowIndex ||lineNum > lastLineIndex ){
+                    for(let i = 0;i<rowNum;i++){
+                        for(let s = 0;s<lineNum;s++ ){
+                            ctx.font="10px Arial";
+                            //绘制矩形
+                            //绘制图形样式
+                            ctx.fillStyle = "rgb(42,189,25)";
+                            ctx.fillRect (102*i+10,s*62+10, 100, 60);
+                            ctx.fillStyle = 'red'; //填充线样式
+                            ctx.fillText("Hello World",101*i+30,s*61+40);
+                        }
+                    }
+                }
+
+            }
+        }
+        lastRowIndex = rowNum;
+        lastLineIndex = lineNum;
+      }
+
+    function drawArrow(ctx, fromX, fromY, toX, toY,theta,headlen,width,color) {
+
+        theta = typeof(theta) != 'undefined' ? theta : 30;
+        headlen = typeof(theta) != 'undefined' ? headlen : 10;
+        width = typeof(width) != 'undefined' ? width : 1;
+        color = typeof(color) != 'color' ? color : '#000';
+
+        // 计算各角度和对应的P2,P3坐标
+        var angle = Math.atan2(fromY - toY, fromX - toX) * 180 / Math.PI,
+            angle1 = (angle + theta) * Math.PI / 180,
+            angle2 = (angle - theta) * Math.PI / 180,
+            topX = headlen * Math.cos(angle1),
+            topY = headlen * Math.sin(angle1),
+            botX = headlen * Math.cos(angle2),
+            botY = headlen * Math.sin(angle2);
+
+        ctx.save();
+        ctx.beginPath();
+
+        var arrowX = fromX - topX,
+            arrowY = fromY - topY;
+
+        ctx.moveTo(arrowX, arrowY);
+        ctx.moveTo(fromX, fromY);
+        ctx.lineTo(toX, toY);
+        arrowX = toX + topX;
+        arrowY = toY + topY;
+        ctx.moveTo(arrowX, arrowY);
+        ctx.lineTo(toX, toY);
+        arrowX = toX + botX;
+        arrowY = toY + botY;
+        ctx.lineTo(arrowX, arrowY);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width;
+        ctx.stroke();
+        ctx.restore();
+    }
 </script>
 </html>

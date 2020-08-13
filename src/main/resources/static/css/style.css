@@ -1,5 +1,186 @@
 
 
+/*
+*箱体canvas样式
+*/
+.box-Connect-box{
+    width: 1045px;
+    height: 770px;
+    background-color: #f0f4f7;
+    float: right;
+    margin-top: -798px;
+    margin-right: 173px;
+}
+
+.box-Connect-box canvas{
+    border: #8D8D8D 8px solid;
+}
+
+/*
+       屏体设置样式
+*/
+
+#boxconnect{
+    width:80%;
+    height: 86%;
+    margin-top: 2%;
+    margin-left: 15%;
+    color: #ffffff;
+}
+
+#boxconnect .addtab{
+    margin-bottom: 20px;
+}
+
+#boxconnect .addtab .el-button--mini, .el-button--small{
+    font-size: 14px;
+    border-radius: 30px;
+}
+
+#boxconnect .addtab .el-button{
+    background: #33ff99;
+    border: 1px solid #00BB25;
+    color: #F0FFF0;
+}
+
+#boxconnect .selectSender{
+    height: 33px;
+    margin-left: 305px;
+    margin-top: -46px;
+}
+
+#boxconnect .selectSender .el-select {
+    width: 113px;
+}
+
+#boxconnect .pianyiliang{
+    height: 161px;
+    width: 248px;
+}
+
+#boxconnect .pianyiliang .XXX{
+    width: 70px;
+    margin-top: 12px;
+}
+
+#boxconnect .pianyiliang .YYY{
+    float: right;
+    margin-right: 43px;
+    margin-top: -59px;
+    width: 70px;
+}
+
+#boxconnect .pianyiliang .context{
+    margin-top: 17px;
+    margin-left: 69px;
+    font-size: 32px;
+}
+
+#boxconnect .pianyiliang .el-input-number--mini{
+    margin-top: 10px;
+    width: 114px;
+}
+
+#boxconnect .boxType>label{
+    font-size: 20px;
+}
+
+#boxconnect .boxType{
+    margin-top: 10px;
+    width: 190px;
+    height: 50px;
+}
+
+#boxconnect .boxType .el-input{
+    margin-top: 10px;
+}
+
+#boxconnect .box-width-height{
+    width: 229px;
+    height: 62px;
+    margin-top: 41px;
+}
+
+#boxconnect .box-width-height .box_width{
+    width: 90px;
+}
+
+#boxconnect .box-width-height .box_width .el-input--mini {
+
+}
+
+#boxconnect .box-width-height .box_height{
+    margin-right: 14px;
+    width: 90px;
+    float: right;
+    margin-top: -49px;
+}
+
+#boxconnect .box-connetor{
+    margin-top: 20px;
+}
+
+#boxconnect .box-connetor .secondhang{
+    margin-top: 10px;
+}
+
+/*
+* 标签页未点击时样式
+*/
+.el-tabs__item{
+    color: #ffffff;
+}
+
+
+.portRow{
+    margin-top: 20px;
+    width: 219px;
+    height: 220px;
+}
+
+.portRow .portRow-Label{
+    margin-left: 31px;
+}
+
+.portRow .el-radio-group{
+    margin-top: 10px;
+}
+
+.portRow .port-smallNum .el-radio-button--small .el-radio-button__inner{
+    padding: 9px 12.6px;
+}
+
+.portRow .port-meidunNum .el-radio-button--small .el-radio-button__inner{
+    padding: 9px 11.6px;
+}
+
+
+.pingti-option{
+    width: 252px;
+    height: 67px;
+    margin-top: 30px;
+}
+
+.pingti-option .line-counter{
+    float: right;
+    width: 115px;
+    height: 58px;
+    margin-top: -18px;
+}
+
+.pingti-option .row-label{
+    margin-left: 13px;
+}
+
+.pingti-option .el-input-number--mini {
+    width: 89px;
+    margin-top: 6px;
+}
+
+.pingti-option>label{
+    color: #fdf6ec;
+}
+
 img {
     display: inline-block;
     border: none;
@@ -7,12 +188,12 @@ img {
 }
 
 
-/*#tuopu{*/
-/*    width: 1450px;*/
-/*    height:800px;*/
-/*    margin-left: -253px;*/
-/*    margin-top: 48px;*/
-/*}*/
+#tuopu{
+    width: 1450px;
+    height:800px;
+    margin-left: -253px;
+    margin-top: 48px;
+}
 
 .container-flex {
     width: 100%;
@@ -55,6 +236,7 @@ img {
 
 .container {
     overflow-y:hidden;
+    overflow-x: hidden;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, .7);
@@ -91,7 +273,24 @@ img {
     background-size: 100% 100%;
     position: absolute;
     display:none;
-    z-index: 999;
+    z-index: 10;
+}
+
+.modedetail >h2{
+    width: 140px;
+    height:40px;
+    line-height:37px;
+    text-align:center;
+    font-size: 20px;
+    color:#0e94eb;
+    margin-top: 75px;
+    margin-left: 45px;
+    background: url(../images/moduleDetailTitle.png) top left no-repeat
+}
+
+.modedetail .fengexian{
+    margin-top: 13px;
+    border-bottom:rgba(255, 255, 255, 0.2) 1px solid;
 }
 
 .pop-up .title {
@@ -105,6 +304,17 @@ img {
     margin-top: 39px;
     position: absolute;
 }
+
+.pop-up >h3{
+    width: 100%;
+    height:40px;
+    font-size: 26px;
+    color:#0e94eb;
+    margin-left:527px;
+    position: absolute;
+    margin-top: 116px;
+}
+
 
 
 .close-pop {
@@ -141,6 +351,15 @@ img {
 }
 
 
+.rec_Message{
+    float: right;
+    margin-left: 1078px;
+    position: absolute;
+    margin-top: -205px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
 
 
 .module_Message>label {
@@ -150,6 +369,7 @@ img {
     margin-right: 10px;
     float: left;
 }
+
 
 .rec_Message>label {
     margin-bottom: 30px;
@@ -175,6 +395,33 @@ img {
     margin-top: 160px;
     margin-left:-160px;
 }
+
+.sensor_Message_1{
+    margin-left:12px;
+    margin-top:-4px;
+}
+
+
+.driverIc{
+    height: 33px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    height: 80px;
+    position: absolute;
+    margin-top: 276px;
+    margin-left: -77px;
+}
+
+
+.driverIc>label {
+    background-image: url(../images/labeltitle.png);
+    width:170px;
+    color: #cdddf7;
+    margin-right: 10px;
+    float: left;
+}
+
 
 .didimen2 {
     font-size: small;
@@ -230,6 +477,14 @@ img {
     align-items: center;
     margin-top: 415px;
     position: absolute;
+}
+
+.Power_Message>label {
+    background-image: url(../images/labeltitle.png);
+    width:170px;
+    color: #cdddf7;
+    margin-right: 10px;
+    float: left;
 }
 
 .sensor_Message {
@@ -341,455 +596,31 @@ img {
 }
 
 
-
-/*适应pad端 宽度在640-1000之间*/
-@media screen and (min-width: 640px) and (max-width: 1000px) {
-
-    .index_nav {
-        height: 11.3%;
-        background-color: #1D8CE0;
-        color: #ffffff;
-        top: 0;
-        left: 0;
-        width: 100%;
-        position: fixed;
-        z-index: 9999;
-    }
-
-    .close-pop {
-        display: inline-block;
-        position: absolute;
-        margin-top: 50px;
-        margin-right: 40px;
-        width: 60px;
-        height: 60px;
-        background: url(../images/close.png) center left no-repeat;
-        background-size: cover;
-        cursor: pointer;
-        z-index: 99;
-    }
-
-    #tuopu{
-        width: 1450px;
-        height:800px;
-        margin-top: 48px;
-    }
-    .sycm li h2 {
-        font-size: 0.9rem;
-        color: #ffffff;
-        opacity: 0.7;
-    }
-    .sycm ul {
-        margin-left: -.5rem;
-        margin-right: -.5rem;
-        padding: 0.36rem 0;
-    }
-    .sycm li span {
-        font-size: 0.9rem;
-        color: #ffffff;
-        opacity: 1;
-    }
-    .sycm2 li h2 {
-        font-size: 1.2rem;
-        color: #ffffff;
-        opacity: 0.7;
-    }
-    .sycm2 ul{
-        line-height:100px;
-    }
-    .boxall1 {
-        height: 7rem;width:30rem;
-        border: 1px solid rgba(25, 186, 139, .17);
-        padding: 0 .3rem .3rem .3rem;
-        background: rgba(255, 255, 255, .04);
-        background-size: 100% auto;
-        position: absolute;
-        margin-bottom: .3rem;
-        z-index: 10;
-        margin-top: 23px;
-    }
-    .boxall2 {
-        height: 30rem;width:32.3rem;
-        border: 1px solid rgba(25, 186, 139, .17);
-        padding: 0 .3rem .3rem .3rem;
-        background-size: 100% auto;
-        position: relative;
-        margin-bottom: .3rem;
-        z-index: 10;
-    }
-    .ledsceen .cssrun {
-        margin-top: -679px;
-        margin-left: 146px;
-        width: 253px;
-        height: 133px;
-        line-height: 100px;
-        font-size: 2em;
-        font-family: sans-serif;
-        font-weight: bold;
-        white-space: nowrap;
-        overflow: hidden;
-    }
-    .left {
-        width:270px;
-        height:370px;
-        float: left;
-        margin-left:20px;
-        margin-top:150px;
-    }
-    .azig {
-        margin-top: -146px;
-        margin-left: -21px;
-        position: absolute;
-    }
-    .left1 {
-        width: 510px;
-        height: 111.5%;
-        border: 0.001em solid #129ce6;
-        position:relative;
-        margin-top: 8px;
-    }
-    .center {
-        position: relative;
-        width:550px;
-        height:785px;
-        border:1px solid #129ce6;
-        float: left;
-        margin-left:540px;
-        margin-top: -370px;
-    }
-
-    .right {
-        width:400px;
-        height:788px;
-        float: right;
-        margin-right:-530px;
-        margin-top: -370px;
-    }
-    .nc {
-        position: fixed;
-        width: 100px;
-        height:50%;
-        display: block;
-        font-size:20px;
-        margin-left: -82px;
-        letter-spacing: 5px;
-        line-height: 120px;
-        -webkit-touch-callout: none; /* iOS Safari */
-
-        -webkit-user-select: none; /* Chrome/Safari/Opera */
-
-        -khtml-user-select: none; /* Konqueror */
-
-        -moz-user-select: none; /* Firefox */
-
-        -ms-user-select: none; /* Internet Explorer/Edge */
-
-        user-select: none; /* Non-prefixed version, currently not supported by any browser */
-    }
-
-    .gx0 {
-        width:397px;
-        height:218px;
-        position: relative;
-    }
-
-    .container-flex {
-        width: 100%;
-        height: 100%;
-        background-size: 100% 100%;
-        display: flex;
-        flex-flow: row nowrap;
-        justify-content: center;
-        outline: none;
-    }
-
-    .container {
-        width: 130%;
-        height: 100%;
-        background: rgba(0, 0, 0, .7);
-        position: absolute;
-        top: 0;
-        left: 0;
-        display: flex;
-        visibility: hidden;
-        justify-content: center;
-        align-items: center;
-        z-index:100;
-        margin-left: 90px;
-        margin-top: 587px;
-    }
-
-
-    .box-center {
-        width: 72%;
-        height: 100%;
-        /*    background: green;*/
-    }
-
-
-    .center-bottom {
-        width: 100%;
-        height: 75.9%;
-        position: relative;
-    }
-
-    .center-bottom>.city-data {
-        width:805px;
-        height: 100%;
-        margin: auto;
-        position: absolute;
-    }
-
-
-
-
-    .four-f {
-        letter-spacing: 4.5px;
-    }
-
-
-    .pop-up {
-        width: 100%;
-        height: 100%;
-        background: url(../images/popUP_bg.png) top left no-repeat;
-        background-size: 100% 100%;
-        position: absolute;
-        padding:20px 50px;
-        visibility: hidden;
-        /* z-index: 3;*/
-    }
-
-
-
-
-    .close-pop {
-        display: inline-block;
-        position: absolute;
-        top: 23px;
-        right: 57px;
-        width:17px;
-        height:17px;
-        background: url(../images/close.png) center left no-repeat;
-        background-size:17px 17px;
-        cursor: pointer;
-        z-index: 99;
-    }
-
-
-    .set-div {
-        width:1340px;
-        height: 88%;
-        margin: 0 auto;
-        overflow: hidden;
-        overflow-y: auto;
-        font-size: 18px;
-    }
-    .left0 {
-        width: 188%;
-        height: 98%;
-        border: 0.01rem solid #129ce6;
-    }
-
-
-
-    .four-f {
-        letter-spacing:4.5px;
-    }
-
-    .boxall {
-        height: 300px;
-        width:320px;
-        font-size: 68px;
-        border: 1px solid rgba(25, 186, 139, .17);
-        padding: 0 .3rem .3rem .3rem;
-        background: rgba(255, 255, 255, .04);
-        background-size: 100% auto;
-        position: relative;
-        margin-bottom: .3rem;
-        z-index: 10;
-    }
-
-    /*.set-box {*/
-    /*    height:33px;*/
-    /*    display: flex;*/
-    /*    flex-flow: row nowrap;*/
-    /*    align-items: center;*/
-    /*}*/
-
-    /*.moduleMessge{*/
-    /*    float: right;*/
-    /*    margin-left: 878px;*/
-    /*    position: absolute;*/
-    /*    margin-top: -255px;*/
-    /*    height:33px;*/
-    /*    display: flex;*/
-    /*    flex-flow: row nowrap;*/
-    /*    align-items: center;*/
-    /*}*/
-
-    /*.rc_Message{*/
-    /*    height:33px;*/
-    /*    display: flex;*/
-    /*    flex-flow: row nowrap;*/
-    /*    align-items: center;*/
-    /*    margin-top: -180px;*/
-    /*    margin-left: 853px;*/
-    /*}*/
-
-    /*.didimen1{*/
-    /*    font-size: small;*/
-    /*    border:1px solid #1dacfe;*/
-    /*    width:200px;*/
-    /*    height: 100px;*/
-    /*    margin-top: 160px;*/
-    /*    margin-left:-160px;*/
-    /*}*/
-
-    /*.didimen2{*/
-    /*    font-size: small;*/
-    /*    border:1px solid #1dacfe;*/
-    /*    width: 100px;*/
-    /*    height: 19.85px;*/
-    /*    margin-top: 70px;*/
-    /*    margin-left:-160px;*/
-    /*}*/
-
-    /*.didimen3{*/
-    /*    font-size: small;*/
-    /*    border:1px solid #1dacfe;*/
-    /*    width:190px;*/
-    /*    height: 100px;*/
-    /*    margin-top: 160px;*/
-    /*    margin-left:-160px;*/
-    /*}*/
-
-    /*.didimen4{*/
-    /*    font-size: small;*/
-    /*    border:1px solid #1dacfe;*/
-    /*    width:170px;*/
-    /*    height: 138px;*/
-    /*    margin-top: 183px;*/
-    /*    margin-left:-160px;*/
-    /*}*/
-    /*.didimen5{*/
-    /*    font-size: small;*/
-    /*    border:1px solid #1dacfe;*/
-    /*    width:150px;*/
-    /*    margin-left:-160px;*/
-    /*    height: 75px;*/
-    /*    margin-top: 130px;*/
-    /*}*/
-    /*.module1{*/
-    /*    border: black 2px;*/
-    /*    border-style:none solid solid none;*/
-    /*    float: left;*/
-    /*    width:139px;*/
-    /*    height:139px;*/
-    /*    margin-top:10px;*/
-    /*    margin-left:7px;*/
-    /*}*/
-    /*.module2{*/
-    /*    border: black 2px;*/
-    /*    border-style:none solid solid none;*/
-    /*    float: left;*/
-    /*    width:139px;*/
-    /*    height:139px;*/
-    /*    margin-top:10px;*/
-    /*}*/
-    /*.module3{*/
-    /*    border: black 2px;*/
-    /*    border-style:none solid solid none;*/
-    /*    float: left;*/
-    /*    width:139px;*/
-    /*    height:139px;*/
-    /*    margin-top:10px;*/
-    /*}*/
-    /*.module4{*/
-    /*    border: black 2px;*/
-    /*    border-style:none none solid none;*/
-    /*    float: left;*/
-    /*    width:139px;*/
-    /*    height:139px;*/
-    /*    margin-top:10px;*/
-    /*}*/
-    /*.module5{*/
-    /*    border: black 2px;*/
-    /*    border-style:none solid none none;*/
-    /*    float: left;*/
-    /*    width:139px;*/
-    /*    height:139px;;*/
-    /*    margin-left:7px;*/
-    /*}*/
-    /*.module6{*/
-    /*    border: black 2px;*/
-    /*    border-style:none solid none none;*/
-    /*    float: left;*/
-    /*    width:139px;*/
-    /*    height:139px;;*/
-    /*}*/
-    /*.module7{*/
-    /*    border: black 2px;*/
-    /*    border-style:none solid none none;*/
-    /*    float: left;*/
-    /*    width:139px;*/
-    /*    height:139px;;*/
-    /*}*/
-    /*.module8{*/
-    /*    float: left;*/
-    /*    width:139px;*/
-    /*    height:139px;;*/
-    /*}*/
-
-
-    /*.set-box>label {*/
-    /*    background-image: url(../images/labeltitle.png);*/
-    /*    width:170px;*/
-    /*    color: #cdddf7;*/
-    /*    margin-right:10px;*/
-    /*    float: left;*/
-    /*}*/
-
-    /*.set-box>input,*/
-
-    /*.set-box>.input-edit {*/
-    /*    width: 430px;*/
-    /*}*/
-
-    /*.pages-div>input {*/
-    /*    background: transparent;*/
-    /*    margin: 020px;*/
-    /*}*/
-
-    /*.set-box>input:nth-child(2n+1) {*/
-    /*    margin: 07px;*/
-    /*}*/
-
-    /*.set-box>button{*/
-    /*    width:36px;*/
-    /*    height:36px;*/
-    /*    line-height:38px;*/
-    /*    text-align: center;*/
-    /*    background-color: transparent;*/
-    /*    border: 1px solid #0E94EA;*/
-    /*    color: white;*/
-    /*    padding-left:10px;*/
-    /*    cursor: pointer;*/
-    /*}*/
-
-    /*.module-model {*/
-    /*    margin-left:251px;*/
-    /*    width: 570px;*/
-    /*    height: 340px;*/
-    /*    margin-top: 163px;*/
-    /*    background-image: url(../images/backgroundImage.png);*/
-    /*    background-repeat: no-repeat;*/
-    /*    background-size: cover;*/
-    /*}*/
-}
-
-
 /*适应1920*1080*/
 @media screen and (min-width: 1600px) and (max-width: 1920px){
+
+    .sycm ul {
+        padding: 1rem 0;
+    }
+
+    .sycm li {
+        margin-top: -10px;
+    }
+
+    .sycm li h2 {
+        font-size: 1.2rem;
+    }
+    .sycm li span {
+        font-size: 1.1rem;
+    }
+
+    .curtitle{
+        font-size: 1.2rem;
+    }
+
+    .current{
+        font-size: 1.5em;
+    }
 
     .nc {
         height: 4em;
@@ -829,7 +660,7 @@ img {
         margin-top: 8px;
     }
     .center {
-        width: 744px;
+        width: 779px;
         height: 571px;
         border: 0.001em solid #129ce6;
         float: left;
@@ -844,12 +675,12 @@ img {
         margin-top: 46px;
     }
     .right0 {
-        width: 529px;
+        width: 542px;
         height: 43%;
         border: 0.001em solid #129ce6;
     }
     .right1 {
-        width: 529px;
+        width: 542px;
         height: 55.5%;
         border: 0.001em solid #129ce6;
         margin-top: 8px;
@@ -899,16 +730,50 @@ img {
         position: absolute;
         margin-bottom: .3rem;
         z-index: 10;
-        margin-top: 23px;
+        margin-top: 36px;
+    }
+    .sycm1 li h2{
+        font-size: 1.2rem;
+    }
+    .sycm1 li span {
+        font-size: 1.1rem;
+    }
+    .lt0 {
+        font-weight: 900;
+    }
+    .lt1 {
+        font-weight: 900;
+    }
+    .ct {
+        font-weight: 900;
+    }
+    .rt0 {
+        font-weight: 900;
+    }
+    .rt1 {
+        font-weight: 900;
     }
     .fskimp {
-        margin-left: 341px;
-        margin-top: 166px;
+        margin-left: 430px;
+        margin-top: 181px;
         position: absolute;
     }
+
+    .fskimp h3 {
+        font-size: 1rem;
+        margin-left: -110px;
+        margin-top: 11px;
+    }
+
+    .fskimp p {
+        font-size: 1rem;
+        margin-top: -15px;
+        line-height: 15px;
+    }
+
     .ledsceen .cssrun {
         margin-top: -479px;
-        margin-left: 226px;
+        margin-left: 250px;
         width: 253px;
         height: 133px;
         line-height: 100px;
@@ -920,7 +785,7 @@ img {
     }
     .boxall2 {
         height: 17rem;
-        width: 44.3rem;
+        width: 46.8rem;
         idth: 26.3rem;
         border: 1px solid rgba(25, 186, 139, .17);
         padding: 0 .3rem .3rem .3rem;
@@ -941,6 +806,23 @@ img {
         position: relative;
         margin-top: -18px;
         margin-left: 68px;
+    }
+
+    .sycm2 {
+        margin-top: 14px;
+    }
+
+    .sycm2 ul {
+        padding: .96rem 0;
+        line-height: 40px;
+    }
+
+    .sycm2 li h2 {
+        font-size: 1.4rem;
+    }
+
+    .sycm2 li span {
+        font-size: 1rem;
     }
 
     .container {
@@ -969,6 +851,14 @@ img {
         margin-left:-160px;
     }
 
+    .sensor_Message_1{
+        margin-left: 10px;
+    }
+
+    .tempoge{
+        margin-left: 10px;
+    }
+
     .didimen4{
         font-size: small;
         border:1px solid #1dacfe;
@@ -984,8 +874,8 @@ img {
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
-        margin-top: -250px;
-        margin-left: 1100px;
+        margin-top: -344px;
+        margin-left: 1084px;
     }
 
 
@@ -1001,9 +891,9 @@ img {
 
     .module_Message{
         float: right;
-        margin-left: 1103px;
+        margin-left: 1084px;
         position: absolute;
-        margin-top: -329px;
+        margin-top: -570px;
         height: 33px;
         display: flex;
         flex-flow: row nowrap;
@@ -1062,10 +952,10 @@ img {
     }
 
     .module-model {
-        margin-left: 288px;
-        width: 59%;
-        height: 51%;
-        margin-top: -370px;
+        margin-left: 163px;
+        width: 69%;
+        height: 62%;
+        margin-top: 163px;
         background-image: url(../images/backgroundImage.png);
         background-repeat: no-repeat;
         background-size: cover;
@@ -1143,7 +1033,7 @@ img {
         margin-left: 50px;
         margin-top: 30px;
         width: 468px;
-        height: 507px;
+        height: 427px;
         background-image: url(../images/modedetail.png);
         background-size: 100% 100%;
         position: absolute;
@@ -1151,5 +1041,234 @@ img {
         z-index: 999;
     }
 
+
+}
+
+/* 判断ipad */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px){
+
+    .ledsceen .cssrun{
+        margin-left: 138px;
+    }
+
+    .modedetail .fengexian{
+        width: 230px;
+    }
+
+    .modedetail{
+        height: 427px;
+    }
+
+    .pop-up >h3{
+        margin-left:333px;
+    }
+
+    .pop-up .title {
+        padding-left: 333px;
+    }
+
+    .container{
+        /*visibility: visible;*/
+        width: 1150px;
+        height: 650px;
+        margin-left: 100px;
+    }
+    .driverIc{
+        margin-left: 10px;
+    }
+
+    .Power_Message{
+        margin-left: 10px;
+    }
+
+    .pop-up {
+        /*visibility: visible;*/
+        width: 100%;
+        height: 100%;
+        /* z-index: 3;*/
+    }
+
+    .module-model {
+        margin-left: 251px;
+        width: 50%;
+        height: 66%;
+    }
+
+    .sensor_Message_1{
+        margin-left:8px;
+        margin-top:-4px;
+    }
+
+    .tempoge{
+        margin-left:90px;
+        margin-top:-80px;
+    }
+
+    .module_Message{
+        float: right;
+        margin-left: 938px;
+        margin-top: -355px;
+        height: 33px;
+    }
+
+
+    .rec_Message{
+        float: right;
+        margin-left: 938px;
+        margin-top: -405px;
+    }
+
+    .didimen4{
+        height: 188px;
+    }
+
+    .module1{
+        width: 163px;
+        height: 160px;
+        margin-top: 10px;
+        margin-left: 7px;
+    }
+
+    .module2{
+        width: 163px;
+        height: 160px;
+        margin-top: 10px;
+    }
+
+    .module3{
+        width: 163px;
+        height: 160px;
+        margin-top: 10px;
+    }
+
+    .module4{
+        width: 163px;
+        height: 160px;
+        margin-top: 10px;
+    }
+
+    .module5{
+        width: 163px;
+        height: 160px;
+        margin-left: 7px;
+    }
+
+    .module6{
+        width: 163px;
+        height: 160px;
+    }
+
+    .module7{
+        width: 163px;
+        height: 160px;
+    }
+
+    .module8{
+        width: 163px;
+        height: 160px;
+    }
+
+    .fskimp h3 {
+        color: #20a0ff;
+        font-size: 1rem;
+    }
+
+    .fskimp p {
+        line-height: 15px;
+        font-size: 0.9rem;
+    }
+
+    div#ledswitch{
+        margin-left: 551px;
+    }
+
+    div#input1{
+        margin-left: 381px;
+    }
+
+    .ledph2{
+        margin-left: 281px;
+        width: 42%;
+    }
+
+    .ledph1{
+        width: 42%;
+    }
+
+    #tuopu{
+        margin-left: -223px;
+    }
+
+    .sycm li h2 {
+        color: #20a0ff;
+        font-size: 1em;
+    }
+    .sycm li span {
+        font-size: 0.9em;
+    }
+
+    .sycm ul {
+        padding: 0.65rem 0;
+    }
+
+    .curtitle{
+        color: #20a0ff;
+        font-size: 0.8em;
+    }
+
+    .current{
+        font-size: 0.95em;
+    }
+    .sycm1 li h2{
+        color: #20a0ff;
+        font-size: 1em;
+    }
+    .sycm1 li span{
+        font-size: 0.9em;
+    }
+
+    .left {
+        margin-left:12px;
+        margin-top: 40px;
+    }
+    .center{
+        width: 536px;
+        margin-top: 40px;
+    }
+
+    .boxall2{
+        width:31.7rem;
+    }
+
+    .sycm2{
+        margin-top: 33px;
+    }
+
+    .sycm2 li h2 {
+        color: #20a0ff;
+        font-size: 1.4rem;
+    }
+
+    .sycm2 ul{
+        line-height: 30px;
+    }
+
+    .sycm2 li span {
+        font-size: 1rem;
+    }
+
+    .right{
+        margin-left: 958px;
+        margin-top: -572px;
+    }
+    .index_nav ul li{
+        font-size:1em;
+    }
+    .nc{
+        margin-top: 0.3em;
+        width: 8em;
+    }
 
 }
