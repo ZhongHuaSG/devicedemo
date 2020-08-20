@@ -1479,16 +1479,12 @@
         <!-- 箱体设置 -->
         <div class="tab" style="display: none;">
             1
-
             <div id="boxconnect">
                 <div class="addtab">
-                    <el-button
-                            size="small"
-                            @click="addTab(editableTabsValue)"
-                    >
-                        新增屏体+
-                    </el-button>
+                    <span>显示屏数量：</span>
+                    <el-input-number v-model="pingti_num" @change="handleChange_pingti" @focus="becomeReadOnly" :min="1" :max="999" label="描述文字"></el-input-number>
                 </div>
+                <!--发送卡选择-->
                 <div class="selectSender">
                     <label>
                         <b>发送卡：</b>
@@ -1504,7 +1500,8 @@
                         </el-select>
                     </template>
                 </div>
-                <el-tabs v-model="editableTabsValue" @tab-click="senderTabClick" type="card" closable @tab-remove="removeTab">
+                <!--屏幕选择-->
+                <el-tabs v-model="editableTabsValue" @tab-click="senderTabClick" type="card" >
                     <el-tab-pane
                             v-for="(item, index) in editableTabs"
                             :key="item.name"
@@ -1516,14 +1513,14 @@
                             <div class="portRow-Label">
                                 <label>发送卡网口设置</label>
                             </div>
-                            <el-radio-group v-model="port_radio" size="small">
+                            <el-radio-group v-model="port_radio" @change="choosePort" size="small">
                                 <el-radio-button label="P1"></el-radio-button>
-                                <el-radio-button label="P2" disabled ></el-radio-button>
+                                <el-radio-button label="P2" ></el-radio-button>
                                 <el-radio-button label="P3"></el-radio-button>
                                 <el-radio-button label="P4"></el-radio-button>
                             </el-radio-group>
 
-                            <el-radio-group v-model="port_radio" size="small">
+                            <el-radio-group v-model="port_radio" @change="choosePort" size="small">
                                 <el-radio-button label="P5"></el-radio-button>
                                 <el-radio-button label="P6"></el-radio-button>
                                 <el-radio-button label="P7"></el-radio-button>
@@ -1531,7 +1528,7 @@
                             </el-radio-group>
 
                             <div class="port-smallNum">
-                                <el-radio-group v-model="port_radio" size="small">
+                                <el-radio-group v-model="port_radio" @change="choosePort" size="small">
                                     <el-radio-button label="P9"></el-radio-button>
                                     <el-radio-button label="P10"></el-radio-button>
                                     <el-radio-button label="P11"></el-radio-button>
@@ -1540,7 +1537,7 @@
                             </div>
 
                             <div class="port-meidunNum">
-                                <el-radio-group v-model="port_radio" size="small">
+                                <el-radio-group v-model="port_radio" @change="choosePort" size="small">
                                     <el-radio-button label="P13"></el-radio-button>
                                     <el-radio-button label="P14"></el-radio-button>
                                     <el-radio-button label="P15"></el-radio-button>
@@ -1566,15 +1563,15 @@
                         </div>
                         <div class="pingti-option">
                             <div class="row-label">
-                                <label>箱体列数</label>
+                                <label>接收卡列数</label>
                             </div>
-                            <el-input-number v-model="rowNum" size="mini" @change="handleRowChange" :min="0" :max="10" label="描述文字"></el-input-number>
+                            <el-input-number v-model="rowNum" size="mini" @change="handleRowChange" :min="0" :max="999" label="描述文字"></el-input-number>
 
                             <div class="line-counter">
                                 <div class="row-label" >
-                                    <label>箱体行数</label>
+                                    <label>接收卡行数</label>
                                 </div>
-                                <el-input-number v-model="lineNum" size="mini" @change="handleLineChange" :min="0" :max="12" label="描述文字"></el-input-number>
+                                <el-input-number v-model="lineNum" size="mini" @change="handleLineChange" :min="0" :max="999" label="描述文字"></el-input-number>
                             </div>
                         </div>
                         <div class="boxType">
@@ -1614,7 +1611,7 @@
                 </el-tabs>
 
                 <div class="box-Connect-box">
-                    <canvas id="box-canvas" width="1035" height="760" style="position: absolute;"> 你的浏览器不支持 canvas，请升级你的浏览器。</canvas>
+                    <canvas id="box-canvas" width="10350" height="7600" style="position: absolute;"> 你的浏览器不支持 canvas，请升级你的浏览器。</canvas>
                 </div>
             </div>
         </div>
@@ -1752,6 +1749,12 @@
 
 
 <script>
+
+    /**
+     * 绘制图表所需的全局变量
+     * */
+    var area_port = "P1";
+
     let _self = null;
     let websocket = null;
     let demo = new Vue({
@@ -1761,24 +1764,15 @@
                 /**
                  * 屏体设置所需参数
                  * */
+                //屏体数量:
+                pingti_num:1,
+                last_pingti_num:undefined,
                 //当前发送卡
                 singleSender:'sender1',
                 //发送卡列表
                 senderItem:[{
                     value: 'sender1',
                     label: '发送卡1'
-                }, {
-                    value: 'sender2',
-                    label: '发送卡2'
-                }, {
-                    value: 'sender3',
-                    label: '发送卡3'
-                }, {
-                    value: 'sender4',
-                    label: '发送卡4'
-                }, {
-                    value: 'sender5',
-                    label: '发送卡5'
                 }],
                 //箱体长度
                 box_height:'',
@@ -1790,14 +1784,12 @@
                 pianyinumX: 0,
                 //偏移量-Y
                 pianyinumY: 0,
-                //箱体列数
+                //接收卡列数
                 rowNum: 0,
-                //箱体行数
+                //接收卡行数
                 lineNum: 0,
                 //网口选择
-                port_radio:'',
-                //tab索引
-                editableTabsIndex: '0',
+                port_radio:'P1',
                 //tab起始值
                 editableTabsValue: '1',
                 //tab数据
@@ -1809,12 +1801,96 @@
                         row: 0,
                         line: 0,
                         port: [{
-                            name:'P1'
-                        },{
-                            name:'P2'
+                            name:'P1',
+                            id:'',
+                            box:[
+                                {
+                                   id:'',
+                                   order:'',
+                                   xpos:'',
+                                   ypos:'',
+                                   pianyiliangx:'',
+                                   pianyiliangy:''
+                                }
+                            ]
+
                         }]
                     }
                 }],
+
+                //设置下发参数
+                senderList:[
+                    {
+                        id:"",
+                        //屏幕分割数 ---常量1
+                        scrs:1,
+                        // 设置图像输出开始位置（水平）
+                        hscr:"",
+                        // 设置图像输出开始位置（垂直）
+                        vscr:"",
+                        // 输出通道水平位置数-X 网口
+                        horiNum:"",
+                        // 输出通道垂直位置数-Y 网口
+                        vertNum:"",
+                        // 配置箱体信息
+                        pSet:{
+                            //箱体类型
+                            boxName:"",
+                            // 每个接收卡有多少个模组  IM /接收卡数量（0-3位：垂直   4-7位：水平）
+                            perRecMod:"",
+                            // 每个箱体有多少个接收卡  接收卡/箱体的数量（0-3位：垂直   4-7位：水平）
+                            perPanelRec:"1",
+                            // 模组的横向像素
+                            modHPixel:"",
+                            // 模组的纵向像素
+                            modVPixel:""
+                        },
+                        // 配置输出通道的布局
+                        outputConfs:[
+                            {
+                                // 输出板号---1
+                                boardNum:"",
+                                // 输出通道号----1,2,3,4,-配置网口排序
+                                channelNum:""
+                            }
+                        ],
+                        // 网口配置
+                        portConfs:[
+                            {
+                                //1~8--网口X坐标
+                                xPos:"",
+                                //网口坐标  1~2---网口Y坐标
+                                yPos:"",
+                                // 单个网口对应的箱体行数
+                                boxRow:"",
+                                // 单个网口对应的箱体列数
+                                boxColumn:"",
+                                // 输出图像的水平起始位置（输出分辨率）
+                                host:"",
+                                // 输出图像的垂直起始位置（输出分辨率）
+                                vost:"",
+                                // 网口带载的箱体
+                                boxConfs:[
+                                    {
+                                        //  箱体X坐标
+                                        xPos:"",
+                                        //  箱体Y坐标
+                                        yPos:"",
+                                        // 箱体的连接顺序
+                                        boxOder:"",
+                                        // 输出图像的箱体水平起始位置（输出分辨率）
+                                        lbdh:"",
+                                        // 输出图像的箱体垂直起始位置（输出分辨率）
+                                        lbdv:""
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+
+
+
                 tabIndex: 1,
 
                 comlist:"",
@@ -3074,87 +3150,6 @@
                         //获取走线端口数量
                         var portNum = senderOrder.PORT_ORDER.length;
                         //遍历走线接口
-                        /* for(var j = 0;j<portNum;j++){
-                             //走线详情信息
-                             var port = senderOrder.PORT_ORDER[j];
-                             //判断索引是否能够取余4来判断在当前X轴的Y位置
-                             if((j+1)%4 === 0){
-                                 //当前port对象
-                                 var singlePort = {
-                                     //X轴上单个偏移差值为60一个单位(向右+60)
-                                     x: XInitPort+parseInt((j+1)/4-1)*60,
-                                     //Y轴上单个偏移差值为70一个单位（向下-70）
-                                     y: YInitPort-3*50-i*300,
-                                     symbolSize: 20,
-                                     nodeName: port.ID,
-                                     name: port.ID+senderOrder.ID,
-                                     type: '网口',
-                                     detail:null,
-                                     svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
-                                 };
-                                 //走线方式数组添加
-                                 nodes.push(singlePort);
-                             }else{
-                                 var singlePort = {
-                                     //X轴上单个偏移差值为60一个单位(向右+60)
-                                     x: XInitPort+parseInt((j+1)/4)*60,
-                                     //Y轴上单个偏移差值为70一个单位（向下-70）
-                                     y: YInitPort-(j)%4*50-i*300,
-                                     symbolSize: 20,
-                                     nodeName: port.ID,
-                                     name: port.ID+senderOrder.ID,
-                                     type: '网口',
-                                     detail:null,
-                                     svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
-                                 };
-                                 nodes.push(singlePort);
-                             }
-                             //遍历单个走线口的箱体信息
-                             for(var boxindex = 0;boxindex < port.BOX.length;boxindex++){
-                                 var box = port.BOX[boxindex];
-                                 //判断箱体顺序是否为1能和端口直连
-                                 if(box.ORDER == 1){
-                                     var portBox = {
-                                         source: port.ID+senderOrder.ID,
-                                         target: senderOrder.ID+box.ID+boxindex,
-                                         name: '连通',
-                                         type: '网线',
-                                         nodeName: '网线'
-                                     }
-                                     //端口连接线新增
-                                     links.push(portBox);
-                                 }
-                                 //判断小于最后一个箱体之间的相互串联
-                                 if(box.ORDER < port.BOX.length){
-                                     var boxNext = port.BOX[boxindex+1]
-                                     //当下个箱体为空时不执行
-                                     if(boxindex+1 < port.BOX.length){
-                                         var portBox = {
-                                             source: senderOrder.ID+box.ID+boxindex,
-                                             target: senderOrder.ID+boxNext.ID+(boxindex+1),
-                                             name: '连通',
-                                             type: '串联',
-                                             nodeName: '串联'
-                                         }
-                                         links.push(portBox);
-                                     }
-                                 }
-                                 //单个箱体的信息
-                                 var singleBox = {
-                                     x: XInit[box.XPOS-1],
-                                     y: YInit[box.YPOS-1],
-                                     symbolSize: 46,
-                                     nodeName: "箱体"+box.ID,
-                                     name: senderOrder.ID+box.ID+boxindex,
-                                     type: '箱体',
-                                     detail:box,
-                                     svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
-                                 }
-                                 nodes.push(singleBox);
-                             }
-
-                         }*/
-                        //遍历走线接口
                         for(var j = 0;j<portNum;j++){
 
                             //走线详情信息
@@ -4123,26 +4118,130 @@
 
 
             ,/**
-             * tab新增方法
+             * tab增删方法
              * */
-            addTab(targetName) {
-                //新的Tab名字序号
-                let newTabName = ++this.tabIndex + '';
-                this.editableTabs.push({
-                    title: '屏体 '+newTabName,
-                    name: newTabName,
-                    content: '屏体 '+newTabName,
-                    contextbody:{
-                        row: 0,
-                        line: 0,
-                        port:[{
-                            name:'P1'
-                        },{
-                            name:'P2'
-                        }]
+            handleChange_pingti(value){
+                //判断上一次增删按钮改变前的值是否存在
+                if(typeof(this.last_pingti_num)!="undefined"){
+                    if(this.last_pingti_num>value){
+                        let targetName = this.tabIndex + "";
+                        let tabs = this.editableTabs;
+                        let activeName = this.editableTabsValue;
+                        if (activeName === targetName) {
+                            tabs.forEach((tab, index) => {
+                                if (tab.name === targetName) {
+                                    let nextTab = tabs[index + 1] || tabs[index - 1];
+                                    if (nextTab) {
+                                        activeName = nextTab.name;
+                                    }
+                                }
+                            });
+                        }
+                        this.editableTabsValue = activeName;
+                        this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+                        this.pingti_num = this.pingti_num--;
+                        let nowtabIndex = this.tabIndex -1;
+                        this.tabIndex = nowtabIndex;
+                        //绘制所属tab-图形
+                        let index = this.editableTabsValue -1;
+                        this.rowNum = this.editableTabs[index].contextbody.row ;
+                        this.lineNum = this.editableTabs[index].contextbody.line;
+                        clearCanvas();
+                        draw(this.rowNum,this.lineNum);
+                    }else{
+                        //当前屏体数量+1
+                        //新的Tab名字序号
+                        let newTabName = ++this.tabIndex + '';
+                        this.editableTabs.push({
+                            title: '屏体 '+newTabName,
+                            name: newTabName,
+                            content: '屏体 '+newTabName,
+                            contextbody:{
+                                row: 0,
+                                line: 0,
+                                port: [{
+                                    name:'P1',
+                                    id:'',
+                                    box:[
+                                        {
+                                            id:'',
+                                            order:'',
+                                            xpos:'',
+                                            ypos:'',
+                                            pianyiliangx:'',
+                                            pianyiliangy:''
+                                        }
+                                    ]
+
+                                },{
+                                    name:'P2',
+                                    id:'',
+                                    box:[
+                                        {
+                                            id:'',
+                                            order:'',
+                                            xpos:'',
+                                            ypos:'',
+                                            pianyiliangx:'',
+                                            pianyiliangy:''
+                                        }
+                                    ]
+
+                                }]
+                            }
+                        });
+                        // this.editableTabsValue = newTabName;
                     }
-                });
-                this.editableTabsValue = newTabName;
+                }else{
+                    //新的Tab名字序号
+                    let newTabName = ++this.tabIndex + '';
+                    this.editableTabs.push({
+                        title: '屏体 '+newTabName,
+                        name: newTabName,
+                        content: '屏体 '+newTabName,
+                        contextbody:{
+                            row: 0,
+                            line: 0,
+                            port: [{
+                                name:'P1',
+                                id:'',
+                                box:[
+                                    {
+                                        id:'',
+                                        order:'',
+                                        xpos:'',
+                                        ypos:'',
+                                        pianyiliangx:'',
+                                        pianyiliangy:''
+                                    }
+                                ]
+
+                            },{
+                                name:'P2',
+                                id:'',
+                                box:[
+                                    {
+                                        id:'',
+                                        order:'',
+                                        xpos:'',
+                                        ypos:'',
+                                        pianyiliangx:'',
+                                        pianyiliangy:''
+                                    }
+                                ]
+
+                            }]
+                        }
+                    });
+                    // this.editableTabsValue = newTabName;
+                }
+                this.last_pingti_num = value;
+            },
+            /**
+             * 增删屏体按钮获取焦点
+             * */
+            becomeReadOnly(){
+              $(".addtab input").attr("readOnly","true");
             },
 
             /**
@@ -4161,9 +4260,15 @@
                         }
                     });
                 }
-
                 this.editableTabsValue = activeName;
                 this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+                this.pingti_num = this.pingti_num--;
+                //绘制所属tab-图形
+                let index = this.editableTabsValue -1;
+                this.rowNum = this.editableTabs[index].contextbody.row ;
+                this.lineNum = this.editableTabs[index].contextbody.line;
+                clearCanvas();
+                draw(this.rowNum,this.lineNum);
             },
 
             /**
@@ -4181,28 +4286,42 @@
             },
 
             /**
-             * 箱体列数计数器改变的方法
+             * 接收卡列数计数器改变的方法
              * */
             handleRowChange(value) {
-                draw(this.rowNum,this.lineNum);
+                let index = this.editableTabsValue -1;
+                let lastRow = this.editableTabs[index].contextbody.row;
+                let lastLine = this.editableTabs[index].contextbody.line;
+                if(lastRow > value){
+                    drawRow(value,lastRow,lastLine)
+                }else{
+                    draw(this.rowNum,this.lineNum);
+                }
+                this.editableTabs[index].contextbody.row =value;
             },
             /**
-             * 箱体行数计数器改变的方法
+             * 接收卡行数计数器改变的方法
              * */
             handleLineChange(value) {
-                draw(this.rowNum,this.lineNum);
+                let index = this.editableTabsValue -1;
+                let lastRow = this.editableTabs[index].contextbody.row;
+                let lastLine = this.editableTabs[index].contextbody.line;
+                if(lastLine > value){
+                    drawLine(value,lastLine,lastRow);
+                }else{
+                    draw(this.rowNum,this.lineNum);
+                }
+                this.editableTabs[index].contextbody.line =value;
             },
 
             /**
              *  发送卡tab转换的方法
              * **/
             senderTabClick(tab, event){
-                console.log(tab, event);
-                console.log("tab索引"+tab.index);
-                this.editableTabsIndex = tab.index;
-
                 this.rowNum = this.editableTabs[tab.index].contextbody.row ;
                 this.lineNum = this.editableTabs[tab.index].contextbody.line;
+                clearCanvas();
+                draw(this.rowNum,this.lineNum);
             },
 
             /**
@@ -4213,10 +4332,21 @@
             },
 
             /**
+             * 网口选择
+             * */
+            choosePort(){
+                let index = this.editableTabsValue -1
+                area_port = this.port_radio;
+                this.editableTabs[index].contextbody.port
+                console.log("当前网口:"+this.port_radio);
+            },
+
+            /**
              * 顺序走线方式按钮
              * */
             connetorfirst(){
-                drawArrow(ctx, 150, 100, 400,100,30,30,10,'#f36');
+                console.log(this.editableTabs);
+                drawArrow(150, 100, 400,100);
             },
 
             /**
@@ -4241,6 +4371,263 @@
         },
 
     });
+
+    //定义canvas图形
+    var canvas = document.getElementById('box-canvas');
+    var ctx = canvas.getContext("2d");
+
+    //连接线颜色数组
+    let connectLineColorGroup =
+        ["#3eede7",
+        "#4b5cc4",
+        "#ff461f",
+        "#60281e",
+        "#bddd22",
+        "#a4e2c6",
+        "#50616d",
+        "#faff72",
+        "#fff2df",
+        "#2ca9e1",
+        "#6e7955",
+        "#ee7800",
+        "#e0c38c",
+        "#a22041",
+        "#c099a0",
+        "#ffea00"]
+
+    //当row没有改变得时候
+    function drawLine(lineNum,lastLineIndex,rowNum){
+        let linecha = lastLineIndex - lineNum;
+        for(let i = 0;i<linecha+1;i++){
+            let realLineIndex = lastLineIndex-i;
+            for(let s = 0;s<rowNum;s++){
+                ctx.clearRect (s*102+8,realLineIndex*62+8, 102, 62);
+            }
+        }
+    }
+
+    //当line没有改变得时候
+    function drawRow(rowNum,lastRowIndex,lineNum){
+        let rowcha = lastRowIndex-rowNum;
+        for(let i = 0;i<rowcha+1;i++){
+            let realRowIndex = lastRowIndex-i;
+            for(let s = 0;s< lineNum;s++){
+                ctx.clearRect (realRowIndex*102+8,s*62+8,102,102);
+            }
+        }
+    }
+
+    //生成箱体的封装方法
+    function draw(rowNum,lineNum){
+        if(!canvas.getContext) return;
+        if(typeof (lastRowIndex)=="undefined" || typeof (lastRowIndex)==""){
+            lastRowIndex = 0;
+        }
+        if(typeof (lastLineIndex)=="undefined" || typeof (lastLineIndex)==""){
+            lastLineIndex = 0;
+        }
+        for(let i = 0;i<rowNum;i++){
+            for(let s = 0;s<lineNum;s++ ){
+                ctx.font="10px Arial";
+                //绘制矩形
+                //绘制图形样式
+                ctx.fillStyle = "rgb(42,189,25)";
+                ctx.strokeStyle = "#1685a9";
+                ctx.lineWidth = 4;
+                ctx.fillRect (102*i+10,s*62+10, 96, 56);
+                ctx.strokeRect(102*i+10,s*62+10, 96, 56);
+                ctx.fillStyle = 'red'; //填充线样式
+                ctx.fillText("Hello World",101*i+30,s*61+40);
+            }
+        }
+
+        // if(rowNum > lastRowIndex ||lineNum > lastLineIndex ){
+
+        // }
+
+        lastRowIndex = rowNum;
+        lastLineIndex = lineNum;
+    }
+
+    //注：使用这个函数，需要给Canvas元素的position设为absolute。
+    //要判断事件对象发生的位置，事件对象e的layerX和layerY属性表示Canvas内部坐标系中的坐标
+    function getEventPosition(ev){
+        var x, y;
+        if (ev.layerX || ev.layerX == 0) {
+            x = ev.layerX;
+            y = ev.layerY;
+        } else if (ev.offsetX || ev.offsetX == 0) { // Opera
+            x = ev.offsetX;
+            y = ev.offsetY;
+        }
+        return {x: x, y: y};
+    }
+
+    function drawArc(x,y) {
+        ctx.beginPath();
+        ctx.fillStyle = 'blue';
+
+        // 顺时针--context.arc(x,y,r,sAngle,eAngle,counterclockwise);
+        ctx.arc(x*102+62, y*62+45, 10, 0, 2 * Math.PI / 4 * 3);
+        // 是否闭合路径 : 闭合路径后起点与终点会连接
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.font = '16px bold';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('S',x*102+62,y*62+25);
+    }
+
+    var sourcePort = "";
+    var lastPort = "";
+    //箱体绘制画面点击事件
+    canvas.addEventListener('click',function (e) {
+        // //当前tab页面索引
+        // console.log("当前页面tab"+demo.index-1);
+        // //Vue内参数获取
+        // console.log(demo.editableTabs);
+        // demo.editableTabs[0].contextbody.port[0].id
+        p = getEventPosition(e);
+        //初始值--//绘制矩形ctx.fillRect (102*i+10,s*62+10, 100, 60);
+        // console.log("当前网口"+area_port);
+        //真实X值
+        var realX = p.x-10;
+        console.log("X取整数=="+Math.ceil(realX/102));
+        //真实Y值
+        var realY = p.y-10;
+        //通过取整确定点击的箱体是第几行或者第几列
+        console.log("Y取整数=="+Math.ceil(realY/62));
+        let x = Math.ceil(realX/102)-1;
+        let y = Math.ceil(realY/62)-1;
+        if(sourcePort === ""){
+            //x*102+62, y*62+45
+            sourcePort = {
+                x:x,
+                y:y
+            }
+            drawArc(x,y);
+        }else if(lastPort === ""){
+            // drawArrow(fromX, fromY, toX, toY)
+            drawArrow(sourcePort.x*102+62,sourcePort.y*62+45,x*102+62,y*62+45);
+            lastPort = {
+                x:x,
+                y:y
+            }
+        }else{
+            drawArrow(lastPort.x*102+62,lastPort.y*62+45,x*102+62,y*62+45);
+            lastPort = {
+                x:x,
+                y:y
+            }
+        }
+        // alert("第"+Math.ceil(realX/102)+"列 第"+Math.ceil(realY/62)+"行，即：（"+Math.ceil(realX/102)+","+Math.ceil(realY/62)+"）");
+
+
+    },false);
+
+    //鼠标移入
+    canvas.addEventListener('mousemove',function (e){
+        p = getEventPosition(e);
+        //初始值--//绘制矩形ctx.fillRect (102*i+10,s*62+10, 100, 60);
+        //真实X值
+        var realX = p.x-10;
+        //真实Y值
+        var realY = p.y-10;
+        //通过取整确定点击的箱体是第几行或者第几列
+        // console.log("监听鼠标移动X-Y:("+Math.ceil(realX/102)+","+Math.ceil(realY/62)+")");
+        // alert("第"+Math.ceil(realX/102)+"列 第"+Math.ceil(realY/62)+"行，即：（"+Math.ceil(realX/102)+","+Math.ceil(realY/62)+"）");
+    },false);
+
+    //按下鼠标按键
+    canvas.addEventListener('mousedown',function (e){
+        p = getEventPosition(e);
+
+        //初始值--//绘制矩形ctx.fillRect (102*i+10,s*62+10, 100, 60);
+        //真实X值
+        var realX = p.x-10;
+        //真实Y值
+        var realY = p.y-10;
+        //通过取整确定点击的箱体是第几行或者第几列
+        // console.log("监听鼠标按下X-Y"+p.x+","+p.y);
+        // console.log("监听鼠标按下X-Y:("+Math.ceil(realX/102)+","+Math.ceil(realY/62)+")");
+        // alert("第"+Math.ceil(realX/102)+"列 第"+Math.ceil(realY/62)+"行，即：（"+Math.ceil(realX/102)+","+Math.ceil(realY/62)+"）");
+    },false);
+
+    //松开鼠标按键
+    canvas.addEventListener('mouseup',function (e){
+        p = getEventPosition(e);
+
+        //初始值--//绘制矩形ctx.fillRect (102*i+10,s*62+10, 100, 60);
+        //真实X值
+        var realX = p.x-10;
+        //真实Y值
+        var realY = p.y-10;
+        //通过取整确定点击的箱体是第几行或者第几列
+        // console.log("监听鼠标松开X-Y:("+Math.ceil(realX/102)+","+Math.ceil(realY/62)+")");
+        // alert("第"+Math.ceil(realX/102)+"列 第"+Math.ceil(realY/62)+"行，即：（"+Math.ceil(realX/102)+","+Math.ceil(realY/62)+"）");
+    },false);
+
+
+    /**
+     *
+     // 向右箭头
+     drawArrow(ctx, myCanvas.width / 2, myCanvas.height / 2, myCanvas.width / 2 + 150, myCanvas.height / 2,30,30,4,'#f36');
+     // 向下箭头
+     drawArrow(ctx, myCanvas.width / 2, myCanvas.height / 2, myCanvas.width / 2, myCanvas.height / 2  + 150,30,30,4,'#f66');
+     // 向左箭头
+     drawArrow(ctx, myCanvas.width / 2, myCanvas.height / 2, myCanvas.width / 2 - 150, myCanvas.height / 2,30,30,4,'#0f6');
+     // 向上箭头
+     drawArrow(ctx, myCanvas.width / 2, myCanvas.height / 2, myCanvas.width / 2, myCanvas.height / 2 - 150,30,30,4,'#d6f');
+     *
+     * */
+    function drawArrow(fromX, fromY, toX, toY) {
+        theta = 30;
+        headlen = 30;
+        width = 10;
+        color = '#f36';
+        theta = typeof(theta) != 'undefined' ? theta : 30;
+        headlen = typeof(theta) != 'undefined' ? headlen : 10;
+        width = typeof(width) != 'undefined' ? width : 1;
+        color = typeof(color) != 'color' ? color : '#000';
+
+        // 计算各角度和对应的P2,P3坐标
+        var angle = Math.atan2(fromY - toY, fromX - toX) * 180 / Math.PI,
+            angle1 = (angle + theta) * Math.PI / 180,
+            angle2 = (angle - theta) * Math.PI / 180,
+            topX = headlen * Math.cos(angle1),
+            topY = headlen * Math.sin(angle1),
+            botX = headlen * Math.cos(angle2),
+            botY = headlen * Math.sin(angle2);
+
+        ctx.save();
+        ctx.beginPath();
+
+        var arrowX = fromX - topX,
+            arrowY = fromY - topY;
+
+        ctx.moveTo(arrowX, arrowY);
+        ctx.moveTo(fromX, fromY);
+        ctx.lineTo(toX, toY);
+        arrowX = toX + topX;
+        arrowY = toY + topY;
+        ctx.moveTo(arrowX, arrowY);
+        ctx.lineTo(toX, toY);
+        arrowX = toX + botX;
+        arrowY = toY + botY;
+        ctx.lineTo(arrowX, arrowY);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width;
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    /**
+     * 清除画布的封装方法
+     * */
+    function clearCanvas() {
+        ctx.clearRect(0,0,3000,3000);
+    }
 
 </script>
 
@@ -4338,122 +4725,6 @@
             $(".modedetail").hide();
             $('.set-div').attr('style','z-index:3;');
         }
-    }
-
-    //定义canvas图形
-    var canvas = document.getElementById('box-canvas');
-    var ctx = canvas.getContext("2d");
-
-    //注：使用这个函数，需要给Canvas元素的position设为absolute。
-    //要判断事件对象发生的位置，事件对象e的layerX和layerY属性表示Canvas内部坐标系中的坐标
-    function getEventPosition(ev){
-        var x, y;
-        if (ev.layerX || ev.layerX == 0) {
-            x = ev.layerX;
-            y = ev.layerY;
-        } else if (ev.offsetX || ev.offsetX == 0) { // Opera
-            x = ev.offsetX;
-            y = ev.offsetY;
-        }
-        return {x: x, y: y};
-    }
-
-    canvas.addEventListener('click',function (e) {
-        p = getEventPosition(e);
-
-        //初始值--//绘制矩形ctx.fillRect (102*i+10,s*62+10, 100, 60);
-        //真实X值
-        var realX = p.x-10;
-        console.log("X取整数=="+Math.ceil(realX/102));
-        //真实Y值
-        var realY = p.y-10;
-        //通过取整确定点击的箱体是第几行或者第几列
-        console.log("Y取整数=="+Math.ceil(realY/62));
-        // alert("第"+Math.ceil(realX/102)+"列 第"+Math.ceil(realY/62)+"行，即：（"+Math.ceil(realX/102)+","+Math.ceil(realY/62)+"）");
-    },false);
-
-
-    //生成箱体的封装方法
-    function draw(rowNum,lineNum){
-        if(!canvas.getContext) return;
-        if(typeof (lastRowIndex)!="undefined" && typeof (lastRowIndex)!=""){
-            if(typeof (lastLineIndex)!="undefined" && typeof (lastLineIndex)!=""){
-                let rowcha = lastRowIndex-rowNum;
-                let linecha = lastLineIndex-lineNum;
-                //当row没有改变得时候
-                if(rowcha === 0){
-                    for(let i = 0;i<linecha+1;i++){
-                        let realLineIndex = lastLineIndex-i;
-                        for(let s = 0;s<rowNum;s++){
-                            ctx.clearRect (s*102+10,realLineIndex*62+10, 100, 60);
-                        }
-                    }
-                    //当line没有改变得时候
-                }else if(linecha === 0){
-                    for(let i = 0;i<rowcha+1;i++){
-                        let realRowIndex = lastRowIndex-i;
-                        for(let s = 0;s< lineNum;s++){
-                            ctx.clearRect (realRowIndex*102+10,s*62+10,100,60);
-                        }
-                    }
-                }
-
-                if(rowNum > lastRowIndex ||lineNum > lastLineIndex ){
-                    for(let i = 0;i<rowNum;i++){
-                        for(let s = 0;s<lineNum;s++ ){
-                            ctx.font="10px Arial";
-                            //绘制矩形
-                            //绘制图形样式
-                            ctx.fillStyle = "rgb(42,189,25)";
-                            ctx.fillRect (102*i+10,s*62+10, 100, 60);
-                            ctx.fillStyle = 'red'; //填充线样式
-                            ctx.fillText("Hello World",101*i+30,s*61+40);
-                        }
-                    }
-                }
-
-            }
-        }
-        lastRowIndex = rowNum;
-        lastLineIndex = lineNum;
-      }
-
-    function drawArrow(ctx, fromX, fromY, toX, toY,theta,headlen,width,color) {
-
-        theta = typeof(theta) != 'undefined' ? theta : 30;
-        headlen = typeof(theta) != 'undefined' ? headlen : 10;
-        width = typeof(width) != 'undefined' ? width : 1;
-        color = typeof(color) != 'color' ? color : '#000';
-
-        // 计算各角度和对应的P2,P3坐标
-        var angle = Math.atan2(fromY - toY, fromX - toX) * 180 / Math.PI,
-            angle1 = (angle + theta) * Math.PI / 180,
-            angle2 = (angle - theta) * Math.PI / 180,
-            topX = headlen * Math.cos(angle1),
-            topY = headlen * Math.sin(angle1),
-            botX = headlen * Math.cos(angle2),
-            botY = headlen * Math.sin(angle2);
-
-        ctx.save();
-        ctx.beginPath();
-
-        var arrowX = fromX - topX,
-            arrowY = fromY - topY;
-
-        ctx.moveTo(arrowX, arrowY);
-        ctx.moveTo(fromX, fromY);
-        ctx.lineTo(toX, toY);
-        arrowX = toX + topX;
-        arrowY = toY + topY;
-        ctx.moveTo(arrowX, arrowY);
-        ctx.lineTo(toX, toY);
-        arrowX = toX + botX;
-        arrowY = toY + botY;
-        ctx.lineTo(arrowX, arrowY);
-        ctx.strokeStyle = color;
-        ctx.lineWidth = width;
-        ctx.stroke();
-        ctx.restore();
     }
 </script>
 </html>

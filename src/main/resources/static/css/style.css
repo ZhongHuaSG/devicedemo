@@ -4,17 +4,16 @@
 *箱体canvas样式
 */
 .box-Connect-box{
+    position: absolute;
     width: 1045px;
     height: 770px;
     background-color: #f0f4f7;
     float: right;
     margin-top: -798px;
-    margin-right: 173px;
+    overflow:scroll;
+    margin-left: inherit;
 }
 
-.box-Connect-box canvas{
-    border: #8D8D8D 8px solid;
-}
 
 /*
        屏体设置样式
@@ -46,7 +45,7 @@
 #boxconnect .selectSender{
     height: 33px;
     margin-left: 305px;
-    margin-top: -46px;
+    margin-top: -50px;
 }
 
 #boxconnect .selectSender .el-select {
