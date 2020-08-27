@@ -4363,12 +4363,12 @@
                 //筛选出不用的网口
                 for(let i = 0;i<this.editableTabs.length;i++){
                     for(let a = 0;a<this.editableTabs[i].contextbody.senderItem.length;a++){
+                        console.log(this.editableTabs[i].content);
                         for(let s = 0;s<this.editableTabs[i].contextbody.senderItem[a].port.length;s++){
                             if(this.editableTabs[i].contextbody.senderItem[a].port[s].box.length>0){
                                 for(let cont = 0;cont<this.portItem.length;cont++){
                                     if(this.editableTabs[i].contextbody.senderItem[a].port[s].name == this.portItem[cont].name){
-                                        console.log(senderItem.port[s].name);
-                                        this.portItem[cont].status = true;
+                                        this.portItem[cont].status = true
                                     }
                                 }
                             }
