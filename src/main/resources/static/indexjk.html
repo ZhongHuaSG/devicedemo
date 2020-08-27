@@ -1489,8 +1489,7 @@
                     <label>
                         <b>发送卡：</b>
                     </label>
-                    <template>
-                        <el-select v-model="singleSender" size="small" @change="changSender(singleSender)" placeholder="请选择">
+                        <el-select v-model="singleSender" size="small" @change="changSender()" placeholder="请选择">
                             <el-option
                                     v-for="item in senderItem"
                                     :key="item.value"
@@ -1498,7 +1497,6 @@
                                     :value="item.value">
                             </el-option>
                         </el-select>
-                    </template>
                 </div>
                 <!--屏幕选择-->
                 <el-tabs v-model="editableTabsValue" @tab-click="senderTabClick" type="card" >
@@ -1508,45 +1506,38 @@
                             :label="item.title"
                             :name="item.name"
                     >
-                        <h1>参数设置-{{item.content}}</h1>
                         <div class="portRow">
                             <div class="portRow-Label">
                                 <label>发送卡网口设置</label>
                             </div>
-                            <el-radio-group v-model="port_radio" @change="choosePort" size="small">
-                                <el-radio-button label="P1"></el-radio-button>
-                                <el-radio-button label="P2" ></el-radio-button>
-                                <el-radio-button label="P3"></el-radio-button>
-                                <el-radio-button label="P4"></el-radio-button>
-                            </el-radio-group>
 
                             <el-radio-group v-model="port_radio" @change="choosePort" size="small">
-                                <el-radio-button label="P5"></el-radio-button>
-                                <el-radio-button label="P6"></el-radio-button>
-                                <el-radio-button label="P7"></el-radio-button>
-                                <el-radio-button label="P8"></el-radio-button>
+                                <el-radio-button
+                                        v-for="(item, index) in portItem.slice(0,8)"
+                                        :key="item.name"
+                                        :label="item.name"
+                                        :disabled="item.status"
+                                        :name="item.name"
+                                >
+                                </el-radio-button>
                             </el-radio-group>
 
                             <div class="port-smallNum">
                                 <el-radio-group v-model="port_radio" @change="choosePort" size="small">
-                                    <el-radio-button label="P9"></el-radio-button>
-                                    <el-radio-button label="P10"></el-radio-button>
-                                    <el-radio-button label="P11"></el-radio-button>
-                                    <el-radio-button label="P12"></el-radio-button>
+                                    <el-radio-button
+                                            v-for="(item, index) in portItem.slice(8)"
+                                            :key="item.name"
+                                            :label="item.name"
+                                            :disabled="item.status"
+                                            :name="item.name"
+                                    >
+                                    </el-radio-button>
                                 </el-radio-group>
                             </div>
 
-                            <div class="port-meidunNum">
-                                <el-radio-group v-model="port_radio" @change="choosePort" size="small">
-                                    <el-radio-button label="P13"></el-radio-button>
-                                    <el-radio-button label="P14"></el-radio-button>
-                                    <el-radio-button label="P15"></el-radio-button>
-                                    <el-radio-button label="P16"></el-radio-button>
-                                </el-radio-group>
-                            </div>
                         </div>
                         <div class="pianyiliang">
-                            <h2>发送卡偏移量</h2>
+                            <h2>接收卡偏移量</h2>
                             <div class="XXX">
                                 <label>偏移量-X</label>
                                 <el-input-number v-model="pianyinumX" controls-position="right" @change="handleChange_pianyiliangX" size="mini" :min="-1000" :max="1000"></el-input-number>
@@ -1555,10 +1546,6 @@
                             <div class="YYY">
                                 <label>偏移量-Y</label>
                                 <el-input-number v-model="pianyinumY" controls-position="right" @change="handleChange_pianyiliangY" size="mini" :min="-1000" :max="1000"></el-input-number>
-                            </div>
-                            <div class="context">
-                                <label>偏移量</label>
-                                <h2>(  {{pianyinumX}},{{pianyinumY}} )</h2>
                             </div>
                         </div>
                         <div class="pingti-option">
@@ -1576,7 +1563,14 @@
                         </div>
                         <div class="boxType">
                             <label>箱体类型：</label>
-                            <el-input v-model="boxtype" placeholder="箱体类型"></el-input>
+                            <el-select v-model="boxtype" size="small" @change="chooseReviceType(boxtype)" placeholder="请选择">
+                                <el-option
+                                        v-for="item in boxItem"
+                                        :key="item.name"
+                                        :label="item.name"
+                                        :value="item.name">
+                                </el-option>
+                            </el-select>
                         </div>
                         <div class="box-width-height">
                             <div class="box_width">
@@ -1599,17 +1593,40 @@
                             </div>
                         </div>
                         <h1>箱体连接-{{item.content}}</h1>
+                        <!-- 工具箱 -->
+                        <div class="box-connect-tools">
+                            <el-button-group>
+                                <el-button type="primary" @click="goBackBtn">回退</el-button>
+                                <!--                        <el-button type="primary" @click="resetgoBackBtn">反回退</el-button>-->
+                                <el-button type="primary" @click="resetAllPortBtn">重置所有网口</el-button>
+                                <el-button type="primary" @click="resetThisPortBtn">重置当前网口</el-button>
+                            </el-button-group>
+                        </div>
                         <div class="box-connetor">
-                            <el-button type="primary" @click="connetorfirst" plain>主要按钮</el-button>
-                            <el-button type="success" @click="connetorSecond" plain>成功按钮</el-button>
+                            <label><h2>快速连接-{{item.content}}</h2></label>
+                            <el-row>
+                                <el-button type="success" icon="el-icon-s-fold" @click="connetorFirst" circle></el-button>
+                                <el-button type="success" icon="el-icon-s-unfold" @click="connetorSecond" circle></el-button>
+                                <el-button type="success" icon="el-icon-upload2" @click="connetorThird" circle></el-button>
+                                <el-button type="success" icon="el-icon-download" @click="connetorFouth" circle></el-button>
+                            </el-row>
                             <div class="secondhang">
-                                <el-button type="info" @click="connetorthird" plain>信息按钮</el-button>
-                                <el-button type="warning" @click="connetorFouth" plain>警告按钮</el-button>
+                                <el-row>
+                                    <el-button type="success" icon="el-icon-check" @click="connetorFifth" circle></el-button>
+                                    <el-button type="success" icon="el-icon-message" @click="connetorSixth" circle></el-button>
+                                    <el-button type="success" icon="el-icon-check" @click="connetorSventh" circle></el-button>
+                                    <el-button type="success" icon="el-icon-message"  @click="connetorEigth" circle></el-button>
+                                </el-row>
                             </div>
                         </div>
                     </el-tab-pane>
                 </el-tabs>
 
+                <!--分割线-->
+                <div class="fengexian-boxconnect">
+
+                </div>
+                <!-- 绘制图形框 -->
                 <div class="box-Connect-box">
                     <canvas id="box-canvas" width="10350" height="7600" style="position: absolute;"> 你的浏览器不支持 canvas，请升级你的浏览器。</canvas>
                 </div>
@@ -1753,10 +1770,16 @@
     /**
      * 绘制图表所需的全局变量
      * */
-    var area_port = "P1";
+    var area_port = null;
+    //发送卡索引
+    let senderIndex = null;
 
     let _self = null;
     let websocket = null;
+
+    let xTox = 132;
+    let yToy = 84;
+
     let demo = new Vue({
         el: '#app',
         data () {
@@ -1764,22 +1787,103 @@
                 /**
                  * 屏体设置所需参数
                  * */
+                //网口P1状态
+                portStatus1:true,
+                //网口列表
+                portItem:[
+                    {
+                        name:'P1',
+                        status:false
+                    },
+                    {
+                        name:'P2',
+                        status:false
+                    },
+                    {
+                        name:'P3',
+                        status:false
+                    },
+                    {
+                        name:'P4',
+                        status:false
+                    },
+                    {
+                        name:'P5',
+                        status:false
+                    },
+                    {
+                        name:'P6',
+                        status:false
+                    },
+                    {
+                        name:'P7',
+                        status:false
+                    },
+                    {
+                        name:'P8',
+                        status:false
+                    },
+                    {
+                        name:'P9',
+                        status:false
+                    },
+                    {
+                        name:'P10',
+                        status:false
+                    },
+                    {
+                        name:'P11',
+                        status:false
+                    },
+                    {
+                        name:'P12',
+                        status:false
+                    },
+                    {
+                        name:'P13',
+                        status:false
+                    },
+                    {
+                        name:'P14',
+                        status:false
+                    },
+                    {
+                        name:'P15',
+                        status:false
+                    },
+                    {
+                        name:'P16',
+                        status:false
+                    }
+                ],
                 //屏体数量:
                 pingti_num:1,
                 last_pingti_num:undefined,
-                //当前发送卡
-                singleSender:'sender1',
                 //发送卡列表
                 senderItem:[{
                     value: 'sender1',
                     label: '发送卡1'
+                },{
+                    value: 'sender2',
+                    label: '发送卡2'
                 }],
+                //当前发送卡
+                singleSender:null,
                 //箱体长度
                 box_height:'',
                 //箱体宽度
                 box_width: '',
                 //箱体类型
                 boxtype: '',
+                //箱体列表常量
+                boxItem:[
+                    {
+                        name:'UHPII0.9',
+                        mod:'160×180',
+                        box:'640×360 ',
+                        jianju:'0.953'
+                    }
+                ],
                 //偏移量-X
                 pianyinumX: 0,
                 //偏移量-Y
@@ -1789,7 +1893,7 @@
                 //接收卡行数
                 lineNum: 0,
                 //网口选择
-                port_radio:'P1',
+                port_radio:null,
                 //tab起始值
                 editableTabsValue: '1',
                 //tab数据
@@ -1800,21 +1904,7 @@
                     contextbody:{
                         row: 0,
                         line: 0,
-                        port: [{
-                            name:'P1',
-                            id:'',
-                            box:[
-                                {
-                                   id:'',
-                                   order:'',
-                                   xpos:'',
-                                   ypos:'',
-                                   pianyiliangx:'',
-                                   pianyiliangy:''
-                                }
-                            ]
-
-                        }]
+                        senderItem:[]
                     }
                 }],
 
@@ -4159,35 +4249,7 @@
                             contextbody:{
                                 row: 0,
                                 line: 0,
-                                port: [{
-                                    name:'P1',
-                                    id:'',
-                                    box:[
-                                        {
-                                            id:'',
-                                            order:'',
-                                            xpos:'',
-                                            ypos:'',
-                                            pianyiliangx:'',
-                                            pianyiliangy:''
-                                        }
-                                    ]
-
-                                },{
-                                    name:'P2',
-                                    id:'',
-                                    box:[
-                                        {
-                                            id:'',
-                                            order:'',
-                                            xpos:'',
-                                            ypos:'',
-                                            pianyiliangx:'',
-                                            pianyiliangy:''
-                                        }
-                                    ]
-
-                                }]
+                                senderItem:[]
                             }
                         });
                         // this.editableTabsValue = newTabName;
@@ -4202,35 +4264,7 @@
                         contextbody:{
                             row: 0,
                             line: 0,
-                            port: [{
-                                name:'P1',
-                                id:'',
-                                box:[
-                                    {
-                                        id:'',
-                                        order:'',
-                                        xpos:'',
-                                        ypos:'',
-                                        pianyiliangx:'',
-                                        pianyiliangy:''
-                                    }
-                                ]
-
-                            },{
-                                name:'P2',
-                                id:'',
-                                box:[
-                                    {
-                                        id:'',
-                                        order:'',
-                                        xpos:'',
-                                        ypos:'',
-                                        pianyiliangx:'',
-                                        pianyiliangy:''
-                                    }
-                                ]
-
-                            }]
+                            senderItem:[]
                         }
                     });
                     // this.editableTabsValue = newTabName;
@@ -4320,65 +4354,393 @@
             senderTabClick(tab, event){
                 this.rowNum = this.editableTabs[tab.index].contextbody.row ;
                 this.lineNum = this.editableTabs[tab.index].contextbody.line;
+                console.log(this.editableTabs[tab.index].contextbody);
                 clearCanvas();
                 draw(this.rowNum,this.lineNum);
+                area_port = null;
+                this.port_radio = null;
+
+                //筛选出不用的网口
+                for(let i = 0;i<this.editableTabs.length;i++){
+                    for(let a = 0;a<this.editableTabs[i].contextbody.senderItem.length;a++){
+                        for(let s = 0;s<this.editableTabs[i].contextbody.senderItem[a].port.length;s++){
+                            if(this.editableTabs[i].contextbody.senderItem[a].port[s].box.length>0){
+                                for(let cont = 0;cont<this.portItem.length;cont++){
+                                    if(this.editableTabs[i].contextbody.senderItem[a].port[s].name == this.portItem[cont].name){
+                                        console.log(senderItem.port[s].name);
+                                        this.portItem[cont].status = true;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+                // for(let s = 0;s<this.editableTabs[tab.index].contextbody.senderItem[senderIndex].port.length;s++){
+                //
+                // }
+                // //判断当前发送卡是否为空
+                // if(this.singleSender != null){
+                //
+                // }
+
             },
 
             /**
              * 发送卡改变方法
              * */
-            changSender(value){
-                console.log("发送卡改变:"+value);
+            changSender(){
+                let index = this.editableTabsValue -1;
+                //遍历当前tab的发送卡列表---判断发送卡列表中是否有该发送卡
+                for(let s = 0;s<this.editableTabs[index].contextbody.senderItem.length;s++){
+                    if(this.editableTabs[index].contextbody.senderItem[s].name == this.singleSender){
+                        senderIndex = s
+                    }
+                }
+                if(senderIndex == null){
+                    this.editableTabs[index].contextbody.senderItem.push(
+                        {
+                            name:this.singleSender,
+                            port: []
+                        }
+                    )
+                    senderIndex = this.editableTabs[index].contextbody.senderItem.length - 1;
+                }
             },
 
             /**
              * 网口选择
              * */
             choosePort(){
+                //当前tab索引
                 let index = this.editableTabsValue -1
+                //获取当前网口
                 area_port = this.port_radio;
-                this.editableTabs[index].contextbody.port
-                console.log("当前网口:"+this.port_radio);
+
+                //判断发送卡是否被选择
+                if(this.singleSender == null || this.singleSender ==''){
+                    alert("未选择发送卡");
+                    this.port_radio = null;
+                    area_port = null;
+                    return false;
+                }
+                //遍历数组看是否存在该网口，如若存在则添加到全局网口变量
+                let portList = this.editableTabs[index].contextbody.senderItem[senderIndex].port;
+                let portCount = 0;
+                for(let i = 0;i<portList.length;i++){
+                    if(portList[i].name === this.port_radio){
+                        portCount++;
+                    }
+                }
+                //当网口不存在时新增网口对象
+                if(portCount === 0){
+                    this.editableTabs[index].contextbody.senderItem[senderIndex].port.push(
+                        {
+                            name:this.port_radio,
+                            id:'',
+                            //source箱体坐标
+                            sourcePort:'',
+                            //最终箱体坐标
+                            lastPort:'',
+                            //操作步数
+                            step:-1,
+                            //操作历史
+                            canvasHistory:[],
+                            //箱体信息
+                            box:[]
+
+                        }
+                    )
+                }
+                /**
+                 *
+                 *
+                 * */
+
             },
 
             /**
-             * 顺序走线方式按钮
+             * 水平顺序走线方式按钮
              * */
-            connetorfirst(){
-                console.log(this.editableTabs);
-                drawArrow(150, 100, 400,100);
+            connetorFirst(){
+                if(area_port == null || area_port ==''){
+                    alert("未选择网口");
+                    return false;
+                }
+                //获取当前页面的ROW和LINE----从左到右然后到终点则往下连接
+
+                //tab索引
+                let index = this.editableTabsValue -1;
+                let row = this.editableTabs[index].contextbody.row;
+                let line = this.editableTabs[index].contextbody.line;
+
+                for(let lineIndex = 0;lineIndex<line;lineIndex++){
+                    //判断拐角--通过行数奇偶数进行判断顺序添加/逆序添加
+                    if(lineIndex%2 == 0){
+                        //从左到右
+                        for(let rowIndex = 0 ; rowIndex<row;rowIndex++){
+                            //已知当前箱体逐个连接
+                            createConnectLine(rowIndex+1,lineIndex+1)
+                        }
+                    }else{
+                        //从右到左
+                        for(let rowIndex = row ; rowIndex>0;rowIndex--){
+                            //已知当前箱体逐个连接
+                            createConnectLine(rowIndex,lineIndex+1)
+                        }
+                    }
+                }
             },
 
+            /**
+             * 水平逆序走线方式按钮
+             * */
+            connetorSecond(){
+                if(area_port == null || area_port ==''){
+                    alert("未选择网口");
+                    return false;
+                }
+                //tab索引
+                let index = this.editableTabsValue -1;
+                let row = this.editableTabs[index].contextbody.row;
+                let line = this.editableTabs[index].contextbody.line;
+
+                for(let lineIndex = 0;lineIndex<line;lineIndex++){
+                    //判断拐角--通过行数奇偶数进行判断顺序添加/逆序添加
+                    if(lineIndex%2 == 0){
+                        //从右到左
+                        for(let rowIndex = row ; rowIndex>0;rowIndex--){
+                            //已知当前箱体逐个连接
+                            createConnectLine(rowIndex,lineIndex+1)
+                        }
+                    }else{
+                        //从左到右
+                        for(let rowIndex = 0 ; rowIndex<row;rowIndex++){
+                            //已知当前箱体逐个连接
+                            createConnectLine(rowIndex+1,lineIndex+1)
+                        }
+                    }
+                }
+
+            },
+
+            /**
+             * 竖直逆序走线方式按钮
+             * */
+            connetorThird(){
+                if(area_port == null || area_port ==''){
+                    alert("未选择网口");
+                    return false;
+                }
+                //tab索引
+                let index = this.editableTabsValue -1;
+                let row = this.editableTabs[index].contextbody.row;
+                let line = this.editableTabs[index].contextbody.line;
+
+                for(let rowIndex = 0 ; rowIndex<row;rowIndex++){
+                    if(rowIndex%2 == 0){
+                        //从下到上
+                        for(let lineIndex = line;lineIndex>0;lineIndex--){
+                            //已知当前箱体逐个连接
+                            createConnectLine(rowIndex+1,lineIndex)
+                        }
+                    }else{
+                        //从上到下
+                        for(let lineIndex = 0;lineIndex<line;lineIndex++){
+                            //已知当前箱体逐个连接
+                            createConnectLine(rowIndex+1,lineIndex+1)
+                        }
+                    }
+
+                }
+            },
             /**
              * 竖直顺序走线方式按钮
              * */
-            connetorSecond(){
-
-            },
-
-            /**
-             * 逆序走线方式按钮
-             * */
-            connetorthird(){
-
-            },
-            /**
-             * 逆序走线方式按钮
-             * */
             connetorFouth(){
+                if(area_port == null || area_port ==''){
+                    alert("未选择网口");
+                    return false;
+                }
+                //tab索引
+                let index = this.editableTabsValue -1;
+                let row = this.editableTabs[index].contextbody.row;
+                let line = this.editableTabs[index].contextbody.line;
 
+                for(let rowIndex = 0 ; rowIndex<row;rowIndex++){
+                    if(rowIndex%2 == 0){
+                        //从上到下
+                        for(let lineIndex = 0;lineIndex<line;lineIndex++){
+                            //已知当前箱体逐个连接
+                            createConnectLine(rowIndex+1,lineIndex+1)
+                        }
+                    }else{
+                        //从下到上
+                        for(let lineIndex = line;lineIndex>0;lineIndex--){
+                            //已知当前箱体逐个连接
+                            createConnectLine(rowIndex+1,lineIndex)
+                        }
+                    }
+
+                }
+            },
+            /**
+             * 逆序走线方式按钮
+             * */
+            connetorFifth(){
+
+            },
+            /**
+             * 逆序走线方式按钮
+             * */
+            connetorSixth(){
+
+            },
+            /**
+             * 逆序走线方式按钮
+             * */
+            connetorSventh(){
+
+            },
+            /**
+             * 逆序走线方式按钮
+             * */
+            connetorEigth(){
+
+            },
+
+            /**
+             * canvas连接回退操作
+             * */
+            goBackBtn(){
+                if(area_port == null || area_port ==''){
+                    alert("未选择网口");
+                    return false;
+                }
+                if(senderIndex == null){
+                    alert("未选择发送卡");
+                    return false;
+                }
+                //当前tab索引
+                let index = this.editableTabsValue -1
+                /**
+                 * canvas绘制数组与现行次数
+                 * */
+                let canvasHistory,step,portIndex;
+                //遍历数组看是否存在该网口，如若存在则添加到局部网口变量
+                let portList = this.editableTabs[index].contextbody.senderItem[senderIndex].port
+                for(let i = 0;i<portList.length;i++){
+                    if(portList[i].name === this.port_radio){
+                        step = portList[i].step;
+                        canvasHistory = portList[i].canvasHistory;
+                        portIndex = i;
+                    }
+                }
+
+                if (step > 0) {
+                    step--;
+                    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+                    let canvasPic = canvasHistory[step];
+                    ctx.putImageData(canvasPic, 0, 0);
+                    this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].step=step;
+                    //连线问题解决
+                    this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].box.pop();
+                    let boxLength = this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].box.length;
+                    let xpos = this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].box[boxLength-1].xpos;
+                    let ypos = this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].box[boxLength-1].ypos;
+                    console.log(this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].box);
+                    this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].lastPort = {
+                        x:xpos-1,
+                        y:ypos-1
+                    }
+                }else if(step == 0){
+
+                    step--;
+                    this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].step=step;
+                    this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].canvasHistory=[];
+                    this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].sourcePort="";
+                    this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].lastPort="";
+                    let xpos = this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].box[0].xpos-1;
+                    let ypos = this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].box[0].ypos-1;
+
+                    ctx.clearRect (xpos*xTox+8,ypos*yToy+8, xTox, yToy);
+                    ctx.font="10px Arial";
+                    //绘制矩形
+                    //绘制图形样式
+                    ctx.fillStyle = "#ccffcc";
+                    ctx.strokeStyle = "#ffffcc";
+                    ctx.lineWidth = 4;
+                    ctx.fillRect (xTox*xpos+10,ypos*yToy+10, 126, 78);
+                    ctx.strokeRect(xTox*xpos+10,ypos*yToy+10, 126, 78);
+                    //连线问题解决
+                    this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].box.pop();
+                }else {
+                    console.log('不能再继续撤销了');
+                }
+            },
+            /**
+             *canvas重置操作
+             * */
+            // resetgoBackBtn(){
+            //     if (step < canvasHistory.length - 1) {
+            //         step++;
+            //         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+            //         let canvasPic = canvasHistory[step];
+            //         ctx.putImageData(canvasPic, 0, 0);
+            //     } else {
+            //         console.log('已经是最新的记录了');
+            //     }
+            // },
+            /**
+             *重置所有网口
+             * */
+            resetAllPortBtn(){
+                if(senderIndex == null){
+                    alert("未选择发送卡");
+                    return false;
+                }
+                //当前tab索引
+                let index = this.editableTabsValue -1;
+                this.editableTabs[index].contextbody.senderItem[senderIndex].port = [];
+                this.port_radio = null;
+                area_port = null;
+                clearCanvas();
+                draw(this.rowNum,this.lineNum);
+            },
+            /**
+             * 重置当前网口
+             * */
+            resetThisPortBtn(){
+
+            },
+            /**
+             * 选择发送卡类型
+             * */
+            chooseReviceType(value){
+                for(let i =0;i<this.boxItem.length;i++){
+                    if(this.boxItem[i].name == value){
+                       let box = this.boxItem[i].box.split('×');
+                       this.box_width = box[0];
+                       this.box_height = box[1];
+                    }
+                }
             }
+
         },
 
     });
 
     //定义canvas图形
-    var canvas = document.getElementById('box-canvas');
-    var ctx = canvas.getContext("2d");
+    let canvas = document.getElementById('box-canvas');
+    let ctx = canvas.getContext("2d");
+    //canvas宽高
+    let canvasWidth = 1000;
+    let canvasHeight = 760;
 
     //连接线颜色数组
     let connectLineColorGroup =
-        ["#3eede7",
+        ["#007b43",
         "#4b5cc4",
         "#ff461f",
         "#60281e",
@@ -4401,7 +4763,7 @@
         for(let i = 0;i<linecha+1;i++){
             let realLineIndex = lastLineIndex-i;
             for(let s = 0;s<rowNum;s++){
-                ctx.clearRect (s*102+8,realLineIndex*62+8, 102, 62);
+                ctx.clearRect (s*xTox+8,realLineIndex*yToy+8, xTox, yToy);
             }
         }
     }
@@ -4412,41 +4774,46 @@
         for(let i = 0;i<rowcha+1;i++){
             let realRowIndex = lastRowIndex-i;
             for(let s = 0;s< lineNum;s++){
-                ctx.clearRect (realRowIndex*102+8,s*62+8,102,102);
+                ctx.clearRect (realRowIndex*xTox+8,s*yToy+8,xTox,154);
             }
         }
     }
 
-    //生成箱体的封装方法
+    //生成未连接箱体的封装方法
     function draw(rowNum,lineNum){
         if(!canvas.getContext) return;
-        if(typeof (lastRowIndex)=="undefined" || typeof (lastRowIndex)==""){
-            lastRowIndex = 0;
-        }
-        if(typeof (lastLineIndex)=="undefined" || typeof (lastLineIndex)==""){
-            lastLineIndex = 0;
-        }
         for(let i = 0;i<rowNum;i++){
             for(let s = 0;s<lineNum;s++ ){
                 ctx.font="10px Arial";
                 //绘制矩形
                 //绘制图形样式
-                ctx.fillStyle = "rgb(42,189,25)";
-                ctx.strokeStyle = "#1685a9";
+                ctx.fillStyle = "#ccffcc";
+                ctx.strokeStyle = "#ffffcc";
                 ctx.lineWidth = 4;
-                ctx.fillRect (102*i+10,s*62+10, 96, 56);
-                ctx.strokeRect(102*i+10,s*62+10, 96, 56);
-                ctx.fillStyle = 'red'; //填充线样式
-                ctx.fillText("Hello World",101*i+30,s*61+40);
+                ctx.fillRect (xTox*i+10,s*yToy+10, 126, 78);
+                ctx.strokeRect(xTox*i+10,s*yToy+10, 126, 78);
             }
         }
+    }
 
-        // if(rowNum > lastRowIndex ||lineNum > lastLineIndex ){
-
-        // }
-
-        lastRowIndex = rowNum;
-        lastLineIndex = lineNum;
+    //生成已连接箱体的封装方法-----#274a78
+    function drawConnectedBox(x,y,color) {
+        //绘制矩形
+        //绘制图形样式
+        ctx.fillStyle = color;
+        ctx.strokeStyle = "#ffffcc";
+        ctx.lineWidth = 4;
+        ctx.fillRect (xTox*x+10,y*yToy+10, 126, 78);
+        ctx.strokeRect(xTox*x+10,y*yToy+10, 126, 78);
+    }
+    
+    function drawConnectBoxFont(x,y,portName,portOrder,boxWidth,boxHeight) {
+        ctx.font="14px Arial";
+        ctx.fillStyle = '#01ffeb'; //填充线样式
+        ctx.fillText("Port:"+portName,xTox*x+50,y*yToy+28);
+        ctx.fillText("Receiver:"+portOrder,xTox*x+50,y*yToy+40);
+        ctx.fillText("width:"+boxWidth,xTox*x+50,y*yToy+52);
+        ctx.fillText("Height:"+boxHeight,xTox*x+50,y*yToy+64);
     }
 
     //注：使用这个函数，需要给Canvas元素的position设为absolute。
@@ -4463,66 +4830,161 @@
         return {x: x, y: y};
     }
 
-    function drawArc(x,y) {
+    function drawArc(x,y,color) {
         ctx.beginPath();
-        ctx.fillStyle = 'blue';
+        ctx.fillStyle = color;
 
         // 顺时针--context.arc(x,y,r,sAngle,eAngle,counterclockwise);
-        ctx.arc(x*102+62, y*62+45, 10, 0, 2 * Math.PI / 4 * 3);
+        ctx.arc(x*xTox+70, y*yToy+51, 10, 0, 2 * Math.PI / 4 * 3);
         // 是否闭合路径 : 闭合路径后起点与终点会连接
         ctx.closePath();
         ctx.fill();
 
-        ctx.font = '16px bold';
+        ctx.font = '30px bold';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('S',x*102+62,y*62+25);
+        ctx.fillText('S',x*xTox+70,y*yToy+31);
     }
 
-    var sourcePort = "";
-    var lastPort = "";
-    //箱体绘制画面点击事件
-    canvas.addEventListener('click',function (e) {
-        // //当前tab页面索引
-        // console.log("当前页面tab"+demo.index-1);
-        // //Vue内参数获取
-        // console.log(demo.editableTabs);
-        // demo.editableTabs[0].contextbody.port[0].id
-        p = getEventPosition(e);
-        //初始值--//绘制矩形ctx.fillRect (102*i+10,s*62+10, 100, 60);
-        // console.log("当前网口"+area_port);
-        //真实X值
-        var realX = p.x-10;
-        console.log("X取整数=="+Math.ceil(realX/102));
-        //真实Y值
-        var realY = p.y-10;
-        //通过取整确定点击的箱体是第几行或者第几列
-        console.log("Y取整数=="+Math.ceil(realY/62));
-        let x = Math.ceil(realX/102)-1;
-        let y = Math.ceil(realY/62)-1;
-        if(sourcePort === ""){
+    /**
+     * 绘制连接线的封装方法
+     * */
+    function createConnectLine(xPos,yPos){
+
+        //tab索引
+        let index = demo.editableTabsValue -1
+        //用以绘制连接线的X坐标
+        let x = xPos-1;
+        //用以绘制连接线的Y坐标
+        let y = yPos-1;
+
+
+        //判断该箱体是否存在----- x > row   y>line  ---如果不存在则不绘制
+        if(xPos>demo.editableTabs[index].contextbody.row){
+            console.log("X坐标大于列数终止绘图");
+            return false;
+        }else if(yPos>demo.editableTabs[index].contextbody.line){
+            console.log("Y坐标大于行数终止绘图");
+            return false;
+        }
+
+        //网口索引
+        let portIndex = null;
+        //获取当前网口筛选出当前箱体
+        let portList = demo.editableTabs[index].contextbody.senderItem[senderIndex].port
+        for(let i = 0;i<portList.length;i++){
+            //当前网口
+            if(portList[i].name === area_port){
+                portIndex = i;
+            }
+        }
+        for(let portNum = 0;portNum<portList.length;portNum++){
+            let boxList = portList[portNum].box;
+            //判断该箱体是否已经存在XPOS--YPOS
+            for(let s = 0;s<boxList.length;s++){
+                if(boxList[s].xpos === xPos ){
+                    if(boxList[s].ypos === yPos ){
+                        return false;
+                    }
+
+                }
+            }
+        }
+
+        //当加一个箱体就在数组内push一个数组
+        let box = {
+            order:portList[portIndex].box.length+1,
+            xpos:xPos,
+            ypos:yPos,
+            pianyiliangx:'',
+            pianyiliangy:'',
+            boxwidth:'',
+            boxheight:''
+        }
+        portList[portIndex].box.push(box);
+
+        /**
+         * canvas绘制数组与现行次数
+         * */
+        let canvasHistory,step;
+        step = portList[portIndex].step;
+        canvasHistory = portList[portIndex].canvasHistory;
+        /**
+         * 记录绘图记录
+         * */
+        step++;
+        if (step < canvasHistory.length) {
+            canvasHistory.length = step; // 截断数组
+        }
+
+        portList[portIndex].step = step;
+
+        if(portList[portIndex].sourcePort === ''){
             //x*102+62, y*62+45
-            sourcePort = {
+            portList[portIndex].sourcePort = {
                 x:x,
                 y:y
             }
-            drawArc(x,y);
-        }else if(lastPort === ""){
+            drawConnectedBox(x,y,'#99cccc');
+            drawConnectBoxFont(x,y,portList[portIndex].name,box.order,141,135);
+            drawArc(x,y,connectLineColorGroup[portIndex]);
+        }else if(portList[portIndex].lastPort === ''){
+            let sourcePort = portList[portIndex].sourcePort;
             // drawArrow(fromX, fromY, toX, toY)
-            drawArrow(sourcePort.x*102+62,sourcePort.y*62+45,x*102+62,y*62+45);
-            lastPort = {
+            drawConnectedBox(x,y,'#99cccc',portList[portIndex].name,box.order,141,135);
+            drawConnectBoxFont(x,y,portList[portIndex].name,box.order,141,135);
+            drawArrow(sourcePort.x*xTox+70,sourcePort.y*yToy+51,x*xTox+70,y*yToy+51,connectLineColorGroup[portIndex]);
+            portList[portIndex].lastPort = {
                 x:x,
                 y:y
             }
         }else{
-            drawArrow(lastPort.x*102+62,lastPort.y*62+45,x*102+62,y*62+45);
-            lastPort = {
+            let lastPort = portList[portIndex].lastPort;
+            drawConnectedBox(x,y,'#99cccc',portList[portIndex].name,box.order,141,135);
+            drawConnectBoxFont(x,y,portList[portIndex].name,box.order,141,135);
+            drawArrow(lastPort.x*xTox+70,lastPort.y*yToy+51,x*xTox+70,y*yToy+51,connectLineColorGroup[portIndex]);
+            portList[portIndex].lastPort = {
                 x:x,
                 y:y
             }
         }
         // alert("第"+Math.ceil(realX/102)+"列 第"+Math.ceil(realY/62)+"行，即：（"+Math.ceil(realX/102)+","+Math.ceil(realY/62)+"）");
 
+        // 添加新的绘制到历史记录
+        let imgData=ctx.getImageData(0,0,1000,1000);
+        canvasHistory.push(imgData);
+        portList[portIndex].canvasHistory = canvasHistory;
+    }
+
+
+    //箱体绘制画面点击事件
+    canvas.addEventListener('click',function (e) {
+        if(area_port == null || area_port ==''){
+            alert("未选择网口");
+            return false;
+        }
+        p = getEventPosition(e);
+        //初始值--//绘制矩形ctx.fillRect (102*i+10,s*62+10, 100, 60);
+        // console.log("当前网口"+area_port);
+        //真实X值
+        var realX = p.x-10;
+        // console.log("X取整数=="+Math.ceil(realX/102));
+        //真实Y值
+        var realY = p.y-10;
+        //通过取整确定点击的箱体是第几行或者第几列
+        // console.log("Y取整数=="+Math.ceil(realY/62));
+
+        //tab索引
+        let index = demo.editableTabsValue -1
+
+        //点击坐标转换的X坐标
+        let xPos =Math.ceil(realX/xTox);
+
+        //点击坐标转换的Y坐标
+        let yPos =Math.ceil(realY/yToy);
+
+        //调用方法创建连接线
+        createConnectLine(xPos,yPos);
 
     },false);
 
@@ -4581,11 +5043,10 @@
      drawArrow(ctx, myCanvas.width / 2, myCanvas.height / 2, myCanvas.width / 2, myCanvas.height / 2 - 150,30,30,4,'#d6f');
      *
      * */
-    function drawArrow(fromX, fromY, toX, toY) {
+    function drawArrow(fromX, fromY, toX, toY,color) {
         theta = 30;
         headlen = 30;
-        width = 10;
-        color = '#f36';
+        width = 8;
         theta = typeof(theta) != 'undefined' ? theta : 30;
         headlen = typeof(theta) != 'undefined' ? headlen : 10;
         width = typeof(width) != 'undefined' ? width : 1;
@@ -4626,7 +5087,7 @@
      * 清除画布的封装方法
      * */
     function clearCanvas() {
-        ctx.clearRect(0,0,3000,3000);
+        ctx.clearRect(0,0,canvasWidth,canvasHeight);
     }
 
 </script>
