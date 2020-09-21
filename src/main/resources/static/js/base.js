@@ -1,4 +1,7 @@
 
+//当前选中箱体的模组
+var clicked_Box_ModGroup = null;
+
 function getCanShu() {
 
     // 基于准备好的dom，初始化echarts实例
@@ -95,49 +98,106 @@ function getCanShu() {
             //走线方式数组
             var portGroup = [];
 
+            let _self = data;
+
             //请求后台参数
-            for(var i = 0;i< data.COMLIST.length;i++){
+            for(var i = 0;i< _self.COMLIST.length;i++){
                 //获取屏幕对象
-                ledParasJson = data.COMLIST[i].LEDPARAS;
+                ledParasJson = _self.COMLIST[i].LEDPARAS;
                 //外围参数拓展显示
                 // console.log(ledParasJson);
                 //通用接收卡对象
                 var recParas = ledParasJson.COMMON_RECPARAS;
                 //通用模组对象
                 var modParas = ledParasJson.COMMON_MODPARAS;
-                $('#MOD_RSL').text(modParas.MOD_RSLT);
-                $('#MOD_SPACE').text(modParas.MOD_SPACE+"MM");
-
-                $('#MOD_SCAN_NUM').text(modParas.SCAN_NUM+"SCAN");
-                //通用模组-灯光参数对象
-                var lamp_Para =modParas.LAMP_PARA;
-                $('#LAMP_PARA_STYLE').text(lamp_Para.STYLE);
-                $('#LAMP_PARA_BRIGHT').text(lamp_Para.BRIGHT);
-                $('#LAMP_PARA_WAVELEN').text(lamp_Para.WAVELEN);
-                $('#LAMP_PARA_ANGLE').text("<="+lamp_Para.ANGLE+"度");
-                $('#LAMP_PARA_ANTISTATIC').text("<"+lamp_Para.ANTISTATIC+"V");
-                $('#LAMP_PARA_LEAKAGE_CURRENT').text("<"+lamp_Para.LEAKAGE_CURRENT+"uA");
-                //箱体ID
-                $('#boxTitle').text(recParas.BOX_NAME);
-                //箱体类型
-                $('#productTitle').text(recParas.BOX_TYPE);
-                //模组个数
-                $('#MOD_ORDER').text(recParas.MOD_ORDER);
-                //接收卡带载面积计算：
-                var Mod_Area_Group = modParas.MOD_SIZE.split("*");
-                for(var s = 0;s<Mod_Area_Group.length;s++){
-                    Mod_Area_Group[s] = Mod_Area_Group[s].replace(/[^0-9]/ig,"");
+                if(typeof (modParas.MOD_RSLT) == "undefined" ){
+                    $('#MOD_RSL').text("未检测到");
+                }else{
+                    $('#MOD_RSL').text(modParas.MOD_RSLT);
                 }
-                //接收卡带载面积：
-                $('#REC_Carrying_Area').text(parseInt((Mod_Area_Group[0]*Mod_Area_Group[1]*recParas.MODULE_CNT)/10000)+"mm²");
 
-                //驱动IC
-                $('#ICSYLE').text(modParas.ICSYLE);
+                if(typeof (modParas.MOD_SPACE) == "undefined" ){
+                    $('#MOD_SPACE').text("未检测到");
+                }else{
+                    $('#MOD_SPACE').text(modParas.MOD_SPACE+"MM");
+                }
+
+                if(typeof (modParas.SCAN_NUM) == "undefined" ){
+                    $('#MOD_SCAN_NUM').text("未检测到");
+                }else{
+                    $('#MOD_SCAN_NUM').text(modParas.SCAN_NUM+"SCAN");
+                }
+
+                //接收卡名称
+                if(typeof (recParas.REC_TYPE) == "undefined" ){
+                    $('#rec_Type').text("暂无数据");
+                }else{
+                    $('#rec_Type').text(recParas.REC_TYPE);
+                }
+
+                if(typeof (recParas.BOX_NAME) == "undefined" ){
+                    $('#productTitle').text("未检测到");
+                }else{
+                    //箱体类型
+                    $('#productTitle').text(recParas.BOX_NAME);
+                }
+
+                if(typeof (recParas.MOD_ORDER) == "undefined" ){
+                    $('#MOD_ORDER').text("未检测到");
+                }else{
+                    //模组个数
+                    $('#MOD_ORDER').text(recParas.MOD_ORDER);
+                }
+
+                if(typeof (modParas.MOD_SIZE) == "undefined" ){
+                    $('#REC_Carrying_Area').text("未检测到");
+                }else{
+                    //接收卡带载面积计算：
+                    var Mod_Area_Group = modParas.MOD_SIZE.split("*");
+                    for(var s = 0;s<Mod_Area_Group.length;s++){
+                        Mod_Area_Group[s] = Mod_Area_Group[s].replace(/[^0-9]/ig,"");
+                    }
+                    //接收卡带载面积：
+                    $('#REC_Carrying_Area').text(parseInt((Mod_Area_Group[0]*Mod_Area_Group[1]*recParas.MODULE_CNT)/10000)+"mm²");
+                }
+
+                // if(typeof (modParas.ICSYLE) == "undefined" ){
+                //     $('#ICSYLE').text("未检测到");
+                // }else{
+                //     //驱动IC
+                //     $('#ICSYLE').text(modParas.ICSYLE);
+                // }
+                //判断发送卡列表是否存在
+                if(typeof (ledParasJson.SENDER_ORDER) == "undefined"){
+                    continue;
+                }
 
                 //发送卡数组
                 senderOrderList = ledParasJson.SENDER_ORDER;
+
+                //丢弃发送卡的值
+                let abandon = 0;
                 //遍历发送卡列表可知发送卡数量
-                for(var i = 0;i<senderOrderList.length;i++){
+                for(let i = 0;i<senderOrderList.length;i++){
+
+                    //判断网口列表是否存在
+                    if(typeof (senderOrderList[i].PORT_ORDER) == "undefined"){
+                        abandon++;
+                        continue;
+                    }
+                    //实际坐标的值
+                    senderSum = i - abandon;
+
+
+                    //判断发送卡连接是否有问题----有时候发送卡断电显示
+                    let senderConnecting = true;
+
+                    //该发送卡箱体总数
+                    let totalBox = 0;
+
+                    //箱体故障总数
+                    let fault_num = 0;
+
                     //当前发送卡信息
                     var senderOrder = senderOrderList[i];
                     //接收卡版本号
@@ -149,7 +209,7 @@ function getCanShu() {
                     //发送卡信息
                     var sender ={
                         x: XInitSender,
-                        y: YInitSender-i*300,
+                        y: YInitSender-senderSum*300,
                         symbolSize: [80,50],
                         nodeName: senderOrder.ID,
                         name: senderOrder.ID,
@@ -158,149 +218,94 @@ function getCanShu() {
                         // svgPath: 'M 0 265.6 v 448 h 192 v 64 h 128 v -64 h 384 v 64 h 128 v -64 h 192 v -448 H 0 Z m 960 384 H 64 v -320 h 896 v 320 Z m -64 -256 h -256 v 192 h 256 v -192 Z m -64 128 h -128 v -64 h 128 v 64 Z m -640 -64 H 128 v -64 h 64 v 64 Z m 128 0 H 256 v -64 h 64 v 64 Z m 128 0 h -64 v -64 h 64 v 64 Z m -256 128 H 128 v -64 h 64 v 64 Z m 128 0 H 256 v -64 h 64 v 64 Z m 128 0 h -64 v -64 h 64 v 64 Z m 128 -128 h -64 v -64 h 64 v 64 Z m 0 128 h -64 v -64 h 64 v 64 Z'
                         svgPath:'image://'+localhostPaht+'/images/senderReal.png'
                     }
-                    //新增拓扑连接线
-                    var lineSender = {
-                        source: '控制卡',
-                        target: senderOrder.ID,
-                        name: '连通',
-                        type: '网线',
-                        nodeName: '主网线'
-                    }
-                    //连接线新增
-                    links.push(lineSender);
                     //矢量图形新增
                     nodes.push(sender);
                     //获取走线端口数量
                     var portNum = senderOrder.PORT_ORDER.length;
-                    //遍历走线接口
-                    /* for(var j = 0;j<portNum;j++){
-                         //走线详情信息
-                         var port = senderOrder.PORT_ORDER[j];
-                         //判断索引是否能够取余4来判断在当前X轴的Y位置
-                         if((j+1)%4 === 0){
-                             //当前port对象
-                             var singlePort = {
-                                 //X轴上单个偏移差值为60一个单位(向右+60)
-                                 x: XInitPort+parseInt((j+1)/4-1)*60,
-                                 //Y轴上单个偏移差值为70一个单位（向下-70）
-                                 y: YInitPort-3*50-i*300,
-                                 symbolSize: 20,
-                                 nodeName: port.ID,
-                                 name: port.ID+senderOrder.ID,
-                                 type: '网口',
-                                 detail:null,
-                                 svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
-                             };
-                             //走线方式数组添加
-                             nodes.push(singlePort);
-                         }else{
-                             var singlePort = {
-                                 //X轴上单个偏移差值为60一个单位(向右+60)
-                                 x: XInitPort+parseInt((j+1)/4)*60,
-                                 //Y轴上单个偏移差值为70一个单位（向下-70）
-                                 y: YInitPort-(j)%4*50-i*300,
-                                 symbolSize: 20,
-                                 nodeName: port.ID,
-                                 name: port.ID+senderOrder.ID,
-                                 type: '网口',
-                                 detail:null,
-                                 svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
-                             };
-                             nodes.push(singlePort);
-                         }
-                         //遍历单个走线口的屏体信息
-                         for(var boxindex = 0;boxindex < port.BOX.length;boxindex++){
-                             var box = port.BOX[boxindex];
-                             //判断屏体顺序是否为1能和端口直连
-                             if(box.ORDER == 1){
-                                 var portBox = {
-                                     source: port.ID+senderOrder.ID,
-                                     target: senderOrder.ID+box.ID+boxindex,
-                                     name: '连通',
-                                     type: '网线',
-                                     nodeName: '网线'
-                                 }
-                                 //端口连接线新增
-                                 links.push(portBox);
-                             }
-                             //判断小于最后一个屏体之间的相互串联
-                             if(box.ORDER < port.BOX.length){
-                                 var boxNext = port.BOX[boxindex+1]
-                                 //当下个箱体为空时不执行
-                                 if(boxindex+1 < port.BOX.length){
-                                     var portBox = {
-                                         source: senderOrder.ID+box.ID+boxindex,
-                                         target: senderOrder.ID+boxNext.ID+(boxindex+1),
-                                         name: '连通',
-                                         type: '串联',
-                                         nodeName: '串联'
-                                     }
-                                     links.push(portBox);
-                                 }
-                             }
-                             //单个屏体的信息
-                             var singleBox = {
-                                 x: XInit[box.XPOS-1],
-                                 y: YInit[box.YPOS-1],
-                                 symbolSize: 46,
-                                 nodeName: "屏体"+box.ID,
-                                 name: senderOrder.ID+box.ID+boxindex,
-                                 type: '屏体',
-                                 detail:box,
-                                 svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
-                             }
-                             nodes.push(singleBox);
-                         }
 
-                     }*/
+                    //已用网口的数组
+                    let usePort = [];
                     //遍历走线接口
                     for(var j = 0;j<portNum;j++){
 
                         //走线详情信息
                         var port = senderOrder.PORT_ORDER[j];
 
-                        //新增归属关系
-                        var hiddenLine = {
-                            source: senderOrder.ID,
-                            target: port.ID+senderOrder.ID,
-                            name: '连通',
-                            type: 0,
-                            nodeName: '主网线'
+                        //遍历端口显示----默认发送卡有16个端口
+                        for(let initPort = 1;initPort < 17;initPort++){
+                            let portName = "P"+initPort;
+                            //已使用网口
+                            if(portName === port.ID){
+                                //新增网线+发送卡归属关系
+                                var hiddenLine = {
+                                    source: senderOrder.ID,
+                                    target: port.ID+senderOrder.ID,
+                                    name: '连通',
+                                    type: 0,
+                                    nodeName: '主网线'
+                                }
+                                links.push(hiddenLine);
+                                //判断索引是否能够取余4来判断在当前X轴的Y位置
+                                if((initPort)%4 === 0){
+                                    //当前port对象
+                                    var singlePort = {
+                                        //X轴上单个偏移差值为60一个单位(向右+60)
+                                        x: XInitPort+parseInt((initPort)/4-1)*42,
+                                        //Y轴上单个偏移差值为70一个单位（向下-70）
+                                        y: YInitPort-3*50-senderSum*300,
+                                        symbolSize: 20,
+                                        nodeName: port.ID,
+                                        name: port.ID+senderOrder.ID,
+                                        type: '网口',
+                                        detail:null,
+                                        svgPath: 'path://M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
+                                    };
+                                    //走线方式数组添加
+                                    nodes.push(singlePort);
+                                }else{
+                                    console.log("当前索引"+initPort);
+                                    var singlePort = {
+                                        //X轴上单个偏移差值为60一个单位(向右+60)
+                                        x: XInitPort+parseInt((initPort)/4)*42,
+                                        //Y轴上单个偏移差值为70一个单位（向下-70）
+                                        y: YInitPort-(initPort-1)%4*50-senderSum*300,
+                                        symbolSize: 20,
+                                        nodeName: port.ID,
+                                        name: port.ID+senderOrder.ID,
+                                        type: '网口',
+                                        detail:null,
+                                        svgPath: 'path://M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
+                                    };
+                                    nodes.push(singlePort);
+                                }
+                                usePort.push(portName);
+
+                            }
+
                         }
-                        links.push(hiddenLine);
-                        //判断索引是否能够取余4来判断在当前X轴的Y位置
-                        if((j+1)%4 == 0){
-                            //当前port对象
-                            var singlePort = {
-                                //X轴上单个偏移差值为60一个单位(向右+60)
-                                x: XInitPort+parseInt((j+1)/4-1)*60,
-                                //Y轴上单个偏移差值为70一个单位（向下-70）
-                                y: YInitPort-3*50-i*300,
-                                symbolSize: 20,
-                                nodeName: port.ID,
-                                name: port.ID+senderOrder.ID,
-                                type: '网口',
-                                detail:null,
-                                svgPath: 'path://M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
-                            };
-                            //走线方式数组添加
-                            nodes.push(singlePort);
-                        }else{
-                            var singlePort = {
-                                //X轴上单个偏移差值为60一个单位(向右+60)
-                                x: XInitPort+parseInt((j+1)/4)*60,
-                                //Y轴上单个偏移差值为70一个单位（向下-70）
-                                y: YInitPort-(j)%4*50-i*300,
-                                symbolSize: 20,
-                                nodeName: port.ID,
-                                name: port.ID+senderOrder.ID,
-                                type: '网口',
-                                detail:null,
-                                svgPath: 'path://M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
-                            };
-                            nodes.push(singlePort);
+
+
+                        /**
+                         * 筛选箱体--重组箱体模型--将Box.order = 1按顺序往下排
+                         *
+                         * */
+                        //外层循环，控制趟数，每一次找到一个最大值
+                        for (let i = 0; i < port.BOX.length - 1; i++) {
+                            // 内层循环,控制比较的次数，并且判断两个数的大小
+                            for (let j = 0; j < port.BOX.length - 1 - i; j++) {
+                                let ops = parseInt(port.BOX[j].ORDER);
+                                let rit = parseInt(port.BOX[j+1].ORDER);
+                                // 如果前面的数大，放到后面(当然是从小到大的冒泡排序)
+                                if (ops > rit) {
+                                    let temp = port.BOX[j];
+                                    port.BOX[j] = port.BOX[j + 1];
+                                    port.BOX[j + 1] = temp;
+                                }
+                            }
+
                         }
-                        //遍历单个走线口的屏体信息
+                        //遍历单个走线口的箱体信息
+                        totalBox = totalBox + port.BOX.length;
                         for(var boxindex = 0;boxindex < port.BOX.length;boxindex++){
 
                             var box = port.BOX[boxindex];
@@ -315,18 +320,20 @@ function getCanShu() {
                             }
                             links.push(hiddenLine);
 
-                            //判断屏体顺序是否为1能和端口直连
-                            if(box.ORDER == 1){
+                            //判断箱体顺序是否为1能和端口直连
+                            if(box.ORDER === '1'){
                                 var box_State;
                                 //判断箱体状态
-                                if(box.BOX_STATE == '1'){
+                                if(box.BOX_STATE === '1'){
                                     box_State = "连通"
-                                }else if(box.BOX_STATE == '2'){
+                                }else if(box.BOX_STATE === '2'){
                                     box_State = "警告"
-                                }else if(box.BOX_STATE == '3'){
+                                }else if(box.BOX_STATE === '3'){
                                     box_State = "故障"
+                                    fault_num++
                                 }else{
                                     box_State = "无法检测"
+                                    fault_num++
                                 }
                                 var portBox = {
                                     source: port.ID+senderOrder.ID,
@@ -348,7 +355,7 @@ function getCanShu() {
                                 nodeName: '主网线'
                             }
                             links.push(hiddenLineForPort);
-                            //判断小于最后一个屏体之间的相互串联
+                            //判断小于最后一个箱体之间的相互串联
                             if(box.ORDER < port.BOX.length){
                                 var boxNext = port.BOX[boxindex+1]
                                 //当下个箱体为空时不执行
@@ -361,8 +368,10 @@ function getCanShu() {
                                         box_State = "警告"
                                     }else if(boxNext.BOX_STATE === '3'){
                                         box_State = "故障"
+                                        fault_num++
                                     }else{
                                         box_State = "无法检测"
+                                        fault_num++
                                     }
                                     var portBox = {
                                         source: senderOrder.ID+box.ID+boxindex,
@@ -374,14 +383,14 @@ function getCanShu() {
                                     links.push(portBox);
                                 }
                             }
-                            //单个屏体的信息
+                            //单个箱体的信息
                             var singleBox = {
                                 x: XInit[box.XPOS-1],
                                 y: YInit[box.YPOS-1],
                                 symbolSize: 70,
-                                nodeName: "屏体"+box.ID,
+                                nodeName: "箱体"+box.XPOS+"-"+box.YPOS,
                                 name: senderOrder.ID+box.ID+boxindex,
-                                type: '屏体',
+                                type: '箱体',
                                 detail:box,
                                 svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
                             }
@@ -390,49 +399,85 @@ function getCanShu() {
 
                     }
 
+
                     //遍历未连接的端口显示----默认发送卡有16个端口
-                    for(var unPortNumIndex = portNum+1;unPortNumIndex < 17;unPortNumIndex++){
-                        //新增归属关系
-                        var hiddenLine = {
-                            source: senderOrder.ID,
-                            target: unPortNumIndex+senderOrder.ID,
-                            name: '未连通',
-                            type: 0,
+                    for(var unPortNumIndex = 1;unPortNumIndex < 17;unPortNumIndex++){
+                        let portName = "P"+unPortNumIndex;
+
+                        if($.inArray(portName,usePort) === -1){
+                            //新增归属关系
+                            var hiddenLine = {
+                                source: senderOrder.ID,
+                                target: portName+senderOrder.ID,
+                                name: '连通',
+                                type: 0,
+                                nodeName: '主网线'
+                            }
+                            links.push(hiddenLine);
+                            //判断索引是否能够取余4来判断在当前X轴的Y位置
+                            if((unPortNumIndex)%4 === 0){
+                                //当前port对象
+                                var singlePort = {
+                                    //X轴上单个偏移差值为60一个单位(向右+60)
+                                    x: XInitPort+parseInt((unPortNumIndex)/4-1)*42,
+                                    //Y轴上单个偏移差值为70一个单位（向下-70）
+                                    y: YInitPort-3*50-i*300,
+                                    symbolSize: 20,
+                                    nodeName: "P"+unPortNumIndex,
+                                    name: portName+senderOrder.ID,
+                                    type: '未连接网口',
+                                    detail:null,
+                                    svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
+                                };
+                                //走线方式数组添加
+                                nodes.push(singlePort);
+                            }else{
+                                var singlePort = {
+                                    //X轴上单个偏移差值为60一个单位(向右+60)
+                                    x: XInitPort+parseInt((unPortNumIndex)/4)*42,
+                                    //Y轴上单个偏移差值为70一个单位（向下-70）
+                                    y: YInitPort-(unPortNumIndex-1)%4*50-i*300,
+                                    symbolSize: 20,
+                                    nodeName: "P"+unPortNumIndex,
+                                    name: portName+senderOrder.ID,
+                                    type: '未连接网口',
+                                    detail:null,
+                                    svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
+                                };
+                                //走线方式数组添加
+                                nodes.push(singlePort);
+
+                            }
+                        }
+                    }
+
+                    if(totalBox === fault_num){
+                        senderConnecting = false
+                    }
+
+
+                    if(senderConnecting === true){
+                        //新增拓扑连接线
+                        var lineSender = {
+                            source: '控制卡',
+                            target: senderOrder.ID,
+                            name: '连通',
+                            type: '网线',
                             nodeName: '主网线'
                         }
-                        links.push(hiddenLine);
-                        //判断索引是否能够取余4来判断在当前X轴的Y位置
-                        if((unPortNumIndex)%4 == 0){
-                            //当前port对象
-                            var singlePort = {
-                                //X轴上单个偏移差值为60一个单位(向右+60)
-                                x: XInitPort+parseInt((unPortNumIndex)/4-1)*42,
-                                //Y轴上单个偏移差值为70一个单位（向下-70）
-                                y: YInitPort-3*50-i*300,
-                                symbolSize: 20,
-                                nodeName: "P"+unPortNumIndex,
-                                name: unPortNumIndex+senderOrder.ID,
-                                type: '未连接网口',
-                                detail:null,
-                                svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
-                            };
-                            //走线方式数组添加
-                            nodes.push(singlePort);
-                        }else{
-                            var singlePort = {
-                                //X轴上单个偏移差值为60一个单位(向右+60)
-                                x: XInitPort+parseInt((unPortNumIndex)/4)*42,
-                                //Y轴上单个偏移差值为70一个单位（向下-70）
-                                y: YInitPort-(unPortNumIndex-1)%4*50-i*300,
-                                symbolSize: 20,
-                                nodeName: "P"+unPortNumIndex,
-                                name: unPortNumIndex+senderOrder.ID,
-                                type: '未连接网口',
-                                detail:null,
-                                svgPath: 'M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
-                            };
-                            nodes.push(singlePort);
+                        //连接线新增
+                        links.push(lineSender);
+                    }else{
+                        //新增拓扑连接线
+                        var lineSender = {
+                            source: '控制卡',
+                            target: senderOrder.ID,
+                            name: '无法检测',
+                            type: '网线',
+                            nodeName: '主网线'
                         }
+                        //连接线新增
+                        links.push(lineSender);
                     }
                 }
 
@@ -629,22 +674,56 @@ function getCanShu() {
                         var Source ;
                         //第三个点--在屏体上方的位置
                         var Target;
-                        //当目标Y坐标小于Y轴第四个屏体的Y坐标
-                        if(TategerY < YInit[4] && SourceY > YInitPort - 151){
-                            Source0 = [SourceX+sopindex*7,SourceY]
-                            Source = [SourceX-sopindex*21,SourceY-sopindex*198]
-                            Target = [TategerX,SourceY-sopindex*198]
-                        }
                         //当源坐标Y坐标等于第一行时
-                        else if(SourceY > YInitPort - 151){
-                            Source0 = [SourceX+sopindex*7,SourceY]
-                            Source = [SourceX+sopindex*7,SourceY+sopindex*66]
-                            Target = [TategerX,SourceY+sopindex*66]
+                        if(SourceY > YInitPort - 151){
+
+                            //当目标Y坐标小于Y轴第三个屏体的Y坐标
+                            if(TategerY < YInit[2] && TategerY > YInit[4]){
+                                Source0 = [SourceX+sopindex*7,SourceY]
+                                Source = [SourceX+sopindex*7,TategerY-sopindex*20-65]
+                                Target = [TategerX,TategerY-sopindex*20-65]
+                            }
+                            //当目标Y坐标小于Y轴第四个屏体的Y坐标
+                            else if(TategerY < YInit[3]){
+                                Source0 = [SourceX+sopindex*7,SourceY]
+                                Source = [SourceX-sopindex*21,SourceY-sopindex*20+88]
+                                Target = [TategerX,SourceY-sopindex*20+88]
+                            }else{
+                                Source0 = [SourceX+sopindex*7,SourceY]
+                                Source = [SourceX+sopindex*7,SourceY+sopindex*30+36]
+                                Target = [TategerX,SourceY+sopindex*30+36]
+                            }
+
+                        }
+                        //数据处于第二行发送卡
+                        else if(SourceY < YInitPort - 299 && SourceY > YInitPort - 451){
+                            //当目标Y坐标小于Y轴第三个屏体的Y坐标
+                            if(TategerY < YInit[2] && TategerY > YInit[4]){
+                                Source0 = [SourceX+sopindex*7,SourceY]
+                                Source = [SourceX+sopindex*7,TategerY-sopindex*20-65]
+                                Target = [TategerX,TategerY-sopindex*20-65]
+                            }
+                            //当目标Y坐标小于Y轴第四个屏体的Y坐标
+                            else if(TategerY < YInit[3]){
+                                Source0 = [SourceX+sopindex*7,SourceY]
+                                Source = [SourceX-sopindex*21,SourceY-sopindex*20+88]
+                                Target = [TategerX,SourceY-sopindex*20+88]
+                            }
+                            //当目标Y坐标大于Y轴第二个屏体的Y坐标
+                            else if(TategerY > YInit[1]){
+                                Source0 = [SourceX+sopindex*7,SourceY]
+                                Source = [SourceX+sopindex*7,SourceY+sopindex*20+248]
+                                Target = [TategerX,SourceY+sopindex*20+248]
+                            }else{
+                                Source0 = [SourceX+sopindex*7,SourceY]
+                                Source = [SourceX+sopindex*7,SourceY+sopindex*20+46]
+                                Target = [TategerX,SourceY+sopindex*20+46]
+                            }
                         }
                         else{
                             Source0 = [SourceX+sopindex*7,SourceY]
-                            Source = [SourceX+sopindex*7,TategerY+sopindex*66]
-                            Target = [TategerX,TategerY+sopindex*66]
+                            Source = [SourceX+sopindex*7,TategerY+sopindex*20+46]
+                            Target = [TategerX,TategerY+sopindex*20+46]
                         }
                         lines = {
                             coords:[
@@ -953,57 +1032,182 @@ function getCanShu() {
             myChart.setOption(option);
             // 处理点击事件并且弹出数据名称-params传入的参数
             myChart.on('click', function (params) {
-                if(params.data.type == '屏体'){
-                    //屏体参数赋值
+                if(params.data.type == '箱体'){
+
+                    //箱体参数赋值
                     var detail = params.data.detail;
                     info_title = detail;
-                    //接收卡信息
-                    var rec = info_title.REC[0];
-                    // console.log(rec);
-                    //传感器赋值
-                    $('#SENSOR_VOL').text(rec.SENSOR_VOL+"V");
-                    $('#SENSOR_CURRENT').text(rec.SENSOR_CURRENT+"A");
-                    $('#SENSOR_HUMI').text(rec.SENSOR_HUMI+"%RH");
-                    $('#SENSOR_SMOG').text(rec.SENSOR_SMOG);
-                    $('#SENSOR_TMP').text(rec.SENSOR_TMP+"℃");
-                    $('#SENSOR_BRI').text(rec.SENSOR_BRI+"Lux");
-
-                    //模组信息赋值
-                    //通过遍历计算故障模组数量
-                    var mod_Normal_count = 0;
-                    for(var i = 0;i<rec.MOD.length;i++){
-                        if(rec.MOD[i].MOD_STATE === 1){
-                            mod_Normal_count++;
-                        }
-                    }
-                    //故障模组数
-                    $('#MOD_FAULT').text(rec.MOD.length-mod_Normal_count);
-                    //正常模组数
-                    $('#MOD_NORMAL').text(mod_Normal_count);
-
-                    //电源赋值
-                    //最大功率
-                    $('#MAX_POWER').text(rec.MAX_POWER+"W/m²");
-                    //电压
-                    $('#VOLTAGE').text(rec.VOLTAGE+"V");
-                    //实际功率
-                    $('#RT_POWERDIS').text(rec.RT_POWERDIS+"W/m²");
-                    //平均功率
-                    $('#AVE_POWERDIS').text(rec.AVE_POWERDIS+"W/m²");
-
-                    //接收卡信息赋值
-                    //接收卡名称
-                    $('#rec_Id').text(rec.REC_ID);
-                    //接收卡个数
-                    $('#rec_Count').text(detail.REC.length);
-                    //接收卡运行时间
-                    $('#rec_TOTAL_WORKTIME').text(rec.TOTAL_WORKTIME+"S");
                     //维修日志赋值
 
-                    //驱动IC赋值
+                    if(typeof (detail.REC) != "undefined" && detail.REC.length > 0){
+                        //接收卡信息
+                        var rec = info_title.REC[0];
+                        // console.log(rec);
+                        //传感器赋值
+                        if(typeof (rec.SENSOR_VOL) == "undefined" ){
+                            $('#SENSOR_VOL').text("暂无数据");
+                        }else{
+                            $('#SENSOR_VOL').text(rec.SENSOR_VOL+"V");
+                        }
+                        if(typeof (rec.SENSOR_CURRENT) == "undefined" ){
+                            $('#SENSOR_CURRENT').text("暂无数据");
+                        }else{
+                            $('#SENSOR_CURRENT').text(rec.SENSOR_CURRENT+"A");
+                        }
+                        if(typeof (rec.SENSOR_HUMI) == "undefined" ){
+                            $('#SENSOR_HUMI').text("暂无数据");
+                        }else{
+                            $('#SENSOR_HUMI').text(rec.SENSOR_HUMI+"%RH");
+                        }
+                        if(typeof (rec.SENSOR_TMP) == "undefined" ){
+                            $('#SENSOR_TMP').text("暂无数据");
+                        }else{
+                            $('#SENSOR_TMP').text(rec.SENSOR_TMP+"℃");
+                        }
+
+                        clicked_Box_ModGroup = rec.MOD;
+
+                        //模组信息赋值
+                        //遍历模组
+                        //通过遍历计算故障模组数量
+                        var mod_Normal_count = 0;
+                        for(let i = 0;i<rec.MOD.length;i++){
+
+                            let sigleMod = rec.MOD[i];
+
+                            let target  = null;
+                            let pos = parseInt(sigleMod.POS);
+
+                            switch (pos) {
+                                case 1:
+                                    target = "module1";
+                                    break;
+                                case 2:
+                                    target = "module5";
+                                    break;
+                                case 3:
+                                    target = "module2";
+                                    break;
+                                case 4:
+                                    target = "module6";
+                                    break;
+                                case 5:
+                                    target = "module3";
+                                    break;
+                                case  6:
+                                    target = "module7";
+                                    break;
+                                case  7:
+                                    target = "module4";
+                                    break;
+                                case  8:
+                                    target = "module8";
+                                    break;
+                            }
+
+                            if(typeof (sigleMod.ID) != "undefined"){
+                                $('#MOD_ID').text(sigleMod.ID);
+                            }
+
+                            //无法检测-灰色
+                            if(rec.MOD[i].MOD_STATE === "0"){
+                                $('.'+target).attr('style','background: #0c1a2d;');
+                                //正常
+                            }else if(rec.MOD[i].MOD_STATE === "1"){
+                                mod_Normal_count++;
+                                $('.'+target).attr('style','background: rgba(173,255,47, 0);');
+                                //警告-黄色
+                            }else if(rec.MOD[i].MOD_STATE === "2"){
+                                $('.'+target).attr('style','background: rgba(173,255,47, .5);');
+                                //故障-红色
+                            }else{
+                                $('.'+target).attr('style','background: rgba(255,0,0, .5);');
+                            }
+                        }
+                        //故障模组数
+                        $('#MOD_FAULT').text(rec.MOD.length-mod_Normal_count);
+                        //正常模组数
+                        $('#MOD_NORMAL').text(mod_Normal_count);
+
+                        if(typeof (rec.MAX_POWER) == "undefined" ){
+                            $('#MAX_POWER').text("暂无数据");
+                        }else{
+                            //最大功率
+                            $('#MAX_POWER').text(rec.MAX_POWER+"W/m²");
+                        }
+                        if(typeof (rec.RT_POWERDIS) == "undefined" ){
+                            //实际功率
+                            $('#RT_POWERDIS').text("暂无数据");
+                        }else{
+                            //实际功率
+                            $('#RT_POWERDIS').text(rec.RT_POWERDIS+"W/m²");
+                        }
+
+                        if(typeof (rec.AVE_POWERDIS) == "undefined" ){
+                            //平均功率
+                            $('#AVE_POWERDIS').text("暂无数据");
+                        }else{
+                            //平均功率
+                            $('#AVE_POWERDIS').text(rec.AVE_POWERDIS+"W/m²");
+                        }
+
+                        //接收卡信息赋值
+                        //接收卡名称
+                        if(typeof (rec.REC_ID) == "undefined" ){
+                            $('#rec_Id').text("暂无数据");
+                        }else{
+                            $('#rec_Id').text(rec.REC_ID);
+                        }
+
+                        //接收卡个数
+                        $('#rec_Count').text(detail.REC.length);
+                        //接收卡运行时间
+                        if(typeof (rec.TOTAL_WORKTIME) == "undefined" ){
+                            $('#rec_TOTAL_WORKTIME').text("暂无数据");
+                        }else{
+                            $('#rec_TOTAL_WORKTIME').text(rec.TOTAL_WORKTIME+"S");
+                        }
+
+                        // 主接收卡  01 主接收卡工作   02 备份接收卡工作
+                        if(typeof (detail.REC_MASTER) == "undefined" ){
+                            $('#BOX_MASTER').text("暂无数据");
+                        }else if(detail.REC_MASTER === '1'){
+                            $('#BOX_MASTER').text('主接收卡工作');
+                        }else{
+                            $('#BOX_MASTER').text('备份接收卡工作');
+                        }
+
+                        // 网口状态   01 A网口工作   02 B网口工作
+                        if(typeof (detail.PORT_MASTER) == "undefined" ){
+                            $('#PORT_MASTER').text("暂无数据");
+                        }else if(detail.PORT_MASTER === '1'){
+                            $('#PORT_MASTER').text('A网口工作');
+                        }else{
+                            $('#PORT_MASTER').text('B网口工作');
+                        }
+
+                        // 网口状态   01 A网口工作   02 B网口工作
+                        if(typeof (detail.POWER_MASTER) == "undefined" ){
+                            $('#POWER_MASTER').text("暂无数据");
+                        }else if(detail.PORT_MASTER === '1'){
+                            $('#POWER_MASTER').text('主电源在线');
+                        }else if(detail.PORT_MASTER === '2 '){
+                            $('#POWER_MASTER').text('备份电源在线');
+                        }else{
+                            $('#POWER_MASTER').text('主，备电源都在线');
+                        }
+
+                    }
+
+
+
+
                     $('#cover').css('display','block'); //显示遮罩层
                     $('.container').attr('style', 'visibility: visible').find('.pop-up').
                     attr('style', 'visibility: visible').siblings().attr('style', 'visibility: hidden');
+
+
+
                 }
             });
         },
@@ -1016,6 +1220,77 @@ function getCanShu() {
 
 getCanShu();
 
+function aiguozhe(item){
+    let modGroup =  clicked_Box_ModGroup;
+    for(let i = 0;i<modGroup.length;i++){
+
+        let sigleMod = modGroup[i];
+
+        let target  = null;
+        let pos = parseInt(sigleMod.POS);
+        switch (pos) {
+            case 1:
+                target = "module1";
+                break;
+            case 2:
+                target = "module5";
+                break;
+            case 3:
+                target = "module2";
+                break;
+            case 4:
+                target = "module6";
+                break;
+            case 5:
+                target = "module3";
+                break;
+            case  6:
+                target = "module7";
+                break;
+            case  7:
+                target = "module4";
+                break;
+            case  8:
+                target = "module8";
+                break;
+        }
+        if(item == target){
+            console.log(modGroup[i].ID);
+            //无法检测-灰色
+            if(modGroup[i].MOD_STATE === "0"){
+                //清空模组的方法
+                clearModedetail("无法检测模组-暂无数据");
+                //正常
+            }else if(modGroup[i].MOD_STATE === "1"){
+                if(typeof (sigleMod.ID) != "undefined"){
+                    $('#MOD_ID').text(sigleMod.ID);
+                }else{
+                    $('#MOD_ID').text("暂无数据");
+                }
+                //警告-黄色
+            }else if(modGroup[i].MOD_STATE === "2"){
+                if(typeof (sigleMod.ID) != "undefined"){
+                    $('#MOD_ID').text(sigleMod.ID);
+                }else{
+                    $('#MOD_ID').text("暂无数据");
+                }
+                //故障-红色
+            }else{
+                //清空模组的方法
+                clearModedetail("模组故障-暂无数据");
+
+            }
+        }
+    }
+    if($('.modedetail').css('display') === 'none'){
+        $('.modedetail').attr('style','display:block;');
+        $('.set-div').attr('style','z-index:1;');
+    }else{
+        $(".modedetail").hide();
+        $('.set-div').attr('style','z-index:3;');
+    }
+}
+
 // function tuopu(nodes,links){
 //
 // }
@@ -1026,17 +1301,6 @@ $('.close-pop').on('click', function () {
     $('#cover').css('display','none');
     $(this).parent().parent().hide().find('.cont-div').attr('style', 'visibility: hidden');
 })
-
-
-function aiguozhe(item){
-    if($('.modedetail').css('display') === 'none'){
-        $('.modedetail').attr('style','display:block;');
-        $('.set-div').attr('style','z-index:1;');
-    }else{
-        $(".modedetail").hide();
-        $('.set-div').attr('style','z-index:3;');
-    }
-}
 
 // $(document).on('click',function (e) {
 //     var target = $(e.target);

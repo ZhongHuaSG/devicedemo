@@ -1,31 +1,218 @@
 
 
+/**
+新增ICON
+*/
+/*//使用图片来替换*/
+/*//before属性中的content文本是用来占位的,必须有*/
+/*//可以设置字体大小来确定大小*/
+/*//使用visibility: hidden;来隐藏文字*/
+.el-icon-my-firstbtn{
+    background: url(../images/first.png) center no-repeat;
+    background-size: cover;
+                   }
+.el-icon-my-firstbtn:before{
+    content: "替";
+    font-size: 16px;
+    visibility: hidden;
+}
+
+.el-icon-my-secondbtn{
+    background: url(../images/second.png) center no-repeat;
+    background-size: cover;
+}
+.el-icon-my-secondbtn:before{
+    content: "替";
+    font-size: 16px;
+    visibility: hidden;
+}
+
+.el-icon-my-thirdbtn{
+    background: url(../images/third.png) center no-repeat;
+    background-size: cover;
+}
+.el-icon-my-thirdbtn:before{
+    content: "替";
+    font-size: 16px;
+    visibility: hidden;
+}
+
+.el-icon-my-fouthbtn{
+    background: url(../images/fouth.png) center no-repeat;
+    background-size: cover;
+}
+.el-icon-my-fouthbtn:before{
+    content: "替";
+    font-size: 16px;
+    visibility: hidden;
+}
+
+.el-icon-my-fifthbtn{
+    background: url(../images/fifth.png) center no-repeat;
+    background-size: cover;
+}
+.el-icon-my-fifthbtn:before{
+    content: "替";
+    font-size: 16px;
+    visibility: hidden;
+}
+
+.el-icon-my-sixthbtn{
+    background: url(../images/sixth.png) center no-repeat;
+    background-size: cover;
+}
+.el-icon-my-sixthbtn:before{
+    content: "替";
+    font-size: 16px;
+    visibility: hidden;
+}
+
+.el-icon-my-sventhbtn{
+    background: url(../images/seventh.png) center no-repeat;
+    background-size: cover;
+}
+.el-icon-my-sventhbtn:before{
+    content: "替";
+    font-size: 16px;
+    visibility: hidden;
+}
+
+.el-icon-my-eigthbtn{
+    background: url(../images/eigth.png) center no-repeat;
+    background-size: cover;
+}
+.el-icon-my-eigthbtn:before{
+    content: "替";
+    font-size: 16px;
+    visibility: hidden;
+}
+
+.el-icon-my-ninthbtn{
+    background: url(../images/ninth.png) center no-repeat;
+    background-size: cover;
+}
+.el-icon-my-ninthbtn:before{
+    content: "替";
+    font-size: 45px;
+    visibility: hidden;
+}
+
+.el-icon-my-tenthbtn{
+    background: url(../images/tenth.png) center no-repeat;
+    background-size: cover;
+}
+.el-icon-my-tenthbtn:before{
+    content: "替";
+    font-size: 45px;
+    visibility: hidden;
+}
+
+.el-icon-my-elventhbtn{
+    background: url(../images/elventh.png) center no-repeat;
+    background-size: cover;
+}
+.el-icon-my-elventhbtn:before{
+    content: "替";
+    font-size: 45px;
+    visibility: hidden;
+}
+
+.el-icon-my-twelfthbtn{
+    background: url(../images/twelfth.png) center no-repeat;
+    background-size: cover;
+}
+.el-icon-my-twelfthbtn:before{
+    content: "替";
+    font-size: 45px;
+    visibility: hidden;
+}
+
+.el-icon-my-tirteenthbtn{
+    background: url(../images/tirteenth.png) center no-repeat;
+    background-size: cover;
+}
+.el-icon-my-tirteenthbtn:before{
+    content: "替";
+    font-size: 45px;
+    visibility: hidden;
+}
+
+.el-icon-my-fourteenthbtn{
+    background: url(../images/fourteenth.png) center no-repeat;
+    background-size: cover;
+}
+.el-icon-my-fourteenthbtn:before{
+    content: "替";
+    font-size: 45px;
+    visibility: hidden;
+}
+
+.el-icon-my-fifteenthbtn{
+    background: url(../images/fifteenth.png) center no-repeat;
+    background-size: cover;
+}
+.el-icon-my-fifteenthbtn:before{
+    content: "替";
+    font-size: 45px;
+    visibility: hidden;
+}
+
+.el-icon-my-sixteenthbtn{
+    background: url(../images/sixteenth.png) center no-repeat;
+    background-size: cover;
+}
+.el-icon-my-sixteenthbtn:before{
+    content: "替";
+    font-size: 45px;
+    visibility: hidden;
+}
+
 /*
 *箱体canvas样式
 */
 
+.portRow .chooseBackUpId{
+    position: absolute;
+    margin-top: -63px;
+    margin-left: 7px;
+    display: none;
+}
+
+.portRow .abnormalPort{
+    display: none;
+}
+
+.portRow .abnormalPort .port-smallNum .el-radio-button--small .el-radio-button__inner{
+    font-size: 1px;
+    padding: 12px 1px;
+}
+
+.portRow .abnormalPort .el-radio-button--small .el-radio-button__inner{
+    padding: 12px 1px;
+}
+
 .fengexian-boxconnect{
-    margin-left: 246px;
-    height: 817px;
+    margin-left:355px;
+    height: 838px;
     border-left: #ABCDEF 2px solid;
     width: 2px;
-    margin-top: -770px;
+    margin-top: -862px;
 }
 
 .box-Connect-box{
+    background-color: #3e3334;
     position: absolute;
     width: 1236px;
     height: 768px;
-    background-color: #f0f4f7;
     float: right;
-    margin-top: -819px;
+    margin-top: -832px;
     overflow: scroll;
-    margin-left: inherit;
+    margin-left: 375px;
 }
 
 .box-connect-tools{
     height: 35px;
-    margin-top: 18px;
+    margin-top: 3px;
     width: 229px
 }
 
@@ -71,14 +258,14 @@
 }
 
 #boxconnect .pianyiliang{
-    margin-top: -101px;
+    margin-top: -97px;
     height: 161px;
     width: 248px;
 }
 
 #boxconnect .pianyiliang .XXX{
     width: 70px;
-    margin-top: 12px;
+    margin-top: 3px;
 }
 
 #boxconnect .pianyiliang .YYY{
@@ -104,7 +291,7 @@
 }
 
 #boxconnect .boxType{
-    margin-top: 10px;
+    margin-top: -10px;
     width: 190px;
     height: 50px;
 }
@@ -116,7 +303,7 @@
 #boxconnect .box-width-height{
     width: 229px;
     height: 62px;
-    margin-top: 28px;
+    margin-top: 19px;
 }
 
 #boxconnect .box-width-height .box_width{
@@ -135,7 +322,7 @@
 }
 
 #boxconnect .box-connetor{
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 #boxconnect .box-connetor .secondhang{
@@ -153,6 +340,14 @@
     color: #ffffff;
 }
 
+#boxconnect .backuppairing{
+    height: 35px;
+    color: #ffffff;
+    width: 112px;
+    margin-bottom: -34px;
+    margin-left: 140px;
+}
+
 
 .portRow{
     width: 378px;
@@ -160,7 +355,8 @@
 }
 
 .portRow .portRow-Label{
-    margin-left: 57px;
+    margin-left: 1px;
+    font-weight: 600;
 }
 
 .portRow .el-radio-group{
@@ -168,18 +364,18 @@
 }
 
 .portRow .port-smallNum .el-radio-button--small .el-radio-button__inner{
-    padding: 8px 3.1px;
+    padding: 12px 10.1px;
 }
 
 .portRow  .el-radio-button--small .el-radio-button__inner{
-    padding: 8px 6px;
+    padding: 12px 13px;
 }
 
 
 .pingti-option{
     width: 252px;
     height: 67px;
-    margin-top: -50px;
+    margin-top: -72px;
 }
 
 .pingti-option .line-counter{
