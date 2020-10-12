@@ -1,4 +1,139 @@
 
+.portRow .chooseBackUpId{
+    position: absolute;
+    margin-top: -63px;
+    margin-left: 7px;
+    display: none;
+}
+#boxconnect .backuppairing{
+    height: 35px;
+    color: #ffffff;
+    width: 112px;
+    margin-top: -1px;
+    position: absolute;
+    margin-left: 140px;
+}
+.portRow .abnormalPort{
+    display: none;
+}
+
+.portRow .abnormalPort .port-smallNum .el-radio-button--small .el-radio-button__inner{
+    font-size: 1px;
+    padding: 8px 1px;
+}
+
+.portRow .abnormalPort .el-radio-button--small .el-radio-button__inner{
+    padding: 8px 1px;
+}
+
+/*
+*网口变换所需的样式匹配
+*/
+#P1{
+    margin-left: 29px;
+    display: block;
+    margin-top: -12px;
+}
+
+#P2{
+    margin-left: 67px;
+    display: block;
+    margin-top: -12px;
+}
+
+#P3{
+    margin-left: 110px;
+    display: block;
+    margin-top: -12px;
+}
+
+#P4{
+    margin-left: 151px;
+    display: block;
+    margin-top: -12px;
+}
+
+#P5{
+    margin-left: 194px;
+    display: block;
+    margin-top: -12px;
+}
+
+#P6{
+    margin-left: 236px;
+    display: block;
+    margin-top: -12px;
+}
+
+#P7{
+    margin-left: 278px;
+    display: block;
+    margin-top: -12px;
+}
+
+
+#P8{
+    margin-left: 321px;
+    display: block;
+    margin-top: -12px;
+}
+
+#P9{
+    margin-top:-15px;
+    margin-left: 7px;
+    display: block;
+}
+
+#P10{
+    margin-top:-15px;
+    margin-left: 48px;
+    display: block;
+
+}
+
+#P11{
+    margin-top:-15px;
+    margin-left: 91px;
+    display: block;
+
+}
+
+#P12{
+    margin-top:-15px;
+    margin-left: 131px;
+    display: block;
+
+}
+
+#P13{
+    margin-top:-15px;
+    margin-left: 174px;
+    display: block;
+
+}
+
+#P14{
+    margin-top:-15px;
+    margin-left: 217px;
+    display: block;
+
+}
+
+#P15{
+    margin-top:-15px;
+    margin-left: 260px;
+    display: block;
+
+}
+
+#P16{
+    margin-top:-15px;
+    margin-left: 303px;
+    display: block;
+
+}
+
+
 
 /**
 新增ICON
@@ -7,13 +142,38 @@
 /*//before属性中的content文本是用来占位的,必须有*/
 /*//可以设置字体大小来确定大小*/
 /*//使用visibility: hidden;来隐藏文字*/
+/*
+.selectSender .el-input--small .el-input__inner{
+    width: 166px;
+    height: 27px;
+}
+
+.pingti-option .el-input-number__decrease, .el-input-number__increase {
+    position: absolute;
+    z-index: 1;
+    top: 2px;
+    width: 34px;
+    height: 24px;
+    text-align: center;
+    background: #F5F7FA;
+    color: #606266;
+    cursor: pointer;
+    font-size: 13px;
+    margin-left: -3px;
+    margin-right: 72px;
+}*/
+
+.usingPort{
+    color: #67C23A;
+}
+
 .el-icon-my-firstbtn{
     background: url(../images/first.png) center no-repeat;
     background-size: cover;
                    }
 .el-icon-my-firstbtn:before{
     content: "替";
-    font-size: 16px;
+    font-size: 39px;
     visibility: hidden;
 }
 
@@ -23,7 +183,7 @@
 }
 .el-icon-my-secondbtn:before{
     content: "替";
-    font-size: 16px;
+    font-size: 39px;
     visibility: hidden;
 }
 
@@ -33,7 +193,7 @@
 }
 .el-icon-my-thirdbtn:before{
     content: "替";
-    font-size: 16px;
+    font-size: 39px;
     visibility: hidden;
 }
 
@@ -43,7 +203,7 @@
 }
 .el-icon-my-fouthbtn:before{
     content: "替";
-    font-size: 16px;
+    font-size: 39px;
     visibility: hidden;
 }
 
@@ -53,7 +213,7 @@
 }
 .el-icon-my-fifthbtn:before{
     content: "替";
-    font-size: 16px;
+    font-size: 39px;
     visibility: hidden;
 }
 
@@ -63,7 +223,7 @@
 }
 .el-icon-my-sixthbtn:before{
     content: "替";
-    font-size: 16px;
+    font-size: 39px;
     visibility: hidden;
 }
 
@@ -73,7 +233,7 @@
 }
 .el-icon-my-sventhbtn:before{
     content: "替";
-    font-size: 16px;
+    font-size: 39px;
     visibility: hidden;
 }
 
@@ -83,7 +243,7 @@
 }
 .el-icon-my-eigthbtn:before{
     content: "替";
-    font-size: 16px;
+    font-size: 39px;
     visibility: hidden;
 }
 
@@ -93,7 +253,7 @@
 }
 .el-icon-my-ninthbtn:before{
     content: "替";
-    font-size: 45px;
+    font-size: 39px;
     visibility: hidden;
 }
 
@@ -103,7 +263,7 @@
 }
 .el-icon-my-tenthbtn:before{
     content: "替";
-    font-size: 45px;
+    font-size: 39px;
     visibility: hidden;
 }
 
@@ -113,7 +273,7 @@
 }
 .el-icon-my-elventhbtn:before{
     content: "替";
-    font-size: 45px;
+    font-size: 39px;
     visibility: hidden;
 }
 
@@ -123,7 +283,7 @@
 }
 .el-icon-my-twelfthbtn:before{
     content: "替";
-    font-size: 45px;
+    font-size: 39px;
     visibility: hidden;
 }
 
@@ -133,7 +293,7 @@
 }
 .el-icon-my-tirteenthbtn:before{
     content: "替";
-    font-size: 45px;
+    font-size: 39px;
     visibility: hidden;
 }
 
@@ -143,7 +303,7 @@
 }
 .el-icon-my-fourteenthbtn:before{
     content: "替";
-    font-size: 45px;
+    font-size: 39px;
     visibility: hidden;
 }
 
@@ -153,7 +313,7 @@
 }
 .el-icon-my-fifteenthbtn:before{
     content: "替";
-    font-size: 45px;
+    font-size: 39px;
     visibility: hidden;
 }
 
@@ -163,7 +323,7 @@
 }
 .el-icon-my-sixteenthbtn:before{
     content: "替";
-    font-size: 45px;
+    font-size: 39px;
     visibility: hidden;
 }
 
@@ -171,53 +331,74 @@
 *箱体canvas样式
 */
 
-.portRow .chooseBackUpId{
-    position: absolute;
-    margin-top: -63px;
-    margin-left: 7px;
-    display: none;
+.box-connetor-border{
+    width: 325px;
+    height: 328px;
+    margin-left: -16px;
 }
 
-.portRow .abnormalPort{
-    display: none;
+
+
+.boxtype-border{
+    width: 325px;
+    margin-left: -14px;
 }
 
-.portRow .abnormalPort .port-smallNum .el-radio-button--small .el-radio-button__inner{
-    font-size: 1px;
-    padding: 12px 1px;
+#boxconnect .boxType .el-select .el-input__suffix{
+    right: -215px;
+    top: 0px;
 }
 
-.portRow .abnormalPort .el-radio-button--small .el-radio-button__inner{
-    padding: 12px 1px;
+.pianyiliang .el-input-number.is-controls-right .el-input-number__increase{
+    top: 0px;
+    bottom: 0px;
+}
+
+.pianyiliang .el-input-number.is-controls-right .el-input-number__decrease{
+    right: -137px;
+    bottom: -2px;
+    z-index: 2;
+}
+
+.pianyiliang .el-input-number.is-controls-right .el-input-number__increase .el-icon-arrow-up:before{
+    content: "\e6e1";
+}
+
+.pianyiliang-border{
+    margin-top: -113px;
+    margin-left: -14px;
+    width: 325px;
+    height: 79px;
 }
 
 .fengexian-boxconnect{
-    margin-left:355px;
-    height: 838px;
+    margin-left: 348px;
+    height: 807px;
     border-left: #ABCDEF 2px solid;
     width: 2px;
-    margin-top: -862px;
+    margin-top: -899px;
 }
 
 .box-Connect-box{
     background-color: #3e3334;
     position: absolute;
-    width: 1236px;
-    height: 768px;
+    width: 774px;
+    height: 811px;
     float: right;
-    margin-top: -832px;
+    margin-top: -807px;
+    margin-left: 354px;
     overflow: scroll;
-    margin-left: 375px;
 }
 
 .box-connect-tools{
-    height: 35px;
-    margin-top: 3px;
-    width: 229px
+    height: 136px;
+    margin-top: 8px;
+    width: 400px;
+    margin-left: -40px;
 }
 
 .box-connect-tools .el-button{
-    padding: 12px 4.84px;
+    padding: 21px 21.17px;
 }
 
 /*
@@ -225,11 +406,16 @@
 */
 
 #boxconnect{
-    width:80%;
+    width:91%;
     height: 101%;
-    margin-top: 2%;
-    margin-left: 15%;
+    margin-top: -11%;
+    margin-left: 6%;
     color: #ffffff;
+}
+
+#boxconnect .el-tabs__item{
+    line-height: 20px;
+    padding: 10px 20px;
 }
 
 #boxconnect .addtab{
@@ -250,15 +436,31 @@
 #boxconnect .selectSender{
     height: 33px;
     margin-left: 305px;
-    margin-top: -50px;
+    margin-top: -56px;
+}
+
+#boxconnect .sendMessageToMachine{
+    margin-left: 593px;
+    height: 39px;
+    width: 130px;
+    margin-top: -30px;
 }
 
 #boxconnect .selectSender .el-select {
-    width: 113px;
+    width: 64px;
+}
+#boxconnect .selectSender .el-select .el-input__suffix{
+    right: -206px;
+    top: 1px;
+}
+#boxconnect .selectSender .el-select .el-input .el-select__caret{
+    font-size: 14px;
+    margin-left: 66px;
 }
 
 #boxconnect .pianyiliang{
-    margin-top: -97px;
+    margin-left: 28px;
+    margin-top: -1px;
     height: 161px;
     width: 248px;
 }
@@ -270,8 +472,8 @@
 
 #boxconnect .pianyiliang .YYY{
     float: right;
-    margin-right: 43px;
-    margin-top: -59px;
+    margin-right: 37px;
+    margin-top: -34px;
     width: 70px;
 }
 
@@ -282,8 +484,9 @@
 }
 
 #boxconnect .pianyiliang .el-input-number--mini{
-    margin-top: 10px;
-    width: 88px;
+    margin-top: 8px;
+    width: 26px;
+    height: 26px;
 }
 
 #boxconnect .boxType>label{
@@ -291,16 +494,20 @@
 }
 
 #boxconnect .boxType{
+    margin-left: 32px;
     margin-top: -10px;
     width: 190px;
     height: 50px;
 }
 
 #boxconnect .boxType .el-input{
-    margin-top: 10px;
+    width: 68px;
+    margin-top: 13px;
+    margin-left: 21px;
 }
 
 #boxconnect .box-width-height{
+    margin-left: 20px;
     width: 229px;
     height: 62px;
     margin-top: 19px;
@@ -308,17 +515,21 @@
 
 #boxconnect .box-width-height .box_width{
     width: 90px;
+    font-family: -webkit-body;
+    font-weight: 500;
 }
 
-#boxconnect .box-width-height .box_width .el-input--mini {
-
+#boxconnect .box-width-height .el-input--mini {
+    width: 24px;
 }
 
 #boxconnect .box-width-height .box_height{
+    font-family: -webkit-body;
+    font-weight: 500;
     margin-right: 14px;
     width: 90px;
     float: right;
-    margin-top: -49px;
+    margin-top: -28px;
 }
 
 #boxconnect .box-connetor{
@@ -329,34 +540,42 @@
     margin-top: 10px;
 }
 
-#boxconnect .box-connetor .el-row{
-    margin-top: 13px;
+#boxconnect .box-connetor .thirdhang{
+    margin-left: 13px;
+    margin-top: 5px;
 }
 
-    /*
-    * 标签页未点击时样式
-    */
+#boxconnect .box-connetor .fourthhang{
+    margin-left: 14px;
+    margin-top: 10px;
+}
+
+#boxconnect .box-connetor .fifthhang{
+    margin-top: 10px;
+}
+
+#boxconnect .box-connetor .el-row{
+    margin-top: 10px;
+    margin-left: 12px;
+}
+
+/*
+* 标签页未点击时样式
+*/
 .el-tabs__item{
     color: #ffffff;
 }
 
-#boxconnect .backuppairing{
-    height: 35px;
-    color: #ffffff;
-    width: 112px;
-    margin-bottom: -34px;
-    margin-left: 140px;
-}
-
 
 .portRow{
+    margin-left: -60px;
+    margin-top: -111px;
     width: 378px;
     height: 220px;
 }
 
 .portRow .portRow-Label{
-    margin-left: 1px;
-    font-weight: 600;
+    margin-left: 10px;
 }
 
 .portRow .el-radio-group{
@@ -364,25 +583,36 @@
 }
 
 .portRow .port-smallNum .el-radio-button--small .el-radio-button__inner{
-    padding: 12px 10.1px;
+    padding: 8px 10.6px;
 }
 
 .portRow  .el-radio-button--small .el-radio-button__inner{
-    padding: 12px 13px;
+    padding: 8px 13.5px;
 }
 
 
 .pingti-option{
+    margin-left: 23px;
     width: 252px;
     height: 67px;
-    margin-top: -72px;
+    margin-top: 5px;
+}
+
+.pingti-option .el-input-number--mini .el-input-number__decrease,.pingti-option .el-input-number--mini .el-input-number__increase{
+    margin-top: -8px;
+    height: 28px;
+    font-size: 17px;
+}
+
+.pingti-option .el-input-number--mini .el-input-number__decrease [class*=el-icon],.pingti-option .el-input-number--mini .el-input-number__increase [class*=el-icon]{
+    margin-top: 6px;
 }
 
 .pingti-option .line-counter{
     float: right;
     width: 115px;
     height: 58px;
-    margin-top: -18px;
+    margin-top: -24px;
 }
 
 .pingti-option .row-label{
@@ -390,7 +620,7 @@
 }
 
 .pingti-option .el-input-number--mini {
-    width: 89px;
+    width: 32px;
     margin-top: 6px;
 }
 
@@ -485,12 +715,41 @@ img {
     margin-left: 3px;
     margin-top: 30px;
     width: 347px;
-    height: 575px;
+    height: 386px;
     background-image: url(../images/modedetail.png);
     background-size: 100% 100%;
     position: absolute;
     display:none;
     z-index: 10;
+}
+
+.modedetail #MOD_RSL{
+    color: #E9E7E7;
+    margin-left: 100px;
+}
+
+.modedetail #MOD_SPACE{
+    color: #E9E7E7;
+    margin-left: 116px;
+}
+
+.modedetail #MOD_SCAN_NUM{
+    color: #E9E7E7;
+    margin-left: 86px;
+}
+
+.modedetail #MOD_ID{
+    color: #E9E7E7;
+    margin-left: 71px;
+}
+
+
+.modedetail >ul{
+    width: 233px;
+    font-size: 15px;
+    margin-left: 60px;
+    margin-top: 10px;
+    line-height: 30px;
 }
 
 .modedetail >h2{
@@ -558,9 +817,9 @@ img {
 }
 .module_Message{
     float: right;
-    margin-left: 1078px;
+    margin-left: 1067px;
     position: absolute;
-    margin-top: -255px;
+    margin-top: -446px;
     height: 33px;
     display: flex;
     flex-flow: row nowrap;
@@ -570,9 +829,9 @@ img {
 
 .rec_Message{
     float: right;
-    margin-left: 1078px;
+    margin-left: 1062px;
     position: absolute;
-    margin-top: -205px;
+    margin-top: -423px;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
@@ -608,26 +867,25 @@ img {
     font-size: small;
     border:1px solid #1dacfe;
     width: 200px;
-    height: 100px;
+    height: 115px;
     margin-top: 160px;
-    margin-left:-160px;
+    margin-left:-165px;
 }
 
 .sensor_Message_1{
-    margin-left:12px;
+    margin-left:0px;
     margin-top:-4px;
 }
 
 
 .driverIc{
-    height: 33px;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     height: 80px;
     position: absolute;
-    margin-top: 276px;
-    margin-left: -77px;
+    margin-top: 254px;
+    margin-left: 8px;
 }
 
 
@@ -643,28 +901,28 @@ img {
 .didimen2 {
     font-size: small;
     border:1px solid #1dacfe;
-    width: 100px;
-    height: 19.85px;
-    margin-top: 70px;
-    margin-left:-160px;
+    width: 204px;
+    height: 99.85px;
+    margin-top: 135px;
+    margin-left: -168px;
 }
 
 .didimen3{
     font-size: small;
-    border:1px solid #1dacfe;
+    border: 1px solid #1dacfe;
     width: 190px;
-    height: 100px;
-    margin-top: 160px;
-    margin-left:-160px;
+    height: 27px;
+    margin-top: 75px;
+    margin-left: -169px;
 }
 
 .didimen4{
     font-size: small;
-    border:1px solid #1dacfe;
+    border: 1px solid #1dacfe;
     width: 170px;
-    height: 218px;
-    margin-top: 233px;
-    margin-left:-160px;
+    height: 167px;
+    margin-top: 176px;
+    margin-left: -160px;
 }
 
 .didimen5{
@@ -748,7 +1006,8 @@ img {
 .module1{
     border: black 2px;
     border-style:none solid solid none;
-    float: left;width: 194.5px;
+    float: left;
+    width: 197.5px;
     height: 190px;
     margin-top: 10px;
     margin-left: 7px;
@@ -758,7 +1017,7 @@ img {
     border: black 2px;
     border-style:none solid solid none;
     float: left;
-    width: 194.5px;
+    width: 197.5px;
     height: 190px;
     margin-top: 10px;
 }
@@ -767,7 +1026,7 @@ img {
     border: black 2px;
     border-style:none solid solid none;
     float: left;
-    width: 194.5px;
+    width: 197.5px;
     height: 190px;
     margin-top: 10px;
 }
@@ -776,7 +1035,7 @@ img {
     border: black 2px;
     border-style:none none solid none;
     float: left;
-    width: 191.2px;
+    width: 195.2px;
     height: 190px;
     margin-top: 10px;
 }
@@ -785,7 +1044,7 @@ img {
     border: black 2px;
     border-style:none solid none none;
     float: left;
-    width: 194.5px;
+    width: 197.5px;
     height: 198px;
     margin-left: 7px;
 }
@@ -794,7 +1053,7 @@ img {
     border: black 2px;
     border-style:none solid none none;
     float: left;
-    width: 194.5px;
+    width: 197.5px;
     height: 198px;
 }
 
@@ -802,7 +1061,7 @@ img {
     border: black 2px;
     border-style:none solid none none;
     float: left;
-    width: 194.5px;
+    width: 197.5px;
     height: 198px;
 }
 
@@ -816,6 +1075,624 @@ img {
 /*适应1920*1080*/
 @media screen and (min-width: 1600px) and (max-width: 1920px){
 
+    .ledsetting{
+        height: 730px;
+    }
+
+    .senderstyle{
+        margin-top: 202px;
+        height: 28px;
+    }
+
+    .tab{
+        margin-top: 35px;
+    }
+
+    .index_tabs{
+        margin-top: 75px;
+    }
+
+    .index_tabs .el-tabs__item{
+        line-height: 22px;
+    }
+
+    .driverIc{
+        margin-left: -77px;
+    }
+
+    #P1{
+        margin-left: 6px;
+        display: block;
+        margin-top: -36px;
+    }
+
+    #P2{
+        margin-left: 47px;
+        display: block;
+        margin-top: -36px;
+    }
+
+    #P3{
+        margin-left: 89px;
+        width: 37px;
+        display: block;
+        margin-top: -36px;
+    }
+
+    #P4{
+        width: 42px;
+        margin-left: 132px;
+        display: block;
+        margin-top: -36px;
+    }
+
+    #P5{
+        margin-left: 175px;
+        display: block;
+        margin-top: -36px;
+    }
+
+    #P6{
+        margin-left: 216px;
+        width: 40px;
+        display: block;
+        margin-top: -36px;
+    }
+
+    #P7{
+        margin-left: 260px;
+        width: 42px;
+        display: block;
+        margin-top: -36px;
+    }
+
+    #P8{
+        margin-left: 302px;
+        width: 41px;
+        display: block;
+        margin-top: -36px;
+    }
+
+    #P9{
+        margin-top:-15px;
+        margin-left: 7px;
+        display: block;
+    }
+
+    #P10{
+        margin-top:-15px;
+        margin-left: 48px;
+        display: block;
+
+    }
+
+    #P11{
+        margin-top:-15px;
+        margin-left: 91px;
+        display: block;
+
+    }
+
+    #P12{
+        margin-top:-15px;
+        margin-left: 131px;
+        display: block;
+
+    }
+
+    #P13{
+        margin-top:-15px;
+        margin-left: 174px;
+        display: block;
+
+    }
+
+    #P14{
+        margin-top:-15px;
+        margin-left: 217px;
+        display: block;
+
+    }
+
+    #P15{
+        margin-top:-15px;
+        margin-left: 260px;
+        display: block;
+
+    }
+
+    #P16{
+        margin-top:-15px;
+        margin-left: 303px;
+        display: block;
+
+    }
+
+    .portRow .chooseBackUpId{
+        margin-top: -37px;
+        margin-left: 0px;
+        width: 36px;
+        height: 51px;
+    }
+
+    .portRow .chooseBackUpId .el-dropdown{
+        height: 51px;
+        width: 36px;
+    }
+
+
+    .pingti-option .el-input-number--mini .el-input-number__decrease [class*=el-icon], .pingti-option .el-input-number--mini .el-input-number__increase [class*=el-icon]{
+        margin-top: 0px;
+    }
+
+    #boxconnect .el-tabs__item{
+        line-height: 40px;
+    }
+
+    .portRow .abnormalPort .port-smallNum .el-radio-button--small .el-radio-button__inner{
+        padding: 12px 1.3px;
+    }
+
+    .portRow .abnormalPort .el-radio-button--small .el-radio-button__inner {
+        padding: 20px 1.3px;
+    }
+
+    #boxconnect .box-width-height{
+        width: 232px;
+    }
+
+    #boxconnect .boxType .el-input{
+        width: 224px;
+        margin-top: 1px;
+        margin-left: 23px;
+    }
+
+    .pingti-option .row-label{
+        font-family: -webkit-body;
+        font-weight: 800;
+    }
+
+    .portRow .portRow-Label{
+        font-family: -webkit-body;
+        font-weight: 800;
+        margin-left: 10px;
+    }
+
+    #boxconnect .backuppairing{
+        position: absolute;
+        margin-left: 168px;
+        margin-top: 0px;
+    }
+
+    #boxconnect .selectSender{
+        margin-left: 292px;
+    }
+
+    #boxconnect .sendMessageToMachine{
+        margin-left: 601px;
+        height: 39px;
+        width: 130px;
+        margin-top: -37px;
+    }
+
+    #boxconnect .selectSender .el-input--small .el-input__inner{
+        width: 210px;
+        margin-top: -4px;
+        height: 45px;
+        line-height: 35px;
+    }
+
+    /*
+    *屏体连接
+    */
+
+    .box-connect-tools .el-button{
+        padding: 20px 22px;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    #boxconnect .boxtype-border{
+        border: #ffffff solid 2px;
+        width: 330px;
+        height: 122px;
+        margin-left: 5px;
+        margin-top: -8px;
+    }
+
+
+    #boxconnect .pianyiliang-border{
+        margin-top: -103px;
+        border: #ffffff solid 2px;
+        width: 330px;
+        height: 79px;
+        margin-left: 5px;
+    }
+    #boxconnect .boxtype-border >legend{
+        font-size: 18px;
+    }
+
+    #boxconnect .pianyiliang-border >legend{
+        font-size: 18px;
+    }
+
+    #boxconnect .pianyiliang .XXX{
+        margin-left: 10px;
+    }
+
+    .portRow .port-smallNum .el-radio-button--small .el-radio-button__inner {
+        padding: 12px 10.9px;
+    }
+
+    .portRow .el-radio-button--small .el-radio-button__inner {
+        padding: 12px 13.8px;
+    }
+
+    #boxconnect .box-connetor{
+        margin-left: 43px;
+        margin-top: -20px;
+    }
+
+    #boxconnect .box-connetor .secondhang .el-button.is-circle{
+        padding: 16px;
+    }
+
+    #boxconnect .box-connetor .el-row .el-button.is-circle{
+        padding: 12px;
+    }
+
+    #boxconnect .box-connetor .el-row{
+        margin-top: 14px;
+        margin-left: -35px;
+        z-index: 10;
+        height: 72px;
+    }
+
+    #boxconnect .box-connetor .fourthhang {
+        margin-left: -36px;
+        z-index: 15;
+    }
+
+    #boxconnect .box-connetor .fifthhang {
+        margin-left: -36px;
+        z-index: 15;
+    }
+
+    #boxconnect .box-connetor .thirdhang {
+        margin-top: -30px;
+        margin-left: -36px;
+        z-index: 15;
+    }
+
+    #boxconnect .box-connetor .thirdhang .morePortConnect{
+        padding-top: 5px;
+        margin-left: 40px;
+    }
+
+    #boxconnect .box-connetor .secondhang{
+        height: 100px;
+        margin-top: -14px;
+        z-index: 10;
+    }
+
+    #boxconnect .box-connetor-border{
+        border: #ffffff solid 2px;
+        margin-left: 5px;
+        width: 330px;
+        height: 320px;
+        margin-top: -8px;
+    }
+
+    #boxconnect .box-connetor-border >legend{
+        font-size: 18px;
+    }
+
+    .fengexian-boxconnect{
+        margin-left: 353px;
+        margin-top: -859px;
+        height: 780px;
+    }
+
+    #boxconnect .pingti-option .el-input-number--mini .el-input-number__decrease{
+        height: 27px;
+        top: 0px;
+        line-height: 28px;
+        margin-top: 1px;
+    }
+
+    #boxconnect  .pingti-option .el-input-number--mini .el-input-number__increase{
+        margin-top: -1px;
+    }
+
+    .pingti-option .line-counter{
+        margin-top: -24px;
+        margin-right: -11px;
+    }
+
+    .pingti-option .el-input-number  .el-input-number--mini .el-input-number__decrease,.pingti-option .el-input-number .el-input-number--mini .el-input-number__increase{
+        font-size: 16px;
+    }
+
+
+
+    #boxconnect .addtab .el-input-number .el-input-number__decrease,#boxconnect .addtab .el-input-number .el-input-number__increase{
+        top: 1px;
+    }
+
+    #boxconnect .pianyiliang .YYY{
+        margin-right: 19px;
+        margin-top: -34px;
+    }
+
+    .pianyiliang .el-input-number.is-controls-right .el-input-number__increase{
+        right: -25px;
+        top: 0px;
+        font-size: 17px;
+    }
+
+
+    .pianyiliang .el-input-number.is-controls-right .el-input-number__decrease{
+        right: -25px;
+        bottom: -7px;
+        font-size: 17px;
+    }
+
+    .pianyiliang .el-input--mini .el-input__inner{
+        height: 33px;
+    }
+
+    .pianyiliang .el-input-number.is-controls-right .el-input__inner{
+        padding-right: 15px;
+    }
+
+    .pingti-option .el-input-number--mini{
+        width: 92px;
+        margin-top: 10px;
+    }
+
+
+    #boxconnect .pianyiliang .el-input-number--mini{
+        width: 55px;
+    }
+
+    .box-connect-tools{
+        margin-left: 5px;
+        margin-top: 7px;
+        width: 508px;
+    }
+
+    #boxconnect .box-width-height  .el-input--mini{
+        width: 36px;
+    }
+
+    #boxconnect .box-width-height{
+        margin-top: -12px;
+        margin-left: 42px;
+    }
+
+    #boxconnect .box-width-height .box_height{
+        margin-right: -3px;
+        margin-top: -28px;
+    }
+
+    #boxconnect .box-width-height .el-input__inner{
+        width: 155%;
+    }
+
+    #boxconnect .boxType .el-select .el-input__suffix{
+        right: 3px;
+        top: 1px;
+    }
+
+    #boxconnect .boxType .el-select .el-input__suffix .el-select__caret{
+        font-size: 19px;
+    }
+
+    #boxconnect .boxType .el-select{
+        width: 72px;
+        margin-top: -14px;
+    }
+
+    #boxconnect .boxType{
+        margin-top: 12px;
+        margin-left: 30px;
+    }
+
+    .pingti-option{
+        margin-top: 3px;
+        margin-left: 54px;
+    }
+
+    #boxconnect .pianyiliang{
+        margin-top: -13px;
+        margin-left: 18px;
+    }
+
+    .portRow{
+        margin-top: 0px;
+        margin-left:4px;
+    }
+
+    .box-Connect-box{
+        width: 1334px;
+        height: 779px;
+        margin-top: -781px;
+        margin-left: 359px;
+    }
+
+    #boxconnect .el-tabs el-tabs--card el-tabs--top{
+        margin-top: 20px;
+    }
+
+    #boxconnect .el-tabs__item{
+        padding: 0px 20px;
+    }
+
+    #boxconnect .selectSender .el-select .el-input__suffix{
+        right: -165px;
+        top: -3px;
+    }
+
+    #boxconnect .selectSender .el-select {
+        width: 37px;
+    }
+
+    /*
+    * 屏体设置
+    */
+    div#boxconnect{
+        width: 89%;
+        height: 100%;
+        margin-top:0.2%;
+        margin-left: 0%;
+        color: #ffffff;
+    }
+
+    div#syncswitch{
+        margin-left: 630px;
+        margin-top: 97px;
+    }
+
+    .gamutadjust1 #cginput{
+        margin-top: 34px;
+        margin-left: 5px;
+    }
+
+    .gamutadjust #blockone{
+        position: absolute;
+        margin-left: 2px;
+        margin-top: -26px;
+        width: 337px;
+    }
+
+    .gamutadjust #blocktwo{
+        position: absolute;
+        margin-left: 2px;
+        margin-top: 26px;
+        width: 337px;
+    }
+
+    .testmodeadjust{
+        width: 36.55%;
+        margin-top: 317px;
+        margin-left: 705px;
+        padding-top: 95px;
+    }
+
+    div#snsginput{
+        margin-top: -63px;
+        margin-left: 15px;
+    }
+
+    .snsginputadjust{
+        margin-left: 706px;
+        margin-top: 42px;
+        padding-top: 84px;
+    }
+
+    .wzjmadjust {
+        width: 5%;
+        margin-left: 974px;
+        margin-top: -112px;
+        padding-top: 81px;
+    }
+
+    .rgbadjust{
+        width: 15%;
+        height: 10.78%;
+        padding-left: 57px;
+        margin-left: 1083px;
+        margin-top: -110px;
+        padding-top: 80px;
+    }
+
+    .coloradjust{
+        margin-top: 153px;
+    }
+
+    div#input{
+        margin-top: 14px;
+        margin-left: 9px;
+    }
+
+    .fbladjust{
+        width: 17%;
+        margin-left: 79px;
+        margin-top: 52px;
+    }
+
+    div#syncinput{
+        margin-top: 15px;
+        margin-left: 8px;
+    }
+
+    div#syncswitc{
+        margin-left: 572px;
+        margin-top: 93px;
+    }
+
+    .syncadjust{
+        margin-left: 439px;
+        margin-top: 52px;
+    }
+
+    .inputsourceadjust{
+        margin-left: 78px;
+        margin-top: -64px;
+    }
+
+    div#ledtest{
+        margin-left: 274px;
+        margin-top: 177px;
+    }
+
+    div#input1 {
+        margin-top: 309px;
+        margin-left: 1049px;
+    }
+
+    #ledswitch {
+        margin-top: 306px;
+        margin-left: 1200px;
+    }
+
+    .hdradjustcontent{
+        margin-left: 768px;
+        margin-top: 63px;
+    }
+
+    .gamutadjust1{
+        margin-left: 984px;
+        margin-top: -1px;
+    }
+
+    .ctadjust{
+        margin-left: 725px;
+        margin-top: -190px;
+    }
+
+    .senderadjust{
+        margin-left: 78px;
+        margin-top: -166px;
+    }
+
+    .brightadjust{
+        margin-left: 726px;
+        margin-top: -512px;
+    }
+    #brightswitch{
+        margin-left: 1341px;
+        margin-top: -106px;
+    }
+
+    .gamutadjust{
+        height: 60.28%;
+        margin-left: 974px;
+        margin-top: -348px;
+    }
+
+
     .sycm ul {
         padding: 1rem 0;
     }
@@ -825,10 +1702,10 @@ img {
     }
 
     .sycm li h2 {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
     .sycm li span {
-        font-size: 1.1rem;
+        font-size: 0.95rem;
     }
 
     .curtitle{
@@ -893,7 +1770,7 @@ img {
     }
     .right0 {
         width: 542px;
-        height: 43%;
+        height: 100%;
         border: 0.001em solid #129ce6;
     }
     .right1 {
@@ -950,7 +1827,7 @@ img {
         margin-top: 36px;
     }
     .sycm1 li h2{
-        font-size: 1.2rem;
+        font-size: 0.9rem;
     }
     .sycm1 li span {
         font-size: 1.1rem;
@@ -977,7 +1854,7 @@ img {
     }
 
     .fskimp h3 {
-        font-size: 1rem;
+        font-size: 0.9rem;
         margin-left: -110px;
         margin-top: 11px;
     }
@@ -1012,8 +1889,8 @@ img {
         z-index: 10;
     }
     .gx0 {
-        width: 397px;
-        height: 218px;
+        width: 439px;
+        height: 600px;
         position: relative;
         margin-left: 69px;
     }
@@ -1031,15 +1908,15 @@ img {
 
     .sycm2 ul {
         padding: .96rem 0;
-        line-height: 40px;
+        line-height: 20px;
     }
 
     .sycm2 li h2 {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
     }
 
     .sycm2 li span {
-        font-size: 1rem;
+        font-size: 0.9rem;
     }
 
     .container {
@@ -1063,8 +1940,8 @@ img {
         font-size: small;
         border:1px solid #1dacfe;
         width: 200px;
-        height: 130px;
-        margin-top: 180px;
+        height: 107px;
+        margin-top: 155px;
         margin-left:-160px;
     }
 
@@ -1080,11 +1957,19 @@ img {
         font-size: small;
         border:1px solid #1dacfe;
         width: 170px;
-        height: 196px;
-        margin-top: 233px;
+        height: 170px;
+        margin-top: 182px;
         margin-left:-160px;
     }
 
+
+    .didimen2{
+        line-height: 18px;
+        width: 203px;
+        height: 125.85px;
+        margin-top: 171px;
+        margin-left: -171px;
+    }
 
     .rec_Message{
         height: 30px;
@@ -1092,7 +1977,7 @@ img {
         flex-flow: row nowrap;
         align-items: center;
         margin-top: -344px;
-        margin-left: 1084px;
+        margin-left: 1092px;
     }
 
 
@@ -1146,7 +2031,7 @@ img {
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
-        margin-top: 415px;
+        margin-top: 473px;
         position: absolute;
         margin-left: -73px;
     }
@@ -1247,15 +2132,36 @@ img {
     }
     .modedetail {
         background-repeat: no-repeat;
-        margin-left: 50px;
+        margin-left: 459px;
         margin-top: 30px;
-        width: 468px;
-        height: 427px;
+        width: 367px;
+        height: 492px;
         background-image: url(../images/modedetail.png);
         background-size: 100% 100%;
         position: absolute;
         display: none;
         z-index: 999;
+    }
+
+    .modedetail >ul {
+        margin-left: 18px;
+        width: 250px;
+    }
+
+    .modedetail #MOD_RSL{
+        margin-left: 80px;
+    }
+
+    .modedetail #MOD_SPACE{
+        margin-left: 96px;
+    }
+
+    .modedetail #MOD_SCAN_NUM{
+        margin-left: 66px;
+    }
+
+    .modedetail #MOD_ID{
+        margin-left: 51px;
     }
 
 

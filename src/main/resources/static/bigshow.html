@@ -29,154 +29,175 @@
 <div class="container">
     <div class="pop-up">
         <span class="close-pop"></span>
-        <h2 id="boxTitle" class="title"></h2>
-        <h3  style="width: 100%;height:40px;font-size: 26px;color:#0e94eb;margin-left:30px;"><b>箱体型号:<span id="productTitle" style="color: white;"></span></b></h3>
+        <h3>
+            <b>箱体型号:<span id="productTitle" style="color: white;"></span></b></h3>
         <!-- 模组信息弹框 -->
-        <div  class="modedetail" >
-            <!-- 模组ID -->
-            <h2 style="width: 140px;height:40px;line-height:37px;text-align:center;font-size: 20px;color:#0e94eb;margin-top: 75px;margin-left: 45px;background: url(/images/moduleDetailTitle.png) top left no-repeat">
-                <b>模组ID</b>
+        <div class="modedetail">
+            <!-- 模组信息 -->
+            <h2>
+                <b>模组信息</b>
             </h2>
-            <ul style="width:340px;font-size: 19px;margin-left: 60px;margin-top: 10px;line-height: 30px;">
-            <!-- 分辨率 -->
+            <ul>
+                <!-- 分辨率 -->
                 <li style="color: #0e94eb;">
-                    分辨率：<b><span id="MOD_RSL" style="color: #E9E7E7;margin-left: 100px;">96 * 108</span></b>
+                    分辨率：<b><span id="MOD_RSL"></span></b>
                 </li>
-            <!-- 间距 -->
+                <!-- 间距 -->
                 <li style="color: #0e94eb;margin-top: 13px;">
-                    间距：<b><span id="MOD_SPACE" style="color: #E9E7E7;margin-left: 119px;">1.588</span></b>
+                    间距：<b><span id="MOD_SPACE"></span></b>
                 </li>
-            <!-- 分割线 -->
-                <li style="margin-top: 13px;border-bottom:rgba(255, 255, 255, 0.2) 1px solid;"></li>
-            <!-- 规格类型 -->
+                <!-- 分割线 -->
+                <li class="fengexian"></li>
+                <!-- 规格类型 -->
+                <!--                            <li style="color: #0e94eb;margin-top: 13px;">-->
+                <!--                                规格型号：<b><span id="LAMP_PARA_STYLE" style="color: #E9E7E7;margin-left: 81px;"></span></b>-->
+                <!--                            </li>-->
+                <!-- 亮度 -->
+                <!--                            <li style="color: #0e94eb;margin-top: 13px;">-->
+                <!--                                亮度：<b><span id="LAMP_PARA_BRIGHT" style="color: #E9E7E7;margin-left: 119px;"></span></b>-->
+                <!--                            </li>-->
+                <!-- 发光亮度 -->
+                <!--                            <li style="color: #0e94eb;margin-top: 13px;">-->
+                <!--                                发光角度：<b><span id="LAMP_PARA_ANGLE" style="color: #E9E7E7;margin-left: 81px;"></span></b>-->
+                <!--                            </li>-->
+
+                <!-- 扫描方式 -->
                 <li style="color: #0e94eb;margin-top: 13px;">
-                    规格型号：<b><span id="LAMP_PARA_STYLE" style="color: #E9E7E7;margin-left: 81px;">SMD3258</span></b>
+                    扫描方式：<b><span id="MOD_SCAN_NUM"></span></b>
                 </li>
-            <!-- 亮度 -->
-                <li style="color: #0e94eb;margin-top: 13px;">
-                    亮度：<b><span id="LAMP_PARA_BRIGHT" style="color: #E9E7E7;margin-left: 119px;">600</span></b>
-                </li>
-            <!-- 波长 -->
-                <li style="color: #0e94eb;margin-top: 13px;">
-                    波长(RGB)：<b><p id="LAMP_PARA_WAVELEN" style="color: #E9E7E7;">R:400~480,G:620~750,B:480~500</p></b>
-                </li>
-            <!-- 发光亮度 -->
-                <li style="color: #0e94eb;margin-top: 13px;">
-                    发光角度：<b><span id="LAMP_PARA_ANGLE" style="color: #E9E7E7;margin-left: 81px;">120</span></b>
-                </li>
-            <!-- 抗静电能力 -->
-                <li style="color: #0e94eb;margin-top: 13px;">
-                    抗静电能力：<span id="LAMP_PARA_ANTISTATIC" style="color: #E9E7E7;margin-left: 62px;"><b>700</b></span>
-                </li>
-            <!-- 漏电电流 -->
-                <li style="color: #0e94eb;margin-top: 13px;">
-                    漏电电流：<b><span id="LAMP_PARA_LEAKAGE_CURRENT" style="color: #E9E7E7;margin-left: 81px;">5</span></b>
-                </li>
-            <!-- 扫描方式 -->
-                <li style="color: #0e94eb;margin-top: 13px;">
-                    扫描方式：<b><span id="MOD_SCAN_NUM" style="color: #E9E7E7;margin-left: 81px;">27</span></b>
-                </li>
+                <li>模组序列号：<b><span id="MOD_ID"></span></b></li>
             </ul>
         </div>
         <div class="set-div">
-            <div class="set-box">
-                <label class="four-f" for="">&nbsp;&nbsp;&nbsp;传感器</label>
-                <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 200px;height: 100px;margin-top: 160px;margin-left:-160px;">
-                    <ul style="margin-left:12px;margin-top:-4px;">
-                        <li style="margin-top: 8px;color: #0e94eb;">电压：<span id="SENSOR_VOL" style="color: #E9E7E7"></span></li>
-                        <li style="margin-top: 8px;color: #0e94eb;">电流：<span id="SENSOR_CURRENT" style="color: #E9E7E7">A</span></li>
-                        <li style="margin-top: 8px;color: #0e94eb;">湿度：<span id="SENSOR_HUMI" style="color: #E9E7E7">%RH</span></li>
-                        <li style="margin-top: 8px;color: #0e94eb;">烟雾：<span id="SENSOR_SMOG" style="color: #E9E7E7"></span></li>
+            <div class="sensor_Message">
+                <label class="four-f">&nbsp;&nbsp;&nbsp;传感器</label>
+                <div class="didimen1">
+                    <ul class="sensor_Message_1">
+                        <li style="margin-top: 8px;color: #0e94eb;">电压：<span id="SENSOR_VOL"
+                                                                             style="color: #E9E7E7"></span>
+                        </li>
+                        <li style="margin-top: 8px;color: #0e94eb;">电流：<span id="SENSOR_CURRENT"
+                                                                             style="color: #E9E7E7">A</span>
+                        </li>
                     </ul>
-                    <ul style="margin-left:100px;margin-top:-100px;">
-                        <li style="margin-top: 8px;color: #0e94eb;">温度：<span id="SENSOR_TMP" style="color: #E9E7E7">℃</span></li>
-                        <li style="margin-top: 8px;color: #0e94eb;">亮度：<span id="SENSOR_BRI" style="color: #E9E7E7">Lux</span></li>
+                    <ul class="tempoge">
+                        <li style="margin-top: 8px;color: #0e94eb;">温度：<span id="SENSOR_TMP"
+                                                                             style="color: #E9E7E7">℃</span>
+                        </li>
+                        <li style="margin-top: 8px;color: #0e94eb;">湿度：<span id="SENSOR_HUMI"
+                                                                             style="color: #E9E7E7">%RH</span>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="set-box" style="margin-top: 100px;height:80px">
-                <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;驱动IC</label>
-                <div class="didimen1" style="font-size: small;border:1px solid #1dacfe;width: 100px;height: 19.85px;margin-top: 70px;margin-left:-160px;">
+            <div class="driverIc">
+                <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;智能HUB板</label>
+                <div class="didimen2">
                     <ul style="margin-left:12px;margin-top:4px;">
-                        <li style="margin-top: 8px;color: #0e94eb;"><span id="ICSYLE" style="color: #E9E7E7"></span></li>
+                        <li style="margin-top: 8px;color: #0e94eb;">接收卡状态：<span id="BOX_MASTER"
+                                                                                style="color: #E9E7E7"></span>
+                        </li>
+                        <li style="margin-top: 8px;color: #0e94eb;">网口状态：<span id="PORT_MASTER"
+                                                                               style="color: #E9E7E7"></span>
+                        </li>
+                        <li style="margin-top: 8px;color: #0e94eb;">电源状态：<span id="POWER_MASTER"
+                                                                               style="color: #E9E7E7"></span>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="set-box" style="margin-top:20px;">
-                <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电源：</label>
-                <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 190px;height: 100px;margin-top: 160px;margin-left:-160px;">
+            <div class="Power_Message">
+                <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电源：</label>
+                <div class="didimen3">
                     <ul style="margin-left:12px;margin-top:-4px;">
-                        <li style="margin-top: 8px;color: #0e94eb;">最大功率：<span id="MAX_POWER" style="color: #E9E7E7"></span></li>
-                        <li style="margin-top: 8px;color: #0e94eb;">电压：<span id="VOLTAGE" style="color: #E9E7E7"></span></li>
-                        <li style="margin-top: 8px;color: #0e94eb;">实际功率：<span id="RT_POWERDIS" style="color: #E9E7E7"></span></li>
-                        <li style="margin-top: 8px;color: #0e94eb;">平均功率：<span id="AVE_POWERDIS" style="color: #E9E7E7"></span></li>
+                        <li style="margin-top: 8px;color: #0e94eb;">实际功率：<span id="RT_POWERDIS"
+                                                                               style="color: #E9E7E7"></span>
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="set-box" style="margin-top:120px;">
-                <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接收卡信息：</label>
-                <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 250px;height: 138px;margin-top: 183px;margin-left:-160px;">
-                    <ul style="margin-left:12px;margin-top:-4px;">
-                        <li style="margin-top: 8px;color: #0e94eb;">接收卡名称：<span id="rec_Id" style="color: #E9E7E7"></span></li>
-                        <li style="margin-top: 8px;color: #0e94eb;">接收卡个数：<span id="rec_Count" style="color: #E9E7E7"></span></li>
-                        <li style="margin-top: 8px;color: #0e94eb;">运行时间：<span id="rec_TOTAL_WORKTIME" style="color: #E9E7E7"></span></li>
-                        <li style="margin-top: 8px;color: #0e94eb;">版本号：<span id="REC_VER" style="color: #E9E7E7"></span></li>
-                        <li style="margin-top: 8px;color: #0e94eb;">带载面积：<span id="REC_Carrying_Area" style="color: #E9E7E7"></span></li>
-                    </ul>
-                </div>
-            </div>
+
             <!-- 模组拓扑 -->
             <div class="module-model">
                 <!--  模组1 -->
-                <div class="module1" onclick="aiguozhe('module1')" style="border: black 2px;border-style:none solid solid none;float: left;width: 194.5px;height: 190px;margin-top: 10px;margin-left: 7px;">
+                <div class="module1" onclick="aiguozhe('module1')">
 
                 </div>
                 <!--  模组2 -->
-                <div class="module2" onclick="aiguozhe('module2')" style="border: black 2px;border-style:none solid solid none;float: left;width: 194.5px;height: 190px;margin-top: 10px;">
+                <div class="module2" onclick="aiguozhe('module2')">
 
                 </div>
                 <!--  模组3 -->
-                <div class="module3" onclick="aiguozhe('module3')" style="border: black 2px;border-style:none solid solid none;float: left;width: 194.5px;height: 190px;margin-top: 10px;">
+                <div class="module3" onclick="aiguozhe('module3')">
 
                 </div>
                 <!--  模组4 -->
-                <div class="module4" onclick="aiguozhe('module4')" style="border: black 2px;border-style:none none solid none;float: left;width: 191.2px;height: 190px;margin-top: 10px;">
+                <div class="module4" onclick="aiguozhe('module4')">
 
                 </div>
 
                 <!--  模组5 -->
-                <div class="module5" onclick="aiguozhe('module5')" style="border: black 2px;border-style:none solid none none;float: left;width: 194.5px;height: 198px;margin-left: 7px;">
+                <div class="module5" onclick="aiguozhe('module5')">
 
                 </div>
 
                 <!--  模组6-->
-                <div class="module6" onclick="aiguozhe('module6')" style="border: black 2px;border-style:none solid none none;float: left;width: 194.5px;height: 198px;">
+                <div class="module6" onclick="aiguozhe('module6')">
 
                 </div>
 
                 <!--  模组7-->
-                <div class="module7" onclick="aiguozhe('module7')" style="border: black 2px;border-style:none solid none none;float: left;width: 194.5px;height: 198px;">
+                <div class="module7" onclick="aiguozhe('module7')">
 
                 </div>
 
                 <!--  模组8-->
-                <div class="module8" onclick="aiguozhe('module8')" style="float: left;width: 194.5px;height: 198px;">
+                <div class="module8" onclick="aiguozhe('module8')">
 
                 </div>
             </div>
-            <div class="set-box" style="margin-top:-440px;float: right;margin-right:45px;">
-                <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;模组信息：</label>
-                <div class="didimen" style="font-size: small;border:1px solid #1dacfe;width: 150px;margin-left:-160px;height: 75px;margin-top: 130px;">
-                    <ul style="margin-left:12px;margin-top:-4px;">
-                        <li style="margin-top: 8px;color: #0e94eb;">模组个数：<span id="MOD_ORDER" style="color: #E9E7E7"></span></li>
-                        <li style="margin-top: 8px;color: #0e94eb;">正常模组：<span id="MOD_NORMAL" style="color: #E9E7E7"></span></li>
-                        <li style="margin-top: 8px;color: #0e94eb;">故障模组：<span id="MOD_FAULT" style="color: #E9E7E7"></span></li>
+            <div class="rec_Message">
+
+                <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接收卡信息：</label>
+                <div class="didimen4">
+                    <ul style="margin-left:3px;margin-top:-6px;">
+                        <li style="margin-top: 8px;color: #0e94eb;">接收卡名称：<span id="rec_Type"
+                                                                                style="color: #E9E7E7"></span>
+                        </li>
+                        <li style="margin-top: 8px;color: #0e94eb;">接收卡型号：<span id="rec_ID"
+                                                                                style="color: #E9E7E7"></span>
+                        </li>
+                        <li style="margin-top: 8px;color: #0e94eb;">接收卡个数：<span id="rec_Count"
+                                                                                style="color: #E9E7E7"></span>
+                        </li>
+                        <li style="margin-top: 8px;color: #0e94eb;">版本号：<span id="REC_VER"
+                                                                              style="color: #E9E7E7"></span>
+                        </li>
+                        <li style="margin-top: 8px;color: #0e94eb;">带载面积：<span id="REC_Carrying_Area"
+                                                                               style="color: #E9E7E7">m㎡</span>
+                        </li>
                     </ul>
                 </div>
             </div>
+            <div class="module_Message">
+                <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;模组信息：</label>
+                <div class="didimen5">
+                    <ul style="margin-left:2px;margin-top:-4px;">
+                        <li style="margin-top: 8px;color: #0e94eb;">模组个数：<span id="MOD_ORDER"
+                                                                               style="color: #E9E7E7"></span>
+                        </li>
+                        <li style="margin-top: 8px;color: #0e94eb;">正常模组：<span id="MOD_NORMAL"
+                                                                               style="color: #E9E7E7"></span>
+                        </li>
+                        <li style="margin-top: 8px;color: #0e94eb;">故障模组：<span id="MOD_FAULT"
+                                                                               style="color: #E9E7E7"></span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 <script type="text/javascript" src="js/base.js"></script>
 </html>

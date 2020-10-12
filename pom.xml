@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 <!--   打包方式设置为war包 -->
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <groupId>com.unilumin</groupId>
     <artifactId>demo</artifactId>
@@ -42,12 +42,17 @@
             <version>2.0.0</version>
         </dependency>
 
-        <!-- 添加tomcat -->
+        <!-- 添加websocket服务端的依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
+            <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
+        <!-- 添加tomcat -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-tomcat</artifactId>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
 <!--           添加servlet-->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -102,6 +107,11 @@
             <artifactId>auto-code</artifactId>
             <version>2.1.5</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+            <version>5.2.3.RELEASE</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -110,6 +120,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
             </plugin>
         </plugins>
     </build>

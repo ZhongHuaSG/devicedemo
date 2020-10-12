@@ -1509,7 +1509,7 @@
                         <div class="backuppairing" @click="optionDbBackup">
                             <el-checkbox v-model="pairingChecked" label="设置双备份" size="mini" border size="medium"></el-checkbox>
                         </div>
-                        <div class="portRow" @contextmenu.prevent="startpairing()">
+                        <div class="portRow">
                             <div class="portRow-Label">
                                 <label>发送卡网口设置</label>
                             </div>
@@ -1541,33 +1541,20 @@
                             </div>
 
                             <div class = "abnormalPort">
-                                <el-radio-group size="small">
+                                <el-radio-group v-model="backupName" @change="chooseOptionPort()" size="small">
                                     <el-radio-button
                                             v-for="(item, index) in portItem.slice(0,8)"
                                             :key="item.name"
                                             :label="'P('+item.id+','+item.backupid+')'"
                                             :disabled="item.status"
-                                            :name="item.name"
+                                            :name="item.id"
                                     >
                                     </el-radio-button>
                                 </el-radio-group>
-
-                                <div class="port-smallNum">
-                                    <el-radio-group  size="small">
-                                        <el-radio-button
-                                                v-for="(item, index) in portItem.slice(8)"
-                                                :key="item.name"
-                                                :label="'P('+item.id+','+item.backupid+')'"
-                                                :disabled="item.status"
-                                                :name="item.name"
-                                        >
-                                        </el-radio-button>
-                                    </el-radio-group>
-                                </div>
                             </div>
 
                             <div class ="chooseBackUpId">
-                                <el-dropdown trigger="click">
+                                <el-dropdown @command="handleCommand">
                                     <span class="el-dropdown-link">
                                         <i class="el-icon-arrow-down el-icon--right"></i>
                                     </span>
@@ -1575,6 +1562,7 @@
                                         <el-dropdown-item
                                                 v-for="(item, index) in portItem"
                                                 :name="item.name"
+                                                :command="item.id"
                                         >{{item.name}}</el-dropdown-item>
                                     </el-dropdown-menu>
                                 </el-dropdown>
@@ -1854,114 +1842,98 @@
                     {
                         id:'1',
                         name:'P1',
-                        backupid:' 9',
-                        status:false,
-                        type:true
+                        backupid:'9',
+                        status:false
                     },
                     {
                         id:'2',
                         name:'P2',
                         backupid:'10',
-                        status:false,
-                        type:true
+                        status:false
                     },
                     {
                         id:'3',
                         name:'P3',
                         backupid:'11',
-                        status:false,
-                        type:true
+                        status:false
                     },
                     {
                         id:'4',
                         name:'P4',
                         backupid:'12',
-                        status:false,
-                        type:true
+                        status:false
                     },
                     {
                         id:'5',
                         name:'P5',
                         backupid:'13',
-                        status:false,
-                        type:true
+                        status:false
                     },
                     {
                         id:'6',
                         name:'P6',
                         backupid:'14',
-                        status:false,
-                        type:true
+                        status:false
                     },
                     {
                         id:'7',
                         name:'P7',
                         backupid:'15',
-                        status:false,
-                        type:false
+                        status:false
                     },
                     {
                         id:'8',
                         name:'P8',
                         backupid:'16',
-                        status:false,
-                        type:false
+                        status:false
                     },
                     {
                         id:'9',
                         name:'P9',
                         backupid:'1',
-                        status:false,
-                        type:false
+                        status:false
                     },
                     {
                         id:'10',
                         name:'P10',
                         backupid:'2',
-                        status:false,
-                        type:true
+                        status:false
                     },
                     {
                         id:'11',
                         name:'P11',
                         backupid:'3',
-                        status:false,
-                        type:true
+                        status:false
                     },
                     {
                         id:'12',
                         name:'P12',
                         backupid:'4',
-                        status:false,
-                        type:false
+                        status:false
                     },
                     {
                         id:'13',
                         name:'P13',
                         backupid:'5',
-                        status:false,
-                        type:false
+                        status:false
                     },
                     {
                         id:'14',
                         name:'P14',
                         backupid:'6',
-                        status:false,
-                        type:false
+                        status:false
                     },
                     {
                         id:'15',
                         name:'P15',
                         backupid:'7',
-                        status:false,
-                        type:false
+                        status:false
                     },
                     {
                         id:'16',
                         name:'P16',
                         backupid:'8',
-                        status:false,
-                        type:false
+                        status:false
                     }
                 ],
                 //中间变量-用以辨识数组
@@ -2195,6 +2167,9 @@
                   label: 'PQ'
               }],*/
                 gmvalue: '',
+
+                //为了屏蔽选框的值
+                backupName:'',
             }
         },
         mounted () {
@@ -2203,7 +2178,7 @@
             // let websocket = null;
             //判断当前浏览器是否支持WebSocket
             if ('WebSocket' in window) {
-                let serverhost = "ws://" + window.location.hostname + ":" + "9090";
+                let serverhost = "ws://" + window.location.hostname + ":" + "9090/websocket/testname";
                 websocket = new WebSocket(serverhost);
             } else {
                 alert('当前浏览器不支持websocket');
@@ -4065,7 +4040,9 @@
                         var rec = info_title.REC[0];
                         // console.log(rec);
                         //传感器赋值
+                        $("#SENSOR_VOL").removeAttr("style");
                         $('#SENSOR_VOL').text(rec.SENSOR_VOL+"V");
+                        $("#SENSOR_VOL").html.css("color","red");
                         $('#SENSOR_CURRENT').text(rec.SENSOR_CURRENT+"A");
                         $('#SENSOR_HUMI').text(rec.SENSOR_HUMI+"%RH");
                         $('#SENSOR_SMOG').text(rec.SENSOR_SMOG);
@@ -5497,19 +5474,24 @@
                         }
                     }
                 }
-            }
-
-            /**
-             * 配对选择
-             * */
-            ,startpairing(){
-                if(this.pairingChecked === true){
-                    $('.chooseBackUpId').css('display','block');
-                }
             },
+
+            //选取设置备份网口的方法
             optionDbBackup(){
-                console.log(this.pairingChecked);
                 if(this.pairingChecked === false){
+                    if(senderIndex == null){
+                        alert("未选择发送卡");
+                        return false;
+                    }
+                    //当前tab索引
+                    let index = this.editableTabsValue -1;
+                    this.editableTabs[index].contextbody.senderItem[senderIndex].port = [];
+                    this.port_radio = null;
+                    area_port = null;
+                    clearCanvas();
+                    draw(this.rowNum,this.lineNum);
+
+                    getMouseWhere();
                     //清除画布上的所有接线
                     //变换网口排列
                     $('.normalPort').css('display','none');
@@ -5519,6 +5501,68 @@
                     $('.normalPort').css('display','block');
                     $('.abnormalPort').css('display','none');
                 }
+            },
+            //网口选取值后的方法
+            handleCommand(command){
+                //原组合的值
+                if(this.backupName === '' ||this.backupName === null){
+                    alert("未选择网口值");
+                    return false;
+                }
+                let backupName  =  this.backupName;
+                backupName = backupName.substring(0,backupName.length-1)
+                backupName = backupName.substring(2,backupName.length)
+                console.log("截取后的值"+backupName);
+                let group = backupName.split(',')
+
+                if(group [0] === command ){
+                    this.backupName = null;
+                    alert("不可设置本网口为备用接口");
+                    return false;
+                }
+
+                //替换目标网口
+                for(let a = 0;a<this.portItem.length;a++){
+                    let port = this.portItem[a];
+                    if(port.id === group [0]+""){
+                        this.portItem[a].backupid = command+"";
+                    }
+                }
+
+                for(let r = 0;r<this.portItem.length;r++){
+                    let port = this.portItem[r];
+                    if(port.id === command+""){
+                        this.portItem[r].backupid = group [0]+"";
+                    }
+                }
+
+                let lastId = null;
+                //替换原网口
+                for(let s = 0;s<this.portItem.length;s++){
+                    let port = this.portItem[s];
+                    if(port.backupid === command+""){
+                        if(port.id != group [0]+""){
+                            lastId = this.portItem[s].id
+                            this.portItem[s].backupid = group[1]+"";
+                        }
+                    }
+                }
+
+                for(let h = 0;h<this.portItem.length;h++){
+                    let port = this.portItem[h];
+                    if(port.id === group[1]+""){
+                        this.portItem[h].backupid = lastId+"";
+                    }
+                }
+
+
+                this.backupName = null;
+                $('.chooseBackUpId').css('display','none');
+
+            },
+
+            chooseOptionPort(){
+                $('.chooseBackUpId').css('display','block');
             }
 
         },
@@ -5986,6 +6030,104 @@
      * */
     function clearCanvas() {
         ctx.clearRect(0,0,canvasWidth,canvasHeight);
+    }
+
+    /**
+     * 获取鼠标焦点位置
+     * */
+    function getMouseWhere(){
+        $('.abnormalPort').mousedown(function(e){
+            //处于第一行网口
+            if(e.pageY < 311){
+                //第八列
+                if(e.pageX > 578){
+                    $(".portRow .chooseBackUpId").removeAttr("style");
+                    $(".portRow .chooseBackUpId").removeAttr("id");
+                    $(".portRow .chooseBackUpId").attr("id","P8");
+                    //第七列
+                }else if(e.pageX > 535){
+                    $(".portRow .chooseBackUpId").removeAttr("style");
+                    $(".portRow .chooseBackUpId").removeAttr("id");
+                    $(".portRow .chooseBackUpId").attr("id","P7");
+                    //第六列
+                }else if(e.pageX > 494){
+                    $(".portRow .chooseBackUpId").removeAttr("style");
+                    $(".portRow .chooseBackUpId").removeAttr("id");
+                    $(".portRow .chooseBackUpId").attr("id","P6");
+                    //第五列
+                }else if(e.pageX > 452){
+                    $(".portRow .chooseBackUpId").removeAttr("style");
+                    $(".portRow .chooseBackUpId").removeAttr("id");
+                    $(".portRow .chooseBackUpId").attr("id","P5");
+                    //第四列
+                }else if(e.pageX > 409){
+                    $(".portRow .chooseBackUpId").removeAttr("style");
+                    $(".portRow .chooseBackUpId").removeAttr("id");
+                    $(".portRow .chooseBackUpId").attr("id","P4");
+                    //第三列
+                }else if(e.pageX > 367){
+                    $(".portRow .chooseBackUpId").removeAttr("style");
+                    $(".portRow .chooseBackUpId").removeAttr("id");
+                    $(".portRow .chooseBackUpId").attr("id","P3");
+                    //第二列
+                }else if(e.pageX > 324){
+                    $(".portRow .chooseBackUpId").removeAttr("style");
+                    $(".portRow .chooseBackUpId").removeAttr("id");
+                    $(".portRow .chooseBackUpId").attr("id","P2");
+                    //第一列
+                }else{
+                    $(".portRow .chooseBackUpId").removeAttr("style");
+                    $(".portRow .chooseBackUpId").removeAttr("id");
+                    $(".portRow .chooseBackUpId").attr("id","P1");
+                }
+            //处于第二行网口
+            }else{
+                $('.portRow .chooseBackUpId').css('margin-top','')
+                $('.portRow .chooseBackUpId').css('margin-top',' -15px')
+                //第八列
+                if(e.pageX > 578){
+                    $(".portRow .chooseBackUpId").removeAttr("style");
+                    $(".portRow .chooseBackUpId").removeAttr("id");
+                    $(".portRow .chooseBackUpId").attr("id","P16");
+                    //第七列
+                }else if(e.pageX > 535){
+                    $(".portRow .chooseBackUpId").removeAttr("style");
+                    $(".portRow .chooseBackUpId").removeAttr("id");
+                    $(".portRow .chooseBackUpId").attr("id","P15");
+                    //第六列
+                }else if(e.pageX > 494){
+                    $(".portRow .chooseBackUpId").removeAttr("style");
+                    $(".portRow .chooseBackUpId").removeAttr("id");
+                    $(".portRow .chooseBackUpId").attr("id","P14");
+                    //第五列
+                }else if(e.pageX > 452){
+                    $(".portRow .chooseBackUpId").removeAttr("style");
+                    $(".portRow .chooseBackUpId").removeAttr("id");
+                    $(".portRow .chooseBackUpId").attr("id","P13");
+                    //第四列
+                }else if(e.pageX > 409){
+                    $(".portRow .chooseBackUpId").removeAttr("style");
+                    $(".portRow .chooseBackUpId").removeAttr("id");
+                    $(".portRow .chooseBackUpId").attr("id","P12");
+                    //第三列
+                }else if(e.pageX > 367){
+                    $(".portRow .chooseBackUpId").removeAttr("style");
+                    $(".portRow .chooseBackUpId").removeAttr("id");
+                    $(".portRow .chooseBackUpId").attr("id","P11");
+                    //第二列
+                }else if(e.pageX > 324){
+                    $(".portRow .chooseBackUpId").removeAttr("style");
+                    $(".portRow .chooseBackUpId").removeAttr("id");
+                    $(".portRow .chooseBackUpId").attr("id","P10");
+                    //第一列
+                }else{
+                    $(".portRow .chooseBackUpId").removeAttr("style");
+                    $(".portRow .chooseBackUpId").removeAttr("id");
+                    $(".portRow .chooseBackUpId").attr("id","P9");
+                }
+            }
+
+        });
     }
 
 </script>

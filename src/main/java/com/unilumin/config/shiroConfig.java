@@ -51,14 +51,14 @@ public class shiroConfig {
         //登录
         map.put("/login","anon");
         //登录
+        map.put("/websocket/**","anon");
         map.put("/bigshow","anon");
-        map.put("/fangzhu","anon");
         map.put("/deviceoption","anon");
         //查看所有信息
         map.put("/getJsonMessage","anon");
         map.put("/indexjk","anon");
         //对所有用户认证
-        map.put("/**", "authc");
+//        map.put("/**", "authc");
         //释放静态资源
         //不过滤
         map.put("/img/**","anon");

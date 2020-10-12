@@ -29,7 +29,6 @@ public class MainController {
         String s = ReadUtils.readJsonFile(name);
         Map<String,Object> lbody = JSON.parseObject(s);
         Body bodyBean = JSON.toJavaObject(JSON.parseObject(s),Body.class);
-        System.out.println(s);
         return s;
     }
 

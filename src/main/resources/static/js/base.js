@@ -7,6 +7,68 @@ function getCanShu() {
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('tuopu'));
 
+    let senderstatuslist = [{
+        ORDER: '1',
+        value: 'sender1',
+        label: '发送卡1',
+        HOSTIP:'192.168.48.17',
+        STATUS:'1'
+    },{
+        ORDER: '2',
+        value: 'sender2',
+        label: '发送卡2',
+        HOSTIP:'192.168.48.16',
+        STATUS:'1'
+    },{
+            ORDER: '3',
+            value: 'sender3',
+            label: '发送卡3',
+            HOSTIP:'192.168.48.18',
+            STATUS:'1'
+        }];
+
+    let senderItem = [];
+
+    for(let s = 0 ; s<senderstatuslist.length;s++){
+        let getSender = senderstatuslist[s];
+        let disabled = true;
+        if(getSender.STATUS === '1'){
+            disabled = false;
+        }else{
+            disabled = true;
+        }
+        if(senderItem.length===0){
+            let sender = {
+                id:getSender.ORDER+"",
+                value: getSender.ORDER+"",
+                label: getSender.HOSTIP+"",
+                disabled: disabled
+            };
+            senderItem.push(sender);
+        }else{
+            // let sender = null;
+            //循环本地发送卡列表
+            for(let a = 0;a<senderItem.length;a++){
+                //判断是否有相同的发送卡
+                if(senderItem[a].id === getSender.ORDER+""){
+                    continue;
+                }else{
+                    //没有相同的发送卡时赋值并推入一个新的senderItem
+                    let sender = {
+                        id:getSender.ORDER+"",
+                        value: getSender.ORDER+"",
+                        label: getSender.HOSTIP+"",
+                        disabled: disabled
+                    };
+                    // if(senderItem.length === senderstatuslist.length){
+                    //     break;
+                    // }
+                    senderItem.push(sender);
+                }
+            }
+        }
+    }
+
     var ledParasJson = null ;
     var senderOrderList = [] ;
 
@@ -64,10 +126,10 @@ function getCanShu() {
             //网口最大总数量
             var MaxPort = 16;
 
-            //X轴上单个偏移差值为60一个单位(向右+60)----屏体（同网口）
-            var XInit = [560,630,700,770,840,910,980,1050];
-            //Y轴上单个偏移差值为140一个单位(向下-140)----屏体
-            var YInit = [810,690,570,450,330,210,90,-30];
+            //X轴上单个偏移差值为60一个单位(向右+70)----屏体（同网口）
+            var XInit = [560,630,700,770,840,910,980,1050,1120,1190,1260,1330,1400,1470,1540,1610];
+            //Y轴上单个偏移差值为140一个单位(向下-120)----屏体
+            var YInit = [810,690,570,450,330,210,90,-30,-150,-270,-390,-510,-630,-750,-870,-990];
 
             //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
             var curWwwPath = window.document.location.href;
@@ -206,6 +268,9 @@ function getCanShu() {
                     }else{
                         $('#REC_VER').text(senderOrder.VER);
                     }
+                    if(typeof (senderOrder.ID) === "undefined"){
+                        senderOrder.ID = senderOrder.IPADDR;
+                    }
                     //发送卡信息
                     var sender ={
                         x: XInitSender,
@@ -225,11 +290,28 @@ function getCanShu() {
 
                     //已用网口的数组
                     let usePort = [];
+
+                    /**
+                     * 排序网口
+                     * */
+                    for(let wai = 0;wai < portNum -1;wai++){
+                        for(let fool = 0;fool < portNum-1 - wai;fool++){
+                            let nowId = parseInt(senderOrder.PORT_ORDER[fool].ID.substring(1));
+                            let nextId = parseInt(senderOrder.PORT_ORDER[fool+1].ID.substring(1));
+                            if(nowId > nextId){
+                                let temp = senderOrder.PORT_ORDER[fool];
+                                senderOrder.PORT_ORDER[fool] = senderOrder.PORT_ORDER[fool+1];
+                                senderOrder.PORT_ORDER[fool+1] = temp;
+                            }
+                        }
+                    }
+
                     //遍历走线接口
                     for(var j = 0;j<portNum;j++){
 
                         //走线详情信息
                         var port = senderOrder.PORT_ORDER[j];
+
 
                         //遍历端口显示----默认发送卡有16个端口
                         for(let initPort = 1;initPort < 17;initPort++){
@@ -245,10 +327,11 @@ function getCanShu() {
                                     nodeName: '主网线'
                                 }
                                 links.push(hiddenLine);
+                                let singlePort = null;
                                 //判断索引是否能够取余4来判断在当前X轴的Y位置
                                 if((initPort)%4 === 0){
                                     //当前port对象
-                                    var singlePort = {
+                                    singlePort = {
                                         //X轴上单个偏移差值为60一个单位(向右+60)
                                         x: XInitPort+parseInt((initPort)/4-1)*42,
                                         //Y轴上单个偏移差值为70一个单位（向下-70）
@@ -261,10 +344,8 @@ function getCanShu() {
                                         svgPath: 'path://M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
                                     };
                                     //走线方式数组添加
-                                    nodes.push(singlePort);
                                 }else{
-                                    console.log("当前索引"+initPort);
-                                    var singlePort = {
+                                    singlePort = {
                                         //X轴上单个偏移差值为60一个单位(向右+60)
                                         x: XInitPort+parseInt((initPort)/4)*42,
                                         //Y轴上单个偏移差值为70一个单位（向下-70）
@@ -276,10 +357,9 @@ function getCanShu() {
                                         detail:null,
                                         svgPath: 'path://M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
                                     };
-                                    nodes.push(singlePort);
                                 }
+                                nodes.push(singlePort);
                                 usePort.push(portName);
-
                             }
 
                         }
@@ -329,7 +409,7 @@ function getCanShu() {
                                 }else if(box.BOX_STATE === '2'){
                                     box_State = "警告"
                                 }else if(box.BOX_STATE === '3'){
-                                    box_State = "故障"
+                                    box_State = "报警"
                                     fault_num++
                                 }else{
                                     box_State = "无法检测"
@@ -367,7 +447,7 @@ function getCanShu() {
                                     }else if(boxNext.BOX_STATE === '2'){
                                         box_State = "警告"
                                     }else if(boxNext.BOX_STATE === '3'){
-                                        box_State = "故障"
+                                        box_State = "报警"
                                         fault_num++
                                     }else{
                                         box_State = "无法检测"
@@ -421,7 +501,7 @@ function getCanShu() {
                                     //X轴上单个偏移差值为60一个单位(向右+60)
                                     x: XInitPort+parseInt((unPortNumIndex)/4-1)*42,
                                     //Y轴上单个偏移差值为70一个单位（向下-70）
-                                    y: YInitPort-3*50-i*300,
+                                    y: YInitPort-3*50-senderSum*300,
                                     symbolSize: 20,
                                     nodeName: "P"+unPortNumIndex,
                                     name: portName+senderOrder.ID,
@@ -436,7 +516,7 @@ function getCanShu() {
                                     //X轴上单个偏移差值为60一个单位(向右+60)
                                     x: XInitPort+parseInt((unPortNumIndex)/4)*42,
                                     //Y轴上单个偏移差值为70一个单位（向下-70）
-                                    y: YInitPort-(unPortNumIndex-1)%4*50-i*300,
+                                    y: YInitPort-(unPortNumIndex-1)%4*50-senderSum*300,
                                     symbolSize: 20,
                                     nodeName: "P"+unPortNumIndex,
                                     name: portName+senderOrder.ID,
@@ -638,6 +718,7 @@ function getCanShu() {
             }
             //判断网口的索引是否大于4
             var sopindex = 1;
+            let thisPort = null;
             //遍历目标连接线
             for (var i = 0; i < links.length; i++) {
                 var link;
@@ -676,29 +757,40 @@ function getCanShu() {
                         var Target;
                         //当源坐标Y坐标等于第一行时
                         if(SourceY > YInitPort - 151){
-
+                            if(thisPort != "ONE"){
+                                thisPort = "ONE";
+                                sopindex = 1;
+                            }
                             //当目标Y坐标小于Y轴第三个屏体的Y坐标
-                            if(TategerY < YInit[2] && TategerY > YInit[4]){
+                            if(TategerY === YInit[2] || TategerY === YInit[1] ||TategerY === YInit[3]){
                                 Source0 = [SourceX+sopindex*7,SourceY]
                                 Source = [SourceX+sopindex*7,TategerY-sopindex*20-65]
                                 Target = [TategerX,TategerY-sopindex*20-65]
                             }
                             //当目标Y坐标小于Y轴第四个屏体的Y坐标
                             else if(TategerY < YInit[3]){
-                                Source0 = [SourceX+sopindex*7,SourceY]
-                                Source = [SourceX-sopindex*21,SourceY-sopindex*20+88]
-                                Target = [TategerX,SourceY-sopindex*20+88]
+                                Source0 = [SourceX+(4-sopindex)*4+12,SourceY]
+                                Source = [SourceX+(4-sopindex)*4+12,SourceY-(4-sopindex)*44-378]
+                                Target = [TategerX,SourceY-(4-sopindex)*44-378]
+                            //当目标Y坐标小于Y轴第二个屏体的Y坐标
+                            }else if(TategerY < YInit[6]){
+                                Source0 = [SourceX+(4-sopindex)*7,SourceY]
+                                Source = [SourceX+(4-sopindex)*7,SourceY-(4-sopindex)*44-888]
+                                Target = [TategerX,SourceY-(4-sopindex)*44-888]
                             }else{
                                 Source0 = [SourceX+sopindex*7,SourceY]
-                                Source = [SourceX+sopindex*7,SourceY+sopindex*30+36]
-                                Target = [TategerX,SourceY+sopindex*30+36]
+                                Source = [SourceX+sopindex*7,SourceY+sopindex*30+56]
+                                Target = [TategerX,SourceY+sopindex*30+56]
                             }
-
                         }
                         //数据处于第二行发送卡
                         else if(SourceY < YInitPort - 299 && SourceY > YInitPort - 451){
+                            if(thisPort != "TWO"){
+                                thisPort = "TWO";
+                                sopindex = 1;
+                            }
                             //当目标Y坐标小于Y轴第三个屏体的Y坐标
-                            if(TategerY < YInit[2] && TategerY > YInit[4]){
+                            if(TategerY === YInit[2] || TategerY === YInit[1]){
                                 Source0 = [SourceX+sopindex*7,SourceY]
                                 Source = [SourceX+sopindex*7,TategerY-sopindex*20-65]
                                 Target = [TategerX,TategerY-sopindex*20-65]
@@ -710,10 +802,10 @@ function getCanShu() {
                                 Target = [TategerX,SourceY-sopindex*20+88]
                             }
                             //当目标Y坐标大于Y轴第二个屏体的Y坐标
-                            else if(TategerY > YInit[1]){
-                                Source0 = [SourceX+sopindex*7,SourceY]
-                                Source = [SourceX+sopindex*7,SourceY+sopindex*20+248]
-                                Target = [TategerX,SourceY+sopindex*20+248]
+                            else if(TategerY === YInit[0]){
+                                Source0 = [SourceX+sopindex*7+3,SourceY]
+                                Source = [SourceX+sopindex*7+3,SourceY-(4-sopindex)*38+535]
+                                Target = [TategerX,SourceY-(4-sopindex)*38+535]
                             }else{
                                 Source0 = [SourceX+sopindex*7,SourceY]
                                 Source = [SourceX+sopindex*7,SourceY+sopindex*20+46]
@@ -721,6 +813,10 @@ function getCanShu() {
                             }
                         }
                         else{
+                            if(thisPort != "THIRD"){
+                                thisPort = "THIRD";
+                                sopindex = 1;
+                            }
                             Source0 = [SourceX+sopindex*7,SourceY]
                             Source = [SourceX+sopindex*7,TategerY+sopindex*20+46]
                             Target = [TategerX,TategerY+sopindex*20+46]
@@ -737,7 +833,7 @@ function getCanShu() {
                             nodeName: links[i].nodeName,
                         };
                         sopindex++;
-                        if(s>4){
+                        if(sopindex>4){
                             sopindex = 1;
                         }
                     }else if(links[i].nodeName == "主网线"){
@@ -768,8 +864,6 @@ function getCanShu() {
                             };
                         }
 
-                        console.log(dataMap.get(links[i].source));
-                        console.log(dataMap.get(links[i].target));
                     } else{
                         lines = {
                             coords:[
@@ -787,7 +881,7 @@ function getCanShu() {
                     }else if(links[i].name === '警告'){
                         charts.warninglinesData.push(lines);
                         lineColor = '#FFFF00';
-                    }else if(links[i].name === '故障'){
+                    }else if(links[i].name === '报警'){
                         charts.faultlinesData.push(lines);
                         lineColor = '#FF0000';
                     }else{
@@ -834,7 +928,7 @@ function getCanShu() {
 
             option = {
                 legend: {
-                    data:['连通','无法检测','警告','故障'],
+                    data:['连通','无法检测','警告','报警'],
                     icon: "circle",
                     textStyle: {
                         fontSize: 25,
@@ -877,7 +971,7 @@ function getCanShu() {
                             }else if(item.data.detail.BOX_STATE == '2'){
                                 box_State = "警告"
                             }else if(item.data.detail.BOX_STATE == '3'){
-                                box_State = "故障"
+                                box_State = "报警"
                             }else{
                                 box_State = "无法检测"
                             }
@@ -1000,9 +1094,9 @@ function getCanShu() {
                         },
                         data: charts.warninglinesData
                     },
-                    //故障效果
+                    //报警效果
                     {
-                        name:'故障',
+                        name:'报警',
                         type: 'lines',
                         zlevel: 2,
                         step: "start",
@@ -1012,9 +1106,9 @@ function getCanShu() {
                             period: 60,
                             show: true,
                             trailLength: 0.1,
-                            symbol: 'path://M547.4 512l278.2-278.2c9.8-9.8 9.8-25.6 0-35.4-9.8-9.8-25.6-9.8-35.4 0L512 476.6 233.8 198.4c-9.8-9.8-25.6-9.8-35.4 0-9.8 9.8-9.8 25.6 0 35.4L476.6 512 198.4 790.2c-9.8 9.8-9.8 25.6 0 35.4 4.9 4.9 11.3 7.3 17.7 7.3s12.8-2.4 17.7-7.3L512 547.4l278.2 278.2c4.9 4.9 11.3 7.3 17.7 7.3s12.8-2.4 17.7-7.3c9.8-9.8 9.8-25.6 0-35.4L547.4 512z',
+                            symbol: 'arrow',
                             color: 'red',
-                            symbolSize: 20
+                            symbolSize: 10
                         },
                         lineStyle: {
                             type: 'solid',
@@ -1032,8 +1126,7 @@ function getCanShu() {
             myChart.setOption(option);
             // 处理点击事件并且弹出数据名称-params传入的参数
             myChart.on('click', function (params) {
-                if(params.data.type == '箱体'){
-
+                if(params.data.type === '箱体'){
                     //箱体参数赋值
                     var detail = params.data.detail;
                     info_title = detail;
@@ -1047,7 +1140,32 @@ function getCanShu() {
                         if(typeof (rec.SENSOR_VOL) == "undefined" ){
                             $('#SENSOR_VOL').text("暂无数据");
                         }else{
-                            $('#SENSOR_VOL').text(rec.SENSOR_VOL+"V");
+                            let sensorVol = parseFloat(rec.SENSOR_VOL);
+                            //警告
+                            if(sensorVol>3.6 && sensorVol <4.0){
+                                $("#SENSOR_VOL").removeAttr("style");
+                                $('#SENSOR_VOL').attr('style','color:#FFD700;');
+                                $('#SENSOR_VOL').text(rec.SENSOR_VOL+"V电压警告");
+                                //警告
+                            }else if(sensorVol>5.5 && sensorVol <6.0){
+                                $("#SENSOR_VOL").removeAttr("style");
+                                $('#SENSOR_VOL').attr('style','color:#FFD700;');
+                                $('#SENSOR_VOL').text(rec.SENSOR_VOL+"V电压警告");
+                                //报警
+                            }else if(sensorVol < 3.6){
+                                $("#SENSOR_VOL").removeAttr("style");
+                                $('#SENSOR_VOL').attr('style','color:#DC143C;');
+                                $('#SENSOR_VOL').text(rec.SENSOR_VOL+"V电压报警");
+                                //报警
+                            }else if(sensorVol > 6.0){
+                                $("#SENSOR_VOL").removeAttr("style");
+                                $('#SENSOR_VOL').attr('style','color:#DC143C;');
+                                $('#SENSOR_VOL').text(rec.SENSOR_VOL+"V电压报警");
+                            }else{
+                                $("#SENSOR_VOL").removeAttr("style");
+                                $('#SENSOR_VOL').attr('style','color:#E9E7E7;')
+                                $('#SENSOR_VOL').text(rec.SENSOR_VOL+"V");
+                            }
                         }
                         if(typeof (rec.SENSOR_CURRENT) == "undefined" ){
                             $('#SENSOR_CURRENT').text("暂无数据");
@@ -1057,19 +1175,51 @@ function getCanShu() {
                         if(typeof (rec.SENSOR_HUMI) == "undefined" ){
                             $('#SENSOR_HUMI').text("暂无数据");
                         }else{
+                            let sensorHumi = parseFloat(rec.SENSOR_HUMI);
+                            //警告
+                            if(sensorHumi>70.9 && sensorHumi <81.0){
+                                $("#SENSOR_HUMI").removeAttr("style");
+                                $('#SENSOR_HUMI').attr('style','color:#FFD700;');
+                                //报警
+                            }else if(sensorHumi > 80.9){
+                                $("#SENSOR_HUMI").removeAttr("style");
+                                $('#SENSOR_HUMI').attr('style','color:#DC143C;');
+                            }else{
+                                $("#SENSOR_HUMI").removeAttr("style");
+                                $('#SENSOR_HUMI').attr('style','color:#E9E7E7;');
+                            }
                             $('#SENSOR_HUMI').text(rec.SENSOR_HUMI+"%RH");
                         }
                         if(typeof (rec.SENSOR_TMP) == "undefined" ){
                             $('#SENSOR_TMP').text("暂无数据");
                         }else{
+                            let sensorTmp = parseFloat(rec.SENSOR_TMP);
+                            //警告
+                            if(sensorTmp>60.9 && sensorTmp <80.0){
+                                $("#SENSOR_TMP").removeAttr("style");
+                                $('#SENSOR_TMP').attr('style','color:#FFD700;');
+                                //报警
+                            }else if(sensorTmp > 79.9){
+                                $("#SENSOR_TMP").removeAttr("style");
+                                $('#SENSOR_TMP').attr('style','color:#DC143C;');
+                            }else{
+                                $("#SENSOR_TMP").removeAttr("style");
+                                $('#SENSOR_TMP').attr('style','color:#E9E7E7;');
+                            }
                             $('#SENSOR_TMP').text(rec.SENSOR_TMP+"℃");
                         }
+                        //接收卡版本号
+                        if(typeof (rec.REC_VER) === "undefined"){
+                            $('#REC_VER').text("暂无数据");
+                        }else{
+                            $('#REC_VER').text(rec.REC_VER);
+                        }
+
 
                         clicked_Box_ModGroup = rec.MOD;
-
                         //模组信息赋值
                         //遍历模组
-                        //通过遍历计算故障模组数量
+                        //通过遍历计算报警模组数量
                         var mod_Normal_count = 0;
                         for(let i = 0;i<rec.MOD.length;i++){
 
@@ -1107,24 +1257,26 @@ function getCanShu() {
 
                             if(typeof (sigleMod.ID) != "undefined"){
                                 $('#MOD_ID').text(sigleMod.ID);
+                            }else{
+                                $('#MOD_ID').text("暂无数据");
                             }
 
                             //无法检测-灰色
                             if(rec.MOD[i].MOD_STATE === "0"){
-                                $('.'+target).attr('style','background: #0c1a2d;');
+                                $('.'+target).attr('style','background: rgba(169,169,169, .9);border-color:#696969;');
                                 //正常
                             }else if(rec.MOD[i].MOD_STATE === "1"){
                                 mod_Normal_count++;
-                                $('.'+target).attr('style','background: rgba(173,255,47, 0);');
+                                $('.'+target).attr('style','background: rgba(173,255,47, 0);border-color:black;');
                                 //警告-黄色
                             }else if(rec.MOD[i].MOD_STATE === "2"){
-                                $('.'+target).attr('style','background: rgba(173,255,47, .5);');
-                                //故障-红色
+                                $('.'+target).attr('style','background: rgba(255,255,0, .5);border-color:#FFD700;');
+                                //报警-红色
                             }else{
-                                $('.'+target).attr('style','background: rgba(255,0,0, .5);');
+                                $('.'+target).attr('style','background: rgba(178,34,34, .5);border-color:#FF0000;');
                             }
                         }
-                        //故障模组数
+                        //报警模组数
                         $('#MOD_FAULT').text(rec.MOD.length-mod_Normal_count);
                         //正常模组数
                         $('#MOD_NORMAL').text(mod_Normal_count);
@@ -1181,9 +1333,9 @@ function getCanShu() {
                         if(typeof (detail.PORT_MASTER) == "undefined" ){
                             $('#PORT_MASTER').text("暂无数据");
                         }else if(detail.PORT_MASTER === '1'){
-                            $('#PORT_MASTER').text('A网口工作');
+                            $('#PORT_MASTER').text('网口1工作');
                         }else{
-                            $('#PORT_MASTER').text('B网口工作');
+                            $('#PORT_MASTER').text('网口2工作');
                         }
 
                         // 网口状态   01 A网口工作   02 B网口工作
@@ -1200,14 +1352,23 @@ function getCanShu() {
                     }
 
 
+                    let BOX_State = params.data.detail.BOX_STATE;
+
+                    if(BOX_State === '1'){
+
+                    }else if(BOX_State === '2'){
+
+                    }else if(BOX_State === '3'){
+
+                    }else{
+                        clearPopup("无法检测");
+                    }
 
 
+                    //驱动IC赋值
                     $('#cover').css('display','block'); //显示遮罩层
                     $('.container').attr('style', 'visibility: visible').find('.pop-up').
                     attr('style', 'visibility: visible').siblings().attr('style', 'visibility: hidden');
-
-
-
                 }
             });
         },
@@ -1218,7 +1379,37 @@ function getCanShu() {
 
 }
 
+function getSocket(){
+    var websocket = null;
+    if('WebSocket' in window){
+        websocket = new WebSocket("ws://127.0.0.1:9090/websocket/testname");
+    }
+
+    websocket.onopen = function(){
+        console.log("连接成功");
+    }
+
+    websocket.onclose = function(){
+        console.log("退出连接");
+    }
+
+    websocket.onmessage = function (event){
+        console.log("收到消息"+event.data);
+    }
+
+    websocket.onerror = function(){
+        console.log("连接出错");
+    }
+
+    window.onbeforeunload = function () {
+        websocket.close();
+    }
+}
+
+// var int=self.setInterval("getCanShu()",1000);
 getCanShu();
+getSocket();
+
 
 function aiguozhe(item){
     let modGroup =  clicked_Box_ModGroup;
@@ -1255,7 +1446,6 @@ function aiguozhe(item){
                 break;
         }
         if(item == target){
-            console.log(modGroup[i].ID);
             //无法检测-灰色
             if(modGroup[i].MOD_STATE === "0"){
                 //清空模组的方法
@@ -1309,5 +1499,31 @@ $('.close-pop').on('click', function () {
 //     }
 // })
 
+//在箱体报警时清空箱体信息封装方法
+function clearPopup(value) {
+    $('#productTitle').text(value);
+    $('#SENSOR_VOL').text(value);
+    $('#SENSOR_CURRENT').text(value);
+    $('#SENSOR_TMP').text(value);
+    $('#SENSOR_HUMI').text(value);
+    $('#RT_POWERDIS').text(value);
+    $('#rec_Type').text(value);
+    $('#rec_Count').text(value);
+    $('#REC_VER').text(value);
+    $('#REC_Carrying_Area').text(value);
+    $('#PORT_MASTER').text(value);
+    $('#BOX_MASTER').text(value);
+    $('#POWER_MASTER').text(value);
+    $('#MOD_ORDER').text(value);
+    $('#MOD_NORMAL').text(value);
+    $('#MOD_FAULT').text(value);
+}
 
+//在模组报警时清空箱体信息封装方法
+function clearModedetail(value) {
+    $('#MOD_RSL').text(value);
+    $('#MOD_SPACE').text(value);
+    $('#MOD_SCAN_NUM').text(value);
+    $('#MOD_ID').text(value);
+}
 
