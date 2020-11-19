@@ -127,9 +127,9 @@ function getCanShu() {
             var MaxPort = 16;
 
             //X轴上单个偏移差值为60一个单位(向右+70)----屏体（同网口）
-            var XInit = [560,630,700,770,840,910,980,1050,1120,1190,1260,1330,1400,1470,1540,1610];
+            var XInit = [460,530,600,670,740,810,880,950,1020,1090,1160,1230,1300,1370,1440,1510];
             //Y轴上单个偏移差值为140一个单位(向下-120)----屏体
-            var YInit = [810,690,570,450,330,210,90,-30,-150,-270,-390,-510,-630,-750,-870,-990];
+            var YInit = [870,750,630,510,390,270,150,30,-90,-210,-330,-450,-570,-690,-810,-930];
 
             //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
             var curWwwPath = window.document.location.href;
@@ -463,18 +463,33 @@ function getCanShu() {
                                     links.push(portBox);
                                 }
                             }
-                            //单个箱体的信息
-                            var singleBox = {
-                                x: XInit[box.XPOS-1],
-                                y: YInit[box.YPOS-1],
-                                symbolSize: 70,
-                                nodeName: "箱体"+box.XPOS+"-"+box.YPOS,
-                                name: senderOrder.ID+box.ID+boxindex,
-                                type: '箱体',
-                                detail:box,
-                                svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+                            if(box.REC.length > 1){
+                                //单个箱体的信息
+                                var singleBox = {
+                                    x: XInit[box.XPOS-1],
+                                    y: YInit[box.YPOS-1],
+                                    symbolSize: 70,
+                                    nodeName: "箱体"+box.XPOS+"-"+box.YPOS,
+                                    name: senderOrder.ID+box.ID+boxindex,
+                                    type: '箱体',
+                                    detail:box,
+                                    svgPath: 'M17.212952 1022.634667h505.856V8.582095H17.212952v1014.052572zM647.070476 8.582095v1014.052572h505.807238V8.582095H647.070476z m418.279619 926.476191h-330.752V96.207238h333.190095v838.948572h-2.438095z'
+                                }
+                                nodes.push(singleBox);
+                            }else{
+                                //单个箱体的信息
+                                var singleBox = {
+                                    x: XInit[box.XPOS-1],
+                                    y: YInit[box.YPOS-1],
+                                    symbolSize: 70,
+                                    nodeName: "箱体"+box.XPOS+"-"+box.YPOS,
+                                    name: senderOrder.ID+box.ID+boxindex,
+                                    type: '箱体',
+                                    detail:box,
+                                    svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+                                }
+                                nodes.push(singleBox);
                             }
-                            nodes.push(singleBox);
                         }
 
                     }
@@ -635,7 +650,7 @@ function getCanShu() {
                     svgPath,
                     symbolSize
                 } = nodes[j];
-                if(type == '屏体'){
+                if(type == '箱体'){
                     var BoxColor ;
                     var BoxEmColor ;
                     //判断箱体状态
@@ -643,8 +658,8 @@ function getCanShu() {
                         BoxColor = '#595857'
                         BoxEmColor = '#e9e4d4'
                     }else if(detail.BOX_STATE === '1'){
-                        BoxColor = '#043c58'
-                        BoxEmColor = '#1D5D76'
+                        BoxColor = '#b1cfff'
+                        BoxEmColor = '#b1cfff'
                     }else if(detail.BOX_STATE === '2'){
                         BoxColor = 'orange'
                         BoxEmColor = '#ffec47'
@@ -668,7 +683,7 @@ function getCanShu() {
                             fontSize:20
                         },
                         itemStyle: {
-                            borderColor: 'rgba(147, 235, 248, 1)',
+                            borderColor: '#5d9bff',
                             borderWidth: 3,
                             color: BoxColor,
                             emphasis: {
@@ -756,7 +771,7 @@ function getCanShu() {
                         //第三个点--在屏体上方的位置
                         var Target;
                         //当源坐标Y坐标等于第一行时
-                        if(SourceY > YInitPort - 151){
+                        if (SourceY > YInitPort - 151) {
                             if(thisPort != "ONE"){
                                 thisPort = "ONE";
                                 sopindex = 1;
@@ -767,59 +782,69 @@ function getCanShu() {
                                 Source = [SourceX+sopindex*7,TategerY-sopindex*20-65]
                                 Target = [TategerX,TategerY-sopindex*20-65]
                             }
-                            //当目标Y坐标小于Y轴第四个屏体的Y坐标
-                            else if(TategerY < YInit[3]){
+                            //当目标Y坐标等于Y轴第五个屏体的Y坐标
+                            else if(TategerY === YInit[4]){
                                 Source0 = [SourceX+(4-sopindex)*4+12,SourceY]
-                                Source = [SourceX+(4-sopindex)*4+12,SourceY-(4-sopindex)*44-378]
-                                Target = [TategerX,SourceY-(4-sopindex)*44-378]
-                            //当目标Y坐标小于Y轴第二个屏体的Y坐标
-                            }else if(TategerY < YInit[6]){
+                                Source = [SourceX+(4-sopindex)*4+12,TategerY+40+sopindex*8]
+                                Target = [TategerX,TategerY+40+sopindex*8]
+                            }
+                            //当目标Y坐标小于Y轴第六个屏体的Y坐标
+                            else if(TategerY === YInit[5]){
+                                Source0 = [SourceX+(4-sopindex)*4+12,SourceY]
+                                Source = [SourceX+(4-sopindex)*4+12,SourceY-(4-sopindex)*44-348]
+                                Target = [TategerX,SourceY-(4-sopindex)*44-348]
+                                //当目标Y坐标小于Y轴第二个屏体的Y坐标
+                            }else if(TategerY < YInit[6] && TategerY > YInit[7]){
                                 Source0 = [SourceX+(4-sopindex)*7,SourceY]
                                 Source = [SourceX+(4-sopindex)*7,SourceY-(4-sopindex)*44-888]
                                 Target = [TategerX,SourceY-(4-sopindex)*44-888]
+                            }else if(TategerY === YInit[7]){
+                                Source0 = [SourceX+(4-sopindex)*7,SourceY]
+                                Source = [SourceX+(4-sopindex)*7,TategerY-sopindex*10-50]
+                                Target = [TategerX,TategerY-sopindex*10-50]
                             }else{
                                 Source0 = [SourceX+sopindex*7,SourceY]
                                 Source = [SourceX+sopindex*7,SourceY+sopindex*30+56]
                                 Target = [TategerX,SourceY+sopindex*30+56]
                             }
+
                         }
                         //数据处于第二行发送卡
-                        else if(SourceY < YInitPort - 299 && SourceY > YInitPort - 451){
+                        else if (SourceY < YInitPort - 299 && SourceY > YInitPort - 451) {
                             if(thisPort != "TWO"){
                                 thisPort = "TWO";
                                 sopindex = 1;
                             }
                             //当目标Y坐标小于Y轴第三个屏体的Y坐标
-                            if(TategerY === YInit[2] || TategerY === YInit[1]){
-                                Source0 = [SourceX+sopindex*7,SourceY]
-                                Source = [SourceX+sopindex*7,TategerY-sopindex*20-65]
-                                Target = [TategerX,TategerY-sopindex*20-65]
+                            if (TategerY < YInit[2] && TategerY > YInit[4]) {
+                                Source0 = [SourceX + sopindex * 7, SourceY]
+                                Source = [SourceX + sopindex * 7, TategerY - sopindex * 20 - 65]
+                                Target = [TategerX, TategerY - sopindex * 20 - 65]
                             }
                             //当目标Y坐标小于Y轴第四个屏体的Y坐标
-                            else if(TategerY < YInit[3]){
-                                Source0 = [SourceX+sopindex*7,SourceY]
-                                Source = [SourceX-sopindex*21,SourceY-sopindex*20+88]
-                                Target = [TategerX,SourceY-sopindex*20+88]
+                            else if (TategerY < YInit[3]) {
+                                Source0 = [SourceX + sopindex * 7, SourceY]
+                                Source = [SourceX - sopindex * 21, SourceY - sopindex * 20 + 88]
+                                Target = [TategerX, SourceY - sopindex * 20 + 88]
                             }
                             //当目标Y坐标大于Y轴第二个屏体的Y坐标
                             else if(TategerY === YInit[0]){
-                                Source0 = [SourceX+sopindex*7+3,SourceY]
-                                Source = [SourceX+sopindex*7+3,SourceY-(4-sopindex)*38+535]
+                                Source0 = [SourceX+sopindex*7+4,SourceY]
+                                Source = [SourceX+sopindex*7+4,SourceY-(4-sopindex)*38+535]
                                 Target = [TategerX,SourceY-(4-sopindex)*38+535]
-                            }else{
-                                Source0 = [SourceX+sopindex*7,SourceY]
-                                Source = [SourceX+sopindex*7,SourceY+sopindex*20+46]
-                                Target = [TategerX,SourceY+sopindex*20+46]
+                            }else {
+                                Source0 = [SourceX + sopindex * 7, SourceY]
+                                Source = [SourceX + sopindex * 7, SourceY + sopindex * 20 + 46]
+                                Target = [TategerX, SourceY + sopindex * 20 + 46]
                             }
-                        }
-                        else{
+                        } else {
                             if(thisPort != "THIRD"){
                                 thisPort = "THIRD";
                                 sopindex = 1;
                             }
-                            Source0 = [SourceX+sopindex*7,SourceY]
-                            Source = [SourceX+sopindex*7,TategerY+sopindex*20+46]
-                            Target = [TategerX,TategerY+sopindex*20+46]
+                            Source0 = [SourceX + sopindex * 7, SourceY]
+                            Source = [SourceX + sopindex * 7, TategerY + sopindex * 20 + 46]
+                            Target = [TategerX, TategerY + sopindex * 20 + 46]
                         }
                         lines = {
                             coords:[
@@ -960,25 +985,31 @@ function getCanShu() {
                     transitionDuration: 0.8,
                     // formatter: '设备类型:{b}<br />序列号:<br />'
                     formatter: function (item) {
-                        if(item.data.type == '屏体'){
+                        if(item.data.type == '箱体'){
                             var box_State;
+                            let fontColor;
                             //判断箱体状态
                             if(item.data.detail == 'uncheck' ){
                                 box_State = "无法检测"
+                                fontColor = "color:#708090;"
                             }
                             else if(item.data.detail.BOX_STATE == '1'){
                                 box_State = "连通"
+                                fontColor = "color:green;"
                             }else if(item.data.detail.BOX_STATE == '2'){
                                 box_State = "警告"
+                                fontColor = "color:#FFFF00;"
                             }else if(item.data.detail.BOX_STATE == '3'){
                                 box_State = "报警"
+                                fontColor = "color:#8B0000;"
                             }else{
                                 box_State = "无法检测"
+                                fontColor = "color:#708090;"
                             }
                             return '设备类型:<b style="color: green;">&nbsp;&nbsp;' + item.data.type + '</b><hr />' +
                                 '设备ID:<b style="color: green;">&nbsp;&nbsp;' + item.data.nodeName + '</b><hr />' +
                                 '箱体坐标(X-Y)：<b style="color: green;">' +item.data.detail.XPOS+'-'+item.data.detail.YPOS +'</b><hr />' +
-                                '工作状态：<b style="color: green;">'+box_State+'</b><hr />';
+                                '工作状态：<b style="'+fontColor+'">'+box_State+'</b><hr />';
                         }else if(item.data.type == '串联'){
                             return '';
                         }
@@ -1372,7 +1403,8 @@ function getCanShu() {
                 }
             });
         },
-        error: function () {
+        error: function (data) {
+            console.log(data);
             alert("获取后台参数失败");
         }
     });

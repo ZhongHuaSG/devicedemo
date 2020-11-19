@@ -27,6 +27,7 @@ public class MainController {
     @ResponseBody
     public String getJsonMessage(){
         String s = ReadUtils.readJsonFile(name);
+        System.out.println(s);
         Map<String,Object> lbody = JSON.parseObject(s);
         Body bodyBean = JSON.toJavaObject(JSON.parseObject(s),Body.class);
         return s;

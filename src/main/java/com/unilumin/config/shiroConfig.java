@@ -54,6 +54,7 @@ public class shiroConfig {
         map.put("/websocket/**","anon");
         map.put("/bigshow","anon");
         map.put("/deviceoption","anon");
+        map.put("/mppage","anon");
         //查看所有信息
         map.put("/getJsonMessage","anon");
         map.put("/indexjk","anon");

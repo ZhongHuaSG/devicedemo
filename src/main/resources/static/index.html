@@ -824,6 +824,10 @@
             bottom: 0;
         }
 
+        .sycm {
+            margin-top: -0.7em;
+        }
+
         .sycm ul {
             margin-left: -.5rem;
             margin-right: -.5rem;
@@ -1504,7 +1508,6 @@
     <script src="js/echarts.min.js"></script>
     <script src="js/echarts-liquidfill.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
-
 </head>
 
 <body>
@@ -1710,7 +1713,7 @@
                     <h3>
                         <b>箱体型号:<span id="productTitle" style="color: white;"></span></b></h3>
                     <!-- 模组信息弹框 -->
-                    <div class="modedetail">
+                    <div class="modedetail" onclick="hidehimselef()">
                         <!-- 模组信息 -->
                         <h2>
                             <b>模组信息</b>
@@ -1900,7 +1903,7 @@
                                     <b>发送卡：</b>
                                 </label>
                                 <el-select v-model="singleSender" size="small" @change="changSender()"
-                                           placeholder="请选择发送卡">
+                                           placeholder="请选择">
                                     <el-option
                                             v-for="senderitem in senderItem"
                                             :key="senderitem.value"
@@ -1914,7 +1917,7 @@
                             <!-- 发送到硬件 -->
                             <div class="sendMessageToMachine">
                                 <el-row>
-                                    <el-button type="success" @click="sendJsonToMachine()" plain>发送到硬件</el-button>
+                                    <el-button type="success" @click="sendJsonToMachine()"  plain>发送到硬件</el-button>
                                 </el-row>
                             </div>
 
@@ -2628,6 +2631,21 @@
     let senderIndex = null;
     let xTox = 132;
     let yToy = 84;
+    //当前选中箱体的模组
+    let clicked_Box_ModGroup = null;
+    //通用模组参数分辨率
+    let mod_rsl  = null;
+    //通用模组参数间距
+    let mod_space = null;
+    //通用模组扫描方式
+    let mod_scan_num = null;
+    //通用接收卡参数模组个数
+    let mod_order = null;
+    //通用接收卡参数接收卡名称
+    let rec_Type = null;
+    //通用接收卡参数带载面积
+    let rec_Carrying_Area = null;
+
 
     let demo = new Vue({
         el: '#app',
@@ -2743,13 +2761,7 @@
                 pingti_num: 1,
                 last_pingti_num: undefined,
                 //发送卡列表
-                senderItem:[{
-                    value: 'sender1',
-                    label: '发送卡1'
-                },{
-                    value: 'sender2',
-                    label: '发送卡2'
-                }],
+                senderItem:[],
                 //当前选中箱体
                 clicked_Box: null,
                 //当前发送卡
@@ -2791,8 +2803,6 @@
                 lineNum: 0,
                 //网口选择
                 port_radio: null,
-                //当前选中箱体的模组
-                clicked_Box_ModGroup: null,
                 //tab起始值
                 editableTabsValue: '1',
                 //tab数据
@@ -2808,6 +2818,7 @@
                         boxtype: 'UHPII1.2',
                         senderItem: [
                             {
+                                hostip: null,
                                 name: 'sender1',
                                 port: []
                             }
@@ -2901,16 +2912,16 @@
                     label: '黑色'
                 }, {
                     snsgvalue: '1',
-                    label: '绿色'
+                    label: '最后一帧图像'
                 }, {
                     snsgvalue: '2',
-                    label: '蓝色'
-                }, {
-                    snsgvalue: '3',
-                    label: '红色'
+                    label: '绿色'
                 }, {
                     snsgvalue: '4',
-                    label: '最后一帧图像'
+                    label: '蓝色'
+                }, {
+                    snsgvalue: '6',
+                    label: '青色'
                 }],
                 snsgvalue: '',
 
@@ -3082,10 +3093,11 @@
             //避免重复连接
             let lockReconnect = false;
             //ws地址
-            let wsUrl = "ws://" + window.location.hostname + ":" + "9090";
+            let wsUrl = "ws://" + window.location.hostname + ":" + "9090/websocket/testname";
 
             function createWebSocket(url) {
                 console.log("进入createWebSocket websocket连接方法");
+                console.log("wsUrl:"+wsUrl);
                 try {
                     if ('WebSocket' in window) {
                         websocket = new WebSocket(url);
@@ -3102,7 +3114,7 @@
             function initEventHandle() {
                 websocket.onclose = function (event) {
                     console.log('websocket服务关闭了');
-                    /*window.location.reload();*/
+                    window.location.reload();
                     reconnect(wsUrl);
                 };
                 websocket.onerror = function (event) {
@@ -3130,6 +3142,11 @@
                     };
                     websocket.send(JSON.stringify(ledsender));
                     console.log("初始化请求发送卡数据完成");
+                    let ledsendernum={
+                        type: 40,
+                        content: 0
+                    };
+                    websocket.send(JSON.stringify(ledsendernum));
                     let ledinitdata = {
                         type: 36,
                         content: 0
@@ -3144,328 +3161,748 @@
                     console.log("第" + count + "次收到数据");
                     //如果获取到消息，心跳检测重置，拿到任何消息都说明当前连接是正常的
                     console.log("msg收到的原始数据:" + msg);
-
-
                     try {
                         let respJsonScreenObj = JSON.parse(msg);
                         console.log("respJsonScreenObj收到的原始数据转成对象" + respJsonScreenObj);
+                        let id;
                         let type;
+                        id=respJsonScreenObj.ledsendercardid;
                         type = respJsonScreenObj.type;
                         console.log("respJsonScreenObj.type:" + type);
                         console.log("respJsonScreenObj.respContent:" + respJsonScreenObj.respContent);
-                        switch (type) {
-                            //亮度
-                            case   7:
-                                _self.value1 = parseInt(respJsonScreenObj.respContent);
-                                break;
-
-                            //发送卡状态
-                            case  8:
-                                let senderstatuslistobj = JSON.parse(respJsonScreenObj.respContent);
-                                console.log("senderstatuslistobj" + senderstatuslistobj);
-                                _self.senderstatuslist = senderstatuslistobj;
-                                if (_self.senderstatuslist.length > 0) {
-                                    _self.senderid = "1";
-                                }
-                                console.log("_self.senderstatuslist" + _self.senderstatuslist);
-                                break;
-
-                            //响应设置发送卡色温
-                            case   11:
-                                _self.value3 = parseInt(respJsonScreenObj.respContent);
-                                break;
-
-                            //响应设置发送卡灰度增益
-                            case   12:
-                                _self.value9 = parseInt(respJsonScreenObj.respContent);
-                                break;
-
-                            //响应设置发送卡灰度基准值调整
-                            case   13:
-                                _self.value7 = parseInt(respJsonScreenObj.respContent) / 2;
-                                break;
-
-                            //色度
-                            case   14:
-                                _self.value4 = parseInt(respJsonScreenObj.respContent);
-                                break;
-
-                            //色相
-                            case   15:
-                                _self.value2 = parseInt(respJsonScreenObj.respContent);
-                                break;
-
-                            //响应设置发送卡增强器调整
-                            case   16:
-                                _self.value8 = parseInt(respJsonScreenObj.respContent);
-                                break;
-
-                            //gama
-                            case   17:
-                                let receivegama = parseInt(respJsonScreenObj.respContent);
-                                if (receivegama === 100 || receivegama === 101 || receivegama === 102) {
-                                    _self.status1 = true;
-                                    this.hdrmodevalue = receivegama;
-                                } else {
-                                    _self.status1 = false;
-                                    this.gmvalue = receivegama;
-                                }
-                                break;
-
-                            //分辨率
-                            case   18:
-                                _self.fblvalue = respJsonScreenObj.respContent;
-                                break;
-
-                            //输入源 分辨率 刷新率
-                            case   19:
-                                let inputsourceObj = JSON.parse(respJsonScreenObj.respContent);
-                                _self.radio = inputsourceObj.iNPUTSOURCE;
-                                if (_self.radio === "HDMI") {
-                                    $("#hdmitext").text(inputsourceObj.iNPUTSOURCE + " " + inputsourceObj.iNSRC_RSLT + " " + inputsourceObj.iNSRC_FRE);
-                                    $("#hdmitext").addClass("checkspan");
-                                } else if (_self.radio === "DVI-D") {
-                                    $("#dvitext").text(inputsourceObj.iNPUTSOURCE + " " + inputsourceObj.iNSRC_RSLT + " " + inputsourceObj.iNSRC_FRE);
-                                    $("#dvitext").addClass("checkspan");
-                                } else if (_self.radio === "SDI") {
-                                    $("#sditext").text(inputsourceObj.iNPUTSOURCE + " " + inputsourceObj.iNSRC_RSLT + " " + inputsourceObj.iNSRC_FRE);
-                                    $("#sditext").addClass("checkspan");
-                                } else {
-                                    console.log("未识别到输入源");
-                                }
-                                _self.fblvalue = inputsourceObj.iNSRC_RSLT;
-                                break;
-
-                            //hdr开关
-                            case   20:
-                                if (respJsonScreenObj.respContent === "1") {
-                                    _self.status1 = true;
-                                    $("#bitnum").html("20位");
-                                    $("#hdradjust").attr('style', 'display: block;');
-                                    $("#input1").attr('style', 'display: none;');
-                                    $("#input2").attr('style', 'display: block;');
-                                } else {
-                                    _self.status1 = false;
-                                    $("#bitnum").html("16位");
-                                    $("#hdradjust").attr('style', 'display: none;');
-                                    $("#input2").attr('style', 'display: none;');
-                                    $("#input1").attr('style', 'display: block;');
-                                }
-                                break;
-
-                            //hdr滑块亮度设置
-                            case   21:
-                                _self.value5 = parseInt(respJsonScreenObj.respContent);
-                                break;
-
-                            //响应设置色域功能选择 0: OFF (Default)   1: Wide   2:reserve
-                            case   22:
-                                _self.cgvalue = respJsonScreenObj.respContent;
-                                break;
-
-                            //响应设置色域功能关闭时的最大亮度设置
-                            case   23:
-                                _self.value6 = parseInt(respJsonScreenObj.respContent);
-                                break;
-
-                            //响应设置色域功能未关闭时的最大亮度设置
-                            case   24:
-                                _self.value10 = parseInt(respJsonScreenObj.respContent);
-                                break;
-
-                            //响应自动亮度设置功能的ON/OFF
-                            case   25:
-                                if (respJsonScreenObj.respContent === "1") {
-                                    _self.status3 = true;
-                                    $(".minbright").attr('style', 'display: block;');
-                                    $(".maxbright").attr('style', 'display: block;');
-                                    $("#clockinput").attr('style', 'display: block;');
-                                } else {
-                                    _self.status3 = false;
-                                    $(".minbright").attr('style', 'display: none;');
-                                    $(".maxbright").attr('style', 'display: none;');
-                                    $("#clockinput").attr('style', 'display: none;');
-                                }
-                                break;
-
-                            //响应自动亮度控制开启时的最大亮度设置 1 - 100
-                            case   26:
-                                _self.brightmaxnum = parseInt(respJsonScreenObj.respContent);
-                                break;
-
-                            //响应自动亮度控制开启时的最小亮度设置 1 - 100
-                            case   27:
-                                _self.brightminnum = parseInt(respJsonScreenObj.respContent);
-                                break;
-
-                            //响应设置自动亮度控制（ABC）更新时间。1 - 120
-                            case   28:
-                                _self.clockvalue = respJsonScreenObj.respContent;
-                                break;
-
-                            //响应设置输入信号的冻结操作。0: FREEZE Off    1: FREEZE On
-                            case   29:
-                                if (respJsonScreenObj.respContent === "1") {
-                                    _self.status2 = false;
-                                } else {
-                                    _self.status2 = true;
-                                }
-                                break;
-
-                            //响应设置箱体连接顺序显示的ON/OFF
-                            case   30:
-                                if (respJsonScreenObj.respContent === "1") {
-                                    _self.status4 = true;
-                                } else {
-                                    _self.status4 = false;
-                                }
-                                recChangeColor();
-                                break;
-
-                            //响应将每种RGB颜色设置为显示ON/OFF RGBE 1,0,1,1
-                            case   31:
-                                let rgbObj = JSON.parse(respJsonScreenObj.respContent);
-                                if (rgbObj.red === "1") {
-                                    _self.status5 = true;
-                                } else {
-                                    _self.status5 = false;
-                                }
-                                if (rgbObj.green === "1") {
-                                    _self.status6 = true;
-                                } else {
-                                    _self.status6 = false;
-                                }
-                                if (rgbObj.blue === "1") {
-                                    _self.status7 = true;
-                                } else {
-                                    _self.status7 = false;
-                                }
-                                recChangeRedColor();
-                                recChangeGreenColor();
-                                recChangeBlueColor();
-                                break;
-
-                            //响应视频输出开/关设置。0: Display ON (Default)   1: Display OFF
-                            case   32:
-                                if (respJsonScreenObj.respContent === "0") {
-                                    _self.status8 = true;
-                                } else {
-                                    _self.status8 = false;
-                                }
-                                recChangergbColor();
-                                break;
-
-                            //响应在没有输入信号时设置操作（箱体）0: Black(default)   1: Last image
-                            case   33:
-                                _self.snsgvalue = respJsonScreenObj.respContent;
-                                break;
-
-                            //响应箱体的测试图案
-                            case   34:
-                                let colorvalueObj = JSON.parse(respJsonScreenObj.respContent);
-                                _self.hexhighvalue = colorvalueObj.hexhigh;
-                                _self.colorvalue = colorvalueObj.hexlow;
-                                changecolorvalue();
-                                break;
-
-                            //响应内置输出的测试图案 0: Off (default) 1: Color bar (Horizontal) 2: Color bar (Vertical) 3: Horizontal direction 10 step gray scale 4: Vertical direction 10 step gray scale 5: Cross hatch6: Luminance 100% 7: Luminance 50%
-                            case   35:
-                                _self.colorvalue = respJsonScreenObj.respContent;
-                                break;
-
-                            //响应同步信号值
-                            case 38:
-                                _self.syncvalue = respJsonScreenObj.respContent;
-                                break;
-
-                            //心跳
-                            case   99:
-                                let pongObj = respJsonScreenObj.respContent;
-                                console.log("客户端收到心跳:" + pongObj);
-                                break;
-
-                            //监控
-                            case 100:
-                                screenCount++;
-                                console.log("第" + screenCount + "次收到监控数据");
-                                let jsonScreenObj = JSON.parse(respJsonScreenObj.respContent);
-                                console.log("jsonScreenObj监控对象" + jsonScreenObj);
-                                console.log("respJsonScreenObj.respContent监控数据" + respJsonScreenObj.respContent);
-                                _self.comlist = jsonScreenObj.COMLIST;
-                                console.log("_self.comlist", _self.comlist);
-                                console.log("_self.comlist", _self.comlist.length);
-                                _self.destination = jsonScreenObj.DESTINATION;
-                                _self.source = jsonScreenObj.SOURCE;
-                                let ledlist = _self.comlist;
-                                let i;
-                                _self.port_ordernum = 0;
-                                _self.sender_boxusednum = 0;
-                                _self.sender_boxtotalnum = 0;
-                                for (i in ledlist) {
-                                    let recurworktime = ledlist[i].LEDPARAS.CURRENT_WORKTIME;
-                                    formatSeconds(recurworktime);
-                                    let rectalworktime = ledlist[i].LEDPARAS.TOTAL_WORKTIME;
-                                    formatSeconds1(rectalworktime);
-                                    _self.senderlist = ledlist[i].LEDPARAS.SENDER_ORDER;
-                                    /*if (screenCount===1&&_self.senderlist.length > 0) {
-                                        _self.sendercardid = "1";
-                                    }*/
-                                    onChangeSenderCard(_self.sendercardid);
-                                    let j;
-                                    for (j in _self.senderlist) {
-                                        if (_self.senderlist[j].STATUS === "1") {
-                                            if (_self.senderlist[j].SENDER_BOXUSED === "" || typeof (_self.senderlist[j].SENDER_BOXUSED) === "undefined") {
-                                                _self.senderlist[j].SENDER_BOXUSED = "0";
-                                            }
-                                            if (_self.senderlist[j].SENDER_BOXTOTAL === "" || typeof (_self.senderlist[j].SENDER_BOXTOTAL) === "undefined") {
-                                                _self.senderlist[j].SENDER_BOXTOTAL = "0";
-                                            }
-                                            _self.sender_boxusednum += parseInt(_self.senderlist[j].SENDER_BOXUSED);
-                                            _self.sender_boxtotalnum += parseInt(_self.senderlist[j].SENDER_BOXTOTAL);
+                        if(type===100){
+                            screenCount++;
+                            console.log("第" + screenCount + "次收到监控数据");
+                            let jsonScreenObj = JSON.parse(respJsonScreenObj.respContent);
+                            console.log("jsonScreenObj监控对象" + jsonScreenObj);
+                            console.log("respJsonScreenObj.respContent监控数据" + respJsonScreenObj.respContent);
+                            _self.comlist = jsonScreenObj.COMLIST;
+                            console.log("_self.comlist", _self.comlist);
+                            console.log("_self.comlist", _self.comlist.length);
+                            _self.destination = jsonScreenObj.DESTINATION;
+                            _self.source = jsonScreenObj.SOURCE;
+                            let ledlist = _self.comlist;
+                            let i;
+                            _self.port_ordernum = 0;
+                            _self.sender_boxusednum = 0;
+                            _self.sender_boxtotalnum = 0;
+                            for (i in ledlist) {
+                                let recurworktime = ledlist[i].LEDPARAS.CURRENT_WORKTIME;
+                                formatSeconds(recurworktime);
+                                let rectalworktime = ledlist[i].LEDPARAS.TOTAL_WORKTIME;
+                                formatSeconds1(rectalworktime);
+                                _self.senderlist = ledlist[i].LEDPARAS.SENDER_ORDER;
+                                /*if (screenCount===1&&_self.senderlist.length > 0) {
+                                    _self.sendercardid = "1";
+                                }*/
+                                onChangeSenderCard(_self.sendercardid);
+                                let j;
+                                for (j in _self.senderlist) {
+                                    if (_self.senderlist[j].STATUS === "1") {
+                                        if (_self.senderlist[j].SENDER_BOXUSED === "" || typeof (_self.senderlist[j].SENDER_BOXUSED) === "undefined") {
+                                            _self.senderlist[j].SENDER_BOXUSED = "0";
                                         }
-                                        let portorderlist = _self.senderlist[j].PORT_ORDER;
-                                        let t;
-                                        for (t in portorderlist) {
-                                            let boxlist = portorderlist[t].BOX;
-                                            if (boxlist[0].BOX_STATE !== "0") {
+                                        if (_self.senderlist[j].SENDER_BOXTOTAL === "" || typeof (_self.senderlist[j].SENDER_BOXTOTAL) === "undefined") {
+                                            _self.senderlist[j].SENDER_BOXTOTAL = "0";
+                                        }
+                                        _self.sender_boxusednum += parseInt(_self.senderlist[j].SENDER_BOXUSED);
+                                        _self.sender_boxtotalnum += parseInt(_self.senderlist[j].SENDER_BOXTOTAL);
+                                    }
+                                    let portorderlist = _self.senderlist[j].PORT_ORDER;
+                                    let t;
+                                    for (t in portorderlist) {
+                                        let boxlist = portorderlist[t].BOX;
+                                        if (boxlist[0].BOX_STATE !== "0") {
+                                            _self.port_ordernum += 1;
+                                            console.log("_self.port_ordernum:" + _self.port_ordernum);
+                                        }
+                                    }
+                                    /*for (t in portorderlist) {
+                                        let boxlist = portorderlist[t].BOX;
+                                        let k;
+                                        for(k in boxlist){
+                                            if (boxlist[k].BOX_STATE !== "0") {
                                                 _self.port_ordernum += 1;
                                                 console.log("_self.port_ordernum:" + _self.port_ordernum);
+                                                break;
                                             }
                                         }
-                                        /*for (t in portorderlist) {
-                                            let boxlist = portorderlist[t].BOX;
-                                            let k;
-                                            for(k in boxlist){
-                                                if (boxlist[k].BOX_STATE !== "0") {
+                                    }*/
+                                }
+                            }
+                            console.log("comlist：", _self.comlist);
+                            console.log("destination：", _self.destination);
+                            console.log("source：", _self.source);
+                            console.log("ledlist：", ledlist);
+                            console.log("_self.bright：", _self.bright);
+                            let nowdt = new Date();
+                            console.log("现在接收完成监控数据时间为" + nowdt.toLocaleTimeString());
+                        }
+                        if(type===8){
+                            let senderstatuslistobj = JSON.parse(respJsonScreenObj.respContent);
+                            console.log("senderstatuslistobj" + senderstatuslistobj);
+                            _self.senderstatuslist = senderstatuslistobj;
+                            /*if (_self.senderstatuslist.length > 0) {
+                                _self.senderid = "1";
+                            }*/
+                            if(_self.senderstatuslist.length > 0){
+                                let allsender={HOSTIP:"所有发送卡",ORDER:"0",STATUS:"2"};
+                                _self.senderstatuslist.unshift(allsender);
+                                console.log("新_self.senderstatuslist:"+JSON.stringify(_self.senderstatuslist));
+                                _self.senderid = "0";
+                            }
+                            console.log("_self.senderstatuslist" + _self.senderstatuslist);
+                        }
+                        if(type===101){
+                            _self.responsemsg = respJsonScreenObj.respContent;
+                            console.log("_self.responsemsg" + _self.responsemsg);
+                        }
+                        if(type===102){
+                            _self.responsemsg = respJsonScreenObj.respContent;
+                            console.log("_self.responsemsg" + _self.responsemsg);
+                        }
+                        if(_self.senderid==="0"){
+                            if(id===1){
+                                switch (type) {
+                                    //亮度
+                                    case   7:
+                                        _self.value1 = parseInt(respJsonScreenObj.respContent);
+                                        break;
+
+                                    //发送卡状态
+                                    /*case  8:
+                                        let senderstatuslistobj = JSON.parse(respJsonScreenObj.respContent);
+                                        console.log("senderstatuslistobj" + senderstatuslistobj);
+                                        _self.senderstatuslist = senderstatuslistobj;
+                                        /!*if (_self.senderstatuslist.length > 0) {
+                                            _self.senderid = "1";
+                                        }*!/
+                                        if(_self.senderstatuslist.length > 0){
+                                            let allsender={HOSTIP:"所有发送卡",ORDER:"0",STATUS:"2"};
+                                            _self.senderstatuslist.unshift(allsender);
+                                            console.log("新_self.senderstatuslist:"+JSON.stringify(_self.senderstatuslist));
+                                            _self.senderid = "0";
+                                        }
+                                        console.log("_self.senderstatuslist" + _self.senderstatuslist);
+                                        break;*/
+
+                                    //响应设置发送卡色温
+                                    case   11:
+                                        _self.value3 = parseInt(respJsonScreenObj.respContent);
+                                        break;
+
+                                    //响应设置发送卡灰度增益
+                                    case   12:
+                                        _self.value9 = parseInt(respJsonScreenObj.respContent);
+                                        break;
+
+                                    //响应设置发送卡灰度基准值调整
+                                    case   13:
+                                        _self.value7 = parseInt(respJsonScreenObj.respContent) / 2;
+                                        break;
+
+                                    //色度
+                                    case   14:
+                                        _self.value4 = parseInt(respJsonScreenObj.respContent);
+                                        break;
+
+                                    //色相
+                                    case   15:
+                                        _self.value2 = parseInt(respJsonScreenObj.respContent);
+                                        break;
+
+                                    //响应设置发送卡增强器调整
+                                    case   16:
+                                        _self.value8 = parseInt(respJsonScreenObj.respContent);
+                                        break;
+
+                                    //gama
+                                    case   17:
+                                        let receivegama = parseInt(respJsonScreenObj.respContent);
+                                        if (receivegama === 100 || receivegama === 101 || receivegama === 102) {
+                                            _self.status1 = true;
+                                            this.hdrmodevalue = receivegama;
+                                        } else {
+                                            _self.status1 = false;
+                                            this.gmvalue = receivegama;
+                                        }
+                                        break;
+
+                                    //分辨率
+                                    case   18:
+                                        _self.fblvalue = respJsonScreenObj.respContent;
+                                        break;
+
+                                    //输入源 分辨率 刷新率
+                                    case   19:
+                                        let inputsourceObj = JSON.parse(respJsonScreenObj.respContent);
+                                        _self.radio = inputsourceObj.INPUTSOURCE;
+                                        if (_self.radio === "HDMI") {
+                                            $("#hdmitext").text(inputsourceObj.INPUTSOURCE + " " + inputsourceObj.INSRC_RSLT + " " + inputsourceObj.INSRC_FRE).addClass("checkspan");
+                                        } else if (_self.radio === "DVI-D") {
+                                            $("#dvitext").text(inputsourceObj.INPUTSOURCE + " " + inputsourceObj.INSRC_RSLT + " " + inputsourceObj.INSRC_FRE).addClass("checkspan");
+                                        } else if (_self.radio === "SDI") {
+                                            $("#sditext").text(inputsourceObj.INPUTSOURCE + " " + inputsourceObj.INSRC_RSLT + " " + inputsourceObj.INSRC_FRE).addClass("checkspan");
+                                        } else {
+                                            console.log("未识别到输入源");
+                                        }
+                                        /*_self.fblvalue = inputsourceObj.iNSRC_RSLT;*/
+                                        break;
+
+                                    //hdr开关
+                                    case   20:
+                                        if (respJsonScreenObj.respContent === "1") {
+                                            _self.status1 = true;
+                                            $("#bitnum").html("20位");
+                                            $("#hdradjust").attr('style', 'display: block;');
+                                            $("#input1").attr('style', 'display: none;');
+                                            $("#input2").attr('style', 'display: block;');
+                                        } else {
+                                            _self.status1 = false;
+                                            $("#bitnum").html("16位");
+                                            $("#hdradjust").attr('style', 'display: none;');
+                                            $("#input2").attr('style', 'display: none;');
+                                            $("#input1").attr('style', 'display: block;');
+                                        }
+                                        break;
+
+                                    //hdr滑块亮度设置
+                                    case   21:
+                                        _self.value5 = parseInt(respJsonScreenObj.respContent);
+                                        break;
+
+                                    //响应设置色域功能选择 0: OFF (Default)   1: Wide   2:reserve
+                                    case   22:
+                                        _self.cgvalue = respJsonScreenObj.respContent;
+                                        break;
+
+                                    //响应设置色域功能关闭时的最大亮度设置
+                                    case   23:
+                                        _self.value6 = parseInt(respJsonScreenObj.respContent);
+                                        break;
+
+                                    //响应设置色域功能未关闭时的最大亮度设置
+                                    case   24:
+                                        _self.value10 = parseInt(respJsonScreenObj.respContent);
+                                        break;
+
+                                    //响应自动亮度设置功能的ON/OFF
+                                    case   25:
+                                        if (respJsonScreenObj.respContent === "1") {
+                                            _self.status3 = true;
+                                            $(".minbright").attr('style', 'display: block;');
+                                            $(".maxbright").attr('style', 'display: block;');
+                                            $("#clockinput").attr('style', 'display: block;');
+                                        } else {
+                                            _self.status3 = false;
+                                            $(".minbright").attr('style', 'display: none;');
+                                            $(".maxbright").attr('style', 'display: none;');
+                                            $("#clockinput").attr('style', 'display: none;');
+                                        }
+                                        break;
+
+                                    //响应自动亮度控制开启时的最大亮度设置 1 - 100
+                                    case   26:
+                                        _self.brightmaxnum = parseInt(respJsonScreenObj.respContent);
+                                        break;
+
+                                    //响应自动亮度控制开启时的最小亮度设置 1 - 100
+                                    case   27:
+                                        _self.brightminnum = parseInt(respJsonScreenObj.respContent);
+                                        break;
+
+                                    //响应设置自动亮度控制（ABC）更新时间。1 - 120
+                                    case   28:
+                                        _self.clockvalue = respJsonScreenObj.respContent;
+                                        break;
+
+                                    //响应设置输入信号的冻结操作。0: FREEZE Off    1: FREEZE On
+                                    case   29:
+                                        if (respJsonScreenObj.respContent === "1") {
+                                            _self.status2 = false;
+                                        } else {
+                                            _self.status2 = true;
+                                        }
+                                        break;
+
+                                    //响应设置箱体连接顺序显示的ON/OFF
+                                    case   30:
+                                        if (respJsonScreenObj.respContent === "1") {
+                                            _self.status4 = true;
+                                        } else {
+                                            _self.status4 = false;
+                                        }
+                                        recChangeColor();
+                                        break;
+
+                                    //响应将每种RGB颜色设置为显示ON/OFF RGBE 1,0,1,1
+                                    case   31:
+                                        let rgbObj = JSON.parse(respJsonScreenObj.respContent);
+                                        if (rgbObj.red === "1") {
+                                            _self.status5 = true;
+                                        } else {
+                                            _self.status5 = false;
+                                        }
+                                        if (rgbObj.green === "1") {
+                                            _self.status6 = true;
+                                        } else {
+                                            _self.status6 = false;
+                                        }
+                                        if (rgbObj.blue === "1") {
+                                            _self.status7 = true;
+                                        } else {
+                                            _self.status7 = false;
+                                        }
+                                        recChangeRedColor();
+                                        recChangeGreenColor();
+                                        recChangeBlueColor();
+                                        break;
+
+                                    //响应视频输出开/关设置。0: Display ON (Default)   1: Display OFF
+                                    case   32:
+                                        if (respJsonScreenObj.respContent === "0") {
+                                            _self.status8 = true;
+                                        } else {
+                                            _self.status8 = false;
+                                        }
+                                        recChangergbColor();
+                                        break;
+
+                                    //响应在没有输入信号时设置操作（箱体）0: Black(default)   1: Last image
+                                    case   33:
+                                        _self.snsgvalue = respJsonScreenObj.respContent;
+                                        break;
+
+                                    //响应箱体的测试图案
+                                    case   34:
+                                        let colorvalueObj = JSON.parse(respJsonScreenObj.respContent);
+                                        _self.hexhighvalue = colorvalueObj.hexhigh;
+                                        _self.colorvalue = colorvalueObj.hexlow;
+                                        changecolorvalue();
+                                        break;
+
+                                    //响应内置输出的测试图案 0: Off (default) 1: Color bar (Horizontal) 2: Color bar (Vertical) 3: Horizontal direction 10 step gray scale 4: Vertical direction 10 step gray scale 5: Cross hatch6: Luminance 100% 7: Luminance 50%
+                                    case   35:
+                                        _self.colorvalue = respJsonScreenObj.respContent;
+                                        break;
+
+                                    //响应同步信号值
+                                    case 38:
+                                        _self.syncvalue = respJsonScreenObj.respContent;
+                                        break;
+
+                                    //心跳
+                                    case   99:
+                                        let pongObj = respJsonScreenObj.respContent;
+                                        console.log("客户端收到心跳:" + pongObj);
+                                        break;
+
+                                    //监控
+                                    /*case 100:
+                                        screenCount++;
+                                        console.log("第" + screenCount + "次收到监控数据");
+                                        let jsonScreenObj = JSON.parse(respJsonScreenObj.respContent);
+                                        console.log("jsonScreenObj监控对象" + jsonScreenObj);
+                                        console.log("respJsonScreenObj.respContent监控数据" + respJsonScreenObj.respContent);
+                                        _self.comlist = jsonScreenObj.COMLIST;
+                                        console.log("_self.comlist", _self.comlist);
+                                        console.log("_self.comlist", _self.comlist.length);
+                                        _self.destination = jsonScreenObj.DESTINATION;
+                                        _self.source = jsonScreenObj.SOURCE;
+                                        let ledlist = _self.comlist;
+                                        let i;
+                                        _self.port_ordernum = 0;
+                                        _self.sender_boxusednum = 0;
+                                        _self.sender_boxtotalnum = 0;
+                                        for (i in ledlist) {
+                                            let recurworktime = ledlist[i].LEDPARAS.CURRENT_WORKTIME;
+                                            formatSeconds(recurworktime);
+                                            let rectalworktime = ledlist[i].LEDPARAS.TOTAL_WORKTIME;
+                                            formatSeconds1(rectalworktime);
+                                            _self.senderlist = ledlist[i].LEDPARAS.SENDER_ORDER;
+                                            /!*if (screenCount===1&&_self.senderlist.length > 0) {
+                                                _self.sendercardid = "1";
+                                            }*!/
+                                            onChangeSenderCard(_self.sendercardid);
+                                            let j;
+                                            for (j in _self.senderlist) {
+                                                if (_self.senderlist[j].STATUS === "1") {
+                                                    if (_self.senderlist[j].SENDER_BOXUSED === "" || typeof (_self.senderlist[j].SENDER_BOXUSED) === "undefined") {
+                                                        _self.senderlist[j].SENDER_BOXUSED = "0";
+                                                    }
+                                                    if (_self.senderlist[j].SENDER_BOXTOTAL === "" || typeof (_self.senderlist[j].SENDER_BOXTOTAL) === "undefined") {
+                                                        _self.senderlist[j].SENDER_BOXTOTAL = "0";
+                                                    }
+                                                    _self.sender_boxusednum += parseInt(_self.senderlist[j].SENDER_BOXUSED);
+                                                    _self.sender_boxtotalnum += parseInt(_self.senderlist[j].SENDER_BOXTOTAL);
+                                                }
+                                                let portorderlist = _self.senderlist[j].PORT_ORDER;
+                                                let t;
+                                                for (t in portorderlist) {
+                                                    let boxlist = portorderlist[t].BOX;
+                                                    if (boxlist[0].BOX_STATE !== "0") {
+                                                        _self.port_ordernum += 1;
+                                                        console.log("_self.port_ordernum:" + _self.port_ordernum);
+                                                    }
+                                                }
+                                                /!*for (t in portorderlist) {
+                                                    let boxlist = portorderlist[t].BOX;
+                                                    let k;
+                                                    for(k in boxlist){
+                                                        if (boxlist[k].BOX_STATE !== "0") {
+                                                            _self.port_ordernum += 1;
+                                                            console.log("_self.port_ordernum:" + _self.port_ordernum);
+                                                            break;
+                                                        }
+                                                    }
+                                                }*!/
+                                            }
+                                        }
+                                        console.log("comlist：", _self.comlist);
+                                        console.log("destination：", _self.destination);
+                                        console.log("source：", _self.source);
+                                        console.log("ledlist：", ledlist);
+                                        console.log("_self.bright：", _self.bright);
+                                        let nowdt = new Date();
+                                        console.log("现在接收完成监控数据时间为" + nowdt.toLocaleTimeString());
+                                        break;*/
+
+                                    /*case 101:
+                                        _self.responsemsg = respJsonScreenObj.respContent;
+                                        console.log("失败");
+                                        console.log("_self.responsemsg" + _self.responsemsg);
+                                        break;
+
+                                    case 102:
+                                        _self.responsemsg = respJsonScreenObj.respContent;
+                                        console.log("失败");
+                                        console.log("_self.responsemsg" + _self.responsemsg);
+                                        break;*/
+
+                                    default:
+                                        console.log("数据异常");
+                                }
+                            }
+                        }else{
+                            switch (type) {
+                                //亮度
+                                case   7:
+                                    _self.value1 = parseInt(respJsonScreenObj.respContent);
+                                    break;
+
+                                //发送卡状态
+                                /*case  8:
+                                    let senderstatuslistobj = JSON.parse(respJsonScreenObj.respContent);
+                                    console.log("senderstatuslistobj" + senderstatuslistobj);
+                                    _self.senderstatuslist = senderstatuslistobj;
+                                    /!*if (_self.senderstatuslist.length > 0) {
+                                        _self.senderid = "1";
+                                    }*!/
+                                    if(_self.senderstatuslist.length > 0){
+                                        let allsender={HOSTIP:"所有发送卡",ORDER:"0",STATUS:"2"};
+                                        _self.senderstatuslist.unshift(allsender);
+                                        console.log("新_self.senderstatuslist:"+JSON.stringify(_self.senderstatuslist));
+                                        _self.senderid = "0";
+                                    }
+                                    console.log("_self.senderstatuslist" + _self.senderstatuslist);
+                                    break;*/
+
+                                //响应设置发送卡色温
+                                case   11:
+                                    _self.value3 = parseInt(respJsonScreenObj.respContent);
+                                    break;
+
+                                //响应设置发送卡灰度增益
+                                case   12:
+                                    _self.value9 = parseInt(respJsonScreenObj.respContent);
+                                    break;
+
+                                //响应设置发送卡灰度基准值调整
+                                case   13:
+                                    _self.value7 = parseInt(respJsonScreenObj.respContent) / 2;
+                                    break;
+
+                                //色度
+                                case   14:
+                                    _self.value4 = parseInt(respJsonScreenObj.respContent);
+                                    break;
+
+                                //色相
+                                case   15:
+                                    _self.value2 = parseInt(respJsonScreenObj.respContent);
+                                    break;
+
+                                //响应设置发送卡增强器调整
+                                case   16:
+                                    _self.value8 = parseInt(respJsonScreenObj.respContent);
+                                    break;
+
+                                //gama
+                                case   17:
+                                    let receivegama = parseInt(respJsonScreenObj.respContent);
+                                    if (receivegama === 100 || receivegama === 101 || receivegama === 102) {
+                                        _self.status1 = true;
+                                        this.hdrmodevalue = receivegama;
+                                    } else {
+                                        _self.status1 = false;
+                                        this.gmvalue = receivegama;
+                                    }
+                                    break;
+
+                                //分辨率
+                                case   18:
+                                    _self.fblvalue = respJsonScreenObj.respContent;
+                                    break;
+
+                                //输入源 分辨率 刷新率
+                                case   19:
+                                    let inputsourceObj = JSON.parse(respJsonScreenObj.respContent);
+                                    _self.radio = inputsourceObj.INPUTSOURCE;
+                                    if (_self.radio === "HDMI") {
+                                        $("#hdmitext").text(inputsourceObj.INPUTSOURCE + " " + inputsourceObj.INSRC_RSLT + " " + inputsourceObj.INSRC_FRE).addClass("checkspan");
+                                    } else if (_self.radio === "DVI-D") {
+                                        $("#dvitext").text(inputsourceObj.INPUTSOURCE + " " + inputsourceObj.INSRC_RSLT + " " + inputsourceObj.INSRC_FRE).addClass("checkspan");
+                                    } else if (_self.radio === "SDI") {
+                                        $("#sditext").text(inputsourceObj.INPUTSOURCE + " " + inputsourceObj.INSRC_RSLT + " " + inputsourceObj.INSRC_FRE).addClass("checkspan");
+                                    } else {
+                                        console.log("未识别到输入源");
+                                    }
+                                    /*_self.fblvalue = inputsourceObj.iNSRC_RSLT;*/
+                                    break;
+
+                                //hdr开关
+                                case   20:
+                                    if (respJsonScreenObj.respContent === "1") {
+                                        _self.status1 = true;
+                                        $("#bitnum").html("20位");
+                                        $("#hdradjust").attr('style', 'display: block;');
+                                        $("#input1").attr('style', 'display: none;');
+                                        $("#input2").attr('style', 'display: block;');
+                                    } else {
+                                        _self.status1 = false;
+                                        $("#bitnum").html("16位");
+                                        $("#hdradjust").attr('style', 'display: none;');
+                                        $("#input2").attr('style', 'display: none;');
+                                        $("#input1").attr('style', 'display: block;');
+                                    }
+                                    break;
+
+                                //hdr滑块亮度设置
+                                case   21:
+                                    _self.value5 = parseInt(respJsonScreenObj.respContent);
+                                    break;
+
+                                //响应设置色域功能选择 0: OFF (Default)   1: Wide   2:reserve
+                                case   22:
+                                    _self.cgvalue = respJsonScreenObj.respContent;
+                                    break;
+
+                                //响应设置色域功能关闭时的最大亮度设置
+                                case   23:
+                                    _self.value6 = parseInt(respJsonScreenObj.respContent);
+                                    break;
+
+                                //响应设置色域功能未关闭时的最大亮度设置
+                                case   24:
+                                    _self.value10 = parseInt(respJsonScreenObj.respContent);
+                                    break;
+
+                                //响应自动亮度设置功能的ON/OFF
+                                case   25:
+                                    if (respJsonScreenObj.respContent === "1") {
+                                        _self.status3 = true;
+                                        $(".minbright").attr('style', 'display: block;');
+                                        $(".maxbright").attr('style', 'display: block;');
+                                        $("#clockinput").attr('style', 'display: block;');
+                                    } else {
+                                        _self.status3 = false;
+                                        $(".minbright").attr('style', 'display: none;');
+                                        $(".maxbright").attr('style', 'display: none;');
+                                        $("#clockinput").attr('style', 'display: none;');
+                                    }
+                                    break;
+
+                                //响应自动亮度控制开启时的最大亮度设置 1 - 100
+                                case   26:
+                                    _self.brightmaxnum = parseInt(respJsonScreenObj.respContent);
+                                    break;
+
+                                //响应自动亮度控制开启时的最小亮度设置 1 - 100
+                                case   27:
+                                    _self.brightminnum = parseInt(respJsonScreenObj.respContent);
+                                    break;
+
+                                //响应设置自动亮度控制（ABC）更新时间。1 - 120
+                                case   28:
+                                    _self.clockvalue = respJsonScreenObj.respContent;
+                                    break;
+
+                                //响应设置输入信号的冻结操作。0: FREEZE Off    1: FREEZE On
+                                case   29:
+                                    if (respJsonScreenObj.respContent === "1") {
+                                        _self.status2 = false;
+                                    } else {
+                                        _self.status2 = true;
+                                    }
+                                    break;
+
+                                //响应设置箱体连接顺序显示的ON/OFF
+                                case   30:
+                                    if (respJsonScreenObj.respContent === "1") {
+                                        _self.status4 = true;
+                                    } else {
+                                        _self.status4 = false;
+                                    }
+                                    recChangeColor();
+                                    break;
+
+                                //响应将每种RGB颜色设置为显示ON/OFF RGBE 1,0,1,1
+                                case   31:
+                                    let rgbObj = JSON.parse(respJsonScreenObj.respContent);
+                                    if (rgbObj.red === "1") {
+                                        _self.status5 = true;
+                                    } else {
+                                        _self.status5 = false;
+                                    }
+                                    if (rgbObj.green === "1") {
+                                        _self.status6 = true;
+                                    } else {
+                                        _self.status6 = false;
+                                    }
+                                    if (rgbObj.blue === "1") {
+                                        _self.status7 = true;
+                                    } else {
+                                        _self.status7 = false;
+                                    }
+                                    recChangeRedColor();
+                                    recChangeGreenColor();
+                                    recChangeBlueColor();
+                                    break;
+
+                                //响应视频输出开/关设置。0: Display ON (Default)   1: Display OFF
+                                case   32:
+                                    if (respJsonScreenObj.respContent === "0") {
+                                        _self.status8 = true;
+                                    } else {
+                                        _self.status8 = false;
+                                    }
+                                    recChangergbColor();
+                                    break;
+
+                                //响应在没有输入信号时设置操作（箱体）0: Black(default)   1: Last image
+                                case   33:
+                                    _self.snsgvalue = respJsonScreenObj.respContent;
+                                    break;
+
+                                //响应箱体的测试图案
+                                case   34:
+                                    let colorvalueObj = JSON.parse(respJsonScreenObj.respContent);
+                                    _self.hexhighvalue = colorvalueObj.hexhigh;
+                                    _self.colorvalue = colorvalueObj.hexlow;
+                                    changecolorvalue();
+                                    break;
+
+                                //响应内置输出的测试图案 0: Off (default) 1: Color bar (Horizontal) 2: Color bar (Vertical) 3: Horizontal direction 10 step gray scale 4: Vertical direction 10 step gray scale 5: Cross hatch6: Luminance 100% 7: Luminance 50%
+                                case   35:
+                                    _self.colorvalue = respJsonScreenObj.respContent;
+                                    break;
+
+                                //响应同步信号值
+                                case 38:
+                                    _self.syncvalue = respJsonScreenObj.respContent;
+                                    break;
+
+                                //心跳
+                                case   99:
+                                    let pongObj = respJsonScreenObj.respContent;
+                                    console.log("客户端收到心跳:" + pongObj);
+                                    break;
+
+                                //监控
+                                /*case 100:
+                                    screenCount++;
+                                    console.log("第" + screenCount + "次收到监控数据");
+                                    let jsonScreenObj = JSON.parse(respJsonScreenObj.respContent);
+                                    console.log("jsonScreenObj监控对象" + jsonScreenObj);
+                                    console.log("respJsonScreenObj.respContent监控数据" + respJsonScreenObj.respContent);
+                                    _self.comlist = jsonScreenObj.COMLIST;
+                                    console.log("_self.comlist", _self.comlist);
+                                    console.log("_self.comlist", _self.comlist.length);
+                                    _self.destination = jsonScreenObj.DESTINATION;
+                                    _self.source = jsonScreenObj.SOURCE;
+                                    let ledlist = _self.comlist;
+                                    let i;
+                                    _self.port_ordernum = 0;
+                                    _self.sender_boxusednum = 0;
+                                    _self.sender_boxtotalnum = 0;
+                                    for (i in ledlist) {
+                                        let recurworktime = ledlist[i].LEDPARAS.CURRENT_WORKTIME;
+                                        formatSeconds(recurworktime);
+                                        let rectalworktime = ledlist[i].LEDPARAS.TOTAL_WORKTIME;
+                                        formatSeconds1(rectalworktime);
+                                        _self.senderlist = ledlist[i].LEDPARAS.SENDER_ORDER;
+                                        /!*if (screenCount===1&&_self.senderlist.length > 0) {
+                                            _self.sendercardid = "1";
+                                        }*!/
+                                        onChangeSenderCard(_self.sendercardid);
+                                        let j;
+                                        for (j in _self.senderlist) {
+                                            if (_self.senderlist[j].STATUS === "1") {
+                                                if (_self.senderlist[j].SENDER_BOXUSED === "" || typeof (_self.senderlist[j].SENDER_BOXUSED) === "undefined") {
+                                                    _self.senderlist[j].SENDER_BOXUSED = "0";
+                                                }
+                                                if (_self.senderlist[j].SENDER_BOXTOTAL === "" || typeof (_self.senderlist[j].SENDER_BOXTOTAL) === "undefined") {
+                                                    _self.senderlist[j].SENDER_BOXTOTAL = "0";
+                                                }
+                                                _self.sender_boxusednum += parseInt(_self.senderlist[j].SENDER_BOXUSED);
+                                                _self.sender_boxtotalnum += parseInt(_self.senderlist[j].SENDER_BOXTOTAL);
+                                            }
+                                            let portorderlist = _self.senderlist[j].PORT_ORDER;
+                                            let t;
+                                            for (t in portorderlist) {
+                                                let boxlist = portorderlist[t].BOX;
+                                                if (boxlist[0].BOX_STATE !== "0") {
                                                     _self.port_ordernum += 1;
                                                     console.log("_self.port_ordernum:" + _self.port_ordernum);
-                                                    break;
                                                 }
                                             }
-                                        }*/
+                                            /!*for (t in portorderlist) {
+                                                let boxlist = portorderlist[t].BOX;
+                                                let k;
+                                                for(k in boxlist){
+                                                    if (boxlist[k].BOX_STATE !== "0") {
+                                                        _self.port_ordernum += 1;
+                                                        console.log("_self.port_ordernum:" + _self.port_ordernum);
+                                                        break;
+                                                    }
+                                                }
+                                            }*!/
+                                        }
                                     }
-                                }
-                                console.log("comlist：", _self.comlist);
-                                console.log("destination：", _self.destination);
-                                console.log("source：", _self.source);
-                                console.log("ledlist：", ledlist);
-                                console.log("_self.bright：", _self.bright);
-                                let nowdt = new Date();
-                                console.log("现在接收完成监控数据时间为" + nowdt.toLocaleTimeString());
-                                break;
+                                    console.log("comlist：", _self.comlist);
+                                    console.log("destination：", _self.destination);
+                                    console.log("source：", _self.source);
+                                    console.log("ledlist：", ledlist);
+                                    console.log("_self.bright：", _self.bright);
+                                    let nowdt = new Date();
+                                    console.log("现在接收完成监控数据时间为" + nowdt.toLocaleTimeString());
+                                    break;*/
 
-                            case 101:
-                                _self.responsemsg = respJsonScreenObj.respContent;
-                                console.log("101:" + _self.responsemsg);
-                                break;
+                                /*case 101:
+                                    _self.responsemsg = respJsonScreenObj.respContent;
+                                    console.log("成功");
+                                    console.log("_self.responsemsg" + _self.responsemsg);
+                                    break;
 
-                            case 102:
-                                _self.responsemsg = respJsonScreenObj.respContent;
-                                console.log("102:" + _self.responsemsg);
-                                break;
+                                case 102:
+                                    _self.responsemsg = respJsonScreenObj.respContent;
+                                    console.log("失败");
+                                    console.log("_self.responsemsg" + _self.responsemsg);
+                                    break;*/
 
-                            default:
-                                console.log("数据异常");
+                                default:
+                                    console.log("数据异常");
+                            }
                         }
                     } catch (e) {
                         /* heartCheck.reset();*/
@@ -3770,11 +4207,30 @@
                     /*alert("_self.senderstatuslist"+_self.senderstatuslist);
                 alert("this.senderstatuslist"+this.senderstatuslist);*/
                 //判断发送卡长度遍历并推入数据
-                    if(_self.senderstatuslist.length>0){
+                    let sbgaga = [
+                        {
+                            ORDER:"1",
+                            HOSTIP:"192.168.45.131",
+                            STATUS:"0",
+                        },{
+                            ORDER:"2",
+                            HOSTIP:"192.168.54.22",
+                            STATUS:"1",
+                        },{
+                            ORDER:"3",
+                            HOSTIP:"192.168.43.174",
+                            STATUS:"1",
+                        }
+                    ];
+
+                    if(sbgaga.length>0){
                         _self.senderItem = [];
                         //循环接收到的发送卡数量
-                        for (let s = 0; s < _self.senderstatuslist.length; s++) {
-                            let getSender = _self.senderstatuslist[s];
+                        for (let s = 0; s < sbgaga.length; s++) {
+                            let getSender = sbgaga[s];
+                            if(getSender.HOSTIP === "所有发送卡"){
+                                continue;
+                            }
                             let disabled = true;
                             if (getSender.STATUS === '1') {
                                 disabled = false;
@@ -3814,14 +4270,20 @@
                                 _self.senderItem.push(sender);
                             }
                         }
-                        if (_self.singleSender === null) {
-                            _self.singleSender = _self.senderItem[0].value;
-                        }
-                        if (_self.editableTabs[_self.editableTabsValue - 1].contextbody.senderItem[0].name === 'sender1') {
-                            _self.editableTabs[_self.editableTabsValue - 1].contextbody.senderItem[0].name = _self.senderItem[0].value;
-                        }
-                        if (senderIndex === null) {
-                            senderIndex = 0;
+                        for(let aop = 0;aop< _self.senderItem.length;aop++){
+                            if(_self.senderItem[aop].disabled === false){
+                                if (_self.singleSender === null) {
+                                    _self.singleSender = _self.senderItem[aop].value;
+                                }
+                                if (_self.editableTabs[_self.editableTabsValue - 1].contextbody.senderItem[0].name === 'sender1') {
+                                    _self.editableTabs[_self.editableTabsValue - 1].contextbody.senderItem[0].name = _self.senderItem[aop].value;
+                                    _self.editableTabs[_self.editableTabsValue - 1].contextbody.senderItem[0].hostip = _self.senderItem[aop].label;
+                                }
+                                if (senderIndex === null) {
+                                    senderIndex = 0;
+                                }
+                                break;
+                            }
                         }
                     }
 
@@ -3887,29 +4349,34 @@
                         var recParas = ledParasJson.COMMON_RECPARAS;
                         //通用模组对象
                         var modParas = ledParasJson.COMMON_MODPARAS;
+                        if(typeof (ledParasJson.LED_TYPE) == "undefined"){
+
+                        }else{
+                            _self.boxtype = ledParasJson.LED_TYPE;
+                        }
                         if (typeof (modParas.MOD_RSLT) == "undefined") {
-                            $('#MOD_RSL').text("未检测到");
+                            mod_rsl = "未检测到";
                         } else {
-                            $('#MOD_RSL').text(modParas.MOD_RSLT);
+                            mod_rsl = modParas.MOD_RSLT;
                         }
 
                         if (typeof (modParas.MOD_SPACE) == "undefined") {
-                            $('#MOD_SPACE').text("未检测到");
+                            mod_space = "未检测到";
                         } else {
-                            $('#MOD_SPACE').text(modParas.MOD_SPACE + "MM");
+                            mod_space = modParas.MOD_SPACE + "MM";
                         }
 
                         if (typeof (modParas.SCAN_NUM) == "undefined") {
-                            $('#MOD_SCAN_NUM').text("未检测到");
+                            mod_scan_num = "未检测到";
                         } else {
-                            $('#MOD_SCAN_NUM').text(modParas.SCAN_NUM + "SCAN");
+                            mod_scan_num = modParas.SCAN_NUM + "SCAN";
                         }
 
                         //接收卡名称
                         if (typeof (recParas.REC_TYPE) == "undefined") {
-                            $('#rec_Type').text("暂无数据");
+                            rec_Type = "暂无数据";
                         } else {
-                            $('#rec_Type').text(recParas.REC_TYPE);
+                            rec_Type = recParas.REC_TYPE;
                         }
 
                         if (typeof (recParas.BOX_NAME) == "undefined") {
@@ -3920,14 +4387,14 @@
                         }
 
                         if (typeof (recParas.MOD_ORDER) == "undefined") {
-                            $('#MOD_ORDER').text("未检测到");
+                            mod_order = "未检测到";
                         } else {
                             //模组个数
-                            $('#MOD_ORDER').text(recParas.MOD_ORDER);
+                            mod_order = recParas.MOD_ORDER;
                         }
 
                         if (typeof (modParas.MOD_SIZE) == "undefined") {
-                            $('#REC_Carrying_Area').text("未检测到");
+                            rec_Carrying_Area = "未检测到";
                         } else {
                             //接收卡带载面积计算：
                             var Mod_Area_Group = modParas.MOD_SIZE.split("*");
@@ -3935,7 +4402,7 @@
                                 Mod_Area_Group[s] = Mod_Area_Group[s].replace(/[^0-9]/ig, "");
                             }
                             //接收卡带载面积：
-                            $('#REC_Carrying_Area').text(parseInt((Mod_Area_Group[0] * Mod_Area_Group[1] * recParas.MODULE_CNT) / 10000) + "mm²");
+                            rec_Carrying_Area = parseInt((Mod_Area_Group[0] * Mod_Area_Group[1] * recParas.MODULE_CNT) / 10000) + "mm²";
                         }
 
                         // if(typeof (modParas.ICSYLE) == "undefined" ){
@@ -3998,6 +4465,22 @@
 
                             //已用网口的数组
                             let usePort = [];
+
+                            /**
+                             * 排序网口
+                             * */
+                            for(let wai = 0;wai < portNum -1;wai++){
+                                for(let fool = 0;fool < portNum-1 - wai;fool++){
+                                    let nowId = parseInt(senderOrder.PORT_ORDER[fool].ID.substring(1));
+                                    let nextId = parseInt(senderOrder.PORT_ORDER[fool+1].ID.substring(1));
+                                    if(nowId > nextId){
+                                        let temp = senderOrder.PORT_ORDER[fool];
+                                        senderOrder.PORT_ORDER[fool] = senderOrder.PORT_ORDER[fool+1];
+                                        senderOrder.PORT_ORDER[fool+1] = temp;
+                                    }
+                                }
+                            }
+
                             //遍历走线接口
                             for (var j = 0; j < portNum; j++) {
 
@@ -4035,7 +4518,6 @@
                                                 svgPath: 'path://M509.92 176C325.504 176 176 325.504 176 509.92c0 184.416 149.504 333.92 333.92 333.92 184.416 0 333.92-149.504 333.92-333.92C843.84 325.504 694.32 176 509.92 176z m0 48c157.904 0 285.92 128 285.92 285.92 0 157.904-128.016 285.92-285.92 285.92C352 795.84 224 667.808 224 509.92 224 352 352 224 509.92 224z m0 96C405.024 320 320 405.024 320 509.92c0 104.88 85.024 189.92 189.92 189.92 104.88 0 189.92-85.04 189.92-189.92 0-104.896-85.04-189.92-189.92-189.92z',
                                             };
                                         } else {
-                                            console.log("当前索引" + initPort);
                                             singlePort = {
                                                 //X轴上单个偏移差值为60一个单位(向右+60)
                                                 x: XInitPort + parseInt((initPort) / 4) * 42,
@@ -4073,7 +4555,6 @@
                                             port.BOX[j + 1] = temp;
                                         }
                                     }
-
                                 }
                                 //遍历单个走线口的箱体信息
                                 totalBox = totalBox + port.BOX.length;
@@ -4154,18 +4635,33 @@
                                             links.push(portBox);
                                         }
                                     }
-                                    //单个箱体的信息
-                                    var singleBox = {
-                                        x: XInit[box.XPOS - 1],
-                                        y: YInit[box.YPOS - 1],
-                                        symbolSize: 70,
-                                        nodeName: "箱体" + box.XPOS + "-" + box.YPOS,
-                                        name: senderOrder.ID + box.ID + boxindex,
-                                        type: '箱体',
-                                        detail: box,
-                                        svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+                                    if(box.REC.length > 1){
+                                        //单个箱体的信息
+                                        var singleBox = {
+                                            x: XInit[box.XPOS-1],
+                                            y: YInit[box.YPOS-1],
+                                            symbolSize: 70,
+                                            nodeName: "箱体"+box.XPOS+"-"+box.YPOS,
+                                            name: senderOrder.ID+box.ID+boxindex,
+                                            type: '箱体',
+                                            detail:box,
+                                            svgPath: 'M17.212952 1022.634667h505.856V8.582095H17.212952v1014.052572zM647.070476 8.582095v1014.052572h505.807238V8.582095H647.070476z m418.279619 926.476191h-330.752V96.207238h333.190095v838.948572h-2.438095z'
+                                        }
+                                        nodes.push(singleBox);
+                                    }else{
+                                        //单个箱体的信息
+                                        var singleBox = {
+                                            x: XInit[box.XPOS-1],
+                                            y: YInit[box.YPOS-1],
+                                            symbolSize: 70,
+                                            nodeName: "箱体"+box.XPOS+"-"+box.YPOS,
+                                            name: senderOrder.ID+box.ID+boxindex,
+                                            type: '箱体',
+                                            detail:box,
+                                            svgPath: 'M651.636364 1024V558.545455h558.545454v465.454545z '
+                                        }
+                                        nodes.push(singleBox);
                                     }
-                                    nodes.push(singleBox);
                                 }
 
                             }
@@ -4409,6 +4905,7 @@
                     }
                     //判断网口的索引是否大于4
                     var sopindex = 1;
+                    let thisPort = null;
                     //遍历目标连接线
                     for (var i = 0; i < links.length; i++) {
                         var link;
@@ -4447,7 +4944,10 @@
                                 var Target;
                                 //当源坐标Y坐标等于第一行时
                                 if (SourceY > YInitPort - 151) {
-
+                                    if(thisPort != "ONE"){
+                                        thisPort = "ONE";
+                                        sopindex = 1;
+                                    }
                                     //当目标Y坐标小于Y轴第三个屏体的Y坐标
                                     if(TategerY === YInit[2] || TategerY === YInit[1] ||TategerY === YInit[3]){
                                         Source0 = [SourceX+sopindex*7,SourceY]
@@ -4456,19 +4956,27 @@
                                     }
                                     //当目标Y坐标小于Y轴第四个屏体的Y坐标
                                     else if(TategerY < YInit[3]){
-                                        Source0 = [SourceX+sopindex*7,SourceY]
-                                        Source = [SourceX-sopindex*21,SourceY-sopindex*20+88]
-                                        Target = [TategerX,SourceY-sopindex*20+88]
+                                        Source0 = [SourceX+(4-sopindex)*4+12,SourceY]
+                                        Source = [SourceX+(4-sopindex)*4+12,SourceY-(4-sopindex)*44-378]
+                                        Target = [TategerX,SourceY-(4-sopindex)*44-378]
                                         //当目标Y坐标小于Y轴第二个屏体的Y坐标
+                                    }else if(TategerY < YInit[6]){
+                                        Source0 = [SourceX+(4-sopindex)*7,SourceY]
+                                        Source = [SourceX+(4-sopindex)*7,SourceY-(4-sopindex)*44-888]
+                                        Target = [TategerX,SourceY-(4-sopindex)*44-888]
                                     }else{
                                         Source0 = [SourceX+sopindex*7,SourceY]
-                                        Source = [SourceX+sopindex*7,SourceY+sopindex*30+36]
-                                        Target = [TategerX,SourceY+sopindex*30+36]
+                                        Source = [SourceX+sopindex*7,SourceY+sopindex*30+56]
+                                        Target = [TategerX,SourceY+sopindex*30+56]
                                     }
 
                                 }
                                 //数据处于第二行发送卡
                                 else if (SourceY < YInitPort - 299 && SourceY > YInitPort - 451) {
+                                    if(thisPort != "TWO"){
+                                        thisPort = "TWO";
+                                        sopindex = 1;
+                                    }
                                     //当目标Y坐标小于Y轴第三个屏体的Y坐标
                                     if (TategerY < YInit[2] && TategerY > YInit[4]) {
                                         Source0 = [SourceX + sopindex * 7, SourceY]
@@ -4482,16 +4990,20 @@
                                         Target = [TategerX, SourceY - sopindex * 20 + 88]
                                     }
                                     //当目标Y坐标大于Y轴第二个屏体的Y坐标
-                                    else if (TategerY > YInit[1]) {
-                                        Source0 = [SourceX + sopindex * 7, SourceY]
-                                        Source = [SourceX + sopindex * 7, SourceY + sopindex * 20 + 248]
-                                        Target = [TategerX, SourceY + sopindex * 20 + 248]
-                                    } else {
+                                    else if(TategerY === YInit[0]){
+                                        Source0 = [SourceX+sopindex*7+4,SourceY]
+                                        Source = [SourceX+sopindex*7+4,SourceY-(4-sopindex)*38+535]
+                                        Target = [TategerX,SourceY-(4-sopindex)*38+535]
+                                    }else {
                                         Source0 = [SourceX + sopindex * 7, SourceY]
                                         Source = [SourceX + sopindex * 7, SourceY + sopindex * 20 + 46]
                                         Target = [TategerX, SourceY + sopindex * 20 + 46]
                                     }
                                 } else {
+                                    if(thisPort != "THIRD"){
+                                        thisPort = "THIRD";
+                                        sopindex = 1;
+                                    }
                                     Source0 = [SourceX + sopindex * 7, SourceY]
                                     Source = [SourceX + sopindex * 7, TategerY + sopindex * 20 + 46]
                                     Target = [TategerX, TategerY + sopindex * 20 + 46]
@@ -4637,22 +5149,28 @@
                             formatter: function (item) {
                                 if (item.data.type === '箱体') {
                                     var box_State;
+                                    let fontColor;
                                     //判断箱体状态
                                     if (item.data.detail === 'uncheck') {
                                         box_State = "无法检测"
+                                        fontColor = "color:#708090;"
                                     } else if (item.data.detail.BOX_STATE === '1') {
                                         box_State = "连通"
+                                        fontColor = "color:green;"
                                     } else if (item.data.detail.BOX_STATE === '2') {
                                         box_State = "警告"
+                                        fontColor = "color:#FFFF00;"
                                     } else if (item.data.detail.BOX_STATE === '3') {
                                         box_State = "报警"
+                                        fontColor = "color:#8B0000;"
                                     } else {
                                         box_State = "无法检测"
+                                        fontColor = "color:#708090;"
                                     }
                                     return '设备类型:<b style="color: green;">&nbsp;&nbsp;' + item.data.type + '</b><hr />' +
                                         '设备ID:<b style="color: green;">&nbsp;&nbsp;' + item.data.nodeName + '</b><hr />' +
                                         '箱体坐标(X-Y)：<b style="color: green;">' + item.data.detail.XPOS + '-' + item.data.detail.YPOS + '</b><hr />' +
-                                        '工作状态：<b style="color: green;">' + box_State + '</b><hr />';
+                                        '工作状态：<b style="'+fontColor+'">'+box_State+'</b><hr />';
                                 } else if (item.data.type === '串联') {
                                     return '';
                                 } else {
@@ -4817,46 +5335,46 @@
                                     let sensorVol = parseFloat(rec.SENSOR_VOL);
                                     //警告
                                     <!-- 生产环境版本 -->
-                                    // if(sensorVol>3.6 && sensorVol <4.0){
-                                    //     $("#SENSOR_VOL").removeAttr("style");
-                                    //     $('#SENSOR_VOL').attr('style','color:#FFD700;');
-                                    //     $('#SENSOR_VOL').text(rec.SENSOR_VOL + "V 电压警告");
-                                    //     //警告
-                                    // }else if(sensorVol>5.5 && sensorVol <6.0){
-                                    //     $("#SENSOR_VOL").removeAttr("style");
-                                    //     $('#SENSOR_VOL').attr('style','color:#FFD700;');
-                                    //     $('#SENSOR_VOL').text(rec.SENSOR_VOL + "V 电压警告");
-                                    //     //报警
-                                    // }else if(sensorVol < 3.6){
-                                    //     $("#SENSOR_VOL").removeAttr("style");
-                                    //     $('#SENSOR_VOL').attr('style','color:#DC143C;');
-                                    //     $('#SENSOR_VOL').text(rec.SENSOR_VOL + "V 电压报警");
-                                    //     //报警
-                                    // }else if(sensorVol > 6.0){
-                                    //     $("#SENSOR_VOL").removeAttr("style");
-                                    //     $('#SENSOR_VOL').attr('style','color:#DC143C;');
-                                    //     $('#SENSOR_VOL').text(rec.SENSOR_VOL + "V 电压报警");
-                                    // }else{
-                                    //     $("#SENSOR_VOL").removeAttr("style");
-                                    //     $('#SENSOR_VOL').attr('style','color:#E9E7E7;');
-                                    //     $('#SENSOR_VOL').text(rec.SENSOR_VOL + "V");
-                                    // }
-                                    <!-- 调试版本 -->
-                                    //报警
-                                    if(sensorVol>4.17 && sensorVol <4.20){
+                                    if(sensorVol>3.6 && sensorVol <4.0){
+                                        $("#SENSOR_VOL").removeAttr("style");
+                                        $('#SENSOR_VOL').attr('style','color:#FFD700;');
+                                        $('#SENSOR_VOL').text(rec.SENSOR_VOL + "V 电压警告");
+                                        //警告
+                                    }else if(sensorVol>5.5 && sensorVol <6.0){
+                                        $("#SENSOR_VOL").removeAttr("style");
+                                        $('#SENSOR_VOL').attr('style','color:#FFD700;');
+                                        $('#SENSOR_VOL').text(rec.SENSOR_VOL + "V 电压警告");
+                                        //报警
+                                    }else if(sensorVol < 3.5){
                                         $("#SENSOR_VOL").removeAttr("style");
                                         $('#SENSOR_VOL').attr('style','color:#DC143C;');
                                         $('#SENSOR_VOL').text(rec.SENSOR_VOL + "V 电压报警");
-                                        //警告
-                                    }else if(sensorVol < 4.17) {
+                                        //报警
+                                    }else if(sensorVol > 6.0){
                                         $("#SENSOR_VOL").removeAttr("style");
-                                        $('#SENSOR_VOL').attr('style', 'color:#FFD700;');
-                                        $('#SENSOR_VOL').text(rec.SENSOR_VOL + "V 电压警告");
+                                        $('#SENSOR_VOL').attr('style','color:#DC143C;');
+                                        $('#SENSOR_VOL').text(rec.SENSOR_VOL + "V 电压报警");
                                     }else{
                                         $("#SENSOR_VOL").removeAttr("style");
                                         $('#SENSOR_VOL').attr('style','color:#E9E7E7;');
                                         $('#SENSOR_VOL').text(rec.SENSOR_VOL + "V");
                                     }
+                                    <!-- 调试版本 -->
+                                    //报警
+                                    // if(sensorVol>4.17 && sensorVol <4.20){
+                                    //     $("#SENSOR_VOL").removeAttr("style");
+                                    //     $('#SENSOR_VOL').attr('style','color:#DC143C;');
+                                    //     $('#SENSOR_VOL').text(rec.SENSOR_VOL + "V 电压报警");
+                                    //     //警告
+                                    // }else if(sensorVol < 4.17) {
+                                    //     $("#SENSOR_VOL").removeAttr("style");
+                                    //     $('#SENSOR_VOL').attr('style', 'color:#FFD700;');
+                                    //     $('#SENSOR_VOL').text(rec.SENSOR_VOL + "V 电压警告");
+                                    // }else{
+                                    //     $("#SENSOR_VOL").removeAttr("style");
+                                    //     $('#SENSOR_VOL').attr('style','color:#E9E7E7;');
+                                    //     $('#SENSOR_VOL').text(rec.SENSOR_VOL + "V");
+                                    // }
                                 }
                                 if (typeof (rec.SENSOR_CURRENT) == "undefined") {
                                     $('#SENSOR_CURRENT').text("暂无数据");
@@ -4953,7 +5471,11 @@
                                     }
 
                                     if (typeof (sigleMod.ID) != "undefined") {
-                                        $('#MOD_ID').text(sigleMod.ID);
+                                        if(sigleMod.ID === '' || sigleMod.ID === null){
+                                            $('#MOD_ID').text("暂无数据");
+                                        }else{
+                                            $('#MOD_ID').text(sigleMod.ID);
+                                        }
                                     } else {
                                         $('#MOD_ID').text("暂无数据");
                                     }
@@ -5050,13 +5572,18 @@
 
 
                             let BOX_State = params.data.detail.BOX_STATE;
-
                             if (BOX_State === '1') {
-
+                                $('#MOD_ORDER').text(mod_order);
+                                $('#rec_Type').text(rec_Type);
+                                $('#REC_Carrying_Area').text(rec_Carrying_Area);
                             } else if (BOX_State === '2') {
-
+                                $('#MOD_ORDER').text(mod_order);
+                                $('#rec_Type').text(rec_Type);
+                                $('#REC_Carrying_Area').text(rec_Carrying_Area);
                             } else if (BOX_State === '3') {
-
+                                $('#MOD_ORDER').text(mod_order);
+                                $('#rec_Type').text(rec_Type);
+                                $('#REC_Carrying_Area').text(rec_Carrying_Area);
                             } else {
                                 clearPopup("无法检测");
                             }
@@ -5132,11 +5659,13 @@
         methods: {
 
             xianshi: function (item) {
-                if (item === '1') {
-                    return '在线';
-                } else if (item === '0') {
+                if (item === '0') {
                     return '离线';
-                } else {
+                } else if (item === '1') {
+                    return '在线';
+                } else if(item === '2'){
+                    return '';
+                }else{
                     console.log("发送卡状态未定义或者数据为空");
                 }
 
@@ -5175,11 +5704,16 @@
             },
 
             onChangeSendervalue() {
-                let ledfblvalue = {
-                    type: 36,
+                let setledsenderNum={
+                    type: 40,
                     content: this.senderid
                 };
-                websocket.send(JSON.stringify(ledfblvalue));
+                websocket.send(JSON.stringify(setledsenderNum));
+                let ledsendervalue = {
+                    type: 36,
+                    content: 0
+                };
+                websocket.send(JSON.stringify(ledsendervalue));
             },
 
             onChangeRadio() {
@@ -5429,6 +5963,11 @@
                         content: 1
                     };
                     websocket.send(JSON.stringify(hdrswichonContent));
+                    let hdrmodeContent = {
+                        type: 17,
+                        content: this.hdrmodevalue
+                    };
+                    websocket.send(JSON.stringify(hdrmodeContent));
                 } else {
                     $("#bitnum").html("16位");
                     $("#hdradjust").attr('style', 'display: none;');
@@ -5439,6 +5978,11 @@
                         content: 0
                     };
                     websocket.send(JSON.stringify(hdrswichoffContent));
+                    let hdrmodeContent = {
+                        type: 17,
+                        content: this.gmvalue
+                    };
+                    websocket.send(JSON.stringify(hdrmodeContent));
                 }
             },
             swichchange2() {
@@ -5756,6 +6300,7 @@
              * 接收卡列数计数器改变的方法
              * */
             handleRowChange(value) {
+                lastBox = null;
                 // if(senderIndex == null){
                 //     return false;
                 // }else{
@@ -5792,6 +6337,7 @@
              * 接收卡行数计数器改变的方法
              * */
             handleLineChange(value) {
+                lastBox = null;
                 // if(senderIndex == null){
                 //     return false;
                 // }else{
@@ -5947,8 +6493,15 @@
                     }
                 }
                 if (senderOrder == null) {
+                    let hostip = null;
+                    for(let ds=0;ds<this.senderItem.length;ds++){
+                        if(this.singleSender === this.senderItem[ds].value){
+                            hostip = this.senderItem[ds].label;
+                        }
+                    }
                     this.editableTabs[index].contextbody.senderItem.push(
                         {
+                            hostip:hostip,
                             name: this.singleSender,
                             port: []
                         }
@@ -6727,7 +7280,8 @@
                 let colorIndex = 0
                 for (let ogj = 0; ogj < this.portItem.length; ogj++) {
                     if (this.portItem[ogj].name === portList[portIndex].name) {
-                        colorIndex = ogj
+                        colorIndex = ogj;
+                        break;
                     }
                 }
 
@@ -6755,28 +7309,41 @@
                     let boxLength = this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].box.length;
                     let xpos = this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].box[boxLength - 1].xpos - 1;
                     let ypos = this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].box[boxLength - 1].ypos - 1;
+                    /**
+                     * 获取箱体类型并截取宽高
+                     * */
+                    let boxType = this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].box[boxLength - 1].boxtype;
+                    let width = null;
+                    let height = null;
+                    for (let i = 0; i < this.boxItem.length; i++) {
+                        if (this.boxItem[i].name === boxType) {
+                            let box = this.boxItem[i].box.split('×');
+                            width = box[0];
+                            height = box[1];
+                        }
+                    }
                     if (step > 1) {
                         //清除画布
                         ctx.clearRect(xpos * xTox + 8, ypos * yToy + 8, xTox, yToy);
                         let lastxpos = this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].box[boxLength - 2].xpos - 1;
                         let lastypos = this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].box[boxLength - 2].ypos - 1;
-                        drawConnectedBox(xpos, ypos, '#99cccc', portList[portIndex].name, deleteBox.order - 1, 141, 135);
-                        drawConnectBoxFont(xpos, ypos, portList[portIndex].name, deleteBox.order - 1, 141, 135);
+                        drawConnectedBox(xpos, ypos, '#99cccc');
+                        drawConnectBoxFont(xpos, ypos, portList[portIndex].name, deleteBox.order - 1, width, height,connectLineColorGroup[colorIndex]);
                         drawArrow(lastxpos * xTox + 70, lastypos * yToy + 51, xpos * xTox + 70, ypos * yToy + 51, connectLineColorGroup[colorIndex]);
                     } else if (step > 0) {
                         //清除画布
                         ctx.clearRect(xpos * xTox + 8, ypos * yToy + 8, xTox, yToy);
                         let lastxpos = this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].sourcePort.x
                         let lastypos = this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].sourcePort.y
-                        drawConnectedBox(xpos, ypos, '#99cccc', portList[portIndex].name, deleteBox.order - 1, 141, 135);
-                        drawConnectBoxFont(xpos, ypos, portList[portIndex].name, deleteBox.order - 1, 141, 135);
+                        drawConnectedBox(xpos, ypos, '#99cccc');
+                        drawConnectBoxFont(xpos, ypos, portList[portIndex].name, deleteBox.order - 1,width, height, connectLineColorGroup[colorIndex]);
                         drawArrow(lastxpos * xTox + 70, lastypos * yToy + 51, xpos * xTox + 70, ypos * yToy + 51, connectLineColorGroup[colorIndex]);
                     } else {
                         //清除画布
                         ctx.clearRect(xpos * xTox + 8, ypos * yToy + 8, xTox, yToy);
-                        drawConnectedBox(xpos, ypos, '#99cccc', portList[portIndex].name, deleteBox.order - 1, 141, 135);
-                        drawConnectBoxFont(xpos, ypos, portList[portIndex].name, deleteBox.order - 1, 141, 135);
-                        drawArc(xpos, ypos, connectLineColorGroup[colorIndex]);
+                        drawConnectedBox(xpos, ypos, '#99cccc');
+                        drawConnectBoxFont(xpos, ypos, portList[portIndex].name, deleteBox.order - 1,width, height, connectLineColorGroup[colorIndex]);
+                        drawArc(xpos, ypos, connectLineColorGroup[colorIndex],this.editableTabs[index].contextbody.senderItem[senderIndex].name);
                     }
                     this.editableTabs[index].contextbody.senderItem[senderIndex].port[portIndex].lastPort = {
                         x: xpos,
@@ -6830,7 +7397,9 @@
                 }
                 //当前tab索引
                 let index = this.editableTabsValue - 1;
-                this.editableTabs[index].contextbody.senderItem[senderIndex].port = [];
+                for(let s = 0;s< this.editableTabs[index].contextbody.senderItem.length;s++){
+                    this.editableTabs[index].contextbody.senderItem[s].port = [];
+                }
                 this.port_radio = null;
                 this.backupName = null;
                 $('.chooseBackUpId').css('display', 'none');
@@ -6883,6 +7452,83 @@
                         this.box_height = box[1];
                     }
                 }
+
+
+                if(this.clicked_Box != null){
+
+                    let  xPos = this.clicked_Box.x;
+                    let  yPos = this.clicked_Box.y;
+                    //获取当前网口筛选出当前箱体
+                    let portList = demo.editableTabs[index].contextbody.senderItem[senderIndex].port
+                    for(let portNum = 0;portNum<portList.length;portNum++){
+                        let colorIndex = 0
+                        for (let ogj = 0; ogj < this.portItem.length; ogj++) {
+                            if (this.portItem[ogj].name === portList[portNum].name) {
+                                colorIndex = ogj;
+                                break;
+                            }
+                        }
+                        let boxList = portList[portNum].box;
+                        //判断该箱体是否已经存在XPOS--YPOS
+                        for(let s = 0;s<boxList.length;s++){
+                            if(boxList[s].xpos === xPos ){
+                                if(boxList[s].ypos === yPos ){
+                                    //具体业务
+                                    //判断类型是否相同，不一致时重新绘制箱体
+                                    if(boxList[s].boxtype === this.boxtype){
+                                    }else{
+                                        //获取箱体坐标
+                                        let xPos = boxList[s].xpos-1;
+                                        let yPos = boxList[s].ypos-1;
+                                        //清除画布
+                                        ctx.clearRect(xPos * xTox + 8, yPos * yToy + 8, xTox, yToy);
+                                        drawConnectedBox(xPos, yPos, '#99cccc');
+                                        let box_width = null;
+                                        let box_height = null;
+                                        for (let i = 0; i < this.boxItem.length; i++) {
+                                            if (this.boxItem[i].name === this.boxtype) {
+                                                let box = this.boxItem[i].box.split('×');
+                                                box_width = box[0];
+                                                box_height = box[1];
+                                            }
+                                        }
+                                        //不一致的业务
+                                        //绘制箱体/判断箱体的位置
+                                        //起点
+                                        drawConnectBoxFont(xPos, yPos, portList[portNum].name, boxList[s].order, box_width, box_height, connectLineColorGroup[colorIndex]);
+                                        if(s === 0){
+                                            //绘制起点
+                                            drawArc(xPos, yPos, connectLineColorGroup[colorIndex],demo.editableTabs[index].contextbody.senderItem[senderIndex].name);
+                                            if(boxList.length > 1){
+                                                let nextXPos = boxList[s+1].xpos-1;
+                                                let nextYPos = boxList[s+1].ypos-1;
+                                                drawArrow(xPos * xTox + 70,yPos * yToy + 51, nextXPos * xTox + 70, nextYPos * yToy + 51, connectLineColorGroup[colorIndex]);
+                                            }
+                                            //过程中的点
+                                        }else if(s<boxList.length-1){
+                                            let lastXPos = boxList[s-1].xpos-1;
+                                            let lastYPos = boxList[s-1].ypos-1;
+                                            drawArrow(lastXPos * xTox + 70,lastYPos * yToy + 51, xPos * xTox + 70, yPos * yToy + 51, connectLineColorGroup[colorIndex]);
+                                            let nextXPos = boxList[s+1].xpos-1;
+                                            let nextYPos = boxList[s+1].ypos-1;
+                                            drawArrow(xPos * xTox + 70,yPos * yToy + 51, nextXPos * xTox + 70, nextYPos * yToy + 51, connectLineColorGroup[colorIndex]);
+                                            //终点
+                                        }else{
+                                            let lastXPos = boxList[s-1].xpos-1;
+                                            let lastYPos = boxList[s-1].ypos-1;
+                                            drawArrow(lastXPos * xTox + 70, lastYPos * yToy + 51, xPos * xTox + 70, yPos * yToy + 51, connectLineColorGroup[colorIndex]);
+
+                                        }
+                                    }
+                                    //赋值box上的类型:
+                                    boxList[s].boxtype = this.boxtype;
+                                }
+
+                            }
+                        }
+                    }
+                }
+
             },
 
             /**
@@ -6907,18 +7553,27 @@
                             let box = port.box[boxcount];
                             let x = box.xpos - 1;
                             let y = box.ypos - 1;
+                            let box_width = null;
+                            let box_height = null;
+                            for (let i = 0; i < this.boxItem.length; i++) {
+                                if (this.boxItem[i].name === box.boxtype) {
+                                    let box = this.boxItem[i].box.split('×');
+                                    box_width = box[0];
+                                    box_height = box[1];
+                                }
+                            }
                             if (boxcount === 0) {
                                 drawConnectedBox(x, y, '#99cccc');
-                                drawConnectBoxFont(x, y, port.name, box.order, 141, 135);
                                 //绘制箱体源点
-                                drawArc(x, y, connectLineColorGroup[colorIndex]);
+                                drawConnectBoxFont(x, y, port.name, box.order, box_width, box_height, connectLineColorGroup[colorIndex]);
+                                drawArc(x, y, connectLineColorGroup[colorIndex],this.editableTabs[index].contextbody.senderItem[senderIndex].name);
                             } else {
                                 let lastBox = port.box[boxcount - 1];
                                 let lastX = lastBox.xpos - 1;
                                 let lastY = lastBox.ypos - 1;
 
-                                drawConnectedBox(x, y, '#99cccc', port.name, box.order, 141, 135);
-                                drawConnectBoxFont(x, y, port.name, box.order, 141, 135);
+                                drawConnectedBox(x, y, '#99cccc');
+                                drawConnectBoxFont(x, y, port.name, box.order, box_width, box_height, connectLineColorGroup[colorIndex]);
                                 drawArrow(lastX * xTox + 70, lastY * yToy + 51, x * xTox + 70, y * yToy + 51, connectLineColorGroup[colorIndex]);
                             }
                         }
@@ -7343,7 +7998,7 @@
         _self.macaddr = _self.senderlist[j].MACADDR;
         _self.sendcardstatus = _self.senderlist[j].STATUS;
         if (_self.sendcardstatus === "1") {
-            $("#fskonspan").html("在线").css("color", "green");
+            $("#fskonspan").html("在线").css("color", "#00ff00");
         } else {
             $("#fskonspan").html("离线").css("color", "red");
         }
@@ -8016,13 +8671,10 @@
     });
 
     function aiguozhe(item) {
-        let modGroup = demo.clicked_Box_ModGroup;
-
+        let modGroup = clicked_Box_ModGroup;
         if (modGroup != null) {
             for (let i = 0; i < modGroup.length; i++) {
-
                 let sigleMod = modGroup[i];
-
                 let target = null;
                 let pos = parseInt(sigleMod.POS);
                 switch (pos) {
@@ -8059,17 +8711,32 @@
                         //正常
                     } else if (modGroup[i].MOD_STATE === "1") {
                         if (typeof (sigleMod.ID) != "undefined") {
-                            $('#MOD_ID').text(sigleMod.ID);
+                            if(sigleMod.ID === '' || sigleMod.ID === null){
+                                $('#MOD_ID').text("暂无数据");
+                            }else{
+                                $('#MOD_ID').text(sigleMod.ID);
+                            }
                         } else {
                             $('#MOD_ID').text("暂无数据");
                         }
+                        $('#MOD_RSL').text(mod_rsl);
+                        $('#MOD_SPACE').text(mod_space);
+                        $('#MOD_SCAN_NUM').text(mod_scan_num);
+
                         //警告-黄色
                     } else if (modGroup[i].MOD_STATE === "2") {
                         if (typeof (sigleMod.ID) != "undefined") {
-                            $('#MOD_ID').text(sigleMod.ID);
+                            if(sigleMod.ID === '' || sigleMod.ID === null){
+                                $('#MOD_ID').text("暂无数据");
+                            }else{
+                                $('#MOD_ID').text(sigleMod.ID);
+                            }
                         } else {
                             $('#MOD_ID').text("暂无数据");
                         }
+                        $('#MOD_RSL').text(mod_rsl);
+                        $('#MOD_SPACE').text(mod_space);
+                        $('#MOD_SCAN_NUM').text(mod_scan_num);
                         //报警-红色
                     } else {
                         //清空模组的方法
@@ -8093,9 +8760,15 @@
     //在箱体报警时清空箱体信息封装方法
     function clearPopup(value) {
         $('#productTitle').text(value);
+        $("#SENSOR_VOL").removeAttr("style");
+        $('#SENSOR_VOL').attr('style','color:#E9E7E7;');
         $('#SENSOR_VOL').text(value);
         $('#SENSOR_CURRENT').text(value);
+        $("#SENSOR_TMP").removeAttr("style");
+        $('#SENSOR_TMP').attr('style','color:#E9E7E7;');
         $('#SENSOR_TMP').text(value);
+        $("#SENSOR_HUMI").removeAttr("style");
+        $('#SENSOR_HUMI').attr('style','color:#E9E7E7;');
         $('#SENSOR_HUMI').text(value);
         $('#RT_POWERDIS').text(value);
         $('#rec_Type').text(value);
@@ -8192,14 +8865,21 @@
         ctx.fillStyle = "#009999";
         ctx.strokeStyle = "#ffffcc";
         ctx.lineWidth = 2;
+        /**
+         *
+         x	矩形左上角的 x 坐标
+         y	矩形左上角的 y 坐标
+         width	矩形的宽度，以像素计
+         height	矩形的高度，以像素计
+         * */
         ctx.fillRect(xTox * x + 10, y * yToy + 10, 126, 78);
         ctx.strokeRect(xTox * x + 10, y * yToy + 10, 126, 78);
     }
 
-    function drawConnectBoxFont(x, y, portName, portOrder, boxWidth, boxHeight) {
+    function drawConnectBoxFont(x, y, portName, portOrder, boxWidth, boxHeight,color) {
         ctx.font = "14px Arial";
-        ctx.fillStyle = '#fffbf0'; //填充线样式
-
+         //填充线样式
+        ctx.fillStyle = color;
         //当双网口配置开启的时候网口名更改
         if(demo.pairingChecked === true){
             for(let portIndex = 0;portIndex < demo.portItem.slice(0,8).length;portIndex++){
@@ -8207,23 +8887,16 @@
                     portName = "P("+demo.portItem[portIndex].id+","+demo.portItem[portIndex].backupid+")";
                 }
             }
-            ctx.fillText("Port:" + portName, xTox * x + 50, y * yToy + 28);
+            // ctx.fillText("Port:" + portName, xTox * x + 40, y * yToy + 28);
+            ctx.fillText(portName, xTox * x + 32, y * yToy + 20);
         }else{
-            ctx.fillText("Port:" + portName, xTox * x + 50, y * yToy + 28);
+            ctx.fillText(portName, xTox * x + 24, y * yToy + 20);
+            // ctx.fillText("Port:" + portName, xTox * x + 40, y * yToy + 28);
         }
+        ctx.fillStyle = '#fffbf0';
         ctx.fillText("Receiver:" + portOrder, xTox * x + 50, y * yToy + 40);
 
-        //获取箱体类型
-        let boxtype = demo.boxtype;
-        let boxItem = demo.boxItem;
-        for (let s = 0; s < boxItem.length; s++) {
-            if (boxtype === boxItem[s].name) {
-                let box = boxItem[s].box.split('×');
-                boxWidth = box[0];
-                boxHeight = box[1];
-            }
-        }
-        ctx.fillText("width:" + boxWidth, xTox * x + 50, y * yToy + 52);
+        ctx.fillText("width:" + boxWidth, xTox * x + 47, y * yToy + 52);
         ctx.fillText("Height:" + boxHeight, xTox * x + 50, y * yToy + 64);
     }
 
@@ -8242,7 +8915,7 @@
     }
 
     //原点的画法
-    function drawArc(x, y, color) {
+    function drawArc(x, y, color,senderhost) {
         ctx.beginPath();
         ctx.fillStyle = color;
 
@@ -8256,6 +8929,10 @@
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText('S', x * xTox + 50, y * yToy + 31);
+        if(senderhost != ''){
+            ctx.font = '9px bold';
+            ctx.fillText(senderhost, x * xTox + 90, y * yToy + 31);
+        }
     }
 
     // /**
@@ -8359,6 +9036,10 @@
             return false;
         }
 
+        if(area_port === null){
+            return false;
+        }
+
         //网口索引
         let portIndex = null;
         //获取当前网口筛选出当前箱体
@@ -8369,17 +9050,26 @@
                 portIndex = i;
             }
         }
-        for (let portNum = 0; portNum < portList.length; portNum++) {
-            let boxList = portList[portNum].box;
-            //判断该箱体是否已经存在XPOS--YPOS
-            for (let s = 0; s < boxList.length; s++) {
-                if (boxList[s].xpos === xPos) {
-                    if (boxList[s].ypos === yPos) {
-                        return false;
+        /**
+         * 当前屏体的发送卡内有此箱体坐标-return false
+         * */
+        for(let senderNo = 0;senderNo < demo.editableTabs[index].contextbody.senderItem.length;senderNo++){
+            let portList = demo.editableTabs[index].contextbody.senderItem[senderNo].port
+            for (let portNum = 0; portNum < portList.length; portNum++) {
+                let boxList = portList[portNum].box;
+                //判断该箱体是否已经存在XPOS--YPOS
+                for (let s = 0; s < boxList.length; s++) {
+                    if (boxList[s].xpos === xPos) {
+                        if (boxList[s].ypos === yPos) {
+                            return false;
+                        }
                     }
-
                 }
             }
+        }
+
+        if(portIndex === null){
+            return false;
         }
 
         //当加一个箱体就在数组内push一个数组
@@ -8387,10 +9077,19 @@
             order: portList[portIndex].box.length + 1,
             xpos: xPos,
             ypos: yPos,
-            boxwidth: '',
-            boxheight: ''
+            boxtype: demo.editableTabs[index].contextbody.boxtype,
         }
         portList[portIndex].box.push(box);
+
+        let box_width = null;
+        let box_height = null;
+        for (let i = 0; i < demo.boxItem.length; i++) {
+            if (demo.boxItem[i].name === demo.editableTabs[index].contextbody.boxtype) {
+                let box = demo.boxItem[i].box.split('×');
+                box_width = box[0];
+                box_height = box[1];
+            }
+        }
 
         /**
          * canvas绘制数组与现行次数
@@ -8415,21 +9114,21 @@
             }
         }
 
+        //生成已连接箱体
+        drawConnectedBox(x, y, '#99cccc');
         if (portList[portIndex].sourcePort === '') {
             //x*102+62, y*62+45
             portList[portIndex].sourcePort = {
                 x: x,
                 y: y
             }
-            drawConnectedBox(x, y, '#99cccc');
-            drawConnectBoxFont(x, y, portList[portIndex].name, box.order, 141, 135);
             //绘制箱体源点
-            drawArc(x, y, connectLineColorGroup[colorIndex]);
+            drawConnectBoxFont(x, y, portList[portIndex].name, box.order, box_width, box_height, connectLineColorGroup[colorIndex]);
+            drawArc(x, y, connectLineColorGroup[colorIndex],demo.editableTabs[index].contextbody.senderItem[senderIndex].name);
         } else if (portList[portIndex].lastPort === '') {
             let sourcePort = portList[portIndex].sourcePort;
             // drawArrow(fromX, fromY, toX, toY)
-            drawConnectedBox(x, y, '#99cccc', portList[portIndex].name, box.order, 141, 135);
-            drawConnectBoxFont(x, y, portList[portIndex].name, box.order, 141, 135);
+            drawConnectBoxFont(x, y, portList[portIndex].name, box.order, box_width, box_height, connectLineColorGroup[colorIndex]);
             drawArrow(sourcePort.x * xTox + 70, sourcePort.y * yToy + 51, x * xTox + 70, y * yToy + 51, connectLineColorGroup[colorIndex]);
             portList[portIndex].lastPort = {
                 x: x,
@@ -8437,8 +9136,7 @@
             }
         } else {
             let lastPort = portList[portIndex].lastPort;
-            drawConnectedBox(x, y, '#99cccc', portList[portIndex].name, box.order, 141, 135);
-            drawConnectBoxFont(x, y, portList[portIndex].name, box.order, 141, 135);
+            drawConnectBoxFont(x, y, portList[portIndex].name, box.order, box_width, box_height, connectLineColorGroup[colorIndex]);
             drawArrow(lastPort.x * xTox + 70, lastPort.y * yToy + 51, x * xTox + 70, y * yToy + 51, connectLineColorGroup[colorIndex]);
             portList[portIndex].lastPort = {
                 x: x,
@@ -8459,15 +9157,11 @@
 
 
         p = getEventPosition(e);
-        //初始值--//绘制矩形ctx.fillRect (102*i+10,s*62+10, 100, 60);
-        // console.log("当前网口"+area_port);
         //真实X值
         var realX = p.x - 10;
-        // console.log("X取整数=="+Math.ceil(realX/102));
         //真实Y值
         var realY = p.y - 10;
         //通过取整确定点击的箱体是第几行或者第几列
-        // console.log("Y取整数=="+Math.ceil(realY/62));
 
         //tab索引
         let index = demo.editableTabsValue - 1
@@ -8476,6 +9170,8 @@
         let xPos = Math.ceil(realX / xTox);
         //点击坐标转换的Y坐标
         let yPos = Math.ceil(realY / yToy);
+
+        getBoxMessage(xPos,yPos);
 
         if (area_port == null || area_port === '') {
             alert("未选择网口");
@@ -8494,39 +9190,56 @@
         var realX = p.x - 10;
         //真实Y值
         var realY = p.y - 10;
-        //通过取整确定点击的箱体是第几行或者第几列
-        // console.log("监听鼠标移动X-Y:("+Math.ceil(realX/102)+","+Math.ceil(realY/62)+")");
-        // alert("第"+Math.ceil(realX/102)+"列 第"+Math.ceil(realY/62)+"行，即：（"+Math.ceil(realX/102)+","+Math.ceil(realY/62)+"）");
+
+        //tab索引
+        let index = demo.editableTabsValue - 1
+
+        //点击坐标转换的X坐标
+        let xPos = Math.ceil(realX / xTox);
+        //点击坐标转换的Y坐标
+        let yPos = Math.ceil(realY / yToy);
+
+        //根据坐标业务处理
+        showTargetBox(xPos,yPos);
+
     }, false);
 
-    //按下鼠标按键
-    canvas.addEventListener('mousedown', function (e) {
-        p = getEventPosition(e);
-
-        //初始值--//绘制矩形ctx.fillRect (102*i+10,s*62+10, 100, 60);
-        //真实X值
-        var realX = p.x - 10;
-        //真实Y值
-        var realY = p.y - 10;
-        //通过取整确定点击的箱体是第几行或者第几列
-        // console.log("监听鼠标按下X-Y"+p.x+","+p.y);
-        // console.log("监听鼠标按下X-Y:("+Math.ceil(realX/102)+","+Math.ceil(realY/62)+")");
-        // alert("第"+Math.ceil(realX/102)+"列 第"+Math.ceil(realY/62)+"行，即：（"+Math.ceil(realX/102)+","+Math.ceil(realY/62)+"）");
+    //鼠标移出
+    canvas.addEventListener('mouseout', function (e) {
+        //将拓扑恢复原状
+        draw(demo.rowNum, demo.lineNum);
+        //当前tab索引
+        let index = demo.editableTabsValue - 1;
+        demo.drawConnectedAgain(index);
     }, false);
-
-    //松开鼠标按键
-    canvas.addEventListener('mouseup', function (e) {
-        p = getEventPosition(e);
-
-        //初始值--//绘制矩形ctx.fillRect (102*i+10,s*62+10, 100, 60);
-        //真实X值
-        var realX = p.x - 10;
-        //真实Y值
-        var realY = p.y - 10;
-        //通过取整确定点击的箱体是第几行或者第几列
-        // console.log("监听鼠标松开X-Y:("+Math.ceil(realX/102)+","+Math.ceil(realY/62)+")");
-        // alert("第"+Math.ceil(realX/102)+"列 第"+Math.ceil(realY/62)+"行，即：（"+Math.ceil(realX/102)+","+Math.ceil(realY/62)+"）");
-    }, false);
+    // //按下鼠标按键
+    // canvas.addEventListener('mousedown', function (e) {
+    //     p = getEventPosition(e);
+    //
+    //     //初始值--//绘制矩形ctx.fillRect (102*i+10,s*62+10, 100, 60);
+    //     //真实X值
+    //     var realX = p.x - 10;
+    //     //真实Y值
+    //     var realY = p.y - 10;
+    //     //通过取整确定点击的箱体是第几行或者第几列
+    //     // console.log("监听鼠标按下X-Y"+p.x+","+p.y);
+    //     // console.log("监听鼠标按下X-Y:("+Math.ceil(realX/102)+","+Math.ceil(realY/62)+")");
+    //     // alert("第"+Math.ceil(realX/102)+"列 第"+Math.ceil(realY/62)+"行，即：（"+Math.ceil(realX/102)+","+Math.ceil(realY/62)+"）");
+    // }, false);
+    //
+    // //松开鼠标按键
+    // canvas.addEventListener('mouseup', function (e) {
+    //     p = getEventPosition(e);
+    //
+    //     //初始值--//绘制矩形ctx.fillRect (102*i+10,s*62+10, 100, 60);
+    //     //真实X值
+    //     var realX = p.x - 10;
+    //     //真实Y值
+    //     var realY = p.y - 10;
+    //     //通过取整确定点击的箱体是第几行或者第几列
+    //     // console.log("监听鼠标松开X-Y:("+Math.ceil(realX/102)+","+Math.ceil(realY/62)+")");
+    //     // alert("第"+Math.ceil(realX/102)+"列 第"+Math.ceil(realY/62)+"行，即：（"+Math.ceil(realX/102)+","+Math.ceil(realY/62)+"）");
+    // }, false);
 
 
     /**
@@ -8644,7 +9357,14 @@
     }
 
     function sendJsonToMachine() {
-        alert("执行发送方法");
+        //屏蔽全局页面
+        const loading = demo.$loading({
+            lock: true,
+            text: '配置正在发送中...',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+        });
+        /*alert("执行发送方法");*/
         demo.senderPostList = [];
         //遍历屏体数据方便抽出数组
         for (let editableIndex = 0; editableIndex < demo.editableTabs.length; editableIndex++) {
@@ -8657,6 +9377,7 @@
             let modVPixel = null;
             let BoxHPixel = null;
             let BoxVPixel = null;
+            let totalPortLength = 0;
             //匹配箱体数据
             for (let constBox = 0; constBox < demo.boxItem.length; constBox++) {
                 if (contextBody.boxtype === demo.boxItem[constBox].name) {
@@ -8672,6 +9393,7 @@
             //获取发送卡列表
             for (let senderIndex = 0; senderIndex < contextBody.senderItem.length; senderIndex++) {
                 let sender = contextBody.senderItem[senderIndex];
+
                 //摒弃无网口数据
                 if (sender.port.length < 1) {
                     continue;
@@ -8687,6 +9409,70 @@
                 let x1 = 0;
                 let x2 = 0;
                 let y = 1;
+
+                //为了防止随意操作所以先给网口排序
+                //垂直单箱
+                if(sender.port[0].lastPort === '' &&sender.port[0].sourcePort.x - sender.port[sender.port.length-1].sourcePort.x === 0){
+                    for (let i = 0; i < sender.port.length - 1; i++) {
+                        // 内层循环,控制比较的次数，并且判断两个数的大小
+                        for (let j = 0; j < sender.port.length - 1 - i; j++) {
+                            let ops = parseInt(sender.port[j].sourcePort.x);
+                            let rit = parseInt(sender.port[j + 1].sourcePort.x);
+                            // 如果前面的数大，放到后面(当然是从小到大的冒泡排序)
+                            if (ops > rit) {
+                                let temp = sender.port[j];
+                                sender.port[j] = sender.port[j + 1];
+                                sender.port[j + 1] = temp;
+                            }
+                        }
+                    }
+                } //水平单箱
+                else if(sender.port[0].lastPort === '' &&sender.port[0].sourcePort.y - sender.port[sender.port.length-1].sourcePort.y === 0){
+                    for (let i = 0; i < sender.port.length - 1; i++) {
+                        // 内层循环,控制比较的次数，并且判断两个数的大小
+                        for (let j = 0; j < sender.port.length - 1 - i; j++) {
+                            let ops = parseInt(sender.port[j].sourcePort.y);
+                            let rit = parseInt(sender.port[j + 1].sourcePort.y);
+                            // 如果前面的数大，放到后面(当然是从小到大的冒泡排序)
+                            if (ops > rit) {
+                                let temp = sender.port[j];
+                                sender.port[j] = sender.port[j + 1];
+                                sender.port[j + 1] = temp;
+                            }
+                        }
+                    }
+                    //垂直
+                }else if(sender.port[0].sourcePort.x - sender.port[0].lastPort.x === 0){
+                    for (let i = 0; i < sender.port.length - 1; i++) {
+                        // 内层循环,控制比较的次数，并且判断两个数的大小
+                        for (let j = 0; j < sender.port.length - 1 - i; j++) {
+                            let ops = parseInt(sender.port[j].sourcePort.x);
+                            let rit = parseInt(sender.port[j + 1].sourcePort.x);
+                            // 如果前面的数大，放到后面(当然是从小到大的冒泡排序)
+                            if (ops > rit) {
+                                let temp = sender.port[j];
+                                sender.port[j] = sender.port[j + 1];
+                                sender.port[j + 1] = temp;
+                            }
+                        }
+                    }
+                    //水平
+                }else if(sender.port[0].sourcePort.y - sender.port[0].lastPort.y === 0){
+                    for (let i = 0; i < sender.port.length - 1; i++) {
+                        // 内层循环,控制比较的次数，并且判断两个数的大小
+                        for (let j = 0; j < sender.port.length - 1 - i; j++) {
+                            let ops = parseInt(sender.port[j].sourcePort.y);
+                            let rit = parseInt(sender.port[j + 1].sourcePort.y);
+                            // 如果前面的数大，放到后面(当然是从小到大的冒泡排序)
+                            if (ops > rit) {
+                                let temp = sender.port[j];
+                                sender.port[j] = sender.port[j + 1];
+                                sender.port[j + 1] = temp;
+                            }
+                        }
+                    }
+                }
+
                 //获取网口列表
                 for (let portIndex = 0; portIndex < sender.port.length; portIndex++) {
                     let port = sender.port[portIndex];
@@ -8722,21 +9508,37 @@
                         let box = port.box[boxIndex];
                         let box_x = null;
                         let box_y = null;
+                        let XPOS = null;
+                        let YPOS = null;
                         //上下相连
                         if (port.box[0].xpos - port.box[port.box.length - 1].xpos === 0) {
                             box_x = pianyiLiangX;
                             box_y = box.ypos + pianyiLiangY - 1;
-                            //左右相连
+                            if(box.xpos === totalPortLength){
+                                XPOS = box.xpos
+                            }else{
+                                XPOS = portIndex+1;
+                            }
+                            YPOS = box.ypos;
+                            console.log("XPOS1"+XPOS);
                         } else {
+                            //左右相连
                             box_x = box.xpos + pianyiLiangX - 1;
                             box_y = pianyiLiangY;
+                            if(box.ypos === totalPortLength){
+                                YPOS = box.ypos
+                            }else{
+                                YPOS = portIndex+1;
+                            }
+                            XPOS = box.xpos;
+                            console.log("XPOS2"+XPOS);
                         }
                         let boxConf = {
                             id: (box.xpos + "") + (box.ypos + ""),
                             //  箱体X坐标
-                            xPos: box.xpos + pianyiLiangX + "",
+                            xPos: XPOS + pianyiLiangX + "",
                             //  箱体Y坐标
-                            yPos: box.ypos + pianyiLiangY + "",
+                            yPos: YPOS + pianyiLiangY + "",
                             // 箱体的连接顺序
                             boxOder: box.order + "",
                             // 输出图像的箱体水平起始位置（输出分辨率）
@@ -8755,27 +9557,91 @@
                     let vostnumber = parseInt(BoxVPixel) * (port.sourcePort.y + pianyiLiangY) + "";
 
                     let portXPos = null;
-
                     let portYPos = null;
+                    let boxRow = null;
+                    let boxColumn = null;
 
 
                     //争议设计的地方
                     //单网口单个箱体的情况
-                    if (port.lastPort.x === '') {
+                    if (port.lastPort === '') {
                         portXPos = port.sourcePort.x;
                         portYPos = port.sourcePort.y;
+                        boxRow =  1 + "";
+                        boxColumn =  1 + "";
                     }
                     //上下连通
                     else if (port.sourcePort.x - port.lastPort.x === 0) {
-                        portXPos = port.sourcePort.x;
+                        portXPos = portIndex;
                         portYPos = 0;
+                        boxRow =  1  + "";
+                        boxColumn = port.box.length + "";
+
+                        for(let boxIndex = 0;boxIndex<boxConfs.length-1;boxIndex++){
+                            for(let j = 0;j<boxConfs.length-1-boxIndex;j++){
+                                let ops = parseInt(boxConfs[j].yPos);
+                                let rit = parseInt(boxConfs[j + 1].yPos);
+                                // 如果前面的数大，放到后面(当然是从小到大的冒泡排序)
+                                if (ops > rit) {
+                                    let temp = boxConfs[j];
+                                    boxConfs[j] = boxConfs[j + 1];
+                                    boxConfs[j + 1] = temp;
+                                }
+                            }
+                        }
+
                         //左右连通
                     } else {
                         portXPos = 0;
-                        portYPos = port.sourcePort.y;
+                        portYPos = portIndex;
+                        boxRow = port.box.length + 1 + "";
+                        boxColumn =  1  + "";
+
+                        for(let boxIndex = 0;boxIndex<boxConfs.length-1;boxIndex++){
+                            for(let j = 0;j<boxConfs.length-1-boxIndex;j++){
+                                let ops = parseInt(boxConfs[j].xPos);
+                                let rit = parseInt(boxConfs[j + 1].xPos);
+                                // 如果前面的数大，放到后面(当然是从小到大的冒泡排序)
+                                if (ops > rit) {
+                                    let temp = boxConfs[j];
+                                    boxConfs[j] = boxConfs[j + 1];
+                                    boxConfs[j + 1] = temp;
+                                }
+                            }
+                        }
                     }
 
+                    //展示的网口列表
+                    let masterChannel = null;
+                    let backupChannel = null;
 
+                    if(demo.pairingChecked === true){
+                        let masterChannel_channelNum = null;
+                        let backupChannel_channelNum = null;
+                        for(let portIndex = 0;portIndex < demo.masterPortItem.length;portIndex++){
+                            let masterPort = demo.masterPortItem[portIndex];
+                            if("P"+masterPort.id === port.name){
+                                masterChannel_channelNum = masterPort.id;
+                                backupChannel_channelNum = masterPort.backupid;
+                            }
+                        }
+                        //主通道号bean
+                        masterChannel = {
+                            // 输出板号---1
+                            boardNum: "1",
+                            // 输出通道号----1,2,3,4,-配置网口排序
+                            channelNum: masterChannel_channelNum + ""
+                        };
+
+                        // 备份通道号bean
+                        backupChannel = {
+                            // 输出板号---1
+                            boardNum: "1",
+                            // 输出通道号----1,2,3,4,-配置网口排序
+                            channelNum: backupChannel_channelNum + ""
+                        };
+                    }
+                    
                     //当前网口配置
                     let portConf = {
                         id: port.name,
@@ -8783,16 +9649,20 @@
                         xPos: portXPos + 1 + pianyiLiangX + "",
                         //--输出通道Y坐标
                         yPos: portYPos + 1 + pianyiLiangY + "",
-                        // 单个网口对应的箱体行数
-                        boxRow: sender.port[0].lastPort.x + 1 + "",
-                        // 单个网口对应的箱体列数
-                        boxColumn: sender.port[0].lastPort.y + 1 + "",
+                        // 单个网口对应的水平箱体数
+                        boxHoriNum: boxRow,
+                        // 单个网口对应的垂直箱体数
+                        boxVertNum: boxColumn,
                         // 输出图像的水平起始位置（输出分辨率）----根据源坐标输出
                         host: host,
                         // 输出图像的垂直起始位置（输出分辨率）----根据源坐标输出
                         vost: vostnumber,
                         // 网口带载的箱体
-                        boxConfs: boxConfs
+                        boxConfs: boxConfs,
+                        // 主通道号
+                        masterChannel:masterChannel,
+                        // 备份通道号
+                        backupChannel:backupChannel,
                     }
                     //推入数组
                     portConfs.push(portConf);
@@ -8813,6 +9683,17 @@
                     // 模组的纵向像素
                     modVPixel: modVPixel
                 };
+
+
+                //双备份字段
+                let backup = "0";
+                //检测双备份状态
+                if(demo.pairingChecked === false){
+                    backup = "0"
+                }else{
+                    backup = "1"
+                }
+
                 //构建发送卡数据
                 let PostSender = {
                     //发送卡ID
@@ -8824,17 +9705,24 @@
                     // // 设置图像输出开始位置（垂直） ---常量1
                     // vscr:"1",
                     // 输出通道水平位置数-X 网口  ---配置网口数量 上下 X
-                    horiNum: x + "",
+                    pxHoriNum: x + "",
                     // 输出通道垂直位置数-Y 网口  -----配置网口数量 -- Y
-                    vertNum: y + "",
+                    pyVertNum: y + "",
                     // 配置箱体信息
                     pSet: pSet,
                     // 配置输出通道的布局
                     outputConfs: outputConfs,
                     // 网口配置
-                    portConfs: portConfs
+                    portConfs: portConfs,
+                    //发送卡IP
+                    ip:sender.hostip+ "",
+                    //是否是双备份 1，双备份  0，无
+                    backup:backup,
+                    //时间戳，用以判断用户发送时间
+                    sendTime:new Date().getTime()+"",
                 }
                 demo.senderPostList.push(PostSender);
+                totalPortLength = totalPortLength +sender.port.length;
 
             }
         }
@@ -8850,11 +9738,316 @@
                 type: 39,
                 content: demo.senderPostList
             };
-            websocket.send(JSON.stringify(screenCofContent));
+            if(_self.responsemsg==="屏体配置成功"){
+                clearTimeout(configTimeOut);
+                _self.responsemsg="";
+            }else{
+                websocket.send(JSON.stringify(screenCofContent));
+            }
         }, 15000);
+
+        let aspnet = setInterval(function (){
+            if(_self.responsemsg==="屏体配置成功"){
+                clearTimeout(aspnet);
+                clearTimeout(configTimeOut);
+                loading.close();
+                alert("设置成功");
+            }
+        },500);
+
         setTimeout(function () {
+            /*alert("setTimeout方法");*/
             clearTimeout(configTimeOut);
-        }, 30000);
+            clearTimeout(aspnet);
+            loading.close();
+            alert("设置失败");
+            let nowdt = new Date();
+            console.log("执行settimeout方法时间"+nowdt.toLocaleTimeString());
+        }, 120000);
+    }
+
+    /**
+     * 获取点击箱体信息方法
+     * */
+    function getBoxMessage(xPos,yPos){
+
+        //tab索引
+        let index = demo.editableTabsValue -1;
+
+        //判断该箱体是否存在----- x > row   y>line  ---如果不存在则不获取
+        if(xPos>demo.editableTabs[index].contextbody.row){
+            return false;
+        }else if(yPos>demo.editableTabs[index].contextbody.line){
+            return false;
+        }
+        for(let senderno = 0;senderno < demo.editableTabs[index].contextbody.senderItem.length;senderno++){
+            let thisSender = demo.editableTabs[index].contextbody.senderItem[senderno];
+            let portList = thisSender.port;
+            for(let portNum = 0;portNum<portList.length;portNum++){
+                let boxList = portList[portNum].box;
+                //判断该箱体是否已经存在XPOS--YPOS
+                for(let s = 0;s<boxList.length;s++){
+                    if(boxList[s].xpos === xPos ){
+                        if(boxList[s].ypos === yPos ){
+                            demo.boxtype = boxList[s].boxtype;
+
+                            for (let i = 0; i < demo.boxItem.length; i++) {
+                                if (demo.boxItem[i].name === demo.boxtype) {
+                                    let box = demo.boxItem[i].box.split('×');
+                                    demo.box_width = box[0];
+                                    demo.box_height = box[1];
+                                }
+                            }
+
+                            //具体业务
+                            demo.singleSender = thisSender.name;
+                            senderIndex = senderno;
+                            becomeUsingPort(portList);
+                            demo.port_radio = portList[portNum].name;
+                            area_port = portList[portNum].name;
+                            demo.clicked_Box = {
+                                x:xPos,
+                                y:yPos
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    let lastBox = null;
+
+    /**
+     * 鼠标移动到箱体上方的效果
+     * */
+    function showTargetBox(xPos,yPos){
+        //tab索引
+        let index = demo.editableTabsValue -1;
+        //判断是否已经高亮某个箱体
+        if(lastBox != null){
+            recoverBox(lastBox,xPos,yPos);
+        }
+        //判断该箱体是否存在----- x > row   y>line  ---如果不存在则不获取
+        if(xPos>demo.editableTabs[index].contextbody.row){
+            return false;
+        }else if(yPos>demo.editableTabs[index].contextbody.line){
+            return false;
+        }
+        if(xPos === -0){
+            return false;
+        }else if(yPos === -0){
+            return false;
+        }
+        let thisBox = null;
+        for(let senderno = 0;senderno < demo.editableTabs[index].contextbody.senderItem.length;senderno++){
+            let thisSender = demo.editableTabs[index].contextbody.senderItem[senderno];
+            let portList = thisSender.port;
+            for(let portNum = 0;portNum<portList.length;portNum++){
+                let boxList = portList[portNum].box;
+                //判断该箱体是否已经存在XPOS--YPOS
+                for(let s = 0;s<boxList.length;s++){
+                    if(boxList[s].xpos === xPos ){
+                        if(boxList[s].ypos === yPos ){
+                            //网线颜色筛选
+                            let colorIndex = 0
+                            for (let ogj = 0; ogj < demo.portItem.length; ogj++) {
+                                if (demo.portItem[ogj].name === portList[portNum].name) {
+                                    colorIndex = ogj
+                                }
+                            }
+                            //箱体类型筛选
+                            let box_width = null;
+                            let box_height = null;
+                            for (let i = 0; i < demo.boxItem.length; i++) {
+                                if (demo.boxItem[i].name === boxList[s].boxtype) {
+                                    let box = demo.boxItem[i].box.split('×');
+                                    box_width = box[0];
+                                    box_height = box[1];
+                                }
+                            }
+                            //具体业务
+                            thisBox = boxList[s];
+                            //复杂的连线高亮
+                            drawNoConnectedBoxHight(xPos,yPos);
+                            let x = xPos -1;
+                            let y = yPos -1;
+                            drawConnectBoxFontHight(x, y, portList[portNum].name, boxList[s].order, box_width, box_height, connectLineColorGroup[colorIndex],demo.editableTabs[index].contextbody.senderItem[senderno].name);
+                        }
+                    }
+                }
+            }
+        }
+
+        //当这个箱体是空白箱体时
+        if(thisBox===null){
+            drawNoConnectedBoxHight(xPos,yPos);
+        }
+
+        lastBox ={
+            xPos:xPos,
+            yPos:yPos
+        };
+
+    }
+
+    //生成未连接箱体的高亮模式
+    function drawNoConnectedBoxHight(x, y){
+        x = x -1;
+        y = y - 1;
+        //绘制矩形
+        //绘制图形样式
+        ctx.fillStyle = "#44cef6";
+        ctx.strokeStyle = "#ffffcc";
+        ctx.lineWidth = 2;
+        /**
+         *
+         x	矩形左上角的 x 坐标
+         y	矩形左上角的 y 坐标
+         width	矩形的宽度，以像素计
+         height	矩形的高度，以像素计
+         * */
+        ctx.fillRect(xTox * x + 10, y * yToy + 10, 126, 78);
+        ctx.strokeRect(xTox * x + 10, y * yToy + 10, 126, 78);
+    }
+
+    //生成未连接箱体
+    function drawNoConnectedBox(x,y){
+        x = x -1;
+        y = y - 1;
+        //绘制矩形
+        //绘制图形样式
+        ctx.fillStyle = "#CCFFFF";
+        ctx.strokeStyle = "#ffffcc";
+        ctx.lineWidth = 2;
+        ctx.fillRect(xTox * x + 10, y * yToy + 10, 126, 78);
+        ctx.strokeRect(xTox * x + 10, y * yToy + 10, 126, 78);
+    }
+
+    //复原箱体走线的封装方法
+    function recoverBox(lastBox,xPos,yPos){
+        //tab索引
+        let index = demo.editableTabsValue -1;
+        //判断上个箱体是否连接状态
+        let ifConnected = false;
+        for(let senderNo = 0;senderNo<demo.editableTabs[index].contextbody.senderItem.length;senderNo++){
+            //获取当前网口筛选出当前箱体
+            let portList = demo.editableTabs[index].contextbody.senderItem[senderNo].port;
+            for(let portNum = 0;portNum<portList.length;portNum++){
+                let boxList = portList[portNum].box;
+                //判断该箱体是否已经存在XPOS--YPOS
+                for(let s = 0;s<boxList.length;s++){
+                    if(boxList[s].xpos === lastBox.xPos ){
+                        if(boxList[s].ypos === lastBox.yPos ){
+                            //筛选颜色索引
+                            let colorIndex = 0
+                            for (let ogj = 0; ogj < demo.portItem.length; ogj++) {
+                                if (demo.portItem[ogj].name === portList[portNum].name) {
+                                    colorIndex = ogj;
+                                    break;
+                                }
+                            }
+                            //获取箱体坐标
+                            let xPos = boxList[s].xpos-1;
+                            let yPos = boxList[s].ypos-1;
+                            //清除画布
+                            ctx.clearRect(xPos * xTox + 8, yPos * yToy + 8, xTox, yToy);
+                            //绘制箱体
+                            drawConnectedBox(xPos, yPos, '#99cccc');
+                            //箱体类型筛选
+                            let box_width = null;
+                            let box_height = null;
+                            for (let i = 0; i < demo.boxItem.length; i++) {
+                                if (demo.boxItem[i].name === boxList[s].boxtype) {
+                                    let box = demo.boxItem[i].box.split('×');
+                                    box_width = box[0];
+                                    box_height = box[1];
+                                }
+                            }
+                            drawConnectBoxFont(xPos, yPos, portList[portNum].name, boxList[s].order, box_width, box_height, connectLineColorGroup[colorIndex]);
+                            //判断箱体的位置
+                            //起点
+                            if(s === 0){
+                                //绘制起点
+                                drawArc(xPos, yPos, connectLineColorGroup[colorIndex],demo.editableTabs[index].contextbody.senderItem[senderNo].name);
+                                if(boxList.length > 1){
+                                    let nextXPos = boxList[s+1].xpos-1;
+                                    let nextYPos = boxList[s+1].ypos-1;
+                                    drawArrow(xPos * xTox + 70,yPos * yToy + 51, nextXPos * xTox + 70, nextYPos * yToy + 51, connectLineColorGroup[colorIndex]);
+                                }
+                                //过程中的点
+                            }else if(s<boxList.length-1){
+                                let lastXPos = boxList[s-1].xpos-1;
+                                let lastYPos = boxList[s-1].ypos-1;
+                                drawArrow(lastXPos * xTox + 70,lastYPos * yToy + 51, xPos * xTox + 70, yPos * yToy + 51, connectLineColorGroup[colorIndex]);
+                                let nextXPos = boxList[s+1].xpos-1;
+                                let nextYPos = boxList[s+1].ypos-1;
+                                drawArrow(xPos * xTox + 70,yPos * yToy + 51, nextXPos * xTox + 70, nextYPos * yToy + 51, connectLineColorGroup[colorIndex]);
+                                //终点
+                            }else{
+                                let lastXPos = boxList[s-1].xpos-1;
+                                let lastYPos = boxList[s-1].ypos-1;
+                                drawArrow(lastXPos * xTox + 70, lastYPos * yToy + 51, xPos * xTox + 70, yPos * yToy + 51, connectLineColorGroup[colorIndex]);
+
+                            }
+                            //告诉下层该箱体时连接状态的
+                            ifConnected = true;
+                        }
+
+                    }
+                }
+            }
+        }
+        //该情况是针对没有连接线的箱体
+        if(ifConnected === false){
+            if(xPos === lastBox.xPos){
+                if(yPos === lastBox.yPos){
+                    return false;
+                }else{
+                    drawNoConnectedBox(lastBox.xPos,lastBox.yPos);
+                }
+            }else if(yPos === lastBox.yPos){
+                if(xPos === lastBox.xPos){
+                    return false;
+                }else{
+                    drawNoConnectedBox(lastBox.xPos,lastBox.yPos);
+                }
+            }else{
+                drawNoConnectedBox(lastBox.xPos,lastBox.yPos);
+            }
+        }
+    }
+
+    //画字体的高亮状态
+    function drawConnectBoxFontHight(x, y, portName, portOrder, boxWidth, boxHeight,color,senderhost) {
+        ctx.font = "16px Arial";
+        //填充线样式
+        ctx.fillStyle = color;
+        //当双网口配置开启的时候网口名更改
+        if(demo.pairingChecked === true){
+            for(let portIndex = 0;portIndex < demo.portItem.slice(0,8).length;portIndex++){
+                if(portName === demo.portItem[portIndex].name){
+                    portName = "P("+demo.portItem[portIndex].id+","+demo.portItem[portIndex].backupid+")";
+                }
+            }
+            // ctx.fillText("Port:" + portName, xTox * x + 40, y * yToy + 28);
+            ctx.fillText(portName, xTox * x + 32, y * yToy + 20);
+        }else{
+            ctx.fillText(portName, xTox * x + 24, y * yToy + 20);
+            // ctx.fillText("Port:" + portName, xTox * x + 40, y * yToy + 28);
+        }
+        ctx.fillStyle = '#fffbf0';
+        ctx.fillText("Receiver:" + portOrder, xTox * x + 60, y * yToy + 49);
+
+        ctx.fillText("width:" + boxWidth, xTox * x + 57, y * yToy + 62);
+        ctx.fillText("Height:" + boxHeight, xTox * x + 60, y * yToy + 76);
+        if(typeof (senderhost) != "undefined"){
+            ctx.font = '14px bold';
+            ctx.fillText(senderhost, x * xTox + 70, y * yToy + 34);
+        }
     }
 
 </script>

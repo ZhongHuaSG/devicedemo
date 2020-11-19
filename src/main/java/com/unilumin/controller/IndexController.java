@@ -15,7 +15,7 @@ public class IndexController {
      * */
     @RequestMapping(value = "/index")
     public String Index(){
-        return "forward:index.html";
+        return "forward:bigshow.html";
     }
 
     /**
@@ -66,6 +66,14 @@ public class IndexController {
      * */
     @RequestMapping(value = "/deviceoption")
     public String DO(){ return "forward:deviceoption.html"; }
+
+    /**
+     * MP系统页面接口
+     * */
+    @RequestMapping(value = "/mppage")
+    public String Mppage(){
+        return "forward:mppage.html";
+    }
 
 
 }

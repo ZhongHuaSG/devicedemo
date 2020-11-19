@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MP系统复刻项目</title>
+
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/mpstyle.css">
+    <script src="js/vue.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+   <div class="allpage" id="main">
+       <!-- 顶部icon和状态 -->
+       <div class="topicon">
+           <h3 class="title-top">Unilumin Pixel</h3>
+           <h3 class="if-display">
+               Display
+           </h3>
+       </div>
+       <!-- 左边菜单栏 -->
+       <div class="leftmenu">
+           <div class = "top-menu">
+               <el-row class="tac">
+                   <el-col :span="12">
+                       <el-menu
+                               default-active="1"
+                               class="el-menu-vertical-demo"
+                               @open="handleOpen"
+                               @close="handleClose"
+                               background-color="#1b1c1d"
+                               text-color="#ffffff"
+                               active-text-color="#ffd04b"
+                               @select="handleSelect"
+                       >
+                           <el-menu-item  index="1">
+                               <i class="el-icon-menu"></i>
+                               <span slot="title">Mapping</span>
+                           </el-menu-item >
+                           <el-menu-item index="2">
+                               <i class="el-icon-menu"></i>
+                               <span slot="title">Seams</span>
+                           </el-menu-item>
+                           <el-menu-item index="3">
+                               <i class="el-icon-document"></i>
+                               <span slot="title">Adjustments</span>
+                           </el-menu-item>
+                           <el-menu-item index="4">
+                               <i class="el-icon-setting"></i>
+                               <span slot="title">Input</span>
+                           </el-menu-item>
+                           <el-menu-item index="5">
+                               <i class="el-icon-setting"></i>
+                               <span slot="title">Output</span>
+                           </el-menu-item>
+                           <el-menu-item index="6">
+                               <i class="el-icon-setting"></i>
+                               <span slot="title">Devices</span>
+                           </el-menu-item>
+                           <el-menu-item index="7">
+                               <i class="el-icon-setting"></i>
+                               <span slot="title">Health</span>
+                           </el-menu-item>
+                           <el-menu-item index="8">
+                               <i class="el-icon-setting"></i>
+                               <span slot="title">Settings</span>
+                           </el-menu-item>
+                           <el-menu-item index="9">
+                               <i class="el-icon-setting"></i>
+                               <span slot="title">Preview</span>
+                           </el-menu-item>
+                       </el-menu>
+                   </el-col>
+               </el-row>
+           </div>
+           <div class = "center-menu">
+               <el-checkbox v-model="global_setting_lock">Global Settings</el-checkbox>
+               <div class="imageadjust">
+                   <el-popover
+                           placement="right"
+                           width="400"
+                           trigger="click">
+                       <div class="image-adjust">
+                           <div class="brightness">
+                               <h5>Brightness</h5>
+                               <el-slider step="0.1" :marks="brightness_marks" v-model="brightness"></el-slider>
+                               <el-input-number v-model="brightness" step="0.1" size="mini" controls-position="right" :min="0" :max="100"></el-input-number>
+                           </div>
+                           <div class="gamma">
+                               <h5>Gamma</h5>
+                               <el-slider step="0.1" max="4.0" @input="GammaInput()" :marks="gamma_marks" v-model="gamma"></el-slider>
+                               <el-input-number v-model="gamma" size="mini" :precision="2" :step="0.1" controls-position="right" :min="1.00" :max="4.00"></el-input-number>
+                           </div>
+                           <div class="color-temperatrue">
+                               <h5>Color temperatrue</h5>
+                               <el-slider @input="color_temperatrueInput()" max="9008" :marks="color_temperatrue_marks" v-model="color_temperatrue"></el-slider>
+                               <el-input-number v-model="color_temperatrue" size="mini" controls-position="right" :min="4000" :max="9008"></el-input-number>
+                           </div>
+                           <el-button @click="restore_image_adjust_default" type="danger">Restore Default Values</el-button>
+                       </div>
+                       <el-link icon="el-icon-s-operation" :underline="false" slot="reference">Image Adjust&nbsp;&nbsp;<i class="el-icon-caret-right"></i></el-link>
+                   </el-popover>
+               </div>
+               <div class="videopattern">
+                   <el-popover
+                           placement="right"
+                           width="400"
+                           trigger="click">
+                       <div class="video-pattern">
+                           <el-slider v-model="value1"></el-slider>
+                           <el-slider v-model="value1"></el-slider>
+                           <el-slider v-model="value1"></el-slider>
+                           <el-slider v-model="value1"></el-slider>
+                       </div>
+                       <el-link icon="el-icon-s-operation" :underline="false" slot="reference">Video Pattern&nbsp;&nbsp;<i class="el-icon-caret-right"></i></el-link>
+                   </el-popover>
+               </div>
+           </div>
+           <div class="foot-menu">
+               <div class="pause">
+                   <el-checkbox v-model="pause_status">Pause</el-checkbox>
+               </div>
+               <div class="blackout">
+                   <el-checkbox v-model="blackout">Blackout</el-checkbox>
+               </div>
+           </div>
+       </div>
+       <!--中间主要内容-->
+       <div class="midContext">
+           <div class="box_option">
+               <canvas id="box-canvas"> 你的浏览器不支持 canvas，请升级你的浏览器。</canvas>
+           </div>
+           <!-- Mapping页 -->
+           <div v-if="page_Index == 1" class="list_page">
+               <div class="right_tools">
+                   <h1>我是Mapping</h1>
+               </div>
+               <div class="foot_tools">
+               </div>
+           </div>
+           <!-- Seams页 -->
+           <div v-else-if="page_Index == 2"  class="list_page">
+               <div class="right_tools">
+                   <h1>我是Seams</h1>
+               </div>
+               <div class="foot_tools">
+               </div>
+           </div>
+           <!-- Adjustments页 -->
+           <div v-else-if="page_Index == 3"  class="list_page">
+               <div class="right_tools">
+                   <h1>我是Adjustments</h1>
+               </div>
+               <div class="foot_tools">
+               </div>
+           </div>
+           <!-- Input页 -->
+           <div v-else-if="page_Index == 4"  class="list_page">
+               <div class="right_tools">
+                   <h1>我是Input</h1>
+               </div>
+               <div class="foot_tools">
+               </div>
+           </div>
+           <!-- Output页 -->
+           <div v-else-if="page_Index == 5"  class="list_page">
+               <div class="right_tools">
+                   <h1>我是Output</h1>
+               </div>
+               <div class="foot_tools">
+               </div>
+           </div><!-- Devices页 -->
+           <div v-else-if="page_Index == 6"  class="list_page">
+               <div class="right_tools">
+                   <h1>我是Devices</h1>
+               </div>
+               <div class="foot_tools">
+               </div>
+           </div>
+           <!-- Health页 -->
+           <div v-else-if="page_Index == 7"  class="list_page">
+               <div class="right_tools">
+                   <h1>我是Health</h1>
+               </div>
+               <div class="foot_tools">
+               </div>
+           </div>
+           <!-- Settings页 -->
+           <div v-else-if="page_Index == 8"  class="list_page">
+               <div class="right_tools">
+                   <h1>我是Settings</h1>
+               </div>
+               <div class="foot_tools">
+               </div>
+           </div>
+           <!-- Preview页 -->
+           <div v-else-if="page_Index == 9"  class="list_page">
+               <div class="right_tools">
+                   <h1>我是Preview</h1>
+               </div>
+               <div class="foot_tools">
+               </div>
+           </div>
+           <!-- 错误页 -->
+           <div v-else>
+               <div class="right_tools"  class="list_page">
+                   <h1>本页面是错误页面</h1>
+               </div>
+               <div class="foot_tools">
+               </div>
+           </div>
+       </div>
+   </div>
+</body>
+     <script src="js/vuescript.js" ></script>
+</html>

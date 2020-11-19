@@ -5701,7 +5701,7 @@
     }
 
     /**
-     * 获取偏移量的封装方法
+     * 判断箱体是否已经拥有走线的封装方法
      * */
     function getPianYiLiang(xPos,yPos){
         if(senderIndex == null){
@@ -5725,6 +5725,7 @@
             for(let s = 0;s<boxList.length;s++){
                 if(boxList[s].xpos === xPos ){
                     if(boxList[s].ypos === yPos ){
+                        console.log("点击一下吗？");
                         //具体业务
                         demo.pianyinumX = boxList[s].pianyiliangx;
                         demo.pianyinumY = boxList[s].pianyiliangy;
@@ -5732,6 +5733,7 @@
                             x:xPos,
                             y:yPos
                         }
+                        demo.singleSender = demo.editableTabs[index].contextbody.senderItem[senderIndex].name;
                     }
 
                 }
